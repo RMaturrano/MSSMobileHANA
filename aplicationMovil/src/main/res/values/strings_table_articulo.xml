@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    
+    <string name="T_ARTICULO">TB_ARTICULO</string>
+    
+    <string name="C_ART_COD">Codigo</string>
+    <string name="C_ART_NOM">Nombre</string>
+    <string name="C_ART_FABRICANTE">Fabricante</string>
+    <string name="C_ART_GRUPO_ART">GrupoArticulo</string>
+    <string name="C_ART_GRUPO_UM">GrupoUnidadMedida</string>
+    <string name="C_ART_UM_VENTA">UnidadMedidaVenta</string>
+    
+</resources>

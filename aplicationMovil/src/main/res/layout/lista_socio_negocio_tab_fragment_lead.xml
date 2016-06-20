@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/swipeRefresh"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+        <LinearLayout
+            android:id="@+id/sideIndex"
+            android:layout_width="20dip"
+            android:layout_height="fill_parent"
+            android:background="#FFF"
+            android:gravity="center_horizontal"
+            android:orientation="vertical" >
+        </LinearLayout>
+
+        <ListView
+            android:id="@+id/lvLstSocioLeadNeg"
+            android:layout_width="fill_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="20dip"
+            android:layout_weight="1"
+            android:fastScrollEnabled="true" >
+        </ListView>
+
+        <android.support.design.widget.FloatingActionButton
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/lvLstSocioLeadNeg"
+            android:layout_alignParentBottom="@id/lvLstSocioLeadNeg"
+            android:layout_alignParentRight="true"
+            android:layout_marginBottom="8dp"
+            android:layout_marginRight="8dp"
+            android:src="@drawable/ic_add_white_36dp"
+            app:backgroundTint="#f44336"
+            app:elevation="6dp"
+            app:pressedTranslationZ="12dp"
+            app:rippleColor="#ef5350" />
+    </RelativeLayout>
+
+</android.support.v4.widget.SwipeRefreshLayout>

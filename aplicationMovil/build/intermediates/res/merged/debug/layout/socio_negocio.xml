@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:fillViewport="true" 
+    android:background="#E0ECF8" >
+    
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingTop="6dip">
+
+
+        <ListView
+            android:id="@+id/lvPrinSN"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dip" 
+            android:background="#FAFAFA"
+            >
+        </ListView>
+        
+        
+        <ListView
+            android:id="@+id/lvGeneralSN"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="1dip" 
+            android:background="#FAFAFA"
+            >
+        </ListView>
+        
+
+        <ListView
+            android:id="@+id/lvDirccSN"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dip"
+            android:background="#FAFAFA">
+        </ListView>
+        
+        <ListView
+            android:id="@+id/lvConPagSN"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dip"
+            android:background="#FAFAFA">
+        </ListView>
+
+        <ListView
+            android:id="@+id/lvContactoSN"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dip" 
+            android:background="#FAFAFA"
+            >
+        </ListView>
+        
+        <ListView
+            android:id="@+id/lvDireccionesSN"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dip" 
+            android:background="#FAFAFA"
+            >
+        </ListView>
+
+        
+    </LinearLayout>
+
+</ScrollView>

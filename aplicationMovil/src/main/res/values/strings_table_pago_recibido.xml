@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    
+    <string name="T_PAGO">TB_PAGO</string>
+    
+    <string name="C_PAGO_TIPO">Tipo</string>
+    <string name="C_PAGO_CLAVE">Clave</string>
+    <string name="C_PAGO_NUMERO">Numero</string>
+    <string name="C_PAGO_SOCIO_NEGOCIO">SocioNegocio</string>
+    <string name="C_PAGO_EMP_VENTA">EmpleadoVenta</string>
+    <string name="C_PAGO_COMENTARIO">Comentario</string>
+    <string name="C_PAGO_GLOSA">Glosa</string>
+    <string name="C_PAGO_FEC_CONTABLE">FechaContable</string>
+    <string name="C_PAGO_MONEDA">Moneda</string>
+    <string name="C_PAGO_TIPO_PAGO">TipoPago</string>
+    <string name="C_PAGO_TRANSF_CUENTA">TransferenciaCuenta</string>
+    <string name="C_PAGO_TRANSF_REF">TransferenciaReferencia</string>
+    <string name="C_PAGO_TRANSF_IMPORTE">TransferenciaImporte</string>
+    <string name="C_PAGO_EFECTIVO_CUENTA">EfectivoCuenta</string>
+    <string name="C_PAGO_EFECTIVO_IMPORTE">EfectivoImporte</string>
+    <string name="C_PAGO_CREADO_MOVIL">CreadMovil</string>
+    <string name="C_PAGO_CLAVE_MOVIL">ClaveMovil</string>
+    <string name="C_PAGO_ESTADO_REGISTRO_MOVIL">EstadoMovil</string>
+    <string name="C_PAGO_TRANSACCION_MOVIL">TransaccionMovil</string>
+    
+     <string name="C_PAGO_CHEQUE_CUENTA">ChequeCuenta</string>
+    <string name="C_PAGO_CHEQUE_BANCO">ChequeBanco</string>
+    <string name="C_PAGO_CHEQUE_VENCIMIENTO">ChequeVencimiento</string>
+    <string name="C_PAGO_CHEQUE_IMPORTE">ChequeImporte</string>
+    <string name="C_PAGO_CHEQUE_NUMERO">ChequeNumero</string>
+    
+    <!-- DETALLES -->
+    <string name="TD_PAGO1">TB_PAGO_DETALLE</string>
+    
+    <string name="C_PAGO1_CLAVE_PAGO">ClavePago</string>
+    <string name="C_PAGO1_FACT_CLIENTE">FacturaCliente</string>
+    <string name="C_PAGO1_IMPORTE">Importe</string>
+    
+</resources>

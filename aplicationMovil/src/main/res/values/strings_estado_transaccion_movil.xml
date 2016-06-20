@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="CREAR_BORRADOR">1</string>
+    <string name="ACTUALIZAR_BORRADOR">2</string>
+    <string name="RECHAZAR_BORRADOR">3</string> <!-- COLOR ROJO, BOTON. NO SE PUEDE EDITAR -->
+    <string name="CREAR_TRANSACCION">4</string> <!-- COLOR VERDE -APROBADO-, BOTON. NO SE PUEDE EDITAR -->
+</resources>

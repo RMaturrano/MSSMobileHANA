@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    
+    <string name="T_CUENTA">TB_CUENTA</string>
+    
+    <string name="C_CUENTA_COD">Codigo</string>
+    <string name="C_CUENTA_NOM">Nombre</string>
+    
+</resources>

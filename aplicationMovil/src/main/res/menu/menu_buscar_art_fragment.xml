@@ -1,0 +1,29 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.proyecto.ventas.BuscarSNFragment">
+    
+
+    <item android:id="@+id/action_aceptar"
+        android:title="Aceptar" 
+        android:icon="@drawable/ic_check_white_36dp"
+        android:orderInCategory="100"
+        app:showAsAction="always|withText" />
+    
+    <item android:id="@+id/action_details"
+        android:title="Detalles" 
+        android:icon="@drawable/ic_details_white_36dp"
+        android:orderInCategory="100"
+        app:showAsAction="always|withText" />
+    
+    
+    <item
+        android:id="@+id/action_search"
+        android:icon="@drawable/ic_search_white_36dp"
+        android:title="@string/action_search"
+        app:actionViewClass="android.support.v7.widget.SearchView"
+        app:showAsAction="always|collapseActionView" 
+        android:hint="@string/search_hint"/>
+    
+</menu>
+

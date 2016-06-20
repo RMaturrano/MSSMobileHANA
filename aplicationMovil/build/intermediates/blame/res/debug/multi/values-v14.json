@@ -1,0 +1,226 @@
+[
+    {
+        "outputFile": "C:\\Users\\PC\\Desktop\\Android Seidor\\aplicationMovil\\build\\intermediates\\res\\merged\\debug\\values-v14\\values-v14.xml",
+        "map": [
+            {
+                "to": {
+                    "startLine": 2,
+                    "startColumn": 4,
+                    "startOffset": 55,
+                    "endLine": 7,
+                    "endColumn": 12,
+                    "endOffset": 278
+                },
+                "from": {
+                    "file": "C:\\Users\\PC\\Desktop\\Android Seidor\\aplicationMovil\\src\\main\\res\\values-v14\\styles.xml",
+                    "position": {
+                        "startLine": 7,
+                        "startColumn": 4,
+                        "startOffset": 225,
+                        "endLine": 12,
+                        "endColumn": 12,
+                        "endOffset": 453
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 8,
+                    "startColumn": 4,
+                    "startOffset": 283,
+                    "endLine": 12,
+                    "endColumn": 12,
+                    "endOffset": 554
+                },
+                "from": {
+                    "file": "C:\\Users\\PC\\Desktop\\Android Seidor\\aplicationMovil\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.4.0\\res\\values-v14\\values-v14.xml",
+                    "position": {
+                        "startLine": 2,
+                        "startColumn": 4,
+                        "startOffset": 55,
+                        "endLine": 6,
+                        "endColumn": 12,
+                        "endOffset": 326
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 13,
+                    "startColumn": 4,
+                    "startOffset": 559,
+                    "endColumn": 70,
+                    "endOffset": 625
+                },
+                "from": {
+                    "file": "C:\\Users\\PC\\Desktop\\Android Seidor\\aplicationMovil\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.4.0\\res\\values-v14\\values-v14.xml",
+                    "position": {
+                        "startLine": 7,
+                        "startColumn": 4,
+                        "startOffset": 331,
+                        "endColumn": 70,
+                        "endOffset": 397
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 14,
+                    "startColumn": 4,
+                    "startOffset": 630,
+                    "endColumn": 82,
+                    "endOffset": 708
+                },
+                "from": {
+                    "file": "C:\\Users\\PC\\Desktop\\Android Seidor\\aplicationMovil\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.4.0\\res\\values-v14\\values-v14.xml",
+                    "position": {
+                        "startLine": 8,
+                        "startColumn": 4,
+                        "startOffset": 402,
+                        "endColumn": 82,
+                        "endOffset": 480
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 15,
+                    "startColumn": 4,
+                    "startOffset": 713,
+                    "endLine": 20,
+                    "endColumn": 12,
+                    "endOffset": 1118
+                },
+                "from": {
+                    "file": "C:\\Users\\PC\\Desktop\\Android Seidor\\aplicationMovil\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.4.0\\res\\values-v14\\values-v14.xml",
+                    "position": {
+                        "startLine": 9,
+                        "startColumn": 4,
+                        "startOffset": 485,
+                        "endLine": 14,
+                        "endColumn": 12,
+                        "endOffset": 890
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 21,
+                    "startColumn": 4,
+                    "startOffset": 1123,
+                    "endLine": 26,
+                    "endColumn": 12,
+                    "endOffset": 1540
+                },
+                "from": {
+                    "file": "C:\\Users\\PC\\Desktop\\Android Seidor\\aplicationMovil\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.4.0\\res\\values-v14\\values-v14.xml",
+                    "position": {
+                        "startLine": 15,
+                        "startColumn": 4,
+                        "startOffset": 895,
+                        "endLine": 20,
+                        "endColumn": 12,
+                        "endOffset": 1312
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 27,
+                    "startColumn": 4,
+                    "startOffset": 1545,
+                    "endColumn": 119,
+                    "endOffset": 1660
+                },
+                "from": {
+                    "file": "C:\\Users\\PC\\Desktop\\Android Seidor\\aplicationMovil\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.4.0\\res\\values-v14\\values-v14.xml",
+                    "position": {
+                        "startLine": 21,
+                        "startColumn": 4,
+                        "startOffset": 1317,
+                        "endColumn": 119,
+                        "endOffset": 1432
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 28,
+                    "startColumn": 4,
+                    "startOffset": 1665,
+                    "endColumn": 62,
+                    "endOffset": 1723
+                },
+                "from": {
+                    "file": "C:\\Users\\PC\\Desktop\\Android Seidor\\aplicationMovil\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.4.0\\res\\values-v14\\values-v14.xml",
+                    "position": {
+                        "startLine": 22,
+                        "startColumn": 4,
+                        "startOffset": 1437,
+                        "endColumn": 62,
+                        "endOffset": 1495
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 29,
+                    "startColumn": 4,
+                    "startOffset": 1728,
+                    "endLine": 31,
+                    "endColumn": 12,
+                    "endOffset": 1877
+                },
+                "from": {
+                    "file": "C:\\Users\\PC\\Desktop\\Android Seidor\\aplicationMovil\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.4.0\\res\\values-v14\\values-v14.xml",
+                    "position": {
+                        "startLine": 23,
+                        "startColumn": 4,
+                        "startOffset": 1500,
+                        "endLine": 25,
+                        "endColumn": 12,
+                        "endOffset": 1649
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 32,
+                    "startColumn": 4,
+                    "startOffset": 1882,
+                    "endColumn": 62,
+                    "endOffset": 1940
+                },
+                "from": {
+                    "file": "C:\\Users\\PC\\Desktop\\Android Seidor\\aplicationMovil\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.4.0\\res\\values-v14\\values-v14.xml",
+                    "position": {
+                        "startLine": 26,
+                        "startColumn": 4,
+                        "startOffset": 1654,
+                        "endColumn": 62,
+                        "endOffset": 1712
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 33,
+                    "startColumn": 4,
+                    "startOffset": 1945,
+                    "endColumn": 131,
+                    "endOffset": 2072
+                },
+                "from": {
+                    "file": "C:\\Users\\PC\\Desktop\\Android Seidor\\aplicationMovil\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.4.0\\res\\values-v14\\values-v14.xml",
+                    "position": {
+                        "startLine": 27,
+                        "startColumn": 4,
+                        "startOffset": 1717,
+                        "endColumn": 131,
+                        "endOffset": 1844
+                    }
+                }
+            }
+        ]
+    }
+]

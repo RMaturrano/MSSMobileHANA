@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    	xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_home"
+            android:checked="true"
+            android:icon="@drawable/ic_home"
+            android:title="@string/menu_inicio" 
+            app:actionViewClass="android.widget.TextView"/>
+        
+        <item
+            android:id="@+id/nav_socios"
+            android:icon="@drawable/ic_account_circle_24dp"
+            android:title="@string/menu_socio_negocio" />
+        
+         <item
+            android:id="@+id/nav_inventario"
+            android:icon="@drawable/ic_shopping_cart"
+            android:title="@string/menu_inventario" />
+        
+        
+        <item
+            android:id="@+id/nav_ordenes"
+            android:icon="@drawable/ic_truck"
+            android:title="@string/menu_ventas" />
+        
+        <item
+            android:id="@+id/nav_facturas"
+            android:icon="@drawable/ic_payment_silver_24dp"
+            android:title="@string/menu_facturas" />
+        
+        <item
+            android:id="@+id/nav_cobranzas"
+            android:icon="@drawable/ic_file_document"
+            android:title="@string/menu_cobranzas" />
+        
+        <item
+            android:id="@+id/nav_reportes"
+            android:icon="@drawable/ic_picture_as_pdf_silver_24dp"
+            android:title="@string/menu_reportes" />
+        
+        <item
+            android:id="@+id/nav_actividades"
+            android:icon="@drawable/ic_event_24dp"
+            android:title="@string/menu_actividades" />
+
+        <!-- Sección de configuración -->
+        <item
+            android:id="@+id/configuration_section"
+            android:title="@string/menu_subtitulo_config">
+            <menu>
+                <item
+                    android:id="@+id/nav_p_con"
+                    android:icon="@drawable/ic_settings_24dp"
+                    android:title="@string/menu_conexion" />
+                
+                <item
+                    android:id="@+id/nav_sincronizar_ini"
+                    android:icon="@drawable/ic_sync_24dp"
+                    android:title="@string/menu_sincronizar_ini" />
+                
+                <item
+                    android:id="@+id/nav_sincronizar_mst"
+                    android:icon="@drawable/ic_sync_24dp"
+                    android:title="@string/menu_sincronizar_mast" />
+                
+                <item
+                    android:id="@+id/nav_sincronizar_doc"
+                    android:icon="@drawable/ic_sync_24dp"
+                    android:title="@string/menu_sincronizar_doc" />
+                
+                <item
+                    android:id="@+id/nav_log_out"
+                    android:icon="@android:drawable/ic_lock_power_off"
+                    android:title="@string/menu_cerrar_sesion" />
+            </menu>
+        </item>
+    </group>
+
+</menu>

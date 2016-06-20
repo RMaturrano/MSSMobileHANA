@@ -1,0 +1,13 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.proyecto.sociosnegocio.SocioNegocio">
+
+    <item android:id="@+id/action_registrar"
+        android:title="@string/menuBtnSaveSN"
+        android:icon="@drawable/ic_done_all_white_36dp"
+        android:orderInCategory="100"
+        app:showAsAction="ifRoom|withText" />
+
+</menu>
+

@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent"
+	android:layout_height="wrap_content" >
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <EditText
+        android:id="@+id/editText1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="@string/edtCodCli"
+        android:inputType="textPersonName" />
+
+
+    <EditText
+        android:id="@+id/edtName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="@string/edtNomCli"
+        android:inputType="textPersonName" />
+    
+
+    <EditText
+        android:id="@+id/edtnomCom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="@string/edtNomComCli"
+        android:inputType="textPersonName" />
+
+    <Spinner
+        android:id="@+id/spnGrupo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+
+    <EditText
+        android:id="@+id/edtMoneda"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="@string/edtMonCli"
+        android:inputType="textPersonName" />
+
+    <EditText
+        android:id="@+id/edtNroDoc"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="N° documento"
+        android:inputType="textPersonName" />
+
+
+    <EditText
+        android:id="@+id/edtApePat"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Apellido Paterno"
+        android:ems="10"
+        android:inputType="textPersonName" />
+
+    <EditText
+        android:id="@+id/edtApeMat"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Apellido Materno"
+        android:ems="10"
+        android:inputType="textPersonName" />
+
+
+    <EditText
+        android:id="@+id/edtPriNom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Primer Nombre"
+        android:ems="10"
+        android:inputType="textPersonName" />
+    
+
+    <EditText
+        android:id="@+id/edtSegNom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Segundo Nombre"
+        android:ems="10"
+        android:inputType="textPersonName" />
+    
+
+    <EditText
+        android:id="@+id/edtTipPer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Tipo de persona"
+        android:ems="10"
+        android:inputType="textPersonName" />
+    
+
+    <EditText
+        android:id="@+id/edttipDoc"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Tipo Documento"
+        android:ems="10"
+        android:inputType="textPersonName" />
+
+
+    <EditText
+        android:id="@+id/edtAgenRet"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Agente de retencion"
+        android:ems="10"
+        android:inputType="textPersonName" />
+    
+
+    <EditText
+        android:id="@+id/edtAgenPer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Agente de percepcion"
+        android:ems="10"
+        android:inputType="textPersonName" />
+    
+
+    <EditText
+        android:id="@+id/edtbuenContr"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="Buen contribuyente"
+        android:inputType="textPersonName" />
+    
+
+    <EditText
+        android:id="@+id/edtFlagRest"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Flag de restricción"
+        android:ems="10"
+        android:inputType="textPersonName" />
+    
+    <ListView
+        android:id="@+id/lvDatosCliente"
+        android:layout_width="match_parent"
+        android:layout_height="100dp" >
+
+    </ListView>
+    
+    
+</LinearLayout>
+
+
+</ScrollView>

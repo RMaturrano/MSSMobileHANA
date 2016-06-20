@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/popup_window"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="bottom|center"
+    android:background="@android:color/white"
+    android:orientation="vertical"
+    android:padding="8dp">
+
+    
+    <ListView
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:id="@+id/lvBottomSheet"
+        android:layout_alignParentLeft="true">
+    </ListView>
+    
+    <android.support.design.widget.FloatingActionButton
+        xmlns:android="http://schemas.android.com/apk/res/android"   
+   		xmlns:app="http://schemas.android.com/apk/res-auto" 
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_check_white_36dp"
+      	app:elevation="6dp"
+      	app:pressedTranslationZ="12dp"
+      	app:backgroundTint="#f44336"
+      	app:rippleColor="#ef5350"
+      	android:layout_alignParentRight="true"
+      	android:layout_alignParentTop="@id/lvBottomSheet"
+        android:layout_marginRight="8dp"/>
+    
+    
+
+</RelativeLayout>
+

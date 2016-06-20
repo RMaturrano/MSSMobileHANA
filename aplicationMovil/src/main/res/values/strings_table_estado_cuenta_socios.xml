@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    
+    <string name="T_ESTADO_CUENTA_SOCIO">TB_ESTADO_CUENTA_SOCIO</string>
+    
+    <string name="TipoReporte">TipoReporte</string>
+    <string name="Cliente">Cliente</string>
+    <string name="Nombre">Nombre</string>
+    <string name="ListaPrecio">ListaPrecio</string>
+    <string name="LineaCredito">LineaCredito</string>
+    <string name="CondicionPago">CondicionPago</string>
+    <string name="Clave">Clave</string>
+    <string name="Sunat">Sunat</string>
+    <string name="Condicion">Condicion</string>
+    <string name="Vendedor">Vendedor</string>
+    <string name="Emision">Emision</string>
+    <string name="Moneda">Moneda</string>
+    <string name="Total">Total</string>
+    <string name="Saldo">Saldo</string>
+    <string name="Pago_Fecha">Pago_Fecha</string>
+    <string name="Pago_Dias">Pago_Dias</string>
+    <string name="Pago_Moneda">Pago_Moneda</string>
+    <string name="Pagado_Importe">Pagado_Importe</string>
+    
+</resources>

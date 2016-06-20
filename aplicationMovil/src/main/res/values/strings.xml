@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Sap Business One</string>
+    <string name="action_settings">Settings</string>
+    <string name="action_close_session">Cerrar sesión</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="botonFotoP">Contacto nuevo</string>
+    
+    <string name="titMenuPrincipal">Inicio</string>
+    <string name="titCliente">Socio de Negocio</string>
+    <string name="titListOrd">Ordenes de venta</string>
+    <string name="titLstCliente">Socios de Negocio</string>
+    <string name="titConn">Sap Business One</string>
+    <string name="titDetCliente">Detalle socio negocio</string>
+    <string name="titDetOrd">Info detallada</string>
+    <string name="titOrdenVenta">Orden de venta</string>
+    <string name="titCobranzas">Cobranza Preliminar</string>
+    <string name="titInformes">Informes</string>
+    <string name="tvCliCod">Codigo</string>
+    <string name="edtCodCli">Código</string>
+    <string name="edtNomCli">Nombre o Razón Social</string>
+    <string name="edtNomComCli">Nombre comercial</string>
+    <string name="edtGrupoCli">Grupo</string>
+    <string name="edtMonCli">Moneda</string>
+
+     <string name="menuBtnSaveSN">Registrar</string>
+     <string name="menuBtnNuevo">Agregar</string>
+     <string name="menuBtnOrdenar">Ordenar</string>
+     <string name="menuBtnFiltrar">Filtrar</string>
+     
+     <string name="action_search">Buscar</string>
+     <string name="search_hint">Buscar socios de negocio</string>
+     <string name="search_hint_contact">Buscar contactos de la agenda</string>
+     <string name="search_hint_sales">Buscar...</string>
+     <string name="search_hint_ord">Buscar pedidos</string>
+     <string name="search_match_other">Matches Other Field</string>
+     <string name="contacts_list_search_results_title">Contacts List Search for \"%s\"</string>
+     <string name="activity_bp_list">Contactos de agenda telefónica</string>
+     
+     <!-- Used for the AlphabetIndexer in ContactsListFragment to provide quick navigation by
+         alphabet using ListView fast scroll. -->
+    <string name="alphabet">ABCDEFGHIJKLMNOPQRSTUVWXYZ</string>
+    
+    <string name="no_items_search">No se encuentran registros</string>
+    
+    
+    <!-- MENU TITULOS -->
+     <string name="menu_inicio">Inicio</string>
+     <string name="menu_socio_negocio">Socios de negocio</string>
+     <string name="menu_actividades">Actividades</string>
+     <string name="menu_ventas">Pedidos</string>
+     <string name="menu_facturas">Facturas</string>
+     <string name="menu_cobranzas">Cobranzas</string>
+     <string name="menu_reportes">Reportes</string>
+     <string name="menu_subtitulo_config">Configuración</string>
+     <string name="menu_conexion">Conexión</string>
+      <string name="menu_inventario">Inventario</string>
+	<string name="menu_sincronizar_doc">Sincronizar documentos</string>	
+	<string name="menu_sincronizar_mast">Sincronizar maestros</string>	
+	<string name="menu_sincronizar_ini">Sincronización inicial</string>	
+	<string name="menu_cerrar_sesion">Cerrar Sesión</string>
+    
+</resources>

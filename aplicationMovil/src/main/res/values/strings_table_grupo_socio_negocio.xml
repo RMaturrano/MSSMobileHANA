@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    
+    <string name="T_GRUPO_SN">TB_GRUPO_SOCIO_NEGOCIO</string>
+    
+    <string name="C_GRUPO_SN_CODIGO">CODIGO</string>
+    <string name="C_GRUPO_SN_NOMBRE">NOMBRE</string>
+    
+</resources>

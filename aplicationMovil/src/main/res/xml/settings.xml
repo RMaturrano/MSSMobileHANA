@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory android:title="Servicio Web">
+        <EditTextPreference
+            android:key="ipServidor"
+            android:title="Servidor"
+            android:summary="Dirección IP o URL del servidor web"
+            android:dialogTitle="Servidor" 
+            android:defaultValue="200.10.84.66"/>
+        
+        <EditTextPreference
+            android:key="puertoServidor"
+            android:title="Puerto"
+            android:summary="Puerto del servidor web"
+            android:dialogTitle="Puerto"
+            android:defaultValue="80"/>
+        
+        
+ <!--       <SwitchPreference android:key="servicio"
+            android:title="Sincronización automática"
+            android:summary="Sincronizar automáticamente al detectar conexión wifi o móvil"
+            android:defaultValue="true">
+        </SwitchPreference>	        -->
+        
+        <EditTextPreference
+            android:key="idDispositivo"
+            android:title="Id de dispositivo"/>
+
+        <CheckBoxPreference
+            android:key="controlSincManual"
+            android:title="Controlar sincronización manual"
+            android:summaryOn="Habilitado"
+            android:summaryOff="Deshabilitado"
+            android:defaultValue="true"/>
+        
+    </PreferenceCategory>
+ 
+</PreferenceScreen>

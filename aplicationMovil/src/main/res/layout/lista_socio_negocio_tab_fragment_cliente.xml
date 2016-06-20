@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/swipeRefresh"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    
+	<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	                android:layout_width="match_parent"
+	                android:layout_height="match_parent"
+	                android:baselineAligned="true">
+	
+	     <LinearLayout
+	        android:id="@+id/sideIndex"
+	        android:layout_width="20dip"
+	        android:layout_height="fill_parent"
+	        android:background="#FFF"
+	        android:gravity="center_horizontal"
+	        android:orientation="vertical" >
+	    </LinearLayout>
+	    
+	    
+	    <ListView
+	        android:layout_width="0dp"
+	        android:layout_height="match_parent"
+	        android:layout_weight="1"
+	        android:id="@+id/lvLstSocioNeg"
+	        android:fastScrollEnabled="true">
+	    </ListView>
+	    
+	</LinearLayout>
+</android.support.v4.widget.SwipeRefreshLayout>

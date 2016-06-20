@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/coordinatorLayout">
+
+
+	<ScrollView 
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    android:fillViewport="true" 
+	    android:background="#E0ECF8" >
+	
+	    <LinearLayout
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:orientation="vertical"
+	        android:paddingTop="5dip"
+	        android:paddingBottom="5dip" 
+	        >
+	
+	
+	        <ListView
+	            android:id="@+id/lvPrinPedido"
+	            android:layout_width="match_parent"
+	            android:layout_height="wrap_content"
+	            android:layout_marginTop="5dip" 
+	            android:background="#FAFAFA"
+	            >
+	        </ListView>
+	
+	
+	        <ListView
+	            android:id="@+id/lvContPedido"
+	            android:layout_width="match_parent"
+	            android:layout_height="wrap_content"
+	            android:layout_marginTop="10dip"
+	            android:background="#FAFAFA">
+	        </ListView>
+	        
+	        <ListView
+	            android:id="@+id/lvLogPedido"
+	            android:layout_width="match_parent"
+	            android:layout_height="wrap_content"
+	            android:layout_marginTop="10dip"
+	            android:background="#FAFAFA">
+	        </ListView>
+	        
+	        <ListView
+	            android:id="@+id/lvFinPedido"
+	            android:layout_width="match_parent"
+	            android:layout_height="wrap_content"
+	            android:layout_marginTop="10dip"
+	            android:background="#FAFAFA">
+	        </ListView>
+	        
+	        
+	        <ListView
+	            android:id="@+id/lvCalculos"
+	            android:layout_width="match_parent"
+	            android:layout_height="wrap_content"
+	            android:layout_marginTop="10dip"
+	            android:background="#FAFAFA">
+	        </ListView>
+	        
+	    </LinearLayout>
+	
+	</ScrollView>
+
+
+</android.support.design.widget.CoordinatorLayout>

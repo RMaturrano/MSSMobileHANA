@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="FROM_SERVICE">S</string>
+    <string name="SINCRONIZADO">U</string>
+    <string name="LOCAL">L</string>
+</resources>

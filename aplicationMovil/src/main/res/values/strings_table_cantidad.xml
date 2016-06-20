@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    
+    <string name="T_CANTIDAD">TB_CANTIDAD</string>
+    
+    <string name="C_CANT_ALMACEN">ALMACEN</string>
+    <string name="C_CANT_ARTICULO">ARTICULO</string>
+    <string name="C_CANT_STOCK">STOCK</string>
+    <string name="C_CANT_COMPROMETIDO">COMPROMETIDO</string>
+    <string name="C_CANT_SOLICITADO">SOLICITADO</string>
+    <string name="C_CANTIDAD_DISPONIBLE">DISPONIBLE</string>
+    
+</resources>

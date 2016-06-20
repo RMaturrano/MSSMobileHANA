@@ -1,0 +1,20 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.proyecto.sociosnegocio.BusinessPartnerListFragment">
+
+    
+    <item android:id="@+id/action_search"
+	     android:title="@string/action_search"
+	     android:icon="@drawable/ic_search_white_36dp"
+	     app:showAsAction="ifRoom|collapseActionView"
+	     app:actionViewClass="android.support.v7.widget.SearchView" />
+    
+    <item android:id="@+id/action_nuevo"
+        android:title="@string/menuBtnNuevo"
+        android:icon="@drawable/ic_person_add_white_36dp"
+        android:orderInCategory="100"
+        app:showAsAction="ifRoom" />
+
+
+</menu>

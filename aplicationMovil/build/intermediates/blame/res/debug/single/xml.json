@@ -1,0 +1,18 @@
+[
+    {
+        "merged": "C:\\Users\\PC\\Desktop\\Android Seidor\\aplicationMovil\\build\\intermediates\\res\\merged\\debug\\xml\\searchable_sales.xml",
+        "source": "C:\\Users\\PC\\Desktop\\Android Seidor\\aplicationMovil\\src\\main\\res\\xml\\searchable_sales.xml"
+    },
+    {
+        "merged": "C:\\Users\\PC\\Desktop\\Android Seidor\\aplicationMovil\\build\\intermediates\\res\\merged\\debug\\xml\\settings.xml",
+        "source": "C:\\Users\\PC\\Desktop\\Android Seidor\\aplicationMovil\\src\\main\\res\\xml\\settings.xml"
+    },
+    {
+        "merged": "C:\\Users\\PC\\Desktop\\Android Seidor\\aplicationMovil\\build\\intermediates\\res\\merged\\debug\\xml\\searchable_orders.xml",
+        "source": "C:\\Users\\PC\\Desktop\\Android Seidor\\aplicationMovil\\src\\main\\res\\xml\\searchable_orders.xml"
+    },
+    {
+        "merged": "C:\\Users\\PC\\Desktop\\Android Seidor\\aplicationMovil\\build\\intermediates\\res\\merged\\debug\\xml\\searchable_contacts.xml",
+        "source": "C:\\Users\\PC\\Desktop\\Android Seidor\\aplicationMovil\\src\\main\\res\\xml\\searchable_contacts.xml"
+    }
+]

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    
+    <string name="T_FABRICANTE">TB_FABRICANTE</string>
+    
+    <string name="C_FAB_COD">CODIGO</string>
+    <string name="C_FAB_NOM">NOMBRE</string>
+    
+</resources>

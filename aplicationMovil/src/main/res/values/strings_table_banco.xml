@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    
+    <string name="T_BANCO">TB_BANCO</string>
+    
+    <string name="C_BANCO_COD">Codigo</string>
+    <string name="C_BANCO_NOM">Nombre</string>
+    
+</resources>

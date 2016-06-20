@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    
+    <string name="T_LISTA_PRECIO">TB_LISTA_PRECIO</string>
+    
+    <string name="C_LST_PRE_COD">Codigo</string>
+    <string name="C_LST_PRE_NOM">Nombre</string>
+    
+    
+    <!-- PRECIOS -->
+    <string name="T_PRECIO">TB_PRECIO</string>
+    
+    <string name="C_PRE_COD_LISTA">CodigoLista</string>
+    <string name="C_PRE_ART">Articulo</string>
+    <string name="C_PRE_MONEDA">Moneda</string>
+    <string name="C_PRE_PRECIO_VENTA">PrecioVenta</string>
+    
+</resources>

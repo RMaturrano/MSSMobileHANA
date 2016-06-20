@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    
+    <string name="T_PAIS">TB_PAIS</string>
+    
+    <string name="C_PAIS_COD">CODIGO</string>
+    <string name="C_PAIS_NOM">NOMBRE</string>
+    
+    
+    <!-- DEPARTAMENTO -->
+    <string name="T_DEPARTAMENTO">TB_DEPARTAMENTO</string>
+    
+    <string name="C_DEP_PAIS_COD">CODIGO_PAIS</string>
+    <string name="C_DEP_COD">CODIGO</string>
+    <string name="C_DEP_NOM">NOMBRE</string>
+    
+    
+     <!-- PROVINCIA -->
+    <string name="T_PROVINCIA">TB_PROVINCIA</string>
+    
+    <string name="C_PROV_DEP_COD">CODIGO_DEPARTAMENTO</string>
+    <string name="C_PROV_COD">CODIGO</string>
+    <string name="C_PROV_NOM">NOMBRE</string>
+    
+    
+     <!-- DISTRITO -->
+    <string name="T_DISTRITO">TB_DISTRITO</string>
+    
+    <string name="C_DIST_PROV_COD">CODIGO_PROVINCIA</string>
+    <string name="C_DIST_COD">CODIGO</string>
+    <string name="C_DIST_NOM">NOMBRE</string>
+    
+    
+    
+    <!-- CALLE -->
+    <string name="T_CALLE">TB_CALLE</string>
+    
+    <string name="C_CALLE_DIST_COD">CODIGO_DISTRITO</string>
+    <string name="C_CALLE_COD">CODIGO</string>
+    <string name="C_CALLE_NOM">NOMBRE</string>
+    
+    
+</resources>

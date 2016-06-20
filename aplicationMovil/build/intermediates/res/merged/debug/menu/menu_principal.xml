@@ -1,0 +1,11 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.proyecto.movil.MainActivity">
+    
+
+    <item android:id="@+id/action_close_session"
+        android:title="@string/action_close_session"
+        app:showAsAction="never" />
+    
+</menu>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    
+    <string name="T_GRUPO_UM">TB_GRUPO_UNIDAD_MEDIDA</string>
+    
+    <string name="C_GRUPO_UM_COD">Codigo</string>
+    <string name="C_GRUPO_UM_NOM">Nombre</string>
+    
+    
+    <!-- DETALLES -->
+    <string name="TD_GRUPO1_UM">TB_GRUPO_UNIDAD_MEDIDA_DETALLE</string>
+    
+    <string name="C_GRUPO1_UM_COD_GRUPO">CodigoGrupo</string>
+    <string name="C_GRUPO1_UM_COD_UM">CodigoUnidadMedida</string>
+    
+</resources>

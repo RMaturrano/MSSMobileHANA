@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    
+    <string name="T_UNIDAD_MEDIDA">TB_UNIDAD_MEDIDA</string>
+    
+    <string name="C_UM_COD">Codigo</string>
+    <string name="C_UM_NOM">Nombre</string>
+    
+</resources>

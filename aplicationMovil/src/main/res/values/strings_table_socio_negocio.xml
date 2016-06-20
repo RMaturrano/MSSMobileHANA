@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    
+    <string name="T_SOCIO_NEGOCIO">TB_SOCIO_NEGOCIO</string>
+    
+    <string name="C_SN_CODIGO">Codigo</string>
+    <string name="C_SN_TIPO_SOCIO">TipoSocio</string>
+    <string name="C_SN_TIPO_PERSONA">TipoPersona</string>
+    <string name="C_SN_TIPO_DOCUMENTO">TipoDocumento</string>
+    <string name="C_SN_NRO_DOCUMENTO">NumeroDocumento</string>
+    <string name="C_SN_NOM_RAZON_SOCIAL">NombreRazonSocial</string>
+    <string name="C_SN_NOM_COMERCIAL">NombreComercial</string>
+    <string name="C_SN_APE_PATERNO">ApellidoPaterno</string>
+    <string name="C_SN_APE_MATERNO">ApellidoMaterno</string>
+    <string name="C_SN_PRI_NOMBRE">PrimerNombre</string>
+    <string name="C_SN_SEG_NOMBRE">SegundoNombre</string>
+    <string name="C_SN_TLF_UNO">Telefono1</string>
+    <string name="C_SN_TLF_DOS">Telefono2</string>
+    <string name="C_SN_TLF_MOV">TelefonoMovil</string>
+    <string name="C_SN_EMAIL">CorreoElectronico</string>
+    <string name="C_SN_GRUPO_SN">GrupoSocio</string>
+    <string name="C_SN_LISTA_PRE">ListaPrecio</string>
+    <string name="C_SN_COND_PAGO">CondicionPago</string>
+    <string name="C_SN_INDICADOR">Indicador</string>
+    <string name="C_SN_ZONA">Zona</string>
+    <string name="C_SN_CREAD_MOVIL">CreadMovil</string>
+    <string name="C_SN_CLAVE_MOVIL">ClaveMovil</string>
+    <string name="C_SN_ESTADO_REGISTRO_MOVIL">EstadoMovil</string>
+    <string name="C_SN_DIRECCION_FISCAL">DireccionFiscal</string>
+    <string name="C_SN_TRANSACCION_MOVIL">TransaccionMovil</string>
+    <string name="C_SN_VALIDO_EN_PEDIDO">ValidoenPedido</string>
+    
+    <!-- CONTACTOS -->
+    <string name="TD_CONTACTO_SOCIO_NEGOCIO">TB_SOCIO_NEGOCIO_CONTACTO</string>
+    
+    <string name="C_SN1_CODIGO_SN">CodigoSocioNegocio</string>
+    <string name="C_SN1_CODIGO">Codigo</string>
+    <string name="C_SN1_NOMBRE">Nombre</string>
+    <string name="C_SN1_PRI_NOMBRE">PrimerNombre</string>
+    <string name="C_SN1_SEG_NOMBRE">SegundoNombre</string>
+    <string name="C_SN1_APELLIDOS">Apellidos</string>
+    <string name="C_SN1_DIRECCION">Direccion</string>
+    <string name="C_SN1_EMAIL">CorreoElectronico</string>
+    <string name="C_SN1_TLF_UNO">Telefono1</string>
+    <string name="C_SN1_TLF_DOS">Telefono2</string>
+    <string name="C_SN1_TLF_MOVIL">TelefonoMovil</string>
+    <string name="C_SN1_POSICION">Posicion</string>
+    <string name="C_SN1_IS_PRINCIPAL">Principal</string>
+    
+    <!-- DIRECCIONES -->
+    <string name="TD_DIRECCION_SOCIO_NEGOCIO">TB_SOCIO_NEGOCIO_DIRECCION</string>
+    
+    <string name="C_SN2_CODIGO_SN">CodigoSocioNegocio</string>
+    <string name="C_SN2_CODIGO">Codigo</string>
+    <string name="C_SN2_PAIS">Pais</string>
+    <string name="C_SN2_DEPARTAMENTO">Departamento</string>
+    <string name="C_SN2_PROVINCIA">Provincia</string>
+    <string name="C_SN2_DISTRITO">Distrito</string>
+    <string name="C_SN2_CALLE">Calle</string>
+    <string name="C_SN2_REFERENCIA">Referencia</string>
+    <string name="C_SN2_TIPO">Tipo</string>
+    <string name="C_SN2_IS_PRINCIPAL">Principal</string>
+    
+    
+</resources>

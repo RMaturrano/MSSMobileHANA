@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    
+    <string name="T_INDICADOR">TB_INDICADOR</string>
+    
+    <string name="C_INDICADOR_COD">Codigo</string>
+    <string name="C_INDICADOR_NOM">Nombre</string>
+    
+</resources>

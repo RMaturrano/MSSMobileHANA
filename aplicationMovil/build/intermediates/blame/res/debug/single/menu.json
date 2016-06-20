@@ -1,0 +1,74 @@
+[
+    {
+        "merged": "C:\\Users\\PC\\Desktop\\Android Seidor\\aplicationMovil\\build\\intermediates\\res\\merged\\debug\\menu\\menu_lst_dir.xml",
+        "source": "C:\\Users\\PC\\Desktop\\Android Seidor\\aplicationMovil\\src\\main\\res\\menu\\menu_lst_dir.xml"
+    },
+    {
+        "merged": "C:\\Users\\PC\\Desktop\\Android Seidor\\aplicationMovil\\build\\intermediates\\res\\merged\\debug\\menu\\menu_art_ordventa.xml",
+        "source": "C:\\Users\\PC\\Desktop\\Android Seidor\\aplicationMovil\\src\\main\\res\\menu\\menu_art_ordventa.xml"
+    },
+    {
+        "merged": "C:\\Users\\PC\\Desktop\\Android Seidor\\aplicationMovil\\build\\intermediates\\res\\merged\\debug\\menu\\lst_sn_menu.xml",
+        "source": "C:\\Users\\PC\\Desktop\\Android Seidor\\aplicationMovil\\src\\main\\res\\menu\\lst_sn_menu.xml"
+    },
+    {
+        "merged": "C:\\Users\\PC\\Desktop\\Android Seidor\\aplicationMovil\\build\\intermediates\\res\\merged\\debug\\menu\\menu_lista_facturas.xml",
+        "source": "C:\\Users\\PC\\Desktop\\Android Seidor\\aplicationMovil\\src\\main\\res\\menu\\menu_lista_facturas.xml"
+    },
+    {
+        "merged": "C:\\Users\\PC\\Desktop\\Android Seidor\\aplicationMovil\\build\\intermediates\\res\\merged\\debug\\menu\\nav_menu.xml",
+        "source": "C:\\Users\\PC\\Desktop\\Android Seidor\\aplicationMovil\\src\\main\\res\\menu\\nav_menu.xml"
+    },
+    {
+        "merged": "C:\\Users\\PC\\Desktop\\Android Seidor\\aplicationMovil\\build\\intermediates\\res\\merged\\debug\\menu\\detalle_venta_articulo.xml",
+        "source": "C:\\Users\\PC\\Desktop\\Android Seidor\\aplicationMovil\\src\\main\\res\\menu\\detalle_venta_articulo.xml"
+    },
+    {
+        "merged": "C:\\Users\\PC\\Desktop\\Android Seidor\\aplicationMovil\\build\\intermediates\\res\\merged\\debug\\menu\\menu_lst_art.xml",
+        "source": "C:\\Users\\PC\\Desktop\\Android Seidor\\aplicationMovil\\src\\main\\res\\menu\\menu_lst_art.xml"
+    },
+    {
+        "merged": "C:\\Users\\PC\\Desktop\\Android Seidor\\aplicationMovil\\build\\intermediates\\res\\merged\\debug\\menu\\menu_buscar_sn_fragment.xml",
+        "source": "C:\\Users\\PC\\Desktop\\Android Seidor\\aplicationMovil\\src\\main\\res\\menu\\menu_buscar_sn_fragment.xml"
+    },
+    {
+        "merged": "C:\\Users\\PC\\Desktop\\Android Seidor\\aplicationMovil\\build\\intermediates\\res\\merged\\debug\\menu\\main.xml",
+        "source": "C:\\Users\\PC\\Desktop\\Android Seidor\\aplicationMovil\\src\\main\\res\\menu\\main.xml"
+    },
+    {
+        "merged": "C:\\Users\\PC\\Desktop\\Android Seidor\\aplicationMovil\\build\\intermediates\\res\\merged\\debug\\menu\\menu_principal.xml",
+        "source": "C:\\Users\\PC\\Desktop\\Android Seidor\\aplicationMovil\\src\\main\\res\\menu\\menu_principal.xml"
+    },
+    {
+        "merged": "C:\\Users\\PC\\Desktop\\Android Seidor\\aplicationMovil\\build\\intermediates\\res\\merged\\debug\\menu\\menu_lista_facturas_sn.xml",
+        "source": "C:\\Users\\PC\\Desktop\\Android Seidor\\aplicationMovil\\src\\main\\res\\menu\\menu_lista_facturas_sn.xml"
+    },
+    {
+        "merged": "C:\\Users\\PC\\Desktop\\Android Seidor\\aplicationMovil\\build\\intermediates\\res\\merged\\debug\\menu\\business_partner_list_menu.xml",
+        "source": "C:\\Users\\PC\\Desktop\\Android Seidor\\aplicationMovil\\src\\main\\res\\menu\\business_partner_list_menu.xml"
+    },
+    {
+        "merged": "C:\\Users\\PC\\Desktop\\Android Seidor\\aplicationMovil\\build\\intermediates\\res\\merged\\debug\\menu\\login.xml",
+        "source": "C:\\Users\\PC\\Desktop\\Android Seidor\\aplicationMovil\\src\\main\\res\\menu\\login.xml"
+    },
+    {
+        "merged": "C:\\Users\\PC\\Desktop\\Android Seidor\\aplicationMovil\\build\\intermediates\\res\\merged\\debug\\menu\\menu_buscar_art_fragment.xml",
+        "source": "C:\\Users\\PC\\Desktop\\Android Seidor\\aplicationMovil\\src\\main\\res\\menu\\menu_buscar_art_fragment.xml"
+    },
+    {
+        "merged": "C:\\Users\\PC\\Desktop\\Android Seidor\\aplicationMovil\\build\\intermediates\\res\\merged\\debug\\menu\\lst_articulo_menu.xml",
+        "source": "C:\\Users\\PC\\Desktop\\Android Seidor\\aplicationMovil\\src\\main\\res\\menu\\lst_articulo_menu.xml"
+    },
+    {
+        "merged": "C:\\Users\\PC\\Desktop\\Android Seidor\\aplicationMovil\\build\\intermediates\\res\\merged\\debug\\menu\\menu_sincronizar.xml",
+        "source": "C:\\Users\\PC\\Desktop\\Android Seidor\\aplicationMovil\\src\\main\\res\\menu\\menu_sincronizar.xml"
+    },
+    {
+        "merged": "C:\\Users\\PC\\Desktop\\Android Seidor\\aplicationMovil\\build\\intermediates\\res\\merged\\debug\\menu\\lst_pedido_pendiente.xml",
+        "source": "C:\\Users\\PC\\Desktop\\Android Seidor\\aplicationMovil\\src\\main\\res\\menu\\lst_pedido_pendiente.xml"
+    },
+    {
+        "merged": "C:\\Users\\PC\\Desktop\\Android Seidor\\aplicationMovil\\build\\intermediates\\res\\merged\\debug\\menu\\menu_lista_facturas_pend.xml",
+        "source": "C:\\Users\\PC\\Desktop\\Android Seidor\\aplicationMovil\\src\\main\\res\\menu\\menu_lista_facturas_pend.xml"
+    }
+]

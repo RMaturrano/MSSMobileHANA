@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    
+    <string name="T_GRUPO_ART">TB_GRUPO_ARTICULO</string>
+    
+    <string name="C_GA_CODIGO">CODIGO</string>
+    <string name="C_GA_NOMBRE">NOMBRE</string>
+    
+</resources>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+ 
+    <ListView android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:id="@+id/lvPedCliBuscarArticulo"
+        android:layout_alignParentLeft="true"
+        android:choiceMode="singleChoice"
+		android:listSelector="#bbdefb">
+    </ListView>
+    
+    <LinearLayout
+        android:id="@+id/sideIndex"
+        android:layout_width="20dip"
+        android:layout_height="fill_parent"
+        android:background="#FFF"
+        android:gravity="center_horizontal"
+        android:orientation="vertical" >
+    </LinearLayout>
+ 
+</LinearLayout>

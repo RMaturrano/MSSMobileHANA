@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    
+    <string name="T_COND_PAGO">TB_CONDICION_PAGO</string>
+    
+    <string name="C_CP_COD">CODIGO</string>
+    <string name="C_CP_NOM">NOMBRE</string>
+    
+</resources>

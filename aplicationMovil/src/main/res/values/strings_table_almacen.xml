@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    
+    <string name="T_ALMACEN">TB_ALMACEN</string>
+    
+    <string name="C_ALMACEN_COD">CODIGO</string>
+    <string name="C_ALMACEN_NOM">NOMBRE</string>
+    
+</resources>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    
+    <color name="color_primary">#2196f3</color>
+    <color name="holo_blue">#FF33B5E5</color>
+    
+    <color name="s1">#2196f3</color>
+    <color name="s2">#f44336</color>
+    <color name="s3">#009688</color>
+    <color name="s4">#ffeb3b</color>
+    
+</resources>

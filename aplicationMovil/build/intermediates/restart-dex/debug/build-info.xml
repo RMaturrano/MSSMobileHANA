@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<instant-run
+    abi="x86,armeabi-v7a"
+    api-level="16"
+    density="xhdpi"
+    format="7"
+    timestamp="16768867833276"
+    verifier="COMPATIBLE" >
+
+    <task
+        name="javac"
+        duration="3749" />
+    <task
+        name="instant-run-dex"
+        duration="470" />
+    <task
+        name="instant-run-transform"
+        duration="24" />
+    <task
+        name="verifier"
+        duration="3" />
+
+    <artifact
+        location="C:\Users\PC\Desktop\Android Seidor\aplicationMovil\build\intermediates\reload-dex\debug\classes.dex"
+        type="RELOAD_DEX" />
+
+    <build timestamp="16603302300946" >
+        <artifact
+            location="C:\Users\PC\Desktop\Android Seidor\aplicationMovil\build\outputs\apk\aplicationMovil-debug.apk"
+            type="MAIN" />
+    </build>
+    <build
+        timestamp="16768867833276"
+        verifier="COMPATIBLE" >
+        <artifact
+            location="C:\Users\PC\Desktop\Android Seidor\aplicationMovil\build\intermediates\reload-dex\debug\classes.dex"
+            type="RELOAD_DEX" />
+    </build>
+
+</instant-run>
