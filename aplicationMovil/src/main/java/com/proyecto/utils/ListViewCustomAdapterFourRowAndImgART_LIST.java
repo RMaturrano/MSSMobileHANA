@@ -106,10 +106,8 @@ public class ListViewCustomAdapterFourRowAndImgART_LIST extends BaseAdapter impl
                protected void publishResults(CharSequence constraint, FilterResults results) {
 
             	   lista = (ArrayList<ArticuloBean>) results.values;
-
             	   notifyDataSetChanged();
-  
-                   
+
                }
 
                @Override

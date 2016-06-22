@@ -170,7 +170,7 @@ public class ListaCobranzasTabTodosFragment extends Fragment
 			long id) {
 		
 		Intent myIntent = new Intent( contexto, DetalleCobranzaMain.class);
-    	myIntent.putExtra("id", listaAdapter.get(position).getClave());
+    	myIntent.putExtra("id", ((PagoBean) adapter.getItem(position)).getClave());
     	startActivity(myIntent);
 		
 	}

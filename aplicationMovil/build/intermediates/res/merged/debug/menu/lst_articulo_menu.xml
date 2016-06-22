@@ -8,19 +8,6 @@
 	     android:icon="@drawable/ic_search_white_36dp"
 	     app:showAsAction="ifRoom|collapseActionView"
 	     app:actionViewClass="android.support.v7.widget.SearchView" />
-    
-   
-    <item android:id="@+id/action_ordenar"
-        android:title="@string/menuBtnOrdenar"
-        android:icon="@drawable/ic_sort_by_alpha_white_24dp"
-        android:orderInCategory="100"
-        app:showAsAction="always|withText" />
-    
-    <item android:id="@+id/action_filtro"
-        android:title="@string/menuBtnFiltrar"
-        android:icon="@drawable/ic_filter_list_white_24dp"
-        android:orderInCategory="100"
-        app:showAsAction="always|withText" />
  
 
 </menu>

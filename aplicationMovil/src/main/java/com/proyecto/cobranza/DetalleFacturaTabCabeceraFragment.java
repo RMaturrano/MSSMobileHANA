@@ -157,7 +157,7 @@ public class DetalleFacturaTabCabeceraFragment extends Fragment implements OnIte
 		  	sr1.setData(rs.getString(15));
 		  	searchResults_0.add(sr1);
 		  	
-		  	DetalleCobranzaMain.idSocioNegocio = rs.getString(16);
+		  	DetalleFacturaMain.idSocioNegocio = rs.getString(16);
 		  	
 		}
 		
@@ -165,7 +165,7 @@ public class DetalleFacturaTabCabeceraFragment extends Fragment implements OnIte
 //		db.close();
 		
 		
-		adapter = new ListViewCustomAdapterTwoLinesAndImg( contexto, searchResults_0);      
+		adapter = new ListViewCustomAdapterTwoLinesAndImg(contexto, searchResults_0);
 		lv_0.setAdapter(adapter);
 	  	DynamicHeight.setListViewHeightBasedOnChildren(lv_0);
 		

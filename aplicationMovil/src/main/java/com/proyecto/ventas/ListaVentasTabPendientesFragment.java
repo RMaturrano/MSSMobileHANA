@@ -272,9 +272,9 @@ public class ListaVentasTabPendientesFragment extends Fragment
 	public void onItemClick(AdapterView<?> parent, View view, int position,
 			long id) {
 		Intent myIntent = new Intent( contexto, DetalleVentaMain.class);
-    	myIntent.putExtra("id", listaAdapter.get(position).getNroDocOrdV());
-    	myIntent.putExtra("estado", listaAdapter.get(position).getEstadoDoc());
-    	myIntent.putExtra("estadoTransaccion", listaAdapter.get(position).getTransaccionMovil());
+    	myIntent.putExtra("id", ((OrdenVentaBean) adapter.getItem(position)).getNroDocOrdV());
+    	myIntent.putExtra("estado", ((OrdenVentaBean) adapter.getItem(position)).getEstadoDoc());
+    	myIntent.putExtra("estadoTransaccion", ((OrdenVentaBean) adapter.getItem(position)).getTransaccionMovil());
     	startActivity(myIntent);
 	}
 	
@@ -308,8 +308,8 @@ public class ListaVentasTabPendientesFragment extends Fragment
 	public boolean onItemLongClick(AdapterView<?> parent, View view,
 			int position, long id) {
 
-		if(listaAdapter.get(position).getTransaccionMovil().equals("1") ||
-				listaAdapter.get(position).getTransaccionMovil().equals("2")){
+		if(((OrdenVentaBean) adapter.getItem(position)).getTransaccionMovil().equals("1") ||
+				((OrdenVentaBean) adapter.getItem(position)).getTransaccionMovil().equals("2")){
 			boolean crear = false;
 			boolean actualizar = false;
 			boolean rechazar = false;

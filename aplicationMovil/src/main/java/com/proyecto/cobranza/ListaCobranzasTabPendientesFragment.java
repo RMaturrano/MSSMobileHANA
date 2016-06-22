@@ -220,9 +220,9 @@ public class ListaCobranzasTabPendientesFragment extends Fragment
 			long id) {
 		
 		Intent myIntent = new Intent( contexto, DetalleCobranzaMain.class);
-    	myIntent.putExtra("id", listaAdapter.get(position).getClave());
-    	myIntent.putExtra("estado", listaAdapter.get(position).getEstadoRegistroMovil());
-    	myIntent.putExtra("estadoTransaccion", listaAdapter.get(position).getTransaccionMovil());
+    	myIntent.putExtra("id", ((PagoBean) adapter.getItem(position)).getClave());
+    	myIntent.putExtra("estado", ((PagoBean) adapter.getItem(position)).getEstadoRegistroMovil());
+    	myIntent.putExtra("estadoTransaccion", ((PagoBean) adapter.getItem(position)).getTransaccionMovil());
     	startActivity(myIntent);
 		
 	}
@@ -311,8 +311,8 @@ public class ListaCobranzasTabPendientesFragment extends Fragment
 	public boolean onItemLongClick(AdapterView<?> parent, View view,
 			int position, long id) {
 
-		if(listaAdapter.get(position).getTransaccionMovil().equals("1") ||
-				listaAdapter.get(position).getTransaccionMovil().equals("2")){
+		if(((PagoBean) adapter.getItem(position)).getTransaccionMovil().equals("1") ||
+				((PagoBean) adapter.getItem(position)).getTransaccionMovil().equals("2")){
 			boolean crear = false;
 			boolean actualizar = false;
 			boolean rechazar = false;

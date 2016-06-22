@@ -227,7 +227,7 @@ public class ListaVentasTabTodosFragment extends Fragment
 	public void onItemClick(AdapterView<?> parent, View view, int position,
 			long id) {
 		Intent myIntent = new Intent(v.getContext(), DetalleVentaMain.class);
-    	myIntent.putExtra("id", listaAdapter.get(position).getNroDocOrdV());
+    	myIntent.putExtra("id", ((OrdenVentaBean) adapter.getItem(position)).getNroDocOrdV());
     	startActivity(myIntent);
 	}
 	

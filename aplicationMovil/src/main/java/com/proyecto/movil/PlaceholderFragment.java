@@ -132,7 +132,10 @@ public class PlaceholderFragment extends Fragment {
 		if(listaProductos != null){
 			for (BeanChartProducto p: listaProductos){
 				entries.add(new Entry((float) p.getTotal(),0,p));
-				labels.add(p.getDescripcion());
+				if(p.getDescripcion() != null)
+					labels.add(p.getDescripcion());
+				else
+					return;
 			}
 
 			PieDataSet dataset = new PieDataSet(entries,"Articulos");

@@ -48,22 +48,15 @@ public class ListaArticulosTabTodosFragment extends Fragment
     private boolean mIsSearchResultView = false;
     private SwipeRefreshLayout refreshLayout;
     
-    private static String ordenSel;
-    private static String filtroSel;
-    
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         v =  inflater.inflate(R.layout.lista_articulos_tab_todos_fragment, container, false);
-        
-        filtroSel = new String();
-        filtroSel = "";
-        ordenSel = new String();
-        ordenSel = "";
-        
-        contexto = v.getContext();
-        builDataArticulos(ordenSel,filtroSel);
-        
- 		lvArticulo.setOnItemClickListener(this);
+
+		contexto = v.getContext();
+
+		lvArticulo = (ListView) v.findViewById(R.id.lvLstArticulosTabTodos);
+        builDataArticulos();
+		lvArticulo.setOnItemClickListener(this);
 
 		// Obtener el refreshLayout
 		refreshLayout = (SwipeRefreshLayout) v.findViewById(R.id.swipeRefresh);
@@ -77,9 +70,7 @@ public class ListaArticulosTabTodosFragment extends Fragment
 				.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
 					@Override
 					public void onRefresh() {
-						builDataArticulos("","");
-						ordenSel = "";
-						filtroSel = "";
+						builDataArticulos();
 						refreshLayout.setRefreshing(false);
 					}
 				});
@@ -91,97 +82,25 @@ public class ListaArticulosTabTodosFragment extends Fragment
     }
     
     
-    private void builDataArticulos(String ordenarPor, String filtrarPor){
-		
+    private void builDataArticulos(){
+
 		listaAdapter = new ArrayList<ArticuloBean>();
 		
 		//TRAER TODO DE SQLITE
 		DataBaseHelper helper = DataBaseHelper.getHelper(contexto);
 		SQLiteDatabase db = helper.getDataBase();
 		
-		Cursor rs = null;
-		if(ordenarPor.equals("") && filtrarPor.equals("")){
-			rs= db.rawQuery(
-					"select " +
-					"A.Codigo, " +
-					"A.Nombre," +
-					"(select IFNULL(SUM(CAST(STOCK AS NUMERIC)),0) from TB_CANTIDAD where ARTICULO = A.Codigo), " +
-					"G.NOMBRE "
-							+ "from TB_ARTICULO A join TB_GRUPO_ARTICULO G " +
-							"ON A.GrupoArticulo = G.CODIGO join TB_FABRICANTE F " +
-							"ON A.Fabricante = F.CODIGO " +
-							"order by A.Nombre" , null);
-		}else if(!ordenarPor.equals("") && filtrarPor.equals("")){
-			
-			String orderBy = "";
-			
-			if(ordenarPor.equalsIgnoreCase("Codigo articulo")){
-				orderBy = "A.Codigo";
-			}else if(ordenarPor.equalsIgnoreCase("Nombre articulo")){
-				orderBy = "A.Nombre";
-			}else if(ordenarPor.equalsIgnoreCase("Grupo articulo")){
-				orderBy = "G.NOMBRE";
-			}else if(ordenarPor.equalsIgnoreCase("Stock descendente")){
-				orderBy = "T_STOCK desc";
-			}else if(ordenarPor.equalsIgnoreCase("Stock ascendente")){
-				orderBy = "T_STOCK asc";
-			}
-			
-			rs= db.rawQuery(
-					"select " +
-					"A.Codigo, " +
-					"A.Nombre," +
-					"(select SUM(CAST(STOCK AS NUMERIC)) from TB_CANTIDAD where ARTICULO = A.Codigo) as T_STOCK, " +
-					"G.NOMBRE "
-							+ "from TB_ARTICULO A join TB_GRUPO_ARTICULO G " +
-							"ON A.GrupoArticulo = G.CODIGO join TB_FABRICANTE F " +
-							"ON A.Fabricante = F.CODIGO " +
-							"order by "+orderBy+"" , null);
-			
-		}else if(!ordenarPor.equals("") && !filtrarPor.equals("")){
-			
-			String orderBy = "";
-			
-			if(ordenarPor.equalsIgnoreCase("Codigo articulo")){
-				orderBy = "A.Codigo";
-			}else if(ordenarPor.equalsIgnoreCase("Nombre articulo")){
-				orderBy = "A.Nombre";
-			}else if(ordenarPor.equalsIgnoreCase("Grupo articulo")){
-				orderBy = "G.NOMBRE";
-			}else if(ordenarPor.equalsIgnoreCase("Stock descendente")){
-				orderBy = "T_STOCK desc";
-			}else if(ordenarPor.equalsIgnoreCase("Stock ascendente")){
-				orderBy = "T_STOCK asc";
-			}
+		Cursor rs= db.rawQuery(
+				"select " +
+				"A.Codigo, " +
+				"A.Nombre," +
+				"(select IFNULL(SUM(CAST(STOCK AS NUMERIC)),0) from TB_CANTIDAD where ARTICULO = A.Codigo), " +
+				"G.NOMBRE "
+						+ "from TB_ARTICULO A join TB_GRUPO_ARTICULO G " +
+						"ON A.GrupoArticulo = G.CODIGO join TB_FABRICANTE F " +
+						"ON A.Fabricante = F.CODIGO " +
+						"order by A.Nombre" , null);
 
-
-			rs= db.rawQuery(
-					"select " +
-					"A.Codigo, " +
-					"A.Nombre," +
-					"(select SUM(CAST(STOCK AS NUMERIC)) from TB_CANTIDAD where ARTICULO = A.Codigo) as T_STOCK, " +
-					"G.NOMBRE "
-							+ "from TB_ARTICULO A join TB_GRUPO_ARTICULO G " +
-							"ON A.GrupoArticulo = G.CODIGO join TB_FABRICANTE F " +
-							"ON A.Fabricante = F.CODIGO " +
-							"where G.NOMBRE = '"+filtrarPor+"' " +
-							"order by "+orderBy+"" , null);
-			
-		}else if(ordenarPor.equals("") && !filtrarPor.equals("")){
-			
-			rs= db.rawQuery(
-					"select " +
-					"A.Codigo, " +
-					"A.Nombre," +
-					"(select SUM(CAST(STOCK AS NUMERIC)) from TB_CANTIDAD where ARTICULO = A.Codigo) as T_STOCK, " +
-					"G.NOMBRE "
-							+ "from TB_ARTICULO A join TB_GRUPO_ARTICULO G " +
-							"ON A.GrupoArticulo = G.CODIGO join TB_FABRICANTE F " +
-							"ON A.Fabricante = F.CODIGO " +
-							"where G.NOMBRE = '"+filtrarPor+"'" , null);
-			
-		}
-		
 		while (rs.moveToNext()) {		
 			
 			customListObjet = new ArticuloBean();
@@ -193,13 +112,10 @@ public class ListaArticulosTabTodosFragment extends Fragment
 			listaAdapter.add(customListObjet);
 
 		}
-		
-		lvArticulo = (ListView) v.findViewById(R.id.lvLstArticulosTabTodos);
-		
+
 		if(listaAdapter.size()>0){
 			lvArticulo.setVisibility(View.VISIBLE);
 			adapter = new ListViewCustomAdapterFourRowAndImgART_LIST( contexto, listaAdapter);
-			
         	lvArticulo.setAdapter(adapter);
 
 		}else
@@ -258,7 +174,7 @@ public class ListaArticulosTabTodosFragment extends Fragment
         
 	}
 
-    
+/*
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
     	
@@ -277,94 +193,15 @@ public class ListaArticulosTabTodosFragment extends Fragment
 			return super.onOptionsItemSelected(item);
 		}
     	
-    }
-    
-    
-    private void buildAlertOrdenar(String odSel,String ftrSel){
-		
-		final String[] tipoPago = new String[5];
-		tipoPago[0] = "Codigo articulo";
-		tipoPago[1] = "Nombre articulo";
-		tipoPago[2] = "Grupo articulo";
-		tipoPago[3] = "Stock descendente";
-		tipoPago[4] = "Stock ascendente";
+    }			*/
 
-		int checkedItem = -1;
-		if(!odSel.equals("")){
-			for (int i = 0; i < tipoPago.length; i++) {
-				if(odSel.equals(tipoPago[i])){
-					checkedItem = i;
-					break;
-				}
-			}
-		}
-			
-		AlertDialog.Builder alert = new AlertDialog.Builder(contexto);
-		alert.setTitle("Ordenar por")
-		     .setCancelable(true)
-		     .setSingleChoiceItems(tipoPago,checkedItem, new DialogInterface.OnClickListener() {
-	    	    public void onClick(DialogInterface dialog, int item) {
-	    	    	ordenSel = tipoPago[item];
-	    	    	
-	    	    	if(filtroSel.equals(""))
-	    				builDataArticulos(ordenSel, "");
-	    			else
-	    				builDataArticulos(ordenSel, filtroSel);
-	    	    	
-	    	    	dialog.dismiss();
-	    	    	
-	    	    }
-	    	});
-	    	
-		alert.show();
-	}
-   
-    
-    private void buildAlertFiltrar(String ordSel,String ftrSel){
-		
-		Select select = new Select(contexto);
-		ArrayList<GrupoArticuloBean> listaGrupos = select.listaGrupoArticulo();
-		
-		final ArrayAdapter<GrupoArticuloBean> adapter = new ArrayAdapter<GrupoArticuloBean>(contexto, 
-				android.R.layout.simple_list_item_single_choice,
-				listaGrupos);
-		
-		int checkedItem = -1;
-		if(!ftrSel.equals("")){
-			for (int i = 0; i < adapter.getCount(); i++) {
-				if(ftrSel.equals(adapter.getItem(i).getNombre())){
-					checkedItem = i;
-				}
-			}
-		}
-		
-		AlertDialog.Builder alert = new AlertDialog.Builder(contexto);
-		alert.setTitle("Filtrar por")
-			 .setSingleChoiceItems(adapter, checkedItem, new DialogInterface.OnClickListener() {
-	    	    public void onClick(DialogInterface dialog, int item) {
-	    	    	
-	    	    	filtroSel = adapter.getItem(item).getNombre();
-	    	    	
-	    	    	if(!ordenSel.equals(""))
-						builDataArticulos(ordenSel, filtroSel);
-					else
-						builDataArticulos("", filtroSel);
-	    	    	
-	    	    	dialog.dismiss();
-	    	    	
-	    	    }
-	    	})
-	    	.setCancelable(true);
-
-		alert.show();
-	}
-    
 
 	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position,
 			long id) {
 		Intent myIntent = new Intent(v.getContext(), DetalleArticuloMain.class);
-    	myIntent.putExtra("id", listaAdapter.get(position).getCod());
+		ArticuloBean bean = (ArticuloBean) adapter.getItem(position);
+    	myIntent.putExtra("id", bean.getCod());
     	startActivity(myIntent);
 	}
 	

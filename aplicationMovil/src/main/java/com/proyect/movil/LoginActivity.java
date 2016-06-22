@@ -186,7 +186,7 @@ public class LoginActivity extends AppCompatActivity {
 				}
 			}else {
 				
-				Toast.makeText(contexto, "No est� conectado a ninguna red de datos...", Toast.LENGTH_LONG).show();
+				Toast.makeText(contexto, "No está conectado a ninguna red de datos...", Toast.LENGTH_LONG).show();
 
 			}
 
@@ -276,7 +276,7 @@ public class LoginActivity extends AppCompatActivity {
 				editor.commit();
 				
 				
-				Toast.makeText(contexto, "¡Bienvenido!", Toast.LENGTH_LONG).show();
+				Toast.makeText(contexto, "Bienvenido...", Toast.LENGTH_LONG).show();
 				
 				Intent principal = new Intent(contexto, MainActivityDrawer.class);
 //				principal.putExtra("S", "T");
