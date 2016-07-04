@@ -61,7 +61,7 @@ public class InvocaWS {
 	private String URL = "";
 	private Context contexto;
 	private int timeOut = 420000;
-	
+
 	public InvocaWS(Context contexto) {
 		this.contexto = contexto;
 		SharedPreferences pref = PreferenceManager
@@ -80,7 +80,7 @@ public class InvocaWS {
 	/***************************** METODO PRINCIPAL LOGIN *****************************/
 	/**********************************************************************************/
 	public EmpleadoBean ObtenerVendedor(String codigoVendedor,
-			String passwordVendedor, String idMovil) {
+										String passwordVendedor, String idMovil) {
 
 		EmpleadoBean bean = null;
 
@@ -102,7 +102,7 @@ public class InvocaWS {
 			transporte.debug = true;
 
 			transporte.call("http://pragsa.org/ObtenerVendedor", envelope);
-			
+
 			SoapObject resSoap = (SoapObject) envelope.getResponse();
 
 			if (resSoap != null) {
@@ -137,25 +137,25 @@ public class InvocaWS {
 		Lista = select.listaSocioNegocio();
 		select.close();
 		String Texto = "";
-		
+
 		if(Lista.size() > 0){
-			
+
 			Texto = AgregarSocioNegocioLista(codVendedor, Lista);
 			if(Texto == null || Texto.equalsIgnoreCase("anytype{}")){
 				for (int i = 0; i < Lista.size() ; i++){
-				
+
 					Insert insert = new Insert(contexto);
 					insert.updateEstadoSocioNegocio(Lista.get(i).getClaveMovil());
 					insert.close();
-				
+
 				}
 			}
-			
+
 		}
-		
+
 		return Texto;
 	}
-	
+
 	public String EnviarPedidoCliente(String codVendedor){
 		ArrayList<OrdenVentaBean> Lista = new ArrayList<OrdenVentaBean>();
 		Select select = new Select(contexto);
@@ -163,9 +163,9 @@ public class InvocaWS {
 		select.close();
 		String Texto = "";
 		if(Lista.size() > 0){
-			
+
 			Texto = createOrderLista(codVendedor, Lista);
-			
+
 			if (Texto == null || Texto.equalsIgnoreCase("anytype{}")) {
 
 				for (int i = 0; i < Lista.size() ; i++){
@@ -175,12 +175,12 @@ public class InvocaWS {
 				}
 
 			}
-			
+
 		}
-		
+
 		return Texto;
 	}
-	
+
 	public String EnviarPagoCliente(String codVendedor){
 		ArrayList<PagoBean> Lista = new ArrayList<PagoBean>();
 		Select select = new Select(contexto);
@@ -188,9 +188,9 @@ public class InvocaWS {
 		select.close();
 		String Texto = "";
 		if(Lista.size() > 0){
-			
+
 			Texto = AgregarPagoRecibidoLista(codVendedor, Lista);
-			
+
 			if (Texto == null || Texto.equalsIgnoreCase("anytype{}")) {
 
 				for (int i = 0; i < Lista.size() ; i++){
@@ -200,20 +200,20 @@ public class InvocaWS {
 				}
 
 			}
-			
+
 		}
-		
+
 		return Texto;
 	}
-	
-	
+
+
 	/**************************************************************************/
 	/***************************** METODOS AGREGAR *****************************/
 	/**************************************************************************/
-	
+
 	public String AgregarSocioNegocio(SocioNegocioBean bean,
-			ArrayList<ContactoBean> listaContactos,
-			ArrayList<DireccionBean> listaDirecciones) {
+									  ArrayList<ContactoBean> listaContactos,
+									  ArrayList<DireccionBean> listaDirecciones) {
 
 		String res = "";
 
@@ -252,7 +252,7 @@ public class InvocaWS {
 		// 1.1 enlazar los contactos al objeto
 		SoapObject soapContacts = new SoapObject(NAMESPACE, "Contacto");
 		SoapObject soapContact = null;
-		
+
 		if(listaContactos != null){
 			for (ContactoBean c : listaContactos) {
 
@@ -273,13 +273,13 @@ public class InvocaWS {
 
 			}
 		}
-		
+
 		soapBP.addProperty("Contacto", soapContacts);
 
 		// 1.2 enlazar las direcciones al objeto
 		SoapObject soapDirections = new SoapObject(NAMESPACE, "Direccion");
 		SoapObject soapDirection = null;
-		
+
 		if(listaDirecciones != null){
 			for (DireccionBean d : listaDirecciones) {
 
@@ -299,7 +299,7 @@ public class InvocaWS {
 
 			}
 		}
-		
+
 		soapBP.addProperty("Direccion", soapDirections);
 
 		// 2. A�adir el objeto al m�todo
@@ -338,11 +338,11 @@ public class InvocaWS {
 		// 0. m�todo
 		SoapObject soap = new SoapObject(NAMESPACE, "AgregarSocioNegocioLista");
 		soap.addProperty("CodigoVendedor", codVendedor);
-		
+
 		SoapObject soapListBP = new SoapObject(NAMESPACE, "SocioNegocio");
 
 		for (SocioNegocioBean bean : lista) {
-			
+
 			SoapObject soapBP = new SoapObject(NAMESPACE, "SocioNegocio");
 			soapBP.addProperty("Codigo", bean.getCodigo());
 			soapBP.addProperty("TipoSocio", bean.getTipoCliente());
@@ -373,7 +373,7 @@ public class InvocaWS {
 			// 1.1 enlazar los contactos al objeto
 			SoapObject soapContacts = new SoapObject(NAMESPACE, "Contacto");
 			SoapObject soapContact = null;
-			
+
 			if(bean.getContactos() != null){
 				for (ContactoBean c : bean.getContactos()) {
 
@@ -394,13 +394,13 @@ public class InvocaWS {
 
 				}
 			}
-			
+
 			soapBP.addProperty("Contacto", soapContacts);
 
 			// 1.2 enlazar las direcciones al objeto
 			SoapObject soapDirections = new SoapObject(NAMESPACE, "Direccion");
 			SoapObject soapDirection = null;
-			
+
 			if(bean.getDirecciones() != null){
 				for (DireccionBean d : bean.getDirecciones()) {
 
@@ -420,13 +420,13 @@ public class InvocaWS {
 
 				}
 			}
-			
+
 			soapBP.addProperty("Direccion", soapDirections);
 
 			soapListBP.addProperty("SocioNegocio",soapBP);
-			
+
 		}
-		
+
 		soap.addSoapObject(soapListBP);
 
 		SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(
@@ -455,403 +455,440 @@ public class InvocaWS {
 
 	}
 
-	
-	
-	public String createOrder(OrdenVentaBean cabecera,
-            ArrayList<OrdenVentaDetalleBean> detalles) {
 
-	      String res = "";
-	      SoapObject soap = new SoapObject(NAMESPACE, "AgregarPedidoCliente");
-	      SoapObject soapOrder = new SoapObject(NAMESPACE, "PedidoCliente");
-	      soapOrder.addProperty("Tipo", cabecera.getTipoDoc());
-	      soapOrder.addProperty("Clave", cabecera.getClave());
-	      soapOrder.addProperty("Numero", cabecera.getNumero());
-	      soapOrder.addProperty("Referencia", cabecera.getReferencia());
-	      soapOrder.addProperty("SocioNegocio", cabecera.getCodSN());
-	      soapOrder.addProperty("ListaPrecio", cabecera.getListaPrecio());
-	      soapOrder.addProperty("Contacto", cabecera.getContacto());
-	      soapOrder.addProperty("Moneda", cabecera.getMoneda());
-	      soapOrder.addProperty("EmpleadoVenta", cabecera.getEmpVentas());
-	      soapOrder.addProperty("Comentario", cabecera.getComentario());
-	      soapOrder.addProperty("FechaContable", cabecera.getFecContable());
-	      soapOrder.addProperty("FechaVencimiento", cabecera.getFecVen());
-	      soapOrder.addProperty("DireccionFiscal", cabecera.getDirFiscal());
-	      soapOrder.addProperty("DireccionEntrega", cabecera.getDirEntrega());
-	      soapOrder.addProperty("CondicionPago", cabecera.getCondPago());
-	      soapOrder.addProperty("Indicador", cabecera.getIndicador());
-	      soapOrder.addProperty("SubTotal", cabecera.getSubTotal());
-	      soapOrder.addProperty("Impuesto", cabecera.getImpuesto());
-	      soapOrder.addProperty("Total", cabecera.getTotal());
-	      soapOrder.addProperty("CreadMovil", cabecera.getCreadoMovil());
-	      soapOrder.addProperty("ClaveMovil", cabecera.getClaveMovil());
-	      soapOrder.addProperty("TransaccionMovil", cabecera.getTransaccionMovil());
-	
-	      SoapObject soapLines = new SoapObject(NAMESPACE, "Lineas");
-	      SoapObject soapDet = null;
-	      for (OrdenVentaDetalleBean d : detalles) {
-	            soapDet = new SoapObject(NAMESPACE, "Pedido_Detalle");
-	            soapDet.addProperty("Articulo", d.getCodArt());
-	            soapDet.addProperty("UnidadMedida", d.getCodUM());
-	            soapDet.addProperty("Almacen", d.getAlmacen());
-	            soapDet.addProperty("Cantidad", String.valueOf(d.getCantidad()));
-	            soapDet.addProperty("ListaPrecio", d.getListaPrecio());
-	            soapDet.addProperty("PrecioUnitario", String.valueOf(d.getPrecio()));
-	            soapDet.addProperty("PorcentajeDescuento",String.valueOf(d.getDescuento()));
-	            soapDet.addProperty("Impuesto", d.getCodImp());
-	            soapLines.addProperty("Pedido_Detalle", soapDet);
-	      }
-	      soapOrder.addProperty("Lineas", soapLines);
-	      soap.addSoapObject(soapOrder);
-	
-	      SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
-	      envelope.bodyOut = soap;
-	      envelope.dotNet = true;
-	      envelope.encodingStyle = SoapSerializationEnvelope.XSD;
-	      HttpTransportSE transporte = null;
-	      try {
-	            transporte = new HttpTransportSE(URL);
-	            transporte.debug = true;
-	            transporte.call("http://pragsa.org/AgregarPedidoCliente", envelope);
-	            res = envelope.getResponse().toString();
-	      } catch (Exception e) {
-	            res = e.getMessage();
-	      }
-	
-	      return res;
+
+	public String createOrder(OrdenVentaBean cabecera,
+							  ArrayList<OrdenVentaDetalleBean> detalles) {
+
+		String res = "";
+		SoapObject soap = new SoapObject(NAMESPACE, "AgregarPedidoCliente");
+		SoapObject soapOrder = new SoapObject(NAMESPACE, "PedidoCliente");
+		soapOrder.addProperty("Tipo", cabecera.getTipoDoc());
+		soapOrder.addProperty("Clave", cabecera.getClave());
+		soapOrder.addProperty("Numero", cabecera.getNumero());
+		soapOrder.addProperty("Referencia", cabecera.getReferencia());
+		soapOrder.addProperty("SocioNegocio", cabecera.getCodSN());
+		soapOrder.addProperty("ListaPrecio", cabecera.getListaPrecio());
+		soapOrder.addProperty("Contacto", cabecera.getContacto());
+		soapOrder.addProperty("Moneda", cabecera.getMoneda());
+		soapOrder.addProperty("EmpleadoVenta", cabecera.getEmpVentas());
+		soapOrder.addProperty("Comentario", cabecera.getComentario());
+		soapOrder.addProperty("FechaContable", cabecera.getFecContable());
+		soapOrder.addProperty("FechaVencimiento", cabecera.getFecVen());
+		soapOrder.addProperty("DireccionFiscal", cabecera.getDirFiscal());
+		soapOrder.addProperty("DireccionEntrega", cabecera.getDirEntrega());
+		soapOrder.addProperty("CondicionPago", cabecera.getCondPago());
+		soapOrder.addProperty("Indicador", cabecera.getIndicador());
+		soapOrder.addProperty("SubTotal", cabecera.getSubTotal());
+		soapOrder.addProperty("Impuesto", cabecera.getImpuesto());
+		soapOrder.addProperty("Total", cabecera.getTotal());
+		soapOrder.addProperty("CreadMovil", cabecera.getCreadoMovil());
+		soapOrder.addProperty("ClaveMovil", cabecera.getClaveMovil());
+		soapOrder.addProperty("TransaccionMovil", cabecera.getTransaccionMovil());
+
+		SoapObject soapLines = new SoapObject(NAMESPACE, "Lineas");
+		SoapObject soapDet = null;
+		for (OrdenVentaDetalleBean d : detalles) {
+			soapDet = new SoapObject(NAMESPACE, "Pedido_Detalle");
+			soapDet.addProperty("Articulo", d.getCodArt());
+			soapDet.addProperty("UnidadMedida", d.getCodUM());
+			soapDet.addProperty("Almacen", d.getAlmacen());
+			soapDet.addProperty("Cantidad", String.valueOf(d.getCantidad()));
+			soapDet.addProperty("ListaPrecio", d.getListaPrecio());
+			soapDet.addProperty("PrecioUnitario", String.valueOf(d.getPrecio()));
+			soapDet.addProperty("PorcentajeDescuento",String.valueOf(d.getDescuento()));
+			soapDet.addProperty("Impuesto", d.getCodImp());
+			soapLines.addProperty("Pedido_Detalle", soapDet);
+		}
+		soapOrder.addProperty("Lineas", soapLines);
+		soap.addSoapObject(soapOrder);
+
+		SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
+		envelope.bodyOut = soap;
+		envelope.dotNet = true;
+		envelope.encodingStyle = SoapSerializationEnvelope.XSD;
+		HttpTransportSE transporte = null;
+		try {
+			transporte = new HttpTransportSE(URL);
+			transporte.debug = true;
+			transporte.call("http://pragsa.org/AgregarPedidoCliente", envelope);
+			res = envelope.getResponse().toString();
+		} catch (Exception e) {
+			res = e.getMessage();
+		}
+
+		return res;
 	}
-	
-	
+
+
 	public String createOrderLista(String codVendedor, ArrayList<OrdenVentaBean> lista) {
 
-	      String res = "";
-	      SoapObject soap = new SoapObject(NAMESPACE, "AgregarPedidoClienteLista");
-	      SoapObject soapOrderList = new SoapObject(NAMESPACE, "PedidoCliente");
-	      
-	      for (OrdenVentaBean ordenVentaBean : lista) {
-			
-	    	  SoapObject soapOrder = new SoapObject(NAMESPACE, "Pedido");
-		      soapOrder.addProperty("Tipo", ordenVentaBean.getTipoDoc());
-		      soapOrder.addProperty("Clave", ordenVentaBean.getClave());
-		      soapOrder.addProperty("Numero", ordenVentaBean.getNumero());
-		      soapOrder.addProperty("Referencia", ordenVentaBean.getReferencia());
-		      soapOrder.addProperty("SocioNegocio", ordenVentaBean.getCodSN());
-		      soapOrder.addProperty("ListaPrecio", ordenVentaBean.getListaPrecio());
-		      soapOrder.addProperty("Contacto", ordenVentaBean.getContacto());
-		      soapOrder.addProperty("Moneda", ordenVentaBean.getMoneda());
-		      soapOrder.addProperty("EmpleadoVenta", ordenVentaBean.getEmpVentas());
-		      soapOrder.addProperty("Comentario", ordenVentaBean.getComentario());
-		      soapOrder.addProperty("FechaContable", ordenVentaBean.getFecContable());
-		      soapOrder.addProperty("FechaVencimiento", ordenVentaBean.getFecVen());
-		      soapOrder.addProperty("DireccionFiscal", ordenVentaBean.getDirFiscal());
-		      soapOrder.addProperty("DireccionEntrega", ordenVentaBean.getDirEntrega());
-		      soapOrder.addProperty("CondicionPago", ordenVentaBean.getCondPago());
-		      soapOrder.addProperty("Indicador", ordenVentaBean.getIndicador());
-		      soapOrder.addProperty("SubTotal", ordenVentaBean.getSubTotal());
-		      soapOrder.addProperty("Impuesto", ordenVentaBean.getImpuesto());
-		      soapOrder.addProperty("Total", ordenVentaBean.getTotal());
-		      soapOrder.addProperty("CreadMovil", ordenVentaBean.getCreadoMovil());
-		      soapOrder.addProperty("ClaveMovil", ordenVentaBean.getClaveMovil());
-		      soapOrder.addProperty("TransaccionMovil", ordenVentaBean.getTransaccionMovil());
-		
-		      SoapObject soapLines = new SoapObject(NAMESPACE, "Lineas");
-		      SoapObject soapDet = null;
-		      for (OrdenVentaDetalleBean d : ordenVentaBean.getDetalles()) {
-		            soapDet = new SoapObject(NAMESPACE, "Pedido_Detalle");
-		            soapDet.addProperty("Articulo", d.getCodArt());
-		            soapDet.addProperty("UnidadMedida", d.getCodUM());
-		            soapDet.addProperty("Almacen", d.getAlmacen());
-		            soapDet.addProperty("Cantidad", String.valueOf(d.getCantidad()));
-		            soapDet.addProperty("ListaPrecio", d.getListaPrecio());
-		            soapDet.addProperty("PrecioUnitario", String.valueOf(d.getPrecio()));
-		            soapDet.addProperty("PorcentajeDescuento",String.valueOf(d.getDescuento()));
-		            soapDet.addProperty("Impuesto", d.getCodImp());
-		            soapLines.addProperty("Pedido_Detalle", soapDet);
-		      }
-		      soapOrder.addProperty("Lineas", soapLines);
-		      
-		      soapOrderList.addProperty("Pedido",soapOrder);
-	    	  
-	      }
-	      
-	      soap.addSoapObject(soapOrderList);
-	
-	      SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
-	      envelope.bodyOut = soap;
-	      envelope.dotNet = true;
-	      envelope.encodingStyle = SoapSerializationEnvelope.XSD;
-	      HttpTransportSE transporte = null;
-	      try {
-	            transporte = new HttpTransportSE(URL);
-	            transporte.debug = true;
-	            transporte.call("http://pragsa.org/AgregarPedidoClienteLista", envelope);
-	            res = envelope.getResponse().toString();
-	      } catch (Exception e) {
-	            res = e.getMessage();
-	      }
-	
-	      return res;
+		String res = "";
+		SoapObject soap = new SoapObject(NAMESPACE, "AgregarPedidoClienteLista");
+		SoapObject soapOrderList = new SoapObject(NAMESPACE, "PedidoCliente");
+
+		for (OrdenVentaBean ordenVentaBean : lista) {
+
+			SoapObject soapOrder = new SoapObject(NAMESPACE, "Pedido");
+			soapOrder.addProperty("Tipo", ordenVentaBean.getTipoDoc());
+			soapOrder.addProperty("Clave", ordenVentaBean.getClave());
+			soapOrder.addProperty("Numero", ordenVentaBean.getNumero());
+			soapOrder.addProperty("Referencia", ordenVentaBean.getReferencia());
+			soapOrder.addProperty("SocioNegocio", ordenVentaBean.getCodSN());
+			soapOrder.addProperty("ListaPrecio", ordenVentaBean.getListaPrecio());
+			soapOrder.addProperty("Contacto", ordenVentaBean.getContacto());
+			soapOrder.addProperty("Moneda", ordenVentaBean.getMoneda());
+			soapOrder.addProperty("EmpleadoVenta", ordenVentaBean.getEmpVentas());
+			soapOrder.addProperty("Comentario", ordenVentaBean.getComentario());
+			soapOrder.addProperty("FechaContable", ordenVentaBean.getFecContable());
+			soapOrder.addProperty("FechaVencimiento", ordenVentaBean.getFecVen());
+			soapOrder.addProperty("DireccionFiscal", ordenVentaBean.getDirFiscal());
+			soapOrder.addProperty("DireccionEntrega", ordenVentaBean.getDirEntrega());
+			soapOrder.addProperty("CondicionPago", ordenVentaBean.getCondPago());
+			soapOrder.addProperty("Indicador", ordenVentaBean.getIndicador());
+			soapOrder.addProperty("SubTotal", ordenVentaBean.getSubTotal());
+			soapOrder.addProperty("Impuesto", ordenVentaBean.getImpuesto());
+			soapOrder.addProperty("Total", ordenVentaBean.getTotal());
+			soapOrder.addProperty("CreadMovil", ordenVentaBean.getCreadoMovil());
+			soapOrder.addProperty("ClaveMovil", ordenVentaBean.getClaveMovil());
+			soapOrder.addProperty("TransaccionMovil", ordenVentaBean.getTransaccionMovil());
+
+			SoapObject soapLines = new SoapObject(NAMESPACE, "Lineas");
+			SoapObject soapDet = null;
+			for (OrdenVentaDetalleBean d : ordenVentaBean.getDetalles()) {
+				soapDet = new SoapObject(NAMESPACE, "Pedido_Detalle");
+				soapDet.addProperty("Articulo", d.getCodArt());
+				soapDet.addProperty("UnidadMedida", d.getCodUM());
+				soapDet.addProperty("Almacen", d.getAlmacen());
+				soapDet.addProperty("Cantidad", String.valueOf(d.getCantidad()));
+				soapDet.addProperty("ListaPrecio", d.getListaPrecio());
+				soapDet.addProperty("PrecioUnitario", String.valueOf(d.getPrecio()));
+				soapDet.addProperty("PorcentajeDescuento",String.valueOf(d.getDescuento()));
+				soapDet.addProperty("Impuesto", d.getCodImp());
+				soapLines.addProperty("Pedido_Detalle", soapDet);
+			}
+			soapOrder.addProperty("Lineas", soapLines);
+
+			soapOrderList.addProperty("Pedido",soapOrder);
+
+		}
+
+		soap.addSoapObject(soapOrderList);
+
+		SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
+		envelope.bodyOut = soap;
+		envelope.dotNet = true;
+		envelope.encodingStyle = SoapSerializationEnvelope.XSD;
+		HttpTransportSE transporte = null;
+		try {
+			transporte = new HttpTransportSE(URL);
+			transporte.debug = true;
+			transporte.call("http://pragsa.org/AgregarPedidoClienteLista", envelope);
+			res = envelope.getResponse().toString();
+		} catch (Exception e) {
+			res = e.getMessage();
+		}
+
+		return res;
 	}
-	
-	
+
+
 	public String AgregarPagoRecibido(PagoBean pago) {
 
-	      String res = "";
-	      SoapObject soap = new SoapObject(NAMESPACE, "AgregarPagoRecibido");
-	      SoapObject soapOrder = new SoapObject(NAMESPACE, "PagoRecibido");
-	      soapOrder.addProperty("Tipo", pago.getTipo());
-	      soapOrder.addProperty("Clave", pago.getClave());
-	      soapOrder.addProperty("Numero", pago.getNumero());
-	      soapOrder.addProperty("SocioNegocio", pago.getSocioNegocio());
-	      soapOrder.addProperty("EmpleadoVenta", pago.getEmpleadoVenta());
-	      soapOrder.addProperty("Comentario", pago.getComentario());
-	      soapOrder.addProperty("Glosa", pago.getGlosa()); 
-	      soapOrder.addProperty("FechaContable", pago.getFechaContable());
-	      soapOrder.addProperty("Moneda", pago.getMoneda());
-	      soapOrder.addProperty("TipoPago", pago.getTipoPago());
-	      soapOrder.addProperty("TransferenciaCuenta", pago.getTransferenciaCuenta());
-	      soapOrder.addProperty("TransferenciaReferencia", pago.getTransferenciaReferencia());
-	      soapOrder.addProperty("TransferenciaImporte", pago.getTransferenciaImporte());
-	      soapOrder.addProperty("EfectivoCuenta", pago.getEfectivoCuenta());
-	      soapOrder.addProperty("EfectivoImporte", pago.getEfectivoImporte());
-	      soapOrder.addProperty("CreadMovil", pago.getCreadoMovil());
-	      soapOrder.addProperty("ClaveMovil", pago.getClaveMovil());
-	      soapOrder.addProperty("ChequeCuenta", pago.getChequeCuenta());
-	      soapOrder.addProperty("ChequeBanco", pago.getChequeBanco());
-	      soapOrder.addProperty("ChequeVencimiento", pago.getChequeVencimiento());
-	      soapOrder.addProperty("ChequeImporte", pago.getChequeImporte());
-	      soapOrder.addProperty("ChequeNumero", pago.getChequeNumero());
-	      soapOrder.addProperty("TransaccionMovil", pago.getTransaccionMovil());
-	
-	      SoapObject soapLines = new SoapObject(NAMESPACE, "Lineas");
-	      SoapObject soapDet = null;
-	      for (PagoDetalleBean d : pago.getLineas()) {
-	            soapDet = new SoapObject(NAMESPACE, "Pago_Detalle");
-	            soapDet.addProperty("FacturaCliente", d.getFacturaCliente());
-	            soapDet.addProperty("Importe", d.getImporte());
-	            soapLines.addProperty("Pago_Detalle", soapDet);
-	      }
-	      soapOrder.addProperty("Lineas", soapLines);
-	      soap.addSoapObject(soapOrder);
-	
-	      SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
-	      envelope.bodyOut = soap;
-	      envelope.dotNet = true;
-	      envelope.encodingStyle = SoapSerializationEnvelope.XSD;
-	      HttpTransportSE transporte = null;
-	      try {
-	            transporte = new HttpTransportSE(URL);
-	            transporte.debug = true;
-	            transporte.call("http://pragsa.org/AgregarPagoRecibido", envelope);
-	            res = envelope.getResponse().toString();
-	      } catch (Exception e) {
-	            res = e.getMessage();
-	      }
-	      
-	      return res;
+		String res = "";
+		SoapObject soap = new SoapObject(NAMESPACE, "AgregarPagoRecibido");
+		SoapObject soapOrder = new SoapObject(NAMESPACE, "PagoRecibido");
+		soapOrder.addProperty("Tipo", pago.getTipo());
+		soapOrder.addProperty("Clave", pago.getClave());
+		soapOrder.addProperty("Numero", pago.getNumero());
+		soapOrder.addProperty("SocioNegocio", pago.getSocioNegocio());
+		soapOrder.addProperty("EmpleadoVenta", pago.getEmpleadoVenta());
+		soapOrder.addProperty("Comentario", pago.getComentario());
+		soapOrder.addProperty("Glosa", pago.getGlosa());
+		soapOrder.addProperty("FechaContable", pago.getFechaContable());
+		soapOrder.addProperty("Moneda", pago.getMoneda());
+		soapOrder.addProperty("TipoPago", pago.getTipoPago());
+		soapOrder.addProperty("TransferenciaCuenta", pago.getTransferenciaCuenta());
+		soapOrder.addProperty("TransferenciaReferencia", pago.getTransferenciaReferencia());
+		soapOrder.addProperty("TransferenciaImporte", pago.getTransferenciaImporte());
+		soapOrder.addProperty("EfectivoCuenta", pago.getEfectivoCuenta());
+		soapOrder.addProperty("EfectivoImporte", pago.getEfectivoImporte());
+		soapOrder.addProperty("CreadMovil", pago.getCreadoMovil());
+		soapOrder.addProperty("ClaveMovil", pago.getClaveMovil());
+		soapOrder.addProperty("ChequeCuenta", pago.getChequeCuenta());
+		soapOrder.addProperty("ChequeBanco", pago.getChequeBanco());
+		soapOrder.addProperty("ChequeVencimiento", pago.getChequeVencimiento());
+		soapOrder.addProperty("ChequeImporte", pago.getChequeImporte());
+		soapOrder.addProperty("ChequeNumero", pago.getChequeNumero());
+		soapOrder.addProperty("TransaccionMovil", pago.getTransaccionMovil());
+
+		SoapObject soapLines = new SoapObject(NAMESPACE, "Lineas");
+		SoapObject soapDet = null;
+		for (PagoDetalleBean d : pago.getLineas()) {
+			soapDet = new SoapObject(NAMESPACE, "Pago_Detalle");
+			soapDet.addProperty("FacturaCliente", d.getFacturaCliente());
+			soapDet.addProperty("Importe", d.getImporte());
+			soapLines.addProperty("Pago_Detalle", soapDet);
+		}
+		soapOrder.addProperty("Lineas", soapLines);
+		soap.addSoapObject(soapOrder);
+
+		SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
+		envelope.bodyOut = soap;
+		envelope.dotNet = true;
+		envelope.encodingStyle = SoapSerializationEnvelope.XSD;
+		HttpTransportSE transporte = null;
+		try {
+			transporte = new HttpTransportSE(URL);
+			transporte.debug = true;
+			transporte.call("http://pragsa.org/AgregarPagoRecibido", envelope);
+			res = envelope.getResponse().toString();
+		} catch (Exception e) {
+			res = e.getMessage();
+		}
+
+		return res;
 	}
 
-	
+
 	public String AgregarPagoRecibidoLista(String codVendedor, ArrayList<PagoBean> lista) {
 
-	      String res = "";
-	      SoapObject soap = new SoapObject(NAMESPACE, "AgregarPagoRecibidoLista");
-	      
-	      SoapObject soapPagoLista = new SoapObject(NAMESPACE, "PagoRecibido");
-	      
-	      for (PagoBean pago : lista) {
-	    	  
-	    	  SoapObject soapOrder = new SoapObject(NAMESPACE, "Pago");
-		      soapOrder.addProperty("Tipo", pago.getTipo());
-		      soapOrder.addProperty("Clave", pago.getClave());
-		      soapOrder.addProperty("Numero", pago.getNumero());
-		      soapOrder.addProperty("SocioNegocio", pago.getSocioNegocio());
-		      soapOrder.addProperty("EmpleadoVenta", pago.getEmpleadoVenta());
-		      soapOrder.addProperty("Comentario", pago.getComentario());
-		      soapOrder.addProperty("Glosa", pago.getGlosa()); 
-		      soapOrder.addProperty("FechaContable", pago.getFechaContable());
-		      soapOrder.addProperty("Moneda", pago.getMoneda());
-		      soapOrder.addProperty("TipoPago", pago.getTipoPago());
-		      soapOrder.addProperty("TransferenciaCuenta", pago.getTransferenciaCuenta());
-		      soapOrder.addProperty("TransferenciaReferencia", pago.getTransferenciaReferencia());
-		      soapOrder.addProperty("TransferenciaImporte", pago.getTransferenciaImporte());
-		      soapOrder.addProperty("EfectivoCuenta", pago.getEfectivoCuenta());
-		      soapOrder.addProperty("EfectivoImporte", pago.getEfectivoImporte());
-		      soapOrder.addProperty("CreadMovil", pago.getCreadoMovil());
-		      soapOrder.addProperty("ClaveMovil", pago.getClaveMovil());
-		      soapOrder.addProperty("ChequeCuenta", pago.getChequeCuenta());
-		      soapOrder.addProperty("ChequeBanco", pago.getChequeBanco());
-		      soapOrder.addProperty("ChequeVencimiento", pago.getChequeVencimiento());
-		      soapOrder.addProperty("ChequeImporte", pago.getChequeImporte());
-		      soapOrder.addProperty("ChequeNumero", pago.getChequeNumero());
-		      soapOrder.addProperty("TransaccionMovil", pago.getTransaccionMovil());
-		
-		      SoapObject soapLines = new SoapObject(NAMESPACE, "Lineas");
-		      SoapObject soapDet = null;
-		      for (PagoDetalleBean d : pago.getLineas()) {
-		            soapDet = new SoapObject(NAMESPACE, "Pago_Detalle");
-		            soapDet.addProperty("FacturaCliente", d.getFacturaCliente());
-		            soapDet.addProperty("Importe", d.getImporte());
-		            soapLines.addProperty("Pago_Detalle", soapDet);
-		      }
-		      soapOrder.addProperty("Lineas", soapLines);
-		      
-		      soapPagoLista.addProperty("Pago", soapOrder);
-			
-	      }
-	      
-	      soap.addSoapObject(soapPagoLista);
-	      
-	
-	      SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
-	      envelope.bodyOut = soap;
-	      envelope.dotNet = true;
-	      envelope.encodingStyle = SoapSerializationEnvelope.XSD;
-	      HttpTransportSE transporte = null;
-	      try {
-	            transporte = new HttpTransportSE(URL);
-	            transporte.debug = true;
-	            transporte.call("http://pragsa.org/AgregarPagoRecibidoLista", envelope);
-	            res = envelope.getResponse().toString();
-	      } catch (Exception e) {
-	            res = e.getMessage();
-	      }
-	      
-	      return res;
+		String res = "";
+		SoapObject soap = new SoapObject(NAMESPACE, "AgregarPagoRecibidoLista");
+
+		SoapObject soapPagoLista = new SoapObject(NAMESPACE, "PagoRecibido");
+
+		for (PagoBean pago : lista) {
+
+			SoapObject soapOrder = new SoapObject(NAMESPACE, "Pago");
+			soapOrder.addProperty("Tipo", pago.getTipo());
+			soapOrder.addProperty("Clave", pago.getClave());
+			soapOrder.addProperty("Numero", pago.getNumero());
+			soapOrder.addProperty("SocioNegocio", pago.getSocioNegocio());
+			soapOrder.addProperty("EmpleadoVenta", pago.getEmpleadoVenta());
+			soapOrder.addProperty("Comentario", pago.getComentario());
+			soapOrder.addProperty("Glosa", pago.getGlosa());
+			soapOrder.addProperty("FechaContable", pago.getFechaContable());
+			soapOrder.addProperty("Moneda", pago.getMoneda());
+			soapOrder.addProperty("TipoPago", pago.getTipoPago());
+			soapOrder.addProperty("TransferenciaCuenta", pago.getTransferenciaCuenta());
+			soapOrder.addProperty("TransferenciaReferencia", pago.getTransferenciaReferencia());
+			soapOrder.addProperty("TransferenciaImporte", pago.getTransferenciaImporte());
+			soapOrder.addProperty("EfectivoCuenta", pago.getEfectivoCuenta());
+			soapOrder.addProperty("EfectivoImporte", pago.getEfectivoImporte());
+			soapOrder.addProperty("CreadMovil", pago.getCreadoMovil());
+			soapOrder.addProperty("ClaveMovil", pago.getClaveMovil());
+			soapOrder.addProperty("ChequeCuenta", pago.getChequeCuenta());
+			soapOrder.addProperty("ChequeBanco", pago.getChequeBanco());
+			soapOrder.addProperty("ChequeVencimiento", pago.getChequeVencimiento());
+			soapOrder.addProperty("ChequeImporte", pago.getChequeImporte());
+			soapOrder.addProperty("ChequeNumero", pago.getChequeNumero());
+			soapOrder.addProperty("TransaccionMovil", pago.getTransaccionMovil());
+
+			SoapObject soapLines = new SoapObject(NAMESPACE, "Lineas");
+			SoapObject soapDet = null;
+			for (PagoDetalleBean d : pago.getLineas()) {
+				soapDet = new SoapObject(NAMESPACE, "Pago_Detalle");
+				soapDet.addProperty("FacturaCliente", d.getFacturaCliente());
+				soapDet.addProperty("Importe", d.getImporte());
+				soapLines.addProperty("Pago_Detalle", soapDet);
+			}
+			soapOrder.addProperty("Lineas", soapLines);
+
+			soapPagoLista.addProperty("Pago", soapOrder);
+
+		}
+
+		soap.addSoapObject(soapPagoLista);
+
+
+		SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
+		envelope.bodyOut = soap;
+		envelope.dotNet = true;
+		envelope.encodingStyle = SoapSerializationEnvelope.XSD;
+		HttpTransportSE transporte = null;
+		try {
+			transporte = new HttpTransportSE(URL);
+			transporte.debug = true;
+			transporte.call("http://pragsa.org/AgregarPagoRecibidoLista", envelope);
+			res = envelope.getResponse().toString();
+		} catch (Exception e) {
+			res = e.getMessage();
+		}
+
+		return res;
 	}
 
-	
+
 	/*********************************************************************/
 	/************************** CARGA DE DATOS ***************************/
 	/*********************************************************************/
 
 	//WebApi
-	public ArrayList<SocioNegocioBean> getBusinessPartnerString(String codVendedor) {
+	public ArrayList<SocioNegocioBean> getBusinessPartnerApi(String codVendedor) {
 
 		ArrayList<SocioNegocioBean> lista = null;
 		ArrayList<ContactoBean> listaContacts = null;
 		ArrayList<DireccionBean> listaDirections = null;
 
-		 try {
-             URL url = new URL("http://10.194.203.47/WebApiMovil/api/socionegocio");
-             HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
-             try {
-                 BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
-                 StringBuilder stringBuilder = new StringBuilder();
-                 String line;
-                 while ((line = bufferedReader.readLine()) != null) {
-                     stringBuilder.append(line).append("\n");
-                 }
-                 bufferedReader.close();
-                 
-                 SocioNegocioBean bean;
-     			ContactoBean contact;
-     			DireccionBean direction;
+		try {
+			URL url = new URL("http://"+PreferenceManager.getDefaultSharedPreferences(contexto).getString("ipServidor","200.10.84.66")+
+					"/WebApiPragsa/api/socionegocio?codigoVendedor="+codVendedor);
+			HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+			try {
+				BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
+				StringBuilder stringBuilder = new StringBuilder();
+				String line;
+				while ((line = bufferedReader.readLine()) != null) {
+					stringBuilder.append(line).append("\n");
+				}
+				bufferedReader.close();
 
-     			lista = new ArrayList<SocioNegocioBean>();
-                 
-                 JSONArray jsonArray = new JSONArray(stringBuilder.toString());
-     			
-     			for (int i = 0; i < jsonArray.length(); i++) {
-     				
-     				JSONObject object = jsonArray.getJSONObject(i);
-     				bean = new SocioNegocioBean();
-     				bean.setCodigo(object.getString("Codigo"));
-     				bean.setTipoCliente(object.getString("TipoSocio"));
-     				bean.setTipoPersona(object.getString("TipoPersona"));
-     				bean.setTipoDoc(object.getString("TipoDocumento"));
-     				bean.setNroDoc(object.getString("NumeroDocumento"));
-     				bean.setNombRazSoc(object.getString("NombreRazonSocial"));
-     				bean.setNomCom(object.getString("NombreComercial"));
-     				bean.setApePat(object.getString("ApellidoPaterno"));
-     				bean.setApeMat(object.getString("ApellidoMaterno"));
-     				bean.setPriNom(object.getString("PrimerNombre"));
-     				bean.setSegNom(object.getString("SegundoNombre"));
-     				bean.setTlf1(object.getString("Telefono1"));
-     				bean.setTlf2(object.getString("Telefono2"));
-     				bean.setTlfMov(object.getString("TelefonoMovil"));
-     				bean.setCorreo(object.getString("CorreoElectronico"));
-     				bean.setGrupo(object.getString("GrupoSocio"));
-     				bean.setListaPrecio(object.getString("ListaPrecio"));
-     				bean.setCondPago(object.getString("CondicionPago"));
-     				bean.setIndicador(object.getString("Indicador"));
-     				bean.setZona(object.getString("Zona"));
-     				bean.setCreadoMovil(object.getString("CreadMovil"));
-     				bean.setClaveMovil(object.getString("ClaveMovil"));
-     				bean.setDireccionFiscal(object.getString("DireccionFiscal"));
-     				bean.setTransaccionMovil(object.getString("TransaccionMovil"));
-     				bean.setValidoenPedido(object.getString("ValidoenPedido"));
-     				
-     				if(!object.isNull("Contacto")){
-     					
-     					JSONArray jsonArrayContacts = object.getJSONArray("Contacto");
-     					listaContacts = new ArrayList<>();
-     					
-     					for (int j = 0; j < jsonArrayContacts.length(); j++) {
-     						
-     						JSONObject jsonContact = jsonArrayContacts.getJSONObject(j);
-     						
-     						contact = new ContactoBean();
-     						contact.setIdCon(jsonContact.getString("Codigo"));
-     						contact.setNomCon(jsonContact.getString("Nombre"));
-     						contact.setPrimerNombre(jsonContact.getString("PrimerNombre"));
-     						contact.setSegNomCon(jsonContact.getString("SegundoNombre"));
-     						contact.setApeCon(jsonContact.getString("Apellidos"));
-     						contact.setDireccion(jsonContact.getString("Direccion"));
-     						contact.setEmailCon(jsonContact.getString("CorreoElectronico"));
-     						contact.setTel1Con(jsonContact.getString("Telefono1"));
-     						contact.setTel2Con(jsonContact.getString("Telefono2"));
-     						contact.setTelMovCon(jsonContact.getString("TelefonoMovil"));
-     						contact.setPosicion(jsonContact.getString("Posicion"));
-     						listaContacts.add(contact);
-     						
-     					}
-     					
-     					bean.setContactos(listaContacts);
-     					
-     				}
-     				
-     				
-     				if(!object.isNull("Direccion")){
-     					
-     					JSONArray jsonArrayDirections = object.getJSONArray("Direccion");
-     					listaDirections = new ArrayList<>();
-     					
-     					for (int j = 0; j < jsonArrayDirections.length(); j++) {
-     						
-     						JSONObject jsonDirection = jsonArrayDirections.getJSONObject(j);
-     						
-     						direction = new DireccionBean();
-     						direction.setIDDireccion(jsonDirection.getString("Codigo"));
-     						direction.setPais(jsonDirection.getString("Pais"));
-     						direction.setDepartamento(jsonDirection.getString("Departamento"));
-     						direction.setProvincia(jsonDirection.getString("Provincia"));
-     						direction.setDistrito(jsonDirection.getString("Distrito"));
-     						direction.setCalle(jsonDirection.getString("Calle"));
-     						direction.setReferencia(jsonDirection.getString("Referencia"));
-     						direction.setTipoDireccion(jsonDirection.getString("Tipo"));
-     						listaDirections.add(direction);
-     					}
-     					
-     					bean.setDirecciones(listaDirections);
-     					
-     				}
-     				
-     				
-     				lista.add(bean);
-     				
-     			}
-                 
-             }
-             finally{
-                 urlConnection.disconnect();
-             }
-         }
-         catch(Exception e) {
-             Log.e("ERROR", e.getMessage(), e);
-             return null;
-         }
-		 
-		 return lista;
+				SocioNegocioBean bean;
+				ContactoBean contact;
+				DireccionBean direction;
+
+				lista = new ArrayList<SocioNegocioBean>();
+
+				JSONArray jsonArray = new JSONArray(stringBuilder.toString());
+				JSONObject object;
+
+				for (int i = 0; i < jsonArray.length(); i++) {
+
+					object = jsonArray.getJSONObject(i);
+					bean = new SocioNegocioBean();
+					bean.setCodigo(object.getString("Codigo"));
+					bean.setTipoCliente(object.getString("TipoSocio"));
+					bean.setTipoPersona(object.getString("TipoPersona"));
+					bean.setTipoDoc(object.getString("TipoDocumento"));
+					bean.setNroDoc(object.getString("NumeroDocumento"));
+					bean.setNombRazSoc(object.getString("NombreRazonSocial"));
+					bean.setNomCom(object.getString("NombreComercial"));
+					bean.setApePat(object.getString("ApellidoPaterno"));
+					bean.setApeMat(object.getString("ApellidoMaterno"));
+					bean.setPriNom(object.getString("PrimerNombre"));
+					bean.setSegNom(object.getString("SegundoNombre"));
+					bean.setTlf1(object.getString("Telefono1"));
+					bean.setTlf2(object.getString("Telefono2"));
+					bean.setTlfMov(object.getString("TelefonoMovil"));
+					bean.setCorreo(object.getString("CorreoElectronico"));
+					bean.setGrupo(object.getString("GrupoSocio"));
+					bean.setListaPrecio(object.getString("ListaPrecio"));
+					bean.setCondPago(object.getString("CondicionPago"));
+					bean.setIndicador(object.getString("Indicador"));
+					bean.setZona(object.getString("Zona"));
+					bean.setCreadoMovil(object.getString("CreadMovil"));
+					bean.setClaveMovil(object.getString("ClaveMovil"));
+					bean.setDireccionFiscal(object.getString("DireccionFiscal"));
+					bean.setTransaccionMovil(object.getString("TransaccionMovil"));
+					bean.setValidoenPedido(object.getString("ValidoenPedido"));
+
+					//Obtener los contactos
+				/*	try {
+
+						URL urlContacts = new URL("http://"+PreferenceManager.getDefaultSharedPreferences(contexto).getString("ipServidor","200.10.84.66")+"/WebApiPragsa/api/contacto?clave="+object.getString("Codigo"));
+						HttpURLConnection urlConnectionContacts = (HttpURLConnection) urlContacts.openConnection();
+						try {
+
+							BufferedReader brContacts = new BufferedReader(new InputStreamReader(urlConnectionContacts.getInputStream()));
+							StringBuilder sbContacts = new StringBuilder();
+							String lineResponse;
+							while ((lineResponse = brContacts.readLine()) != null){
+								sbContacts.append(lineResponse).append("\n");
+							}
+							brContacts.close();
+
+							listaContacts = new ArrayList<>();
+							JSONArray jsonArrayContacts = new JSONArray(sbContacts.toString());
+							JSONObject jsonContact;
+							for (int j = 0; j < jsonArrayContacts.length(); j++) {
+								jsonContact = jsonArrayContacts.getJSONObject(j);
+								contact = new ContactoBean();
+								contact.setIdCon(jsonContact.getString("Codigo"));
+								contact.setNomCon(jsonContact.getString("Nombre"));
+								contact.setPrimerNombre(jsonContact.getString("PrimerNombre"));
+								contact.setSegNomCon(jsonContact.getString("SegundoNombre"));
+								contact.setApeCon(jsonContact.getString("Apellidos"));
+								contact.setDireccion(jsonContact.getString("Direccion"));
+								contact.setEmailCon(jsonContact.getString("CorreoElectronico"));
+								contact.setTel1Con(jsonContact.getString("Telefono1"));
+								contact.setTel2Con(jsonContact.getString("Telefono2"));
+								contact.setTelMovCon(jsonContact.getString("TelefonoMovil"));
+								contact.setPosicion(jsonContact.getString("Posicion"));
+								listaContacts.add(contact);
+							}
+							bean.setContactos(listaContacts);
+
+						}finally {
+							urlConnectionContacts.disconnect();
+						}
+
+
+					}catch (Exception e){
+						Log.e("ERROR CONTACTS", e.getMessage(), e);
+					}		*/
+
+
+					//Obtener las direcciones
+				/*	try {
+
+						URL urlDirections = new URL("http://"+PreferenceManager.getDefaultSharedPreferences(contexto).getString("ipServidor","200.10.84.66")+
+								"/WebApiPragsa/api/direccion?clave="+object.getString("Codigo"));
+						HttpURLConnection urlConnectionDirection = (HttpURLConnection) urlDirections.openConnection();
+						try {
+
+							BufferedReader brDirections = new BufferedReader(new InputStreamReader(urlConnectionDirection.getInputStream()));
+							StringBuilder sbDirections = new StringBuilder();
+							String lineResponse;
+							while ((lineResponse = brDirections.readLine()) != null){
+								sbDirections.append(lineResponse).append("\n");
+							}
+							brDirections.close();
+
+							listaDirections = new ArrayList<>();
+							JSONArray jsonArrayDirections = new JSONArray(sbDirections.toString());
+							JSONObject jsonDirection;
+							for (int j = 0; j < jsonArrayDirections.length(); j++) {
+								jsonDirection = jsonArrayDirections.getJSONObject(j);
+
+								direction = new DireccionBean();
+								direction.setIDDireccion(jsonDirection.getString("Codigo"));
+								direction.setPais(jsonDirection.getString("Pais"));
+								direction.setDepartamento(jsonDirection.getString("Departamento"));
+								direction.setProvincia(jsonDirection.getString("Provincia"));
+								direction.setDistrito(jsonDirection.getString("Distrito"));
+								direction.setCalle(jsonDirection.getString("Calle"));
+								direction.setReferencia(jsonDirection.getString("Referencia"));
+								direction.setTipoDireccion(jsonDirection.getString("Tipo"));
+								listaDirections.add(direction);
+							}
+							bean.setDirecciones(listaDirections);
+
+						}finally {
+							urlConnectionDirection.disconnect();
+						}
+
+
+					}catch (Exception e){
+						Log.e("ERROR CONTACTS", e.getMessage(), e);
+					}
+					*/
+
+					lista.add(bean);
+
+				}
+
+			}
+			finally{
+				urlConnection.disconnect();
+			}
+		}
+		catch(Exception e) {
+			Log.e("ERROR", e.getMessage(), e);
+			return null;
+		}
+
+		return lista;
 
 	}
 
@@ -1155,10 +1192,10 @@ public class InvocaWS {
 			OrdenVentaDetalleBean detail;
 
 			lista = new ArrayList<OrdenVentaBean>();
-			
+
 			if(resSoap != null){
 				for (int i = 0; i < resSoap.getPropertyCount(); i++) {
-	
+
 					row = (SoapObject) resSoap.getProperty(i);
 					bean = new OrdenVentaBean();
 
@@ -1209,7 +1246,7 @@ public class InvocaWS {
 					lista.add(bean);
 				}
 			}
-			
+
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -1310,8 +1347,8 @@ public class InvocaWS {
 		return lista;
 
 	}
-	
-	
+
+
 	// Obtener almacenes
 	public ArrayList<AlmacenBean> getAlmacen(String codigoVendedor) {
 
@@ -1651,7 +1688,7 @@ public class InvocaWS {
 //						}
 //						bean.setLineas(lineas);
 //					}
-					
+
 
 					lista.add(bean);
 
@@ -1989,7 +2026,7 @@ public class InvocaWS {
 		return lista;
 
 	}
-	
+
 	// Obtener Precios
 	public ArrayList<PrecioBean> ObtenerPrecios(String codVendedor) {
 
@@ -2113,9 +2150,9 @@ public class InvocaWS {
 
 			transporte = new HttpTransportSE(URL,timeOut);
 			transporte.debug = true;
-			
+
 			transporte.call("http://pragsa.org/ObtenerPaiss", envelope);
-			
+
 
 			// Nivel pais
 			SoapObject resSoap = (SoapObject) envelope.getResponse();
@@ -2147,7 +2184,7 @@ public class InvocaWS {
 
 	}
 
-	
+
 	// Obtener DEPARTAMENTOS
 	public ArrayList<DepartamentoBean> ObtenerDepartamentos(String codVendedor) {
 
@@ -2167,9 +2204,9 @@ public class InvocaWS {
 
 			transporte = new HttpTransportSE(URL,timeOut);
 			transporte.debug = true;
-			
+
 			transporte.call("http://pragsa.org/ObtenerDepartamentos", envelope);
-			
+
 
 			// Nivel pais
 			SoapObject resSoap = (SoapObject) envelope.getResponse();
@@ -2202,7 +2239,7 @@ public class InvocaWS {
 
 	}
 
-	
+
 	// Obtener PROVINCIAS
 	public ArrayList<ProvinciaBean> ObtenerProvincias(String codVendedor) {
 
@@ -2222,9 +2259,9 @@ public class InvocaWS {
 
 			transporte = new HttpTransportSE(URL, timeOut);
 			transporte.debug = true;
-			
+
 			transporte.call("http://pragsa.org/ObtenerProvincias", envelope);
-			
+
 
 			// Nivel pais
 			SoapObject resSoap = (SoapObject) envelope.getResponse();
@@ -2257,7 +2294,7 @@ public class InvocaWS {
 
 	}
 
-	
+
 	// Obtener distritos
 	public ArrayList<DistritoBean> ObtenerDistritos(String codVendedor) {
 
@@ -2277,9 +2314,9 @@ public class InvocaWS {
 
 			transporte = new HttpTransportSE(URL, timeOut);
 			transporte.debug = true;
-			
+
 			transporte.call("http://pragsa.org/ObtenerDistritos", envelope);
-			
+
 
 			// Nivel pais
 			SoapObject resSoap = (SoapObject) envelope.getResponse();
@@ -2331,7 +2368,7 @@ public class InvocaWS {
 
 			transporte = new HttpTransportSE(URL,timeOut);
 			transporte.debug = true;
-			
+
 			transporte.call("http://pragsa.org/ObtenerCalles", envelope);
 
 			// Nivel pais
@@ -2364,8 +2401,8 @@ public class InvocaWS {
 		return lista;
 
 	}
-	
-	
+
+
 	// Obtener Unidades de medida
 	public ArrayList<UnidadMedidaBean> getUnidadMedida(String codVendedor) {
 
@@ -2466,7 +2503,7 @@ public class InvocaWS {
 
 	}
 
-	
+
 	// Obtener Cuentas
 	public ArrayList<CuentaBean> ObtenerCuentas(String codVendedor) {
 
@@ -2516,8 +2553,8 @@ public class InvocaWS {
 		return lista;
 
 	}
-	
-	
+
+
 	// Obtener Bancos
 	public ArrayList<BancoBean> ObtenerBancos(String codVendedor) {
 
@@ -2567,9 +2604,9 @@ public class InvocaWS {
 		return lista;
 
 	}
-	
-	
-	
+
+
+
 	// Obtener Reportes
 	public ArrayList<ReporteEstadoCuenta> ObtenerEstadoCuentaSocios(String codVendedor) {
 
@@ -2635,7 +2672,7 @@ public class InvocaWS {
 		return lista;
 
 	}
-	
 
-	
+
+
 }

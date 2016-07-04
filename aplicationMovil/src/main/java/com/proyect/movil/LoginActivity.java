@@ -18,6 +18,8 @@ import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
@@ -27,6 +29,7 @@ import android.widget.Toast;
 import com.proyecto.bean.EmpleadoBean;
 import com.proyecto.conectividad.Connectivity;
 import com.proyecto.movil.MainActivityDrawer;
+import com.proyecto.preferences.SettingsMain;
 import com.proyecto.servicios.Constants;
 import com.proyecto.servicios.ServicioOvPr;
 import com.proyecto.servicios.ServicioSocios;
@@ -125,6 +128,27 @@ public class LoginActivity extends AppCompatActivity {
 	// getMenuInflater().inflate(R.menu.login, menu);
 	// return true;
 	// }
+
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		super.onCreateOptionsMenu(menu);
+		getMenuInflater().inflate(R.menu.login,menu);
+		return true;
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()){
+			case R.id.configuration_section:
+				Intent conn = new Intent(contexto,
+						SettingsMain.class);
+				startActivity(conn);
+				return true;
+			default:
+				return super.onOptionsItemSelected(item);
+		}
+	}
 
 	/**
 	 * Attempts to sign in or register the account specified by the login form.

@@ -4,26 +4,26 @@
     api-level="16"
     density="xhdpi"
     format="7"
-    timestamp="181109937979132" >
+    timestamp="357125710514409" >
 
     <task
         name="javac"
-        duration="672" />
+        duration="63600" />
     <task
         name="instant-run-dex"
         duration="0" />
     <task
         name="instant-run-transform"
-        duration="46" />
+        duration="8736" />
     <task
         name="verifier"
-        duration="51" />
+        duration="3300" />
 
     <artifact
         location="C:\Users\PC\Desktop\Android Seidor\aplicationMovil\build\outputs\apk\aplicationMovil-debug.apk"
         type="MAIN" />
 
-    <build timestamp="181109937979132" >
+    <build timestamp="357125710514409" >
         <artifact
             location="C:\Users\PC\Desktop\Android Seidor\aplicationMovil\build\outputs\apk\aplicationMovil-debug.apk"
             type="MAIN" />

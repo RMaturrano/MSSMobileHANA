@@ -484,12 +484,12 @@
         "source": "C:\\Users\\PC\\Desktop\\Android Seidor\\aplicationMovil\\src\\main\\res\\layout\\socio_negocio_detalle_fragment.xml"
     },
     {
-        "merged": "C:\\Users\\PC\\Desktop\\Android Seidor\\aplicationMovil\\build\\intermediates\\res\\merged\\debug\\layout\\detalle_factura_cliente_tab_cont_fragment.xml",
-        "source": "C:\\Users\\PC\\Desktop\\Android Seidor\\aplicationMovil\\src\\main\\res\\layout\\detalle_factura_cliente_tab_cont_fragment.xml"
-    },
-    {
         "merged": "C:\\Users\\PC\\Desktop\\Android Seidor\\aplicationMovil\\build\\intermediates\\res\\merged\\debug\\layout\\notification_template_lines.xml",
         "source": "C:\\Users\\PC\\Desktop\\Android Seidor\\aplicationMovil\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.4.0\\res\\layout\\notification_template_lines.xml"
+    },
+    {
+        "merged": "C:\\Users\\PC\\Desktop\\Android Seidor\\aplicationMovil\\build\\intermediates\\res\\merged\\debug\\layout\\detalle_factura_cliente_tab_cont_fragment.xml",
+        "source": "C:\\Users\\PC\\Desktop\\Android Seidor\\aplicationMovil\\src\\main\\res\\layout\\detalle_factura_cliente_tab_cont_fragment.xml"
     },
     {
         "merged": "C:\\Users\\PC\\Desktop\\Android Seidor\\aplicationMovil\\build\\intermediates\\res\\merged\\debug\\layout\\cobranza_lista_facturas_frg.xml",

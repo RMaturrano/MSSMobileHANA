@@ -40,8 +40,8 @@ public class SettingsMain extends AppCompatActivity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 
 		switch (item.getItemId()) {
-			case 16908332:
-				finish();
+			case android.R.id.home:
+				onBackPressed();
 				return true;
 			default:
 				return super.onOptionsItemSelected(item);

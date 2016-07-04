@@ -2504,7 +2504,6 @@ containing a value of this type.
         public static final int action_details=0x7f0c0124;
         public static final int action_divider=0x7f0c00f8;
         public static final int action_eliminar=0x7f0c0126;
-        public static final int action_forgot_password=0x7f0c0121;
         public static final int action_menu_divider=0x7f0c0002;
         public static final int action_menu_presenter=0x7f0c0003;
         public static final int action_mode_bar=0x7f0c0057;
@@ -2537,7 +2536,7 @@ containing a value of this type.
         public static final int clip_vertical=0x7f0c002d;
         public static final int codigo=0x7f0c00f3;
         public static final int collapseActionView=0x7f0c0034;
-        public static final int configuration_section=0x7f0c0131;
+        public static final int configuration_section=0x7f0c0121;
         public static final int contact_detail=0x7f0c007b;
         public static final int contact_list=0x7f0c007a;
         public static final int contentPanel=0x7f0c004a;
@@ -2687,13 +2686,13 @@ containing a value of this type.
         public static final int nav_facturas=0x7f0c012d;
         public static final int nav_home=0x7f0c0129;
         public static final int nav_inventario=0x7f0c012b;
-        public static final int nav_log_out=0x7f0c0136;
+        public static final int nav_log_out=0x7f0c0135;
         public static final int nav_ordenes=0x7f0c012c;
-        public static final int nav_p_con=0x7f0c0132;
+        public static final int nav_p_con=0x7f0c0131;
         public static final int nav_reportes=0x7f0c012f;
-        public static final int nav_sincronizar_doc=0x7f0c0135;
-        public static final int nav_sincronizar_ini=0x7f0c0133;
-        public static final int nav_sincronizar_mst=0x7f0c0134;
+        public static final int nav_sincronizar_doc=0x7f0c0134;
+        public static final int nav_sincronizar_ini=0x7f0c0132;
+        public static final int nav_sincronizar_mst=0x7f0c0133;
         public static final int nav_socios=0x7f0c012a;
         public static final int nav_view=0x7f0c00f0;
         public static final int navigation_header_container=0x7f0c00cb;

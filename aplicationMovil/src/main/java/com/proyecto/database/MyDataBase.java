@@ -625,7 +625,7 @@ public class MyDataBase extends SQLiteOpenHelper {
 		
 		//Insert tipo de persona
 		String Q_INS_TIPO_PER = ("INSERT INTO TB_TIPO_PERSONA(COD_TIP,DES_TIP) " +
-								 "VALUES('TPJ','Jurídica')," +
+								 "VALUES('TPJ','Juridica')," +
 								 "('TPN','Natural')");
 		db.execSQL(Q_INS_TIPO_PER);
 		

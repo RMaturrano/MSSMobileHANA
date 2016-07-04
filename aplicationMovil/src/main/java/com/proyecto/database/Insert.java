@@ -73,6 +73,8 @@ public class Insert {
 					delete.deleteSocioNegocio(lista);
 				else if(type.equalsIgnoreCase("L"))
 					delete.deleteSocioNegocioLead(lista);
+
+				db.beginTransaction();
 				
 				for (SocioNegocioBean socioNegocio : lista) {
 
@@ -178,6 +180,10 @@ public class Insert {
 						res = false;
 
 				}
+
+				db.setTransactionSuccessful();
+				db.endTransaction();
+
 			}
 			
 		}
@@ -609,6 +615,7 @@ public class Insert {
 			
 			if(lista.size()>0){
 				res = true;
+				db.beginTransaction();
 				for (ArticuloBean bean : lista) {
 
 					db.execSQL(
@@ -623,6 +630,8 @@ public class Insert {
 											bean.getUnidadMedidaVenta()});
 					
 				}
+				db.setTransactionSuccessful();
+				db.endTransaction();
 			}
 			
 		}
@@ -640,7 +649,7 @@ public class Insert {
 			if(lista.size() > 0){
 				res = true;
 				delete.deleteCantidad();
-				
+				db.beginTransaction();
 				for (CantidadBean bean : lista) {
 
 					db.execSQL(
@@ -655,6 +664,8 @@ public class Insert {
 											bean.getDisponible()});
 					
 				}
+				db.setTransactionSuccessful();
+				db.endTransaction();
 			}
 			
 		}
@@ -672,6 +683,7 @@ public class Insert {
 			
 			if(lista.size()>0){
 				res = true;
+				db.beginTransaction();
 				for (CondicionPagoBean bean : lista) {
 
 					db.execSQL(
@@ -682,6 +694,8 @@ public class Insert {
 											bean.getDescripcionCondicion()});
 					
 				}
+				db.setTransactionSuccessful();
+				db.endTransaction();
 			}
 			
 		}
@@ -699,6 +713,7 @@ public class Insert {
 			
 			if(lista.size() >0){
 				res = true;
+				db.beginTransaction();
 				for (FabricanteBean bean : lista) {
 
 					db.execSQL(
@@ -709,6 +724,8 @@ public class Insert {
 											bean.getNombre()});
 					
 				}
+				db.setTransactionSuccessful();
+				db.endTransaction();
 			}
 			
 		}
@@ -730,7 +747,7 @@ public class Insert {
 			if(lista.size()>0){
 				res = true;
 
-				
+				db.beginTransaction();
 				for (FacturaBean factura : lista) {
 
 					// Registrar orden de venta->
@@ -796,6 +813,8 @@ public class Insert {
 						res = false;
 
 				}
+				db.setTransactionSuccessful();
+				db.endTransaction();
 			}
 			
 		}
@@ -813,6 +832,7 @@ public class Insert {
 			
 			if(lista.size()>0){
 				res = true;
+				db.beginTransaction();
 				for (GrupoArticuloBean bean : lista) {
 
 					db.execSQL(
@@ -823,6 +843,8 @@ public class Insert {
 											bean.getNombre()});
 					
 				}
+				db.setTransactionSuccessful();
+				db.endTransaction();
 			}
 			
 		}
@@ -840,6 +862,7 @@ public class Insert {
 			
 			if(lista.size() > 0){
 				res = true;
+				db.beginTransaction();
 				for (GrupoSocioNegocioBean bean : lista) {
 
 					db.execSQL(
@@ -850,6 +873,8 @@ public class Insert {
 											bean.getGroupName()});
 					
 				}
+				db.setTransactionSuccessful();
+				db.endTransaction();
 			}
 			
 		}
@@ -869,6 +894,7 @@ public class Insert {
 			if(lista.size() > 0){
 				
 				delete.deleteGrupoUnidadMedida();
+				db.beginTransaction();
 				for (GrupoUnidadMedidaBean bean : lista) {
 
 					// Registrar GRUPO UNIDAD DE MEDIDA->
@@ -907,6 +933,8 @@ public class Insert {
 						res = false;
 
 				}
+				db.setTransactionSuccessful();
+				db.endTransaction();
 			}
 			
 		}
@@ -949,6 +977,7 @@ public class Insert {
 			
 			if(lista.size() > 0){
 				res = true;
+				db.beginTransaction();
 				for (IndicadorBean bean : lista) {
 	
 					db.execSQL(
@@ -959,6 +988,8 @@ public class Insert {
 											bean.getNombre()});
 					
 				}
+				db.setTransactionSuccessful();
+				db.endTransaction();
 			}
 			
 		}
@@ -977,6 +1008,7 @@ public class Insert {
 			
 			if(lista.size() > 0){
 				delete.deleteListaPrecios();
+				db.beginTransaction();
 				for (ListaPrecioBean bean : lista) {
 	
 					// Registrar lista de precio->
@@ -993,6 +1025,8 @@ public class Insert {
 						res = false;
 	
 				}
+				db.setTransactionSuccessful();
+				db.endTransaction();
 			}
 			
 		}
@@ -1011,7 +1045,7 @@ public class Insert {
 			
 			if(lista.size()>0){
 				delete.deletePrecios();
-				
+				db.beginTransaction();
 				for (PrecioBean bean : lista) {
 
 					// Registrar lista de precio->
@@ -1030,6 +1064,8 @@ public class Insert {
 						res = false;
 
 				}
+				db.setTransactionSuccessful();
+				db.endTransaction();
 			}
 			
 		}
@@ -1049,6 +1085,7 @@ public class Insert {
 			
 			if(lista.size() > 0){
 				res = true;
+				db.beginTransaction();
 				for (MonedaBean bean : lista) {
 	
 					db.execSQL(
@@ -1059,6 +1096,8 @@ public class Insert {
 											bean.getDescripcion()});
 					
 				}
+				db.setTransactionSuccessful();
+				db.endTransaction();
 			}
 			
 		}
@@ -1079,7 +1118,7 @@ public class Insert {
 				
 				if(lista.size()>0){
 					res = true;
-
+					db.beginTransaction();
 					for (ReporteEstadoCuenta pago : lista) {
 
 						ContentValues objetForInsert = new ContentValues();
@@ -1109,6 +1148,8 @@ public class Insert {
 							res = true;
 						}
 					}
+					db.setTransactionSuccessful();
+					db.endTransaction();
 				}
 				
 			}
@@ -1414,6 +1455,7 @@ public class Insert {
 			
 			if(lista.size() > 0){
 				res = true;
+				db.beginTransaction();
 				for (DistritoBean distrito : lista) {
 					db.execSQL(
 							"insert or ignore into "
@@ -1425,6 +1467,8 @@ public class Insert {
 									distrito.getNombre()});
 	
 				}
+				db.setTransactionSuccessful();
+				db.endTransaction();
 			}
 			
 		}
@@ -1439,7 +1483,8 @@ public class Insert {
 		if(lista != null){
 			
 			if(lista.size() > 0){
-					res = true;
+				res = true;
+				db.beginTransaction();
 					for (CalleBean calle :lista) {
 						
 						db.execSQL("INSERT OR IGNORE INTO TB_CALLE(CODIGO_DISTRITO,CODIGO,NOMBRE) VALUES(?,?,?)" ,
@@ -1450,6 +1495,8 @@ public class Insert {
 						
 					
 					}
+				db.setTransactionSuccessful();
+				db.endTransaction();
 			}
 		
 		}
@@ -1466,6 +1513,7 @@ public class Insert {
 			
 			if(lista.size() > 0){
 				res = true;
+				db.beginTransaction();
 				for (UnidadMedidaBean bean : lista) {
 	
 					db.execSQL(
@@ -1476,6 +1524,8 @@ public class Insert {
 										  bean.getNombre()});
 					
 				}
+				db.setTransactionSuccessful();
+				db.endTransaction();
 			}
 			
 		}
@@ -1493,6 +1543,7 @@ public class Insert {
 			
 			if(lista.size() > 0){
 				res = true;
+				db.beginTransaction();
 				for (ZonaBean bean : lista) {
 	
 					db.execSQL(
@@ -1503,6 +1554,8 @@ public class Insert {
 											bean.getNombre()});
 					
 				}
+				db.setTransactionSuccessful();
+				db.endTransaction();
 			}
 			
 		}

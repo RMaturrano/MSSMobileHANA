@@ -711,7 +711,6 @@ int id action_context_bar 0x7f0c005b
 int id action_details 0x7f0c0124
 int id action_divider 0x7f0c00f8
 int id action_eliminar 0x7f0c0126
-int id action_forgot_password 0x7f0c0121
 int id action_menu_divider 0x7f0c0002
 int id action_menu_presenter 0x7f0c0003
 int id action_mode_bar 0x7f0c0057
@@ -744,7 +743,7 @@ int id clip_horizontal 0x7f0c002c
 int id clip_vertical 0x7f0c002d
 int id codigo 0x7f0c00f3
 int id collapseActionView 0x7f0c0034
-int id configuration_section 0x7f0c0131
+int id configuration_section 0x7f0c0121
 int id contact_detail 0x7f0c007b
 int id contact_list 0x7f0c007a
 int id contentPanel 0x7f0c004a
@@ -894,13 +893,13 @@ int id nav_cobranzas 0x7f0c012e
 int id nav_facturas 0x7f0c012d
 int id nav_home 0x7f0c0129
 int id nav_inventario 0x7f0c012b
-int id nav_log_out 0x7f0c0136
+int id nav_log_out 0x7f0c0135
 int id nav_ordenes 0x7f0c012c
-int id nav_p_con 0x7f0c0132
+int id nav_p_con 0x7f0c0131
 int id nav_reportes 0x7f0c012f
-int id nav_sincronizar_doc 0x7f0c0135
-int id nav_sincronizar_ini 0x7f0c0133
-int id nav_sincronizar_mst 0x7f0c0134
+int id nav_sincronizar_doc 0x7f0c0134
+int id nav_sincronizar_ini 0x7f0c0132
+int id nav_sincronizar_mst 0x7f0c0133
 int id nav_socios 0x7f0c012a
 int id nav_view 0x7f0c00f0
 int id navigation_header_container 0x7f0c00cb

@@ -48,7 +48,8 @@ public class SincManualTaskMaestros extends AsyncTask<String, String, Object> {
 		ws.EnviarSociosNegocio(codigoEmpleado);
 		
 		//Recepcion
-		
+
+		//PRUEBA WEB SERVICE SOAP
 		//1. Lista Socio de negocio
 		String[] progress = new String[2];
 		progress[0] = "Obteniendo socios de negocio";
@@ -68,7 +69,31 @@ public class SincManualTaskMaestros extends AsyncTask<String, String, Object> {
 		if(res){
 			contador++;
 		}
-		
+
+/*
+		//PRUEBA WEB SERVICE REST
+		//1. Lista Socio de negocio
+		String[] progress = new String[2];
+		progress[0] = "Obteniendo socios de negocio";
+		progress[1] = "0";
+		publishProgress(progress);
+
+		if(PreferenceManager.getDefaultSharedPreferences(contexto).getBoolean("controlSincManual", false)){
+			if(checkRegistros("Socios"))
+				res = insert.insertSocioNegocio(ws.getBusinessPartnersLead(codigoEmpleado), "L");
+			else{
+				res = insert.insertSocioNegocio(ws.getBusinessPartnerApi(codigoEmpleado), "A");
+				putRegistro("Socios");
+			}
+		}else
+			res = insert.insertSocioNegocio(ws.getBusinessPartnerApi(codigoEmpleado), "A");
+
+		if(res){
+			contador++;
+		}
+*/
+
+
 		//2. Lista articulos
 		progress[0] = "Obteniendo articulos";
 		progress[1] = "1";
@@ -209,7 +234,7 @@ public class SincManualTaskMaestros extends AsyncTask<String, String, Object> {
 					Toast.LENGTH_LONG).show();
 		}else{
 			Toast.makeText(contexto,
-					"No se pudo establecer conexión con el servidor",
+					"No se pudo establecer conexion con el servidor",
 					Toast.LENGTH_LONG).show();
 		}
 

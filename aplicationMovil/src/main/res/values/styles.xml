@@ -3,12 +3,13 @@
 
     <!--
         Base application theme, dependent on API level. This theme is replaced
-        by AppBaseTheme from res/values-vXX/styles.xml on newer devices.
+        by AppBaseTheme from res/values-vXX/styles.xml on newer devices.
+
     -->
      <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorPrimary">#2196f3</item>
-        <item name="colorAccent">#ffffff</item>
-        
+        <item name="colorAccent">#F44336</item>
+         <item name="colorPrimaryDark">#2145f9</item>
 	    <item name="colorControlActivated">#90caf9</item>
 	    
         

@@ -271,7 +271,7 @@ public class SincManualTaskInicio extends AsyncTask<String, String, Object> {
 
 		
 		//15. Lista grupos articulo
-		publishProgress("Obteniendo grupos de artículo");
+		publishProgress("Obteniendo grupos de articulo");
 		if(PreferenceManager.getDefaultSharedPreferences(contexto).getBoolean("controlSincManual", false)){
 			if(checkRegistros("GrupoArticulo"))
 				contador++;
@@ -361,7 +361,7 @@ public class SincManualTaskInicio extends AsyncTask<String, String, Object> {
 					Toast.LENGTH_LONG).show();
 		}else{
 			Toast.makeText(contexto,
-					"No se pudo establecer conexión con el servidor",
+					"No se pudo establecer conexion con el servidor",
 					Toast.LENGTH_LONG).show();
 		}
 

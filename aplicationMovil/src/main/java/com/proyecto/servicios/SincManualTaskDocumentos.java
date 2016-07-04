@@ -140,7 +140,7 @@ public class SincManualTaskDocumentos extends AsyncTask<String, String, Object> 
 					Toast.LENGTH_LONG).show();
 		}else{
 			Toast.makeText(contexto,
-					"No se pudo establecer conexi�n con el servidor",
+					"No se pudo establecer conexion con el servidor",
 					Toast.LENGTH_LONG).show();
 		}
 		
