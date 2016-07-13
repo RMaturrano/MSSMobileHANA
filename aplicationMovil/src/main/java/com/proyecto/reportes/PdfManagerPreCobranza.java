@@ -12,6 +12,7 @@ import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Environment;
 import android.widget.Toast;
 
@@ -82,6 +83,8 @@ public class PdfManagerPreCobranza {
     
     // 1.
     private String createDirectoryAndFileName(){
+
+
    	 
         String FILENAME = "PreCobranza.pdf";
         String fullFileName ="";
@@ -117,6 +120,8 @@ public class PdfManagerPreCobranza {
         }
         return fullFileName;
     }
+
+
     
     // 2.
     private static void addMetaData(Document document) {

@@ -7,6 +7,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.TimerTask;
+import java.util.jar.Manifest;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -15,8 +16,12 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
+import android.content.pm.PackageManager;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -80,7 +85,21 @@ public class ReporteFragment extends Fragment implements OnItemClickListener{
         return v;
         
     }
-		
+
+	@Override
+	public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+		super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+		if(grantResults[0] == PackageManager.PERMISSION_GRANTED){
+			if(tipoReporteSel.equalsIgnoreCase("Saldos por Cobrar")){
+					new GenerarReporte().execute("1");
+			}else if(tipoReporteSel.equalsIgnoreCase("Pre Cobranza")){
+					new GenerarReporte().execute("3");
+			}else if (tipoReporteSel.equalsIgnoreCase("Productos por marca")){
+					new GenerarReporte().execute("2");
+			}
+		}
+	}
+
 	private void buildFirstAlert(){
 		
 		
@@ -141,7 +160,8 @@ public class ReporteFragment extends Fragment implements OnItemClickListener{
 
 				}else if (tipoReporteSel.equalsIgnoreCase("Productos por marca")){
 
-					new GenerarReporte().execute("2");
+					if(isStoragePermissionGranted())
+						new GenerarReporte().execute("2");
 
 				}else if(tipoReporteSel.equalsIgnoreCase("Pre Cobranza")){
 					
@@ -221,9 +241,7 @@ public class ReporteFragment extends Fragment implements OnItemClickListener{
 	public void onItemClick(AdapterView<?> parent, View view, int position,
 			long id) {
 		
-			if(position == 0){
-				
-			}else if(position == 1){
+			if(position == 1){
 				alert.construirAlertDatePicker(contexto, position, "Fecha inicio", searchResults_0, lv_0);
 			}else if (position == 2){
 				alert.construirAlertDatePicker(contexto, position, "Fecha fin", searchResults_0, lv_0);
@@ -249,11 +267,13 @@ public class ReporteFragment extends Fragment implements OnItemClickListener{
 				
 				if(tipoReporteSel.equalsIgnoreCase("Saldos por Cobrar")){
 
-					new GenerarReporte().execute("1");
+					if(isStoragePermissionGranted())
+						new GenerarReporte().execute("1");
 					
 				}else if(tipoReporteSel.equalsIgnoreCase("Pre Cobranza")){
 
-					new GenerarReporte().execute("3");
+					if(isStoragePermissionGranted())
+						new GenerarReporte().execute("3");
 					
 				}
                 
@@ -265,6 +285,20 @@ public class ReporteFragment extends Fragment implements OnItemClickListener{
 			
 	}
 
+
+	private boolean isStoragePermissionGranted(){
+
+		if(Build.VERSION.SDK_INT >= 23){
+			if(getContext().checkSelfPermission(android.Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED){
+				return true;
+			}else{
+				ActivityCompat.requestPermissions(getActivity(),new String[]{android.Manifest.permission.WRITE_EXTERNAL_STORAGE},1);
+				return false;
+			}
+		}
+
+		return true;
+	}
 
 	;
 

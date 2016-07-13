@@ -27,7 +27,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="15dp"
-                    android:text="Monto total de pedidos y cobranzas del día"
+                    android:text="Pedidos y pagos recibidos"
                     android:textColor="#2196f3"
                     android:textStyle="bold" />
 
@@ -57,7 +57,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="15dp"
-                    android:text="Productos más vendidos del día"
+                    android:text="Productos del día"
                     android:textColor="#2196f3"
                     android:textStyle="bold" />
 

@@ -49,10 +49,7 @@ public class PlaceholderFragment extends Fragment {
 
 	/**
 	 * Crea una instancia prefabricada de {@link PlaceholderFragment}
-	 * 
-	 * @param sectionTitle
-	 *            T�tulo usado en el contenido
-	 * @return Instancia dle fragmento
+	 *
 	 */
 	public static PlaceholderFragment newInstance(String sectionTitle) {
 		PlaceholderFragment fragment = new PlaceholderFragment();

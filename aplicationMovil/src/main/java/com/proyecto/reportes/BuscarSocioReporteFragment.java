@@ -9,14 +9,19 @@ import java.util.Locale;
 import java.util.TimerTask;
 import java.util.regex.Pattern;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.app.SearchManager;
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.SearchView;
@@ -334,9 +339,15 @@ public class BuscarSocioReporteFragment extends android.support.v4.app.Fragment 
 			// getListView().setSelection(subitemPosition);
 		}
 	}
-	
-	
-	
+
+	@Override
+	public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+		super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+		if(grantResults[0] == PackageManager.PERMISSION_GRANTED){
+			new GenerarReporte().execute();
+		}
+	}
+
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
 		menu.clear();
@@ -395,8 +406,8 @@ public class BuscarSocioReporteFragment extends android.support.v4.app.Fragment 
 
 			if (arguments != null) {
 
-				new GenerarReporte().execute();
-				
+				if(isStoragePermissionGranted())
+					new GenerarReporte().execute();
 
 			} else {
 
@@ -411,6 +422,19 @@ public class BuscarSocioReporteFragment extends android.support.v4.app.Fragment 
 			return super.onOptionsItemSelected(item);
 
 		}
+	}
+
+	private boolean isStoragePermissionGranted(){
+		if(Build.VERSION.SDK_INT >= 23){
+			if(getContext().checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED){
+				return true;
+			}else{
+				ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},1);
+				return false;
+			}
+		}
+
+		return true;
 	}
 
 	

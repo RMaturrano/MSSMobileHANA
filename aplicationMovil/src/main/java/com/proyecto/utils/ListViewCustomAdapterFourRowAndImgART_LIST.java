@@ -26,13 +26,21 @@ public class ListViewCustomAdapterFourRowAndImgART_LIST extends BaseAdapter impl
     private String mSearchTerm;
     
     
-    public ListViewCustomAdapterFourRowAndImgART_LIST(Context context,ArrayList<ArticuloBean> lista) {
+    public ListViewCustomAdapterFourRowAndImgART_LIST(Context context) {
         super();
         this.context = context;
-        this.lista = lista;
-        listaFiltrada = lista;
+        lista = new ArrayList<>();
+		listaFiltrada = new ArrayList<>();
         this.inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
+
+	public void clearAndAddAll(ArrayList<ArticuloBean> lista){
+		this.lista.clear();
+		this.lista.addAll(lista);
+		listaFiltrada.clear();
+		listaFiltrada.addAll(lista);
+		notifyDataSetChanged();
+	}
     
 	
 	@Override

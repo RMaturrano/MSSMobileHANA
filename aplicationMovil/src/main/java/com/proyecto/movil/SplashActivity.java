@@ -1,5 +1,6 @@
 package com.proyecto.movil;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -8,9 +9,12 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
+import android.support.v4.app.ActivityCompat;
 import android.text.InputType;
 import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
@@ -30,7 +34,7 @@ import com.proyecto.utils.Variables;
 public class SplashActivity extends Activity{
 
 	// Duración en milisegundos que se mostrará el splash
-    private final int DURACION_SPLASH = 2000; // 2 segundos
+    private final int DURACION_SPLASH = 3000; // 3 segundos
     private Context contexto;
     private AlertDialog.Builder alert = null;
     
@@ -55,6 +59,22 @@ public class SplashActivity extends Activity{
 		
 		// Tenemos una plantilla llamada splash.xml donde mostraremos la información (logotipo)
         setContentView(R.layout.splash_screen);
+
+		//Asignar permisos
+		if(Build.VERSION.SDK_INT >= 23){
+			if(checkSelfPermission(Manifest.permission.INTERNET) == PackageManager.PERMISSION_DENIED){
+				ActivityCompat.requestPermissions(SplashActivity.this,new String[]{Manifest.permission.INTERNET},1);
+			}
+			if(checkSelfPermission(Manifest.permission.ACCESS_NETWORK_STATE) == PackageManager.PERMISSION_DENIED){
+				ActivityCompat.requestPermissions(SplashActivity.this,new String[]{Manifest.permission.ACCESS_NETWORK_STATE},2);
+			}
+			if(checkSelfPermission(Manifest.permission.READ_CONTACTS) == PackageManager.PERMISSION_DENIED){
+				ActivityCompat.requestPermissions(SplashActivity.this, new String[]{Manifest.permission.READ_CONTACTS},3);
+			}
+			if(checkSelfPermission(Manifest.permission.WRITE_CONTACTS) == PackageManager.PERMISSION_DENIED){
+				ActivityCompat.requestPermissions(SplashActivity.this,new String[]{Manifest.permission.WRITE_CONTACTS},4);
+			}
+		}
         
         new Handler().postDelayed(new Runnable(){
             public void run(){

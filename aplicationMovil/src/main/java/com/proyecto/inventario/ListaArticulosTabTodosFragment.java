@@ -9,6 +9,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.MenuItemCompat;
@@ -53,25 +54,26 @@ public class ListaArticulosTabTodosFragment extends Fragment
         v =  inflater.inflate(R.layout.lista_articulos_tab_todos_fragment, container, false);
 
 		contexto = v.getContext();
+		adapter = new ListViewCustomAdapterFourRowAndImgART_LIST(contexto);
 
 		lvArticulo = (ListView) v.findViewById(R.id.lvLstArticulosTabTodos);
-        builDataArticulos();
 		lvArticulo.setOnItemClickListener(this);
+		lvArticulo.setAdapter(adapter);
 
-		// Obtener el refreshLayout
 		refreshLayout = (SwipeRefreshLayout) v.findViewById(R.id.swipeRefresh);
-
-		// Seteamos los colores que se usarán a lo largo de la animación
 		refreshLayout.setColorSchemeResources(R.color.s1, R.color.s2,
 				R.color.s3, R.color.s4);
-
-		// Iniciar la tarea al revelar el indicador
-		refreshLayout
-				.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+		refreshLayout.post(new Runnable() {
+			@Override
+			public void run() {
+				refreshLayout.setRefreshing(true);
+			}
+		});
+		new fillDataInBackGround().execute();
+		refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
 					@Override
 					public void onRefresh() {
-						builDataArticulos();
-						refreshLayout.setRefreshing(false);
+						new fillDataInBackGround().execute();
 					}
 				});
 
@@ -80,9 +82,9 @@ public class ListaArticulosTabTodosFragment extends Fragment
         return v;
         
     }
-    
-    
-    private void builDataArticulos(){
+
+
+	private void builDataArticulos(){
 
 		listaAdapter = new ArrayList<ArticuloBean>();
 		
@@ -113,16 +115,17 @@ public class ListaArticulosTabTodosFragment extends Fragment
 
 		}
 
-		if(listaAdapter.size()>0){
+	/*	if(listaAdapter.size()>0){
 			lvArticulo.setVisibility(View.VISIBLE);
 			adapter = new ListViewCustomAdapterFourRowAndImgART_LIST( contexto, listaAdapter);
         	lvArticulo.setAdapter(adapter);
 
-		}else
-			lvArticulo.setVisibility(View.GONE);
+		} */
 		
 		rs.close();
 //		db.close();
+
+		adapter.clearAndAddAll(listaAdapter);
 		
 	}
     
@@ -224,10 +227,67 @@ public class ListaArticulosTabTodosFragment extends Fragment
 			boolean topOfFirstItemVisible = lvArticulo.getChildAt(0).getTop() == 0;
 			// enabling or disabling the refresh layout
 			enable = firstItemVisible && topOfFirstItemVisible;
+		}else if (lvArticulo != null && totalItemCount == 0){
+			enable = true;
 		}
 		refreshLayout.setEnabled(enable);
 	
 	}
-	
+
+	;
+
+	private class fillDataInBackGround extends AsyncTask<String,Void,Object>{
+
+		@Override
+		protected Object doInBackground(String... params) {
+
+			listaAdapter = new ArrayList<ArticuloBean>();
+
+			//TRAER TODO DE SQLITE
+			DataBaseHelper helper = DataBaseHelper.getHelper(contexto);
+			SQLiteDatabase db = helper.getDataBase();
+
+			Cursor rs= db.rawQuery(
+					"select " +
+							"A.Codigo, " +
+							"A.Nombre," +
+							"(select IFNULL(SUM(CAST(STOCK AS NUMERIC)),0) from TB_CANTIDAD where ARTICULO = A.Codigo), " +
+							"G.NOMBRE "
+							+ "from TB_ARTICULO A join TB_GRUPO_ARTICULO G " +
+							"ON A.GrupoArticulo = G.CODIGO join TB_FABRICANTE F " +
+							"ON A.Fabricante = F.CODIGO " +
+							"order by A.Nombre" , null);
+
+			while (rs.moveToNext()) {
+
+				customListObjet = new ArticuloBean();
+				customListObjet.setUtilIcon(icon);
+				customListObjet.setCod(rs.getString(0));
+				customListObjet.setDesc(rs.getString(1));
+				customListObjet.setStock(rs.getString(2));
+				customListObjet.setGrupoArticulo(rs.getString(3));
+				listaAdapter.add(customListObjet);
+
+			}
+
+	/*	if(listaAdapter.size()>0){
+			lvArticulo.setVisibility(View.VISIBLE);
+			adapter = new ListViewCustomAdapterFourRowAndImgART_LIST( contexto, listaAdapter);
+        	lvArticulo.setAdapter(adapter);
+
+		} */
+
+			rs.close();
+//		db.close();
+
+			return null;
+		}
+
+		@Override
+		protected void onPostExecute(Object o) {
+			adapter.clearAndAddAll(listaAdapter);
+			refreshLayout.setRefreshing(false);
+		}
+	}
 	
 }

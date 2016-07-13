@@ -639,8 +639,8 @@ public class MyDataBase extends SQLiteOpenHelper {
 		String Q_INS_TIPO_DOC = ("INSERT INTO TB_TIPO_DOC(COD_DOC,DES_DOC) " +
 								 "VALUES('0','OTROS TIPOS DE DOCUMENTOS')," +
 								 "('1','DOCUMENTO NACIONAL DE IDENTIDAD')," +
-								 "('4','CARNET DE EXTRANJERÍA')," +
-								 "('6','REGISTRO ÚNICO DE CONTRIBUYENTES')," +
+								 "('4','CARNET DE EXTRANJERIA')," +
+								 "('6','REGISTRO UNICO DE CONTRIBUYENTES')," +
 								 "('7','PASAPORTE')");
 		db.execSQL(Q_INS_TIPO_DOC);
 		

@@ -68,7 +68,7 @@ public class InvocaWS {
 				.getDefaultSharedPreferences(contexto);
 
 		//   10.194.203.47
-		String ip = pref.getString("ipServidor", "10.194.203.47");
+		String ip = pref.getString("ipServidor", "200.10.84.66");
 		String port = pref.getString("puertoServidor", "80");
 
 		URL = "http://" + ip + ":" + port + "/" + "WebServPragsaSoap/"
