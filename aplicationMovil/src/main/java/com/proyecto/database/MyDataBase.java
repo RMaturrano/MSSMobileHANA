@@ -13,7 +13,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class MyDataBase extends SQLiteOpenHelper {
 
 	// VERSION DE BD
-	public static int DATABASE_VERSION = 58;
+	public static int DATABASE_VERSION = 61;
 
 	// DATABASE NAME
 	private static final String DATABASE_NAME = "BD_PRAGSA_SQLITE";
@@ -592,12 +592,26 @@ public class MyDataBase extends SQLiteOpenHelper {
 		db.execSQL(Q_CREATE_TB_CORRELATIVO);
 
 
-		// TABLA AUDITORIA
+		// TABLA REPORTE NC
+		String Q_CREATE_TB_REPORTE_MODEL;
+		Q_CREATE_TB_REPORTE_MODEL = ("CREATE TABLE TB_REPORTE_MODEL (Clave TEXT , " +
+								 "Sunat TEXT," +
+								 "Emision TEXT, " +
+								 "Dias TEXT , " +
+								 "Ruc TEXT , " +
+								 "Nombre TEXT , " +
+				  			     "Direccion TEXT , " +
+								 "Total TEXT , " +
+								 "Pagado TEXT , " +
+								 "Saldo TEXT) ");
+		db.execSQL(Q_CREATE_TB_REPORTE_MODEL);
+
+		//tabla auditoria
 		String Q_CREATE_TB_AUDITORIA;
 		Q_CREATE_TB_AUDITORIA = ("CREATE TABLE TB_AUDITORIA (Codigo INTEGER PRIMARY KEY  AUTOINCREMENT  NOT NULL , " +
-															"FechaInsercion DATETIME NOT NULL  DEFAULT CURRENT_DATE, " +
-															"TipoEntidad TEXT NOT NULL , " +
-															"Estado BOOL NOT NULL) ");
+				"FechaInsercion DATETIME NOT NULL  DEFAULT CURRENT_DATE, " +
+				"TipoEntidad TEXT NOT NULL , " +
+				"Estado BOOL NOT NULL) ");
 		db.execSQL(Q_CREATE_TB_AUDITORIA);
 				
 		/************************************************************/
@@ -692,6 +706,7 @@ public class MyDataBase extends SQLiteOpenHelper {
 		db.execSQL("DROP TABLE IF EXISTS "+contexto.getResources().getString(R.string.T_BANCO));
 		db.execSQL("DROP TABLE IF EXISTS "+contexto.getResources().getString(R.string.T_ESTADO_CUENTA_SOCIO));
 		db.execSQL("DROP TABLE IF EXISTS TB_AUDITORIA");
+		db.execSQL("DROP TABLE IF EXISTS TB_REPORTE_MODEL");
 
 		onCreate(db);
 

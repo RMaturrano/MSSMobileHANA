@@ -69,15 +69,29 @@ public class QueryReport {
 								 StringDateCast.castDatetoDateWithoutSlash(fecIni)+
 								 "' and '"+
 								 StringDateCast.castDatetoDateWithoutSlash(fecFin)+
-								 "'", null); 
-		
+								 "'  " +
+				"union all " +
+				 			"select 'NC' as 'Tipo'," +
+								"X0.Clave," +
+								"X0.Sunat," +
+								"X0.Emision," +
+								"X0.Dias," +
+								"X0.Ruc," +
+								"X0.Nombre," +
+								"X0.Direccion," +
+								"X0.Total," +
+								"X0.Pagado," +
+								"X0.Saldo " +
+								"from TB_REPORTE_MODEL X0 where X0.Emision between '"+StringDateCast.castDatetoDateWithoutSlash(fecIni)+
+																			"' and '"+StringDateCast.castDatetoDateWithoutSlash(fecFin)+"'", null);
+
 		if(data.getCount()>0)
 		{
 			
 			detalles = new ArrayList<ReportFormatObjectSaldosVendedorDetail>();
 			reporte = new ReportFormatObjectSaldosVendedor();
 			reporte.setEmpresa("Productos Alimentos Golosinas S.A.C.");
-			reporte.setDireccion("Calle Tacna N° 330-Iquitos-Maynas-Loreto");
+			reporte.setDireccion("Calle Tacna NÂ° 330-Iquitos-Maynas-Loreto");
 			reporte.setEmpleado(empleado);
 			double totalGen = 0;
 			double totalPag = 0;
@@ -87,15 +101,20 @@ public class QueryReport {
 				
 				detalle = new ReportFormatObjectSaldosVendedorDetail();
 				String tipoDocumento = "";
-				if(data.getString(2).substring(0, 1).equalsIgnoreCase("F"))
-					tipoDocumento = "Factura";
-				if(data.getString(2).substring(0, 1).equalsIgnoreCase("B"))
-					tipoDocumento = "Boleta";
-				
+				if(data.getString(2) != null && !data.getString(2).trim().startsWith("any")) {
+					if (data.getString(2).substring(0, 1).equalsIgnoreCase("F"))
+						tipoDocumento = "Factura";
+					if (data.getString(2).substring(0, 1).equalsIgnoreCase("B"))
+						tipoDocumento = "Boleta";
+					detalle.setSunat(data.getString(2));
+				}else {
+					tipoDocumento = "Sin referencia";
+					detalle.setSunat(tipoDocumento);
+				}
+
 				detalle.setDocumento(tipoDocumento);
 				
 				detalle.setClave(data.getString(1));
-				detalle.setSunat(data.getString(2));
 				detalle.setEmision(StringDateCast.castStringtoDate(data.getString(3)));
 				detalle.setDias(data.getString(4));
 				detalle.setRuc(data.getString(5));
@@ -170,7 +189,7 @@ public class QueryReport {
 			detalles = new ArrayList<ReportFormatObjectSaldosVendedorDetail>();
 			reporte = new ReportFormatObjectSaldosVendedor();
 			reporte.setEmpresa("Productos Alimentos Golosinas S.A.C.");
-			reporte.setDireccion("Calle Tacna N° 330-Iquitos-Maynas-Loreto");
+			reporte.setDireccion("Calle Tacna Nï¿½ 330-Iquitos-Maynas-Loreto");
 			reporte.setEmpleado(empleado);
 			double totalGen = 0;
 			double totalPag = 0;

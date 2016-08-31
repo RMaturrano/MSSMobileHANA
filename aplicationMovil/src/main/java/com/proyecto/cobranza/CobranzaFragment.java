@@ -89,7 +89,7 @@ public class CobranzaFragment extends Fragment{
 	public static ArrayList<FacturaBean> listaFacturasPagar = new ArrayList<FacturaBean>();
 	public static TipoPagoBean tipoPago = new TipoPagoBean();
 	
-	//Objeto que tomarà al ser seleccionado (Ayuda al update del select item con popup
+	//Objeto que tomarï¿½ al ser seleccionado (Ayuda al update del select item con popup
 	private FormatCustomListView fullObject = null;
 	private int posicion = 0;
 	private MonedaBean monSel = null;	
@@ -103,7 +103,7 @@ public class CobranzaFragment extends Fragment{
 	private int nroPago = 0;
 	public static double totalPago = 0;
 	
-	//RECIBE LOS PARÀMETROS DESDE EL FRAGMENT CORRESPONDIENTE
+	//RECIBE LOS PARï¿½METROS DESDE EL FRAGMENT CORRESPONDIENTE
 	private BroadcastReceiver myLocalBroadcastReceiver = new BroadcastReceiver() {
 			  @Override
 			  public void onReceive(Context context, Intent intent) {
@@ -116,7 +116,7 @@ public class CobranzaFragment extends Fragment{
 					        String name = bundle.getString("name");
 					  //      String extras = bundle.getString("extras");
 					        	
-					        //Settear el código del socio de negocio seleccionado
+					        //Settear el cï¿½digo del socio de negocio seleccionado
 								Object o = lvTitulo.getItemAtPosition(3);
 				        		fullObject = new FormatCustomListView();
 				            	fullObject = (FormatCustomListView)o;
@@ -223,7 +223,7 @@ public class CobranzaFragment extends Fragment{
 			idDispositivo = Secure.getString(getActivity().getContentResolver(),
 					Secure.ANDROID_ID);
 	        
-	        //REGISTRAR EL MÈTODO PARA RECIBIR PARÀMETROS DESDE UN FRAGMENT CON POPBACKSTACK
+	        //REGISTRAR EL Mï¿½TODO PARA RECIBIR PARï¿½METROS DESDE UN FRAGMENT CON POPBACKSTACK
 	        IntentFilter filter = new IntentFilter("custom-event-get-socio-negocio-cobranza");
 			filter.addAction("event-send-tipo-pago");
 			filter.addAction("event-send-total-pago-facturas");
@@ -427,7 +427,7 @@ public class CobranzaFragment extends Fragment{
 		searchResults1 = new ArrayList<FormatCustomListView>();
 
 		FormatCustomListView sr = new FormatCustomListView();
-		sr.setTitulo("N° Facturas");
+		sr.setTitulo("Nï¿½ Facturas");
 		sr.setIcon(iconId);
 		searchResults1.add(sr);
 		
@@ -458,7 +458,7 @@ public class CobranzaFragment extends Fragment{
 		searchResults = new ArrayList<FormatCustomListView>();
 
 		FormatCustomListView sr = new FormatCustomListView();
-    	sr.setTitulo("Número");
+    	sr.setTitulo("Nï¿½mero");
     	sr.setData(idDispositivo+"-"+fullDate+"-"+nroPago);
     	searchResults.add(sr);
 		
@@ -473,7 +473,7 @@ public class CobranzaFragment extends Fragment{
     	searchResults.add(sr);
 		
 		sr = new FormatCustomListView();
-		sr.setTitulo("Código socio de negocio");
+		sr.setTitulo("Cï¿½digo socio de negocio");
 		sr.setIcon(iconId);
 		searchResults.add(sr);
     	
@@ -590,16 +590,31 @@ public class CobranzaFragment extends Fragment{
 					pago.setTipoPago("T");
 					pago.setTransferenciaCuenta(tipoPago.getTransferenciaCuenta());
 					pago.setTransferenciaReferencia(tipoPago.getTransferenciaReferencia());
+
+					if(Double.parseDouble(tipoPago.getTransferenciaImporte().trim()) <= 0){
+						Toast.makeText(contexto,"El importe no puede ser cero.",Toast.LENGTH_SHORT).show();
+						return true;
+					}
 					pago.setTransferenciaImporte(tipoPago.getTransferenciaImporte());
 				}else if(tipoPago.getTipoPago().equalsIgnoreCase("Efectivo")){
 					pago.setTipoPago("F");
 					pago.setEfectivoCuenta(tipoPago.getEfectivoCuenta());
+
+					if(Double.parseDouble(tipoPago.getEfectivoImporte().trim()) <= 0){
+						Toast.makeText(contexto,"El importe no puede ser cero.",Toast.LENGTH_SHORT).show();
+						return true;
+					}
 					pago.setEfectivoImporte(tipoPago.getEfectivoImporte());
 				}else if(tipoPago.getTipoPago().equalsIgnoreCase("Cheque")){
 					pago.setTipoPago("C");
 					pago.setChequeCuenta(tipoPago.getChequeCuenta());
 					pago.setChequeBanco(tipoPago.getChequeBanco());
 					pago.setChequeVencimiento(StringDateCast.castDatetoDateWithoutSlash(tipoPago.getChequeVencimiento()));
+
+					if(Double.parseDouble(tipoPago.getChequeImporte().trim()) <= 0){
+						Toast.makeText(contexto,"El importe no puede ser cero.",Toast.LENGTH_SHORT).show();
+						return true;
+					}
 					pago.setChequeImporte(tipoPago.getChequeImporte());
 					pago.setChequeNumero(tipoPago.getChequeNumero());
 				}
@@ -641,7 +656,7 @@ public class CobranzaFragment extends Fragment{
 						insert.updateCorrelativo("PAG");
 						insert.close();
 						
-						//Mostrar el mensaje de éxito
+						//Mostrar el mensaje de ï¿½xito
 						Toast.makeText(contexto, "Pago registrado",
 								Toast.LENGTH_LONG).show();
 						
@@ -687,7 +702,7 @@ public class CobranzaFragment extends Fragment{
 						
 						
 					}else{
-						Toast.makeText(contexto, "No se registró el pago, compruebe los datos", 
+						Toast.makeText(contexto, "No se registrÃ³ el pago, compruebe los datos",
 								Toast.LENGTH_LONG).show();
 					}
 				}else{
@@ -700,7 +715,7 @@ public class CobranzaFragment extends Fragment{
 					}
 					
 					
-					//Actualización
+					//Actualizaciï¿½n
 					Update update = new Update(contexto);
 					boolean res = update.updatePagoCliente(pago);
 					
@@ -750,7 +765,7 @@ public class CobranzaFragment extends Fragment{
 			            
 					}else{
 						update.close();
-						Toast.makeText(contexto, "No se actualizó el pago, compruebe los datos", 
+						Toast.makeText(contexto, "No se actualizÃ³ el pago, compruebe los datos",
 								Toast.LENGTH_LONG).show();
 					}
 					

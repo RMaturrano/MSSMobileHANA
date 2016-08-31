@@ -370,7 +370,7 @@ public class MainActivityDrawer extends AppCompatActivity {
 				pd.setIndeterminate(false);
 				pd.setMessage("Por favor, espere...");
 				pd.setProgress(0);
-				pd.setMax(4);
+				pd.setMax(5);
 				pd.show();
 				SincManualTaskDocumentos job = new SincManualTaskDocumentos(pd, contexto, "");
 				

@@ -57,8 +57,10 @@ public class SincManualTaskMaestros extends AsyncTask<String, String, Object> {
 		publishProgress(progress);
 
 		if(PreferenceManager.getDefaultSharedPreferences(contexto).getBoolean("controlSincManual", false)){
-			if(checkRegistros("Socios"))
-				res = insert.insertSocioNegocio(ws.getBusinessPartnersLead(codigoEmpleado), "L");
+			if(checkRegistros("Socios")){
+				res = true;
+				insert.insertSocioNegocio(ws.getBusinessPartnersLead(codigoEmpleado), "L");
+			}
 			else{
 				res = insert.insertSocioNegocio(ws.getBusinessPartners(codigoEmpleado), "A");
 				putRegistro("Socios");

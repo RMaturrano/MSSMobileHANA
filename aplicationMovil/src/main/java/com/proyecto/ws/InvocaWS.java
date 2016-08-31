@@ -47,6 +47,7 @@ import com.proyecto.bean.PagoDetalleBean;
 import com.proyecto.bean.PaisBean;
 import com.proyecto.bean.PrecioBean;
 import com.proyecto.bean.ProvinciaBean;
+import com.proyecto.bean.ReporteModel;
 import com.proyecto.bean.SocioNegocioBean;
 import com.proyecto.bean.UnidadMedidaBean;
 import com.proyecto.bean.ZonaBean;
@@ -117,6 +118,7 @@ public class InvocaWS {
 				bean.setMovilCrear(resSoap.getProperty(7).toString());
 				bean.setMovilRechazar(resSoap.getProperty(8).toString());
 				bean.setMovilEscogerPrecio(resSoap.getProperty(9).toString());
+				PreferenceManager.getDefaultSharedPreferences(contexto).edit().putInt("MaxLineas",Integer.parseInt(resSoap.getProperty("MaximoLineas").toString())).commit();
 			}
 
 		} catch (Exception e) {
@@ -2673,6 +2675,62 @@ public class InvocaWS {
 
 	}
 
+	public ArrayList<ReporteModel> ObtenerReporteNotaCredito(String codVendedor) {
+
+		ArrayList<ReporteModel> lista = null;
+
+		SoapObject soap = new SoapObject(NAMESPACE, "ObtenerReporteNotaCredito");
+		soap.addProperty("CodigoVendedor", codVendedor);
+
+		SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(
+				SoapEnvelope.VER11);
+		envelope.dotNet = true;
+		envelope.setOutputSoapObject(soap);
+
+		HttpTransportSE transporte = null;
+
+		try {
+
+			transporte = new HttpTransportSE(URL, timeOut);
+			transporte.debug = true;
+
+			transporte.call("http://pragsa.org/ObtenerReporteNotaCredito", envelope);
+
+			SoapObject resSoap = (SoapObject) envelope.getResponse();
+			SoapObject row = null;
+			ReporteModel bean;
+
+			if (resSoap != null) {
+				lista = new ArrayList<ReporteModel>();
+				for (int i = 0; i < resSoap.getPropertyCount(); i++) {
+
+					row = (SoapObject) resSoap.getProperty(i);
+					bean = new ReporteModel();
+
+					bean.setClave(row.getProperty("clave").toString());
+					bean.setSunat(row.getProperty("sunat").toString());
+					bean.setEmision(row.getProperty("emision").toString());
+					bean.setDias(row.getProperty("dias").toString());
+					bean.setRuc(row.getProperty("ruc").toString());
+					bean.setNombre(row.getProperty("nombre").toString());
+					bean.setDireccion(row.getProperty("direccion").toString());
+					bean.setTotal(row.getProperty("total").toString());
+					bean.setPagado(row.getProperty("pagado").toString());
+					bean.setSaldo(row.getProperty("saldo").toString());
+
+					lista.add(bean);
+
+				}
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+
+		return lista;
+
+	}
 
 
 }

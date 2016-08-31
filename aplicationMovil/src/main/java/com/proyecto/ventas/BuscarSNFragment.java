@@ -148,7 +148,7 @@ public class BuscarSNFragment extends Fragment implements OnItemClickListener,
 					}
 				});
 
-		
+		lvSN.setOnScrollListener(this);
 		lvSN.setOnItemClickListener(this);
 
 		setHasOptionsMenu(true);

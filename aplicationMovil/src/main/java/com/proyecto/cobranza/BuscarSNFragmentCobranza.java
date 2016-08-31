@@ -156,7 +156,6 @@ public class BuscarSNFragmentCobranza extends Fragment implements
 		return view;
 	}
 
-	
 	private void llenarDatos() {
 
 		// TRAER TODO DE SQLITE
@@ -198,8 +197,6 @@ public class BuscarSNFragmentCobranza extends Fragment implements
 			
 		}
 		
-		Log.i("CANTIDAD DE CLIENTES CON FACTURA", "T: " + listaAdapter.size());
-
 		rs.close();
 //		db.close();
 
@@ -272,11 +269,7 @@ public class BuscarSNFragmentCobranza extends Fragment implements
 		}
 
 	}
-	
-	
-	
 	// ///////INDEXER
-
 	public void updateList() {
 
 		sideIndex.removeAllViews();
@@ -330,8 +323,7 @@ public class BuscarSNFragmentCobranza extends Fragment implements
 			}
 		});
 	}
-	
-	
+
 	public void displayListItem() {
 
 		sideIndexHeight = sideIndex.getHeight();
@@ -350,8 +342,6 @@ public class BuscarSNFragmentCobranza extends Fragment implements
 			// getListView().setSelection(subitemPosition);
 		}
 	}
-	
-	
 
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
@@ -427,11 +417,9 @@ public class BuscarSNFragmentCobranza extends Fragment implements
 
 	}
 	
-	
 	//EVENT SCROLL OF LISTVIEW
 	@Override
 	public void onScrollStateChanged(AbsListView view, int scrollState) {}
-	
 
 	@Override
 	public void onScroll(AbsListView view, int firstVisibleItem,
@@ -449,7 +437,6 @@ public class BuscarSNFragmentCobranza extends Fragment implements
 	    refreshLayout.setEnabled(enable);
 
 	}
-	
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
@@ -533,7 +520,6 @@ public class BuscarSNFragmentCobranza extends Fragment implements
 			c = db.rawQuery(query, new String[] { arguments.getString("cod") });
 			if (c.moveToFirst()) {
 				nro = c.getInt(0);
-				Log.i("CANTIDAD DE FACTURAS DEL SOCIO", "t: "+ nro);
 			}
 		} finally {
 			if (c != null) {
@@ -637,6 +623,5 @@ public class BuscarSNFragmentCobranza extends Fragment implements
 			}
 		}
 	}
-
 
 }

@@ -1,48 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <instant-run
-    abi="armeabi-v7a,armeabi"
-    api-level="23"
+    abi="x86,armeabi-v7a"
+    api-level="16"
     density="xhdpi"
     format="7"
-    timestamp="107259366050160" >
+    timestamp="194687385602014" >
 
     <task
         name="javac"
-        duration="3939" />
+        duration="579" />
     <task
         name="instant-run-dex"
         duration="0" />
     <task
         name="instant-run-transform"
-        duration="92" />
+        duration="19" />
     <task
         name="verifier"
-        duration="69" />
+        duration="22" />
 
     <artifact
-        location="C:\Users\PC\Desktop\Android Seidor\aplicationMovil\build\intermediates\transforms\dex\debug\folders\1000\5\slice_7\classes.dex"
-        type="DEX" />
-    <artifact
-        location="C:\Users\PC\Desktop\Android Seidor\aplicationMovil\build\intermediates\transforms\dex\debug\folders\1000\5\slice_1\classes.dex"
-        type="DEX" />
+        location="C:\Users\PC\Desktop\Android Seidor\aplicationMovil\build\outputs\apk\aplicationMovil-debug.apk"
+        type="MAIN" />
 
-    <build timestamp="104723197039948" >
+    <build timestamp="194687385602014" >
         <artifact
             location="C:\Users\PC\Desktop\Android Seidor\aplicationMovil\build\outputs\apk\aplicationMovil-debug.apk"
             type="MAIN" />
-    </build>
-    <build timestamp="106601262886716" >
-        <artifact
-            location="C:\Users\PC\Desktop\Android Seidor\aplicationMovil\build\intermediates\transforms\dex\debug\folders\1000\5\slice_3\classes.dex"
-            type="DEX" />
-    </build>
-    <build timestamp="107259366050160" >
-        <artifact
-            location="C:\Users\PC\Desktop\Android Seidor\aplicationMovil\build\intermediates\transforms\dex\debug\folders\1000\5\slice_7\classes.dex"
-            type="DEX" />
-        <artifact
-            location="C:\Users\PC\Desktop\Android Seidor\aplicationMovil\build\intermediates\transforms\dex\debug\folders\1000\5\slice_1\classes.dex"
-            type="DEX" />
     </build>
 
 </instant-run>

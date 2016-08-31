@@ -36,6 +36,7 @@ import com.proyecto.bean.PagoDetalleBean;
 import com.proyecto.bean.PaisBean;
 import com.proyecto.bean.PrecioBean;
 import com.proyecto.bean.ProvinciaBean;
+import com.proyecto.bean.ReporteModel;
 import com.proyecto.bean.SocioNegocioBean;
 import com.proyecto.bean.UnidadMedidaBean;
 import com.proyecto.bean.ZonaBean;
@@ -1157,7 +1158,51 @@ public class Insert {
 			return res;
 			
 		}
-	
+
+
+	//Registro de ntas de credito para reporte de saldos x Vendedor
+	public boolean insertNotaCredito(ArrayList<ReporteModel> lista){
+
+		boolean res = false;
+
+		if(lista != null){
+
+			delete.deleteRegistroNC();
+
+			if(lista.size()>0){
+				res = true;
+				db.beginTransaction();
+				for (ReporteModel nc : lista) {
+
+					ContentValues objetForInsert = new ContentValues();
+					objetForInsert.put("Clave", nc.getClave());
+					objetForInsert.put("Sunat", nc.getSunat());
+					objetForInsert.put("Emision", nc.getEmision());
+					objetForInsert.put("Dias", nc.getDias());
+					objetForInsert.put("Ruc", nc.getRuc());
+					objetForInsert.put("Nombre", nc.getNombre());
+					objetForInsert.put("Direccion", nc.getDireccion());
+					objetForInsert.put("Total", nc.getTotal());
+					objetForInsert.put("Pagado", nc.getPagado());
+					objetForInsert.put("Saldo", nc.getSaldo());
+
+					long respuestaInsert = db.insert("TB_REPORTE_MODEL",
+							null, objetForInsert);
+
+					if (respuestaInsert != -1) {
+						res = true;
+					}
+				}
+				db.setTransactionSuccessful();
+				db.endTransaction();
+			}
+
+		}
+
+		return res;
+
+	}
+
 	
 	//Registro de pagos
 	public boolean insertPagoCliente(ArrayList<PagoBean> lista){

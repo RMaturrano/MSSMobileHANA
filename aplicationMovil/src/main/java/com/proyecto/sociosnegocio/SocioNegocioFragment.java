@@ -1836,6 +1836,7 @@ public class SocioNegocioFragment extends Fragment {
 					objSN.setIndicador(indicadorSel.getCodigo());
 				objSN.setCreadoMovil("Y");
 				objSN.setClaveMovil(claveMovil);
+				objSN.setValidoenPedido("Y");
 				objSN.setEstadoRegistroMovil(getResources().getString(R.string.LOCAL));
 				objSN.setTransaccionMovil(getResources().getString(R.string.CREAR_BORRADOR));
 				

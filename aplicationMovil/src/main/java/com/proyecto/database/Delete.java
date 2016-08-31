@@ -201,6 +201,10 @@ public class Delete {
 		db.execSQL("delete from "+ contexto.getResources().getString(R.string.T_ESTADO_CUENTA_SOCIO));
 		
 	}
+
+	public void deleteRegistroNC(){
+		db.execSQL("delete from TB_REPORTE_MODEL");
+	}
 	
 	
 	public void close(){}

@@ -104,10 +104,31 @@ public class SincManualTaskDocumentos extends AsyncTask<String, String, Object> 
 			}
 		}
 
+		//4. Lista de notas de credito para reporte saldos por vendedor
+		progress[0] = "Obteniendo notas de credito";
+		progress[1] = "4";
+		publishProgress(progress);
+		if(PreferenceManager.getDefaultSharedPreferences(contexto).getBoolean("controlSincManual", false)){
+			if(checkRegistros("ReporteNC"))
+				contador++;
+			else{
+				res = insert.insertNotaCredito(ws.ObtenerReporteNotaCredito(codigoEmpleado));
+				if(res){
+					contador++;
+					putRegistro("ReporteNC");
+				}
+			}
+		}else{
+			res = insert.insertNotaCredito(ws.ObtenerReporteNotaCredito(codigoEmpleado));
+			if(res){
+				contador++;
+			}
+		}
+
 
 		
 		progress[0] = "Finalizado";
-		progress[1] = "4";
+		progress[1] = "5";
 		publishProgress(progress);
 		
 		return contador;
@@ -132,10 +153,10 @@ public class SincManualTaskDocumentos extends AsyncTask<String, String, Object> 
 		
 		int res = (int) result;
 
-		if(res == 4){
+		if(res == 5){
 			Toast.makeText(contexto, "Carga de datos completa.",
 					Toast.LENGTH_LONG).show();
-		}else if( res < 4 && res > 0){
+		}else if( res < 5 && res > 0){
 			Toast.makeText(contexto, "Se cargaron "+ res +" documentos. ",
 					Toast.LENGTH_LONG).show();
 		}else{

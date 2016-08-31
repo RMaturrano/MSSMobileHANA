@@ -13,6 +13,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.widget.DrawerLayout.LayoutParams;
 import android.view.Gravity;
@@ -390,14 +391,18 @@ public class ListaArtFragment extends Fragment implements OnItemClickListener{
     		return true;
 		
         case R.id.action_agregar:
-        	
-        	Fragment fragment = new ArticuloOrdVenta();
-        	
-            transaction.hide(this);
-            transaction.add(R.id.box, fragment);
-            transaction.addToBackStack(null);
-            transaction.commit();
-    	    
+
+			if(OrdenVentaFragment.listaDetalleArticulos.size() <
+					PreferenceManager.getDefaultSharedPreferences(contexto).getInt("MaxLineas",0)) {
+				Fragment fragment = new ArticuloOrdVenta();
+
+				transaction.hide(this);
+				transaction.add(R.id.box, fragment);
+				transaction.addToBackStack(null);
+				transaction.commit();
+			}else{
+				Toast.makeText(contexto,"Está sobrepasando la cantidad máxima de líneas permitidas por pedido",Toast.LENGTH_SHORT).show();
+			}
     	    
         	return true;
         	

@@ -1,6 +1,7 @@
 package com.proyecto.utils;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 import android.annotation.SuppressLint;
@@ -24,7 +25,7 @@ public class AlphabetListAdapterImgAndTwoLines extends BaseAdapter implements
 	public static abstract class Row {}
 
 	private String mSearchTerm;
-
+	private ClientFilter mClientFilter;
 	public Context context;
 	
 	public static final class Section extends Row {
@@ -54,7 +55,9 @@ public class AlphabetListAdapterImgAndTwoLines extends BaseAdapter implements
 
 	@Override
 	public int getCount() {
-		return rows.size();
+		if(rows != null)
+			return rows.size();
+		else return 0;
 	}
 
 	@Override
@@ -121,81 +124,85 @@ public class AlphabetListAdapterImgAndTwoLines extends BaseAdapter implements
 		return view;
 	}
 
-	@Override
-	public Filter getFilter() {
+	private class ClientFilter extends Filter{
 
-		
-		Filter filter = new Filter() {
+		@Override
+		protected FilterResults performFiltering(CharSequence constraint) {
 
-			@SuppressWarnings("unchecked")
-			@Override
-			protected void publishResults(CharSequence constraint,
-					FilterResults results) {
-
-				rows =  (List<Row>) results.values;
-				notifyDataSetChanged();
-
+			if(!constraint.toString().trim().equals("")){
+				if(mSearchTerm.length() > constraint.toString().length())
+					rows = rowsFilterBase;
 			}
 
-			@SuppressLint("DefaultLocale")
-			@Override
-			protected FilterResults performFiltering(CharSequence constraint) {
+			mSearchTerm = constraint.toString().toLowerCase();
+			FilterResults results = new FilterResults();
 
-				if(!constraint.toString().equals("")){
-					if(mSearchTerm.length() > constraint.toString().length())
-						rows = rowsFilterBase;
-				}
-				
-				mSearchTerm = constraint.toString().toLowerCase();
-				FilterResults results = new FilterResults();
+			if (mSearchTerm.equals("") || mSearchTerm.length() == 0) {
 
-				if (mSearchTerm.equals("")) {
+				results.count = rowsFilterBase.size();
+				results.values = rowsFilterBase;
 
-					results.count = rowsFilterBase.size();
-					results.values = rowsFilterBase;
+				return results;
 
-					return results;
+			} else {
 
-				} else {
-					
-					List<Row> rowsFilterFinal = new ArrayList<Row>();
+				List<Row> rowsFilterFinal = new ArrayList<Row>();
 
-
+				if(rows != null && rows.size() > 0){
 					for (int i = 0; i < rows.size(); i++) {
 
 						if(getItemViewType(i)!= 1){
-							
+
 							Item item = (Item) getItem(i);
-							
-							if (item.element.getData().toLowerCase()
-									.startsWith(mSearchTerm.toString())
-									|| item.element.getTitulo().toLowerCase()
-											.startsWith(mSearchTerm)) {
-								rowsFilterFinal.add(item);
-								
+
+							if(item.element != null){
+								if (item.element.getData().toLowerCase()
+										.startsWith(mSearchTerm.toString())
+										|| item.element.getTitulo().toLowerCase()
+										.startsWith(mSearchTerm)) {
+									rowsFilterFinal.add(item);
+								}
 							}
-							
+
+
 						}else{
-							
+
 							Section section = (Section) getItem(i);
-							
-							if(section.letter.toLowerCase().startsWith(mSearchTerm.toString().substring(0,1))){
-								rowsFilterFinal.add(section);
+
+							if(section.letter != null && section.letter.length() >= 1 &&
+									mSearchTerm.length() > 0){
+								if(section.letter.toLowerCase().startsWith(mSearchTerm.toString().substring(0,1))){
+									rowsFilterFinal.add(section);
+								}
 							}
-							
+
+
 						}
 
 					}
-
-					results.count = rowsFilterFinal.size();
-					results.values = rowsFilterFinal;
-
-					return results;
 				}
-			}
-		};
 
-		return filter;
+
+				results.count = rowsFilterFinal.size();
+				results.values = rowsFilterFinal;
+
+				return results;
+			}
+		}
+
+		@Override
+		protected void publishResults(CharSequence constraint, FilterResults results) {
+			rows =  (List<Row>) results.values;
+			notifyDataSetChanged();
+		}
+	}
+
+	@Override
+	public Filter getFilter() {
+
+		if(mClientFilter == null)
+			mClientFilter = new ClientFilter();
+		return mClientFilter;
 
 	}
 
