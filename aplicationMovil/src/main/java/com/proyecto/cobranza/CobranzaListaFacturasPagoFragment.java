@@ -12,6 +12,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.LocalBroadcastManager;
+import android.text.InputFilter;
 import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -153,6 +154,7 @@ public class CobranzaListaFacturasPagoFragment extends Fragment implements OnIte
 			alert.setTitle("Total a pagar");
 
 			final EditText edt = new EditText(contexto);
+			edt.setFilters(new InputFilter[]{new InputFilter.LengthFilter(25)});
 			edt.setRawInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
 			alert.setView(edt);
 

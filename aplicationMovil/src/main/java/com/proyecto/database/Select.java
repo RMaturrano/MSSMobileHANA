@@ -1692,6 +1692,29 @@ public class Select {
 		return res;
 		
 	}
+
+
+	public String selectnombreListaPrecioArticulo(String codigoLP){
+
+		String res = "";
+
+		Cursor data= db.rawQuery("select Nombre from TB_LISTA_PRECIO "  +
+				"where Codigo='"+codigoLP+"' " , null);
+
+		if(data.getCount()>0)
+		{
+			while (data.moveToNext()) {
+				res = data.getString(0);
+			}
+
+			//Cerrar el cursor
+			data.close();
+
+		}
+
+		return res;
+
+	}
 	
 	
 	

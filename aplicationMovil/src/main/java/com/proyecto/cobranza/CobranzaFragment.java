@@ -381,7 +381,7 @@ public class CobranzaFragment extends Fragment{
 				
 			}else if(position == 6){
 				//GLOSA
-				alert.construirAlert(contexto, position, "Glosa", searchResults, lvTitulo, "text");
+				alert.construirAlert(contexto, position, "Glosa", searchResults, lvTitulo, "text",50);
 
 			}else if(position == 7){
 				
@@ -402,7 +402,7 @@ public class CobranzaFragment extends Fragment{
 				
 			}else if(position == 8){
 				
-				alert.construirAlert(contexto, position, "Comentarios", searchResults, lvTitulo, "text");
+				alert.construirAlert(contexto, position, "Comentarios", searchResults, lvTitulo, "text",160);
 				
 			}
 			
@@ -427,7 +427,7 @@ public class CobranzaFragment extends Fragment{
 		searchResults1 = new ArrayList<FormatCustomListView>();
 
 		FormatCustomListView sr = new FormatCustomListView();
-		sr.setTitulo("N� Facturas");
+		sr.setTitulo("N° Facturas");
 		sr.setIcon(iconId);
 		searchResults1.add(sr);
 		
@@ -458,7 +458,7 @@ public class CobranzaFragment extends Fragment{
 		searchResults = new ArrayList<FormatCustomListView>();
 
 		FormatCustomListView sr = new FormatCustomListView();
-    	sr.setTitulo("N�mero");
+    	sr.setTitulo("Numero");
     	sr.setData(idDispositivo+"-"+fullDate+"-"+nroPago);
     	searchResults.add(sr);
 		
@@ -473,7 +473,7 @@ public class CobranzaFragment extends Fragment{
     	searchResults.add(sr);
 		
 		sr = new FormatCustomListView();
-		sr.setTitulo("C�digo socio de negocio");
+		sr.setTitulo("Codigo socio de negocio");
 		sr.setIcon(iconId);
 		searchResults.add(sr);
     	

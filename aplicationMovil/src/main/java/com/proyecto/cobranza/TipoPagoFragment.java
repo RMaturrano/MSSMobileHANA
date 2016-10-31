@@ -28,6 +28,7 @@ import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.proyect.movil.R;
 import com.proyecto.bean.BancoBean;
@@ -263,9 +264,9 @@ public class TipoPagoFragment extends Fragment implements OnItemClickListener{
 				alert.show();
 				
 			}else if(position == 2)
-				alert.construirAlert(contexto, position, "Transferencia referencia", searchResults, lvPrincipal, "text");
+				alert.construirAlert(contexto, position, "Transferencia referencia", searchResults, lvPrincipal, "text",27);
 			else if(position == 3)
-				alert.construirAlert(contexto, position, "Transferencia importe", searchResults, lvPrincipal, "decimal");
+				alert.construirAlert(contexto, position, "Transferencia importe", searchResults, lvPrincipal, "decimal",40);
 		}else if(tipoPagoSel.equalsIgnoreCase("Efectivo")){
 			
 			if(position == 0)
@@ -331,7 +332,7 @@ public class TipoPagoFragment extends Fragment implements OnItemClickListener{
 				
 				
 			}else if(position == 2)
-				alert.construirAlert(contexto, position, "Efectivo importe", searchResults, lvPrincipal, "decimal");
+				alert.construirAlert(contexto, position, "Efectivo importe", searchResults, lvPrincipal, "decimal",40);
 			
 		}else if(tipoPagoSel.equalsIgnoreCase("Cheque")){
 			
@@ -458,9 +459,9 @@ public class TipoPagoFragment extends Fragment implements OnItemClickListener{
 			else if(position == 3)
 				alert.construirAlertDatePicker(contexto, position, "Fecha vencimiento", searchResults, lvPrincipal);
 			else if(position == 4)
-				alert.construirAlert(contexto, position, "Importe", searchResults, lvPrincipal, "decimal");
+				alert.construirAlert(contexto, position, "Importe", searchResults, lvPrincipal, "decimal",40);
 			else if(position == 5)
-				alert.construirAlert(contexto, position, "Número cheque", searchResults, lvPrincipal, "text");
+				alert.construirAlert(contexto, position, "Número cheque", searchResults, lvPrincipal, "numeric", 10);
 		}
 		
 	}
@@ -620,7 +621,19 @@ public class TipoPagoFragment extends Fragment implements OnItemClickListener{
 				CobranzaFragment.tipoPago.setChequeBanco(bancoSel.getCodigo());
 				CobranzaFragment.tipoPago.setChequeVencimiento(searchResults.get(3).getData());
 				CobranzaFragment.tipoPago.setChequeImporte(searchResults.get(4).getData());
-				CobranzaFragment.tipoPago.setChequeNumero(searchResults.get(5).getData());
+				if(searchResults.get(5).getData() != null && !searchResults.get(5).getData().toString().trim().equals("")) {
+					long num = Long.parseLong(searchResults.get(5).getData().toString().trim());
+					if(num <= Integer.MAX_VALUE && num >= Integer.MIN_VALUE)
+						CobranzaFragment.tipoPago.setChequeNumero(searchResults.get(5).getData());
+					else{
+						Toast.makeText(contexto,"Número de cheque inválido, ingrese un número entre " + Integer.MIN_VALUE +
+						" y " + Integer.MAX_VALUE,Toast.LENGTH_LONG).show();
+						return true;
+					}
+				}else{
+					Toast.makeText(contexto,"Ingrese el número de cheque",Toast.LENGTH_SHORT).show();
+					return true;
+				}
 			}
 			
 			//ENVIAR EL AVISO DEL TIPO DE PAGO SELECCIONADO

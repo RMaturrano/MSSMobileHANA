@@ -13,6 +13,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.content.LocalBroadcastManager;
+import android.text.InputFilter;
 import android.text.InputType;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -90,7 +91,7 @@ public class ArticuloOrdVenta extends Fragment {
     private ArticuloBean articuloActualizar = null;
     private String actualizar = "false";
 
-    //RECIBE LOS PARÀMETROS DESDE EL FRAGMENT CORRESPONDIENTE
+    //RECIBE LOS PARï¿½METROS DESDE EL FRAGMENT CORRESPONDIENTE
     private BroadcastReceiver myLocalBroadcastReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -103,7 +104,7 @@ public class ArticuloOrdVenta extends Fragment {
 
                     String cod = bundle.getString("cod");
                     String descp = bundle.getString("desc");
-                    String[] extras = bundle.getString("extras").toString().split("¡");
+                    String[] extras = bundle.getString("extras").toString().split("#");
 
                     if (!extras[2].equals("") && !extras[2].equalsIgnoreCase("anytype{}") &&
                             !extras[4].equals("") && !extras[4].equalsIgnoreCase("anytype{}")) {
@@ -199,7 +200,7 @@ public class ArticuloOrdVenta extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup viewGroup, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.pedido_cliente_articulo, viewGroup, false);
 
-        getActivity().setTitle("Artículo");
+        getActivity().setTitle("Articulo");
 
         v = view;
         contexto = view.getContext();
@@ -260,6 +261,8 @@ public class ArticuloOrdVenta extends Fragment {
         listaImpuesto = select.listaImpuesto();
         listaImpuestoSel = listaImpuesto.get(0);
         listaUnidadesMedida = select.listaUnidadesDeMedida();
+        if(listaUnidadesMedida != null && listaUnidadesMedida.size()>0)
+            unidadMedidaSelOriginal = listaUnidadesMedida.get(0);
         listaPrecios = select.listaPrecios();
 
 
@@ -295,7 +298,7 @@ public class ArticuloOrdVenta extends Fragment {
         lvPrincipal = (ListView) v.findViewById(R.id.lvArticuloPedido);
 
         FormatCustomListView sr = new FormatCustomListView();
-        sr.setTitulo("Artículo");
+        sr.setTitulo("Articulo");
         if (articuloActualizar != null) {
             sr.setData(articuloActualizar.getCod());
         } else {
@@ -304,7 +307,7 @@ public class ArticuloOrdVenta extends Fragment {
         searchResults.add(sr);
 
         sr = new FormatCustomListView();
-        sr.setTitulo("Descripción");
+        sr.setTitulo("Descripcion");
         if (articuloActualizar != null)
             sr.setData(articuloActualizar.getDesc());
         searchResults.add(sr);
@@ -326,12 +329,17 @@ public class ArticuloOrdVenta extends Fragment {
             unidadMedidaSel = new UnidadMedidaBean();
             unidadMedidaSel.setCodigo(articuloActualizar.getCodUM());
             unidadMedidaSel.setNombre(articuloActualizar.getNombreUnidadMedida());
+
+            unidadMedidaSelOriginal = new UnidadMedidaBean();
+            unidadMedidaSelOriginal.setCodigo(articuloActualizar.getCodUM());
+            unidadMedidaSelOriginal.setNombre(articuloActualizar.getNombreUnidadMedida());
+
             sr.setData(articuloActualizar.getNombreUnidadMedida());
         }
         searchResults.add(sr);
 
         sr = new FormatCustomListView();
-        sr.setTitulo("Almacén");
+        sr.setTitulo("Almacen");
         sr.setIcon(iconId);
         if (articuloActualizar != null) {
             for (AlmacenBean almacen : listaAlmacen) {
@@ -356,7 +364,17 @@ public class ArticuloOrdVenta extends Fragment {
         sr.setTitulo("Lista de precios");
         if (permisoEscogerPrecio.equalsIgnoreCase("Y"))
             sr.setIcon(iconId);
-        sr.setData(OrdenVentaFragment.listaPrecioSel.getNombre());
+        if(articuloActualizar != null){
+            listaPreSel = new ListaPrecioBean();
+            listaPreSel.setCodigo(articuloActualizar.getCodigoListaPrecio());
+            listaPreSel.setNombre(articuloActualizar.getDescripcionListaPrecio());
+            sr.setData(articuloActualizar.getDescripcionListaPrecio());
+        }else{
+            sr.setData(OrdenVentaFragment.listaPrecioSel.getNombre());
+            listaPreSel = new ListaPrecioBean();
+            listaPreSel.setCodigo(OrdenVentaFragment.listaPrecioSel.getCodigo());
+            listaPreSel.setNombre(OrdenVentaFragment.listaPrecioSel.getNombre());
+        }
         searchResults.add(sr);
 
         sr = new FormatCustomListView();
@@ -422,6 +440,7 @@ public class ArticuloOrdVenta extends Fragment {
             if (grupoUnidadMedidaSel != null && !grupoUnidadMedidaSel.getCodigo().equals("-1")) {
 
                 String[] parts = grupoUnidadMedidaSel.getNombre().split(":");
+                cargarListasUMManual(grupoUnidadMedidaSel.getCodigo());
 
                 // Parte UNO de la unidad de medida , ejem: 1-CAJA
                 String[] part_1 = parts[0].split("-");
@@ -478,28 +497,31 @@ public class ArticuloOrdVenta extends Fragment {
                         fullObject.setData(unidadMedidaSel.toString());
                         searchResults.set(posicion, fullObject);
 
-                        if (unidadMedidaSel.toString().equals(um2)) {
-                            double pre = Double.parseDouble(searchResults.get(7).getData().toString());
-                            if (pre > 0) {
+                        if(!unidadMedidaSel.getCodigo().equals(unidadMedidaSelOriginal.getCodigo())) {
+
+                            if (unidadMedidaSel.toString().equals(um2)) {
+                                double pre = Double.parseDouble(searchResults.get(7).getData().toString());
+                                if (pre > 0) {
+                                    fullObject = new FormatCustomListView();
+                                    fullObject = (FormatCustomListView) lvPrincipal.getItemAtPosition(7);
+                                    fullObject.setData(String.valueOf(DoubleRound.round((pre / nroDividir), 6)));
+                                    searchResults.set(7, fullObject);
+                                }
+                            } else if (unidadMedidaSel.toString().equals(part_1_nom)) {
+                                double pre = Double.parseDouble(searchResults.get(7).getData().toString());
+                                if (pre > 0)
+                                    searchResults.get(7).setData(String.valueOf(DoubleRound.round((pre * nroDividir), 6)));
+
+                            } else {
                                 fullObject = new FormatCustomListView();
                                 fullObject = (FormatCustomListView) lvPrincipal.getItemAtPosition(7);
-                                fullObject.setData(String.valueOf(DoubleRound.round((pre / nroDividir), 6)));
+                                fullObject.setData(precioVenta);
                                 searchResults.set(7, fullObject);
                             }
-                        } else if (unidadMedidaSel.toString().equals(part_1_nom) && unidadMedidaSelOriginal.getNombre().equals(um2)) {
-
-                            searchResults.get(7).setData(String.valueOf(DoubleRound.round((Double.parseDouble(precioVenta) * nroDividir), 6)));
-
-                        } else {
-                            fullObject = new FormatCustomListView();
-                            fullObject = (FormatCustomListView) lvPrincipal.getItemAtPosition(7);
-                            fullObject.setData(precioVenta);
-                            searchResults.set(7, fullObject);
+                            doMaths();
+                            unidadMedidaSelOriginal = unidadMedidaSel;
+                            lvPrincipal.invalidateViews();
                         }
-                        doMaths();
-
-                        lvPrincipal.invalidateViews();
-
                     }
                 });
 
@@ -522,7 +544,7 @@ public class ArticuloOrdVenta extends Fragment {
             fullObject = (FormatCustomListView) o;
 
             AlertDialog.Builder alert = new AlertDialog.Builder(contexto);
-            alert.setTitle("Almacén");
+            alert.setTitle("Almacen");
 
             //Spinner
             final Spinner spnAlmacen = new Spinner(contexto);
@@ -585,6 +607,9 @@ public class ArticuloOrdVenta extends Fragment {
 
             AlertDialog.Builder alert = new AlertDialog.Builder(contexto);
             alert.setTitle("Cantidad");
+
+            edtCantidad.setFilters(new InputFilter[]{new InputFilter.LengthFilter(25)});
+
             edtCantidad.setFocusableInTouchMode(true);
             edtCantidad.requestFocus();
             edtCantidad.setRawInputType(InputType.TYPE_CLASS_NUMBER|InputType.TYPE_NUMBER_FLAG_DECIMAL);
@@ -676,8 +701,45 @@ public class ArticuloOrdVenta extends Fragment {
                                 precioVenta = cargarPrecioManual(listaPreSel.getCodigo(), searchResults.get(0).getData());
                                 if (precioVenta.equals("") || precioVenta == null)
                                     precioVenta = "0.00";
-                                searchResults.get(7).setData(precioVenta);
-                                searchResults.get(3).setData(unidadMedidaSelOriginal.getNombre());
+
+                                if(grupoUnidadMedidaSel != null && !grupoUnidadMedidaSel.getCodigo().equals("-1")){
+                                    String[] parts = grupoUnidadMedidaSel.getNombre().split(":");
+
+                                    // Parte UNO de la unidad de medida , ejem: 1-CAJA
+                                    String[] part_1 = parts[0].split("-");
+                                    final String part_1_nom = part_1[1];
+
+                                    // Parte DOS de la unidad de medida , ejem: 12-BOTELLA
+                                    String[] part_2 = parts[1].split("-");
+                                    final String um2 = part_2[1];
+                                    final int nroDividir = Integer.parseInt(part_2[0]);
+
+                                    if(unidadMedidaSel != null) {
+
+                                            if (unidadMedidaSel.toString().equals(um2)) {
+                                                if (Double.parseDouble(precioVenta) > 0) {
+                                                    fullObject = new FormatCustomListView();
+                                                    fullObject = (FormatCustomListView) lvPrincipal.getItemAtPosition(7);
+                                                    fullObject.setData(String.valueOf(DoubleRound.round((Double.parseDouble(precioVenta) / nroDividir), 6)));
+                                                    searchResults.set(7, fullObject);
+                                                }
+                                            } else if (unidadMedidaSel.toString().equals(part_1_nom)) {
+                                             //   if (Double.parseDouble(precioVenta) > 0)
+                                               //     searchResults.get(7).setData(String.valueOf(DoubleRound.round((Double.parseDouble(precioVenta) * nroDividir), 6)));
+                                                searchResults.get(7).setData(precioVenta);
+                                            } else {
+                                                fullObject = new FormatCustomListView();
+                                                fullObject = (FormatCustomListView) lvPrincipal.getItemAtPosition(7);
+                                                fullObject.setData(precioVenta);
+                                                searchResults.set(7, fullObject);
+                                            }
+
+                                    }
+                                } else {
+                                    searchResults.get(7).setData(precioVenta);
+                                }
+
+                              //  searchResults.get(3).setData(unidadMedidaSelOriginal.getNombre());
                                 doMaths();
                                 lvPrincipal.invalidateViews();
                             }
@@ -917,8 +979,18 @@ public class ArticuloOrdVenta extends Fragment {
                     art_bean.setCodUM(unidadMedidaSel.getCodigo());
                     art_bean.setNombreUnidadMedida(unidadMedidaSel.getNombre());
                     art_bean.setAlmacen(almacenSel.getCodigo());
-                    art_bean.setCant(Double.parseDouble(searchResults.get(5).getData()));
-                    art_bean.setPre(Double.parseDouble(searchResults.get(7).getData()));
+                    if(Double.parseDouble(searchResults.get(5).getData()) > 0)
+                        art_bean.setCant(Double.parseDouble(searchResults.get(5).getData()));
+                    else{
+                        Toast.makeText(contexto,"La cantidad debe ser mayor a cero.",Toast.LENGTH_SHORT).show();
+                        return true;
+                    }
+                    if(searchResults.get(7).getData() != null && !searchResults.get(7).getData().equals(""))
+                        art_bean.setPre(Double.parseDouble(searchResults.get(7).getData()));
+                    else{
+                        Toast.makeText(contexto,"El articulo no tiene precio",Toast.LENGTH_SHORT).show();
+                        return true;
+                    }
                     art_bean.setDescuento(Double.parseDouble(searchResults.get(8).getData()));
                     if (!listaImpuestoSel.getCodigo().equals("IGV_EXO"))
                         art_bean.setImpuesto(18);
@@ -926,7 +998,13 @@ public class ArticuloOrdVenta extends Fragment {
                         art_bean.setImpuesto(0);
                     art_bean.setCodigoImpuesto(listaImpuestoSel.getCodigo());
                     art_bean.setUtilIcon(iconId);
-
+                    if(listaPreSel != null) {
+                        art_bean.setCodigoListaPrecio(listaPreSel.getCodigo());
+                        art_bean.setDescripcionListaPrecio(listaPreSel.getNombre());
+                    }else{
+                        Toast.makeText(contexto,"Seleccione la lista de precios",Toast.LENGTH_SHORT).show();
+                        return true;
+                    }
 
                     if (MainVentas.codigoArticulo.equals(""))
                         OrdenVentaFragment.listaDetalleArticulos.add(art_bean);
@@ -939,14 +1017,13 @@ public class ArticuloOrdVenta extends Fragment {
                                 OrdenVentaFragment.listaDetalleArticulos.remove(i);
                                 OrdenVentaFragment.listaDetalleArticulos.add(i, art_bean);
                                 break;
-                            } else
-                                i++;
+                            }
                         }
                         MainVentas.codigoArticulo = "";
                     }
 
 
-                    //MANDAR LOS PARÀMETROS EN LOCALBORADCAST INTENT
+                    //MANDAR LOS PARï¿½METROS EN LOCALBORADCAST INTENT
                     Intent localBroadcastIntent = new Intent("event-send-art-to-list");
                     localBroadcastIntent.putExtras(arguments);
                     LocalBroadcastManager myLocalBroadcastManager = LocalBroadcastManager.getInstance(getActivity());
@@ -960,7 +1037,7 @@ public class ArticuloOrdVenta extends Fragment {
 
                 } else {
 
-                    Toast.makeText(contexto, "Seleccione el artículo o ingrese el precio correspondiente", Toast.LENGTH_LONG).show();
+                    Toast.makeText(contexto, "Seleccione el artï¿½culo o ingrese el precio correspondiente", Toast.LENGTH_LONG).show();
 
                 }
 

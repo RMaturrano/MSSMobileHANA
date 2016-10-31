@@ -22,7 +22,7 @@
         android:layout_marginBottom="15dp"
         android:layout_marginLeft="10dp"
         android:textStyle="bold"
-        android:text="Versión: 2.0"/>
+        android:text="Versión: 2.1.1"/>
 
 
 </RelativeLayout>

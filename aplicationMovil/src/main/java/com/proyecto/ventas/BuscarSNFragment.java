@@ -129,7 +129,7 @@ public class BuscarSNFragment extends Fragment implements OnItemClickListener,
 		refreshLayout = (SwipeRefreshLayout) view
 				.findViewById(R.id.swipeRefresh);
 
-		// Seteamos los colores que se usarán a lo largo de la animación
+		// Seteamos los colores que se usarï¿½n a lo largo de la animaciï¿½n
 		refreshLayout.setColorSchemeResources(R.color.s1, R.color.s2,
 				R.color.s3, R.color.s4);
 
@@ -166,7 +166,7 @@ public class BuscarSNFragment extends Fragment implements OnItemClickListener,
 
 		listaAdapter = new ArrayList<FormatCustomListView>();
 
-		Cursor rs = db.rawQuery("select UPPER(NombreRazonSocial),Codigo, " 
+		Cursor rs = db.rawQuery("select UPPER(NombreRazonSocial),Codigo, "
 				+ "ListaPrecio,CondicionPago,Indicador, DireccionFiscal "
 				+ "from TB_SOCIO_NEGOCIO " 
 				+ "where ValidoenPedido = 'Y'"
@@ -472,7 +472,7 @@ public class BuscarSNFragment extends Fragment implements OnItemClickListener,
 				rs2.close();
 //				db.close();
 
-				// MANDAR LOS PARÀMETROS EN LOCALBORADCAST INTENT
+				// MANDAR LOS PARï¿½METROS EN LOCALBORADCAST INTENT
 				Intent localBroadcastIntent = new Intent("event-send-bp-to-ordr");
 				localBroadcastIntent.putExtras(arguments);
 				LocalBroadcastManager myLocalBroadcastManager = LocalBroadcastManager

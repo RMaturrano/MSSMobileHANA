@@ -12,6 +12,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.LocalBroadcastManager;
+import android.text.InputFilter;
 import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -202,6 +203,7 @@ public class FacturaSocioNegocio extends Fragment implements OnItemClickListener
 				edt.setRawInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
 				alert.setView(edt);
 				edt.setText(sr.getData());
+				edt.setFilters(new InputFilter[]{new InputFilter.LengthFilter(25)});
 				edt.setFocusableInTouchMode(true);
 				edt.requestFocus();
 

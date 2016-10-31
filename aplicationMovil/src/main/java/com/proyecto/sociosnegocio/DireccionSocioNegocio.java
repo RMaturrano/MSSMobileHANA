@@ -721,7 +721,7 @@ public class DireccionSocioNegocio extends Fragment{
 			}else if(position == 7){
 				
 				ConstruirAlert alert = new ConstruirAlert();
-				alert.construirAlert(contexto, position, "Referencia", searchResults, lvPrincipal, "text");
+				alert.construirAlert(contexto, position, "Referencia", searchResults, lvPrincipal, "text",100);
 				
 			}
 			

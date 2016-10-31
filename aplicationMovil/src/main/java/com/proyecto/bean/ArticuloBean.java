@@ -4,9 +4,25 @@ public class ArticuloBean {
 
 	private String cod, desc, fabricante, grupoArticulo, codUM,unidadMedidaVenta, 
 			nroCatIC, peso, almacen, fecVen, gDet, marca,
-			zona, codProv, stock, codigoImpuesto, utilLinea;
+			zona, codProv, stock, codigoImpuesto, utilLinea, codigoListaPrecio, descripcionListaPrecio;
 	
 	private String nombreFabricante, nombreGrupoArt, nombreUnidadMedida, nombreUnidadMedidaVenta;
+
+	public String getCodigoListaPrecio() {
+		return codigoListaPrecio;
+	}
+
+	public void setCodigoListaPrecio(String codigoListaPrecio) {
+		this.codigoListaPrecio = codigoListaPrecio;
+	}
+
+	public String getDescripcionListaPrecio() {
+		return descripcionListaPrecio;
+	}
+
+	public void setDescripcionListaPrecio(String descripcionListaPrecio) {
+		this.descripcionListaPrecio = descripcionListaPrecio;
+	}
 
 	public String getNombreFabricante() {
 		return nombreFabricante;

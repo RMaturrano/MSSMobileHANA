@@ -2392,6 +2392,8 @@ public class InvocaWS {
 
 					lista.add(object);
 
+
+
 				}
 			}
 

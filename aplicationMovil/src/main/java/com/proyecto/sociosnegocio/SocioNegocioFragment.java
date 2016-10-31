@@ -430,23 +430,21 @@ public class SocioNegocioFragment extends Fragment {
 		alert.setView(edt);
 
 		if (nroDoc != "") {
-
 			edt.setText(nroDoc);
-
 		}
-
-		edt.setFocusableInTouchMode(true);
-		edt.requestFocus();
 
 		InputFilter[] FilterArray = new InputFilter[1];
 
 		if (tipo.equals("ruc")) {
-			FilterArray[0] = new InputFilter.LengthFilter(11);
+			FilterArray[0] = new InputFilter.LengthFilter(32);
 		} else
-			FilterArray[0] = new InputFilter.LengthFilter(8);
+			FilterArray[0] = new InputFilter.LengthFilter(20);
 
 		edt.setFilters(FilterArray);
+		edt.setFocusableInTouchMode(true);
+		edt.requestFocus();
 		edt.setRawInputType(InputType.TYPE_CLASS_NUMBER);
+
 		alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
 			@SuppressLint("DefaultLocale")
 			public void onClick(DialogInterface dialog, int whichButton) {
@@ -579,12 +577,12 @@ public class SocioNegocioFragment extends Fragment {
 				} else if (position == 5) {
 
 					alert.construirAlert(contexto, position,
-							"Nombre o razón social", searchResults, lvPrincipal , "text");
+							"Nombre o razón social", searchResults, lvPrincipal , "text",100);
 
 				} else if (position == 6) {
 
 					alert.construirAlert(contexto, position,
-							"Nombre comercial", searchResults, lvPrincipal, "text");
+							"Nombre comercial", searchResults, lvPrincipal, "text",100);
 
 				} else if (position == 7) {
 
@@ -741,7 +739,7 @@ public class SocioNegocioFragment extends Fragment {
 				} else if (position == 6) {
 
 					alert.construirAlert(contexto, position,
-							"Nombre comercial", searchResults, lvPrincipal, "text");
+							"Nombre comercial", searchResults, lvPrincipal, "text",100);
 
 				} else if (position == 7) {
 
@@ -1089,22 +1087,22 @@ public class SocioNegocioFragment extends Fragment {
 		if (position == 0) {
 
 			alert.construirAlert(contexto, position, "Teléfono 1",
-					searchResults3, lvGeneral, "numeric");
+					searchResults3, lvGeneral, "numeric",20);
 
 		} else if (position == 1) {
 
 			alert.construirAlert(contexto, position, "Teléfono 2",
-					searchResults3, lvGeneral, "numeric");
+					searchResults3, lvGeneral, "numeric",20);
 
 		} else if (position == 2) {
 
 			alert.construirAlert(contexto, position, "Teléfono móvil",
-					searchResults3, lvGeneral, "numeric");
+					searchResults3, lvGeneral, "numeric",50);
 
 		} else if (position == 3) {
 
 			alert.construirAlert(contexto, position, "Correo electrónico",
-					searchResults3, lvGeneral , "text");
+					searchResults3, lvGeneral , "text",100);
 
 		}
 

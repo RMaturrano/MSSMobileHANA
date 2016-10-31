@@ -112,6 +112,7 @@ public class SincManualTaskDocumentos extends AsyncTask<String, String, Object> 
 			if(checkRegistros("ReporteNC"))
 				contador++;
 			else{
+
 				res = insert.insertNotaCredito(ws.ObtenerReporteNotaCredito(codigoEmpleado));
 				if(res){
 					contador++;

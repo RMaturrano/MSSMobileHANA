@@ -252,12 +252,12 @@
         "source": "C:\\Users\\PC\\Desktop\\Android Seidor\\aplicationMovil\\src\\main\\res\\drawable-hdpi\\ic_store.png"
     },
     {
-        "merged": "C:\\Users\\PC\\Desktop\\Android Seidor\\aplicationMovil\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\abc_list_pressed_holo_dark.9.png",
-        "source": "C:\\Users\\PC\\Desktop\\Android Seidor\\aplicationMovil\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.4.0\\res\\drawable-hdpi-v4\\abc_list_pressed_holo_dark.9.png"
-    },
-    {
         "merged": "C:\\Users\\PC\\Desktop\\Android Seidor\\aplicationMovil\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\ic_truck.png",
         "source": "C:\\Users\\PC\\Desktop\\Android Seidor\\aplicationMovil\\src\\main\\res\\drawable-hdpi\\ic_truck.png"
+    },
+    {
+        "merged": "C:\\Users\\PC\\Desktop\\Android Seidor\\aplicationMovil\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\abc_list_pressed_holo_dark.9.png",
+        "source": "C:\\Users\\PC\\Desktop\\Android Seidor\\aplicationMovil\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.4.0\\res\\drawable-hdpi-v4\\abc_list_pressed_holo_dark.9.png"
     },
     {
         "merged": "C:\\Users\\PC\\Desktop\\Android Seidor\\aplicationMovil\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\quickcontact_badge_small_unpressed.9.png",

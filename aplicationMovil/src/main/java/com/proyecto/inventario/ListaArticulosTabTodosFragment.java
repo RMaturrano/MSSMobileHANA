@@ -63,12 +63,8 @@ public class ListaArticulosTabTodosFragment extends Fragment
 		refreshLayout = (SwipeRefreshLayout) v.findViewById(R.id.swipeRefresh);
 		refreshLayout.setColorSchemeResources(R.color.s1, R.color.s2,
 				R.color.s3, R.color.s4);
-		refreshLayout.post(new Runnable() {
-			@Override
-			public void run() {
-				refreshLayout.setRefreshing(true);
-			}
-		});
+
+		refreshLayout.setRefreshing(true);
 		new fillDataInBackGround().execute();
 		refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
 					@Override
@@ -254,8 +250,7 @@ public class ListaArticulosTabTodosFragment extends Fragment
 							"(select IFNULL(SUM(CAST(STOCK AS NUMERIC)),0) from TB_CANTIDAD where ARTICULO = A.Codigo), " +
 							"G.NOMBRE "
 							+ "from TB_ARTICULO A join TB_GRUPO_ARTICULO G " +
-							"ON A.GrupoArticulo = G.CODIGO join TB_FABRICANTE F " +
-							"ON A.Fabricante = F.CODIGO " +
+							"ON A.GrupoArticulo = G.CODIGO " +
 							"order by A.Nombre" , null);
 
 			while (rs.moveToNext()) {

@@ -182,19 +182,19 @@ public class OrdenVentaFragment extends Fragment{
 									break;
 								}
 							}
-				        	Object o = lvFinanzas.getItemAtPosition(2);
+				        /*	Object o = lvFinanzas.getItemAtPosition(2);
 			        		fullObject = new FormatCustomListView();
 			            	fullObject = (FormatCustomListView)o;
 			            	fullObject.setData(listaPrecioSel.getNombre());
 			            	searchResults4.set(2, fullObject);
-			            	lvFinanzas.invalidateViews();
+			            	lvFinanzas.invalidateViews();	*/
 				        }else{
 				        	listaPrecioSel = null;
-				        	Object o = lvFinanzas.getItemAtPosition(2);
+				        /*	Object o = lvFinanzas.getItemAtPosition(2);
 			        		fullObject = new FormatCustomListView();
 			            	fullObject = (FormatCustomListView)o;
 			            	fullObject.setData("");
-			            	searchResults4.set(2, fullObject);
+			            	searchResults4.set(2, fullObject);	*/
 			            	lvFinanzas.invalidateViews();
 				        }
 				        	
@@ -227,7 +227,7 @@ public class OrdenVentaFragment extends Fragment{
 					        lvFinanzas.invalidateViews();
 				        }
 				        	
-				        if(!extras[2].equals("") && !extras[2].equalsIgnoreCase("anytype{}")){
+				        if(extras.length > 2 && !extras[2].equals("") && !extras[2].equalsIgnoreCase("anytype{}")){
 				        	codigoIndicadorSN = extras[2];
 				        	for (IndicadorBean bean : listaIndicadores) {
 								if(bean.getCodigo().equals(codigoIndicadorSN)){
@@ -556,10 +556,11 @@ public class OrdenVentaFragment extends Fragment{
     	sr.setTitulo("Indicador");
     	searchResults4.add(sr);
     	
-    	sr = new FormatCustomListView();
+    /*	sr = new FormatCustomListView();
     	sr.setTitulo("Lista de precios");
     	searchResults4.add(sr);
-    	
+    	*/
+
     	adapter = new ListViewCustomAdapterTwoLinesAndImg( contexto, searchResults4);
     	lvFinanzas.setAdapter(adapter);
     	DynamicHeight.setListViewHeightBasedOnChildren(lvFinanzas);
@@ -812,7 +813,7 @@ public class OrdenVentaFragment extends Fragment{
 				
 			}else if (position == 6){
 				
-				alert.construirAlert(contexto, position, "Comentarios", searchResults, lvPrincipal, "text");
+				alert.construirAlert(contexto, position, "Comentarios", searchResults, lvPrincipal, "text",160);
 				
 			}else if (position == 7){
 				
@@ -824,7 +825,7 @@ public class OrdenVentaFragment extends Fragment{
 			
 			}else if(position == 9){
 				
-				alert.construirAlert(contexto, position, "Referencia", searchResults, lvPrincipal, "text");
+				alert.construirAlert(contexto, position, "Referencia", searchResults, lvPrincipal, "text",100);
 				
 			}
 			
@@ -1034,7 +1035,7 @@ public class OrdenVentaFragment extends Fragment{
 	    		alert.show();
 				
         	}else
-        		alert.construirAlert(contexto, position, "Dirección de entrega", searchResults2, lvDirecciones, "text");
+        		alert.construirAlert(contexto, position, "Dirección de entrega", searchResults2, lvDirecciones, "text",250);
         	
         	
 			
@@ -1066,23 +1067,23 @@ public class OrdenVentaFragment extends Fragment{
 		
 		if(position == 0){
 			
-			alert.construirAlert(contexto, position, "Código de entrega", searchResults2, lvLogistica, "text");
+			alert.construirAlert(contexto, position, "Código de entrega", searchResults2, lvLogistica, "text",200);
 			
 		}else if(position == 1){
 			
-			alert.construirAlert(contexto, position, "Dirección de despacho", searchResults2, lvLogistica, "text");
+			alert.construirAlert(contexto, position, "Dirección de despacho", searchResults2, lvLogistica, "text",200);
 			
 		}else if(position == 2){
 			
-			alert.construirAlert(contexto, position, "Código de factura", searchResults2, lvLogistica, "text");
+			alert.construirAlert(contexto, position, "Código de factura", searchResults2, lvLogistica, "text",200);
 			
 		}else if(position == 3){
 			
-			alert.construirAlert(contexto, position, "Dirección de factura", searchResults2, lvLogistica, "text");
+			alert.construirAlert(contexto, position, "Dirección de factura", searchResults2, lvLogistica, "text",200);
 			
 		}else if(position == 4){
 			
-			alert.construirAlert(contexto, position, "Situación entre.", searchResults2, lvLogistica, "text");
+			alert.construirAlert(contexto, position, "Situación entre.", searchResults2, lvLogistica, "text",200);
 			
 		}
 		
@@ -1361,10 +1362,25 @@ public class OrdenVentaFragment extends Fragment{
 		
 		
 		//Bloque calculos
-		ordBean.setSubTotal(searchResults3.get(0).getData());
-		ordBean.setPorcDesc(Double.parseDouble(searchResults3.get(1).getData()));
-		ordBean.setTotDesc(Double.parseDouble(searchResults3.get(2).getData()));
-		ordBean.setImpuesto(searchResults3.get(3).getData());
+			if(searchResults3 != null)
+				ordBean.setSubTotal(searchResults3.get(0).getData());
+			else {
+				Toast.makeText(contexto, "Confirme los artículos en el detalle para generar los totales del pedido.", Toast.LENGTH_SHORT).show();
+				return true;
+			}
+			if(searchResults3.get(1) != null)
+				ordBean.setPorcDesc(Double.parseDouble(searchResults3.get(1).getData()));
+			else {
+				Toast.makeText(contexto, "Confirme los artículos en el detalle para generar los totales del pedido.", Toast.LENGTH_SHORT).show();
+				return true;
+			}
+			if(searchResults3.get(3) !=null)
+				ordBean.setTotDesc(Double.parseDouble(searchResults3.get(2).getData()));
+			else {
+				Toast.makeText(contexto, "Confirme los artículos en el detalle para generar los totales del pedido.", Toast.LENGTH_SHORT).show();
+				return true;
+			}
+			ordBean.setImpuesto(searchResults3.get(3).getData());
 		ordBean.setTotal(searchResults3.get(4).getData());
 		ordBean.setCreadoMovil("Y");
 		
@@ -1388,7 +1404,7 @@ public class OrdenVentaFragment extends Fragment{
 			ordDetBean.setCodUM(art.getCodUM());
 			ordDetBean.setAlmacen(art.getAlmacen());
 			ordDetBean.setCantidad(art.getCant());
-			ordDetBean.setListaPrecio(listaPrecioSel.getCodigo());
+			ordDetBean.setListaPrecio(art.getCodigoListaPrecio());
 			ordDetBean.setPrecio(art.getPre());
 			ordDetBean.setDescuento(art.getDescuento());
 			ordDetBean.setCodImp(art.getCodigoImpuesto());
@@ -1584,6 +1600,8 @@ public class OrdenVentaFragment extends Fragment{
 			articulo.setNombreUnidadMedida(select.selectnombreUMArticulo(line.getCodArt()));
 			articulo.setAlmacen(line.getAlmacen());
 			articulo.setCant(line.getCantidad());
+			articulo.setCodigoListaPrecio(line.getListaPrecio());
+			articulo.setDescripcionListaPrecio(select.selectnombreListaPrecioArticulo(line.getListaPrecio()));
 			articulo.setPre(line.getPrecio());
 			articulo.setDescuento(line.getDescuento());
 			articulo.setCodigoImpuesto(line.getCodImp());
@@ -1657,7 +1675,7 @@ public class OrdenVentaFragment extends Fragment{
 		for (ListaPrecioBean lp : listaPrecios) {
 			if(lp.getCodigo().equals(bean.getListaPrecio())){
 				listaPrecioSel = lp;
-				searchResults4.get(2).setData(listaPrecioSel.getNombre());
+				//searchResults4.get(2).setData(listaPrecioSel.getNombre());
 				break;
 			}
 		}

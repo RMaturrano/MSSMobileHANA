@@ -11,6 +11,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.LocalBroadcastManager;
+import android.text.InputFilter;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -129,27 +130,27 @@ public class ContactoSocioNegocio extends Fragment{
 			
 		}else if(position == 4){
 			
-			alert.construirAlert(contexto, position, "Dirección", searchResults, lvPrincipal, "text");
+			alert.construirAlert(contexto, position, "Dirección", searchResults, lvPrincipal, "text",100);
 			
 		}else if(position == 5){
 			
-			alert.construirAlert(contexto, position, "Teléfono 1", searchResults, lvPrincipal, "numeric");
+			alert.construirAlert(contexto, position, "Teléfono 1", searchResults, lvPrincipal, "numeric",20);
 			
 		}else if(position == 6){
 			
-			alert.construirAlert(contexto, position, "Teléfono 2", searchResults, lvPrincipal, "numeric");
+			alert.construirAlert(contexto, position, "Teléfono 2", searchResults, lvPrincipal, "numeric",20);
 			
 		}else if(position == 7){
 			
-			alert.construirAlert(contexto, position, "Teléfono móvil", searchResults, lvPrincipal, "numeric");
+			alert.construirAlert(contexto, position, "Teléfono móvil", searchResults, lvPrincipal, "numeric",50);
 			
 		}else if(position == 8){
 			
-			alert.construirAlert(contexto, position, "Correo electrónico", searchResults, lvPrincipal, "text");
+			alert.construirAlert(contexto, position, "Correo electrónico", searchResults, lvPrincipal, "text",100);
 			
 		}else if(position == 9){
 			
-			alert.construirAlert(contexto, position, "Posición", searchResults, lvPrincipal, "text");
+			alert.construirAlert(contexto, position, "Posición", searchResults, lvPrincipal, "text",90);
 			
 		}
 		
@@ -172,7 +173,9 @@ public class ContactoSocioNegocio extends Fragment{
 		
 		edt.setFocusableInTouchMode(true);
 		edt.requestFocus();
-		
+		InputFilter[] fArray = new InputFilter[1];
+		fArray[0] = new InputFilter.LengthFilter(50);
+		edt.setFilters(fArray);
 		
 		alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
 		public void onClick(DialogInterface dialog, int whichButton) {

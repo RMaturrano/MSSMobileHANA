@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.text.InputFilter;
 import android.text.InputType;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.DatePicker;
@@ -19,7 +20,7 @@ public class ConstruirAlert {
 	
 	public void construirAlert(Context contexto, final int posicion, String titulo,
 						final ArrayList<FormatCustomListView> searchResults,
-						final ListView lv, String tipoString){
+						final ListView lv, String tipoString, int maxLength){
 		
 		this.context = contexto;
 
@@ -38,7 +39,10 @@ public class ConstruirAlert {
 		}else if(tipoString.equalsIgnoreCase("decimal")){
 			edt.setRawInputType(InputType.TYPE_CLASS_NUMBER|InputType.TYPE_NUMBER_FLAG_DECIMAL);
 		}
-		
+
+		InputFilter[] fArray = new InputFilter[1];
+		fArray[0] = new InputFilter.LengthFilter(maxLength);
+		edt.setFilters(fArray);
 		edt.setMaxLines(1);
 		edt.setFocusableInTouchMode(true);
 		edt.requestFocus();
