@@ -26,7 +26,14 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
 import com.proyecto.bean.EmpleadoBean;
+import com.proyecto.bean.EmpresaBean;
 import com.proyecto.conectividad.Connectivity;
 import com.proyecto.movil.MainActivityDrawer;
 import com.proyecto.preferences.SettingsMain;
@@ -34,7 +41,16 @@ import com.proyecto.servicios.Constants;
 import com.proyecto.servicios.ServicioOvPr;
 import com.proyecto.servicios.ServicioSocios;
 import com.proyecto.utils.Variables;
+import com.proyecto.ws.HanaWS;
 import com.proyecto.ws.InvocaWS;
+import com.proyecto.ws.VolleySingleton;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Activity which displays a login screen to the user, offering registration as
@@ -86,7 +102,7 @@ public class LoginActivity extends AppCompatActivity {
 		final ActionBar ab = getSupportActionBar();
 		if (ab != null) {
 			// Poner �cono del drawer toggle
-			ab.setHomeAsUpIndicator(R.drawable.logo_seidor_menu);
+			//ab.setHomeAsUpIndicator(R.drawable.logo_seidor_menu);
 			ab.setDisplayHomeAsUpEnabled(true);
 		}
 
@@ -182,6 +198,12 @@ public class LoginActivity extends AppCompatActivity {
 			cancel = true;
 		}
 
+		if (TextUtils.isEmpty(mUser)) {
+			mEmailView.setError(getString(R.string.error_field_required));
+			focusView = mEmailView;
+			cancel = true;
+		}
+
 		if (cancel) {
 			// There was an error; don't attempt login and focus the first
 			// form field with an error.
@@ -200,10 +222,14 @@ public class LoginActivity extends AppCompatActivity {
 
 					// Show a progress spinner, and kick off a background task to
 					// perform the user login attempt.
+
 					mLoginStatusMessageView.setText(R.string.login_progress_signing_in);
 					showProgress(true);
-					mAuthTask = new UserLoginTask();
-					mAuthTask.execute((Void) null);
+
+					//mAuthTask = new UserLoginTask();
+					//mAuthTask.execute((Void) null);
+
+					iniciarLogin();
 					
 				} else {
 
@@ -258,6 +284,113 @@ public class LoginActivity extends AppCompatActivity {
 		}
 	}
 
+
+	private void iniciarLogin(){
+
+		final SharedPreferences pref = PreferenceManager
+				.getDefaultSharedPreferences(contexto);
+
+		final String ip = pref.getString("ipServidor", "200.10.84.66");
+		final String port = pref.getString("puertoServidor", "80");
+		final String sociedad = pref.getString("sociedades", "-1");
+		final String ws_ruta = "http://" + ip + ":" + port +
+				"/MSS_MOBILE/service/login/auth.xsjs";
+		String usuario = mEmailView.getText().toString();
+		String password = mPasswordView.getText().toString();
+
+		JSONObject jsonObject = new JSONObject();
+
+		try {
+			jsonObject.put("empresaId", Integer.parseInt(sociedad));
+			jsonObject.put("usuario", usuario);
+			jsonObject.put("password", Integer.parseInt(password));
+			jsonObject.put("idUnico", idDispositivo);
+		}catch (Exception e){
+			showToast("Excepción no controlada, JSONObject to send, " + e.getMessage());
+		}
+
+		JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, ws_ruta, jsonObject,
+				new Response.Listener<JSONObject>() {
+					@Override
+					public void onResponse(JSONObject response) {
+						showProgress(false);
+						try {
+							if(response.getString("ResponseStatus").equals("Error")){
+								String messageError = response.getJSONObject("Response")
+										.getJSONObject("message")
+										.getString("value");
+
+								if(response.getJSONObject("Response").getInt("code") == -102 ||
+										response.getJSONObject("Response").getInt("code") == -103){
+									mEmailView.setError(messageError);
+									mEmailView.requestFocus();
+								}else if(response.getJSONObject("Response").getInt("code") == -104){
+									mPasswordView.setError(messageError);
+									mPasswordView.requestFocus();
+								}else{
+									showToast(messageError);
+								}
+
+							}else{
+								showToast("Datos correctos. Bienvenido...");
+
+								JSONObject objUser = response.getJSONObject("Response");
+								SharedPreferences.Editor editor = pref.edit();
+								editor.putString(Variables.CODIGO_EMPLEADO, objUser.getString("Codigo"));
+								editor.putString(Variables.NOMBRE_EMPLEADO, objUser.getString("Nombre"));
+								editor.putString(Variables.USUARIO_EMPLEADO, objUser.getString("Usuario"));
+								editor.putString(Variables.PASSWORD_EMPLEADO, String.valueOf(objUser.getInt("Clave")));
+								editor.putString(Variables.PERFIL, objUser.getString("Perfil"));
+
+								JSONObject permisos = new JSONObject();
+								permisos.put(Variables.MOVIL_ACCESA, "N");
+								permisos.put(Variables.MOVIL_CREAR, "N");
+								permisos.put(Variables.MOVIL_EDITAR, "N");
+								permisos.put(Variables.MOVIL_APROBAR, "N");
+								permisos.put(Variables.MOVIL_RECHAZAR, "N");
+								permisos.put(Variables.MOVIL_ESCOGER_PRECIO, "N");
+
+								editor.putString(Variables.MENU_SOCIOS_NEGOCIO, permisos.toString());
+								editor.putString(Variables.MENU_INVENTARIO, permisos.toString());
+								editor.putString(Variables.MENU_PEDIDOS, permisos.toString());
+								editor.putString(Variables.MENU_FACTURAS, permisos.toString());
+								editor.putString(Variables.MENU_COBRANZAS, permisos.toString());
+								editor.putString(Variables.MENU_REPORTES, permisos.toString());
+								editor.putString(Variables.MENU_ACTIVIDADES, permisos.toString());
+
+								editor.commit();
+
+								Intent principal = new Intent(contexto, MainActivityDrawer.class);
+								startActivity(principal);
+
+								finish();
+							}
+						}catch (Exception e){
+							showToast("Exception > onResponse() > " + e.getMessage());
+						}
+					}
+				},
+				new Response.ErrorListener() {
+					@Override
+					public void onErrorResponse(VolleyError error) {
+						showProgress(false);
+						showToast("Ocurrio un error intentando conectar con el servidor");
+					}
+				}) {
+			@Override
+			public Map<String, String> getHeaders() throws AuthFailureError {
+				HashMap<String, String> headers = new HashMap<String, String>();
+				headers.put("Content-Type", "application/json; charset=utf-8");
+				return headers;
+			}
+		};
+
+		VolleySingleton.getInstance(contexto).addToRequestQueue(jsonObjectRequest);
+	}
+
+	private void showToast(String message) {
+		Toast.makeText(LoginActivity.this, message, Toast.LENGTH_SHORT).show();
+	}
 	/**
 	 * Represents an asynchronous login/registration task used to authenticate
 	 * the user.

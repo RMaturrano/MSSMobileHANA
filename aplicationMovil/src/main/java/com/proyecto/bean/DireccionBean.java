@@ -2,10 +2,28 @@ package com.proyecto.bean;
 
 public class DireccionBean {
 
-	
-	private String TipoDireccion,IDDireccion,Pais,Departamento,Provincia,Distrito,Calle, referencia, nombreCalle;
+	private String codigoCliente;
+	private String TipoDireccion;
+	private String IDDireccion;
+	private String Pais;
+	private String Departamento;
+	private String Provincia;
+	private String Distrito;
+	private String Calle;
+	private String referencia;
+	private String nombreCalle;
+	private String latitud;
+	private String longitud;
 	private int utilId;
 	private boolean principal;
+
+	public String getCodigoCliente() {
+		return codigoCliente;
+	}
+
+	public void setCodigoCliente(String codigoCliente) {
+		this.codigoCliente = codigoCliente;
+	}
 
 	public String getTipoDireccion() {
 		return TipoDireccion;
@@ -94,7 +112,21 @@ public class DireccionBean {
 	public void setNombreCalle(String nombreCalle) {
 		this.nombreCalle = nombreCalle;
 	}
-	
-	
+
+	public String getLatitud() {
+		return latitud;
+	}
+
+	public void setLatitud(String latitud) {
+		this.latitud = latitud;
+	}
+
+	public String getLongitud() {
+		return longitud;
+	}
+
+	public void setLongitud(String longitud) {
+		this.longitud = longitud;
+	}
 	
 }

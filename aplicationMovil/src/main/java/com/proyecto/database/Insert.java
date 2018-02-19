@@ -1,6 +1,7 @@
 package com.proyecto.database;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -74,6 +75,8 @@ public class Insert {
 					delete.deleteSocioNegocio(lista);
 				else if(type.equalsIgnoreCase("L"))
 					delete.deleteSocioNegocioLead(lista);
+				else
+					delete.deleteSocioNegocioAll(lista);
 
 				db.beginTransaction();
 				
@@ -157,7 +160,7 @@ public class Insert {
 									db.execSQL(
 											"insert into "
 													+contexto.getResources().getString(R.string.TD_DIRECCION_SOCIO_NEGOCIO)+
-											" values(?,?,?,?,?,?,?,?,?,?)",
+											" values(?,?,?,?,?,?,?,?,?,?,?,?)",
 											new Object[] {
 													socioNegocio.getCodigo(),
 													direccion.getIDDireccion(),
@@ -168,7 +171,9 @@ public class Insert {
 													direccion.getCalle(),
 													direccion.getReferencia(), 
 													direccion.getTipoDireccion(),
-													"0" });
+													"0",
+													direccion.getLatitud(),
+													direccion.getLongitud()});
 
 								}
 
@@ -579,7 +584,7 @@ public class Insert {
 	
 	
 	//Registro de almacenes
-	public boolean insertAlmacen(ArrayList<AlmacenBean> lista){
+	public boolean insertAlmacen(List<AlmacenBean> lista){
 		
 		boolean res = false;
 		
@@ -608,7 +613,7 @@ public class Insert {
 	
 	
 	//Registro de articulos
-	public boolean insertArticulo(ArrayList<ArticuloBean> lista){
+	public boolean insertArticulo(List<ArticuloBean> lista){
 		
 		boolean res = false;
 		
@@ -642,7 +647,7 @@ public class Insert {
 	
 	
 	//Registro de cantidades
-	public boolean insertCantidad(ArrayList<CantidadBean> lista){
+	public boolean insertCantidad(List<CantidadBean> lista){
 		
 		boolean res = false;
 		if(lista != null){
@@ -676,7 +681,7 @@ public class Insert {
 	
 	
 	//Registro de condiciones de pago
-	public boolean insertCondicionPago(ArrayList<CondicionPagoBean> lista){
+	public boolean insertCondicionPago(List<CondicionPagoBean> lista){
 		
 		boolean res = false;
 		
@@ -707,7 +712,7 @@ public class Insert {
 	
 	
 	//Registro de fabricantes
-	public boolean insertFabricante(ArrayList<FabricanteBean> lista){
+	public boolean insertFabricante(List<FabricanteBean> lista){
 		
 		boolean res = false;
 		if(lista != null){
@@ -826,7 +831,7 @@ public class Insert {
 		
 	
 	//Registro de grupos de articulo
-	public boolean insertGruposArticulo(ArrayList<GrupoArticuloBean> lista){
+	public boolean insertGruposArticulo(List<GrupoArticuloBean> lista){
 		
 		boolean res = false;
 		if(lista != null){
@@ -856,7 +861,7 @@ public class Insert {
 		
 	
 	//Registro de grupos de socio de negocio
-	public boolean insertGruposSocioNegocio(ArrayList<GrupoSocioNegocioBean> lista){
+	public boolean insertGruposSocioNegocio(List<GrupoSocioNegocioBean> lista){
 		
 		boolean res = false;
 		if(lista != null){
@@ -886,7 +891,7 @@ public class Insert {
 	
 	
 	//Registro de grupos de unidad de medida
-	public boolean insertGruposUnidadMedida(ArrayList<GrupoUnidadMedidaBean> lista){
+	public boolean insertGruposUnidadMedida(List<GrupoUnidadMedidaBean> lista){
 		
 		boolean res = false;
 		
@@ -946,7 +951,7 @@ public class Insert {
 		
 	
 	//Registro de impuesto
-	public boolean insertImpuesto(ArrayList<ImpuestoBean> lista){
+	public boolean insertImpuesto(List<ImpuestoBean> lista){
 		
 		boolean res = false;
 		if(lista != null){
@@ -971,7 +976,7 @@ public class Insert {
 	
 	
 	//Registro de indicadores
-	public boolean insertIndicador(ArrayList<IndicadorBean> lista){
+	public boolean insertIndicador(List<IndicadorBean> lista){
 		
 		boolean res = false;
 		if(lista != null){
@@ -1001,7 +1006,7 @@ public class Insert {
 
 	
 	//Registro de listas de precios
-	public boolean insertListaPrecio(ArrayList<ListaPrecioBean> lista){
+	public boolean insertListaPrecio(List<ListaPrecioBean> lista){
 		
 		boolean res = false;
 		
@@ -1038,7 +1043,7 @@ public class Insert {
 	
 	
 	//Registro de listas de precios
-	public boolean insertPrecios(ArrayList<PrecioBean> lista){
+	public boolean insertPrecios(List<PrecioBean> lista){
 		
 		boolean res = false;
 		
@@ -1079,7 +1084,7 @@ public class Insert {
 		
 	
 	//Registro de monedas
-	public boolean insertMoneda(ArrayList<MonedaBean> lista){
+	public boolean insertMoneda(List<MonedaBean> lista){
 		
 		boolean res = false;
 		if(lista != null){
@@ -1412,7 +1417,7 @@ public class Insert {
 			
 	
 	//Registro de pais
-	public boolean insertPais(ArrayList<PaisBean> lista){
+	public boolean insertPais(List<PaisBean> lista){
 		
 		boolean res = false;
 		
@@ -1430,7 +1435,6 @@ public class Insert {
 					
 				}
 			}
-		
 		}
 		
 		return res;
@@ -1439,7 +1443,7 @@ public class Insert {
 	
 	
 	//Registro de departamento
-	public boolean insertDepartamento(ArrayList<DepartamentoBean> lista){
+	public boolean insertDepartamento(List<DepartamentoBean> lista){
 
 		boolean res = false;
 		if(lista != null){
@@ -1466,7 +1470,7 @@ public class Insert {
 	
 	
 	//Registro de provincias
-	public boolean insertProvincias(ArrayList<ProvinciaBean> lista){
+	public boolean insertProvincias(List<ProvinciaBean> lista){
 
 		boolean res = false;
 		if(lista != null){
@@ -1493,7 +1497,7 @@ public class Insert {
 	
 	
 	//Registro de distritos
-	public boolean insertDistritos(ArrayList<DistritoBean> lista){
+	public boolean insertDistritos(List<DistritoBean> lista){
 
 		boolean res = false;
 		if(lista != null){
@@ -1551,7 +1555,7 @@ public class Insert {
 		
 	
 	//Registro de unidades de medida
-	public boolean insertUnidadMedida(ArrayList<UnidadMedidaBean> lista){
+	public boolean insertUnidadMedida(List<UnidadMedidaBean> lista){
 		
 		boolean res = false;
 		if(lista != null){
@@ -1581,7 +1585,7 @@ public class Insert {
 	
 	
 	//Registro de zonas
-	public boolean insertZonas(ArrayList<ZonaBean> lista){
+	public boolean insertZonas(List<ZonaBean> lista){
 		
 		boolean res = false;
 		if(lista != null){
@@ -1609,7 +1613,7 @@ public class Insert {
 	
 	
 	//Registro de cuentas
-	public boolean insertCuentas(ArrayList<CuentaBean> lista){
+	public boolean insertCuentas(List<CuentaBean> lista){
 		
 		boolean res = false;
 		if(lista != null){
@@ -1635,7 +1639,7 @@ public class Insert {
 	
 	
 	//Registro de bancos
-	public boolean insertBancos(ArrayList<BancoBean> lista){
+	public boolean insertBancos(List<BancoBean> lista){
 		
 		boolean res = false;
 		if(lista != null){

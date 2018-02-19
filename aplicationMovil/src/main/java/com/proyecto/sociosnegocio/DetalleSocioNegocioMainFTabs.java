@@ -14,7 +14,7 @@ import com.proyecto.utils.PagerAdapterDetalleBP;
 public class DetalleSocioNegocioMainFTabs extends Fragment{
 	
 	private View v;
-	
+	private PagerAdapterDetalleBP adapter;
 
 	@Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -29,8 +29,7 @@ public class DetalleSocioNegocioMainFTabs extends Fragment{
               tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
        
               final ViewPager viewPager = (ViewPager) v.findViewById(R.id.pager);
-              final PagerAdapterDetalleBP adapter = new PagerAdapterDetalleBP
-                      (getFragmentManager(), tabLayout.getTabCount());
+              adapter = new PagerAdapterDetalleBP(getFragmentManager(), tabLayout.getTabCount());
               viewPager.setAdapter(adapter);
               viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
               tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
@@ -52,6 +51,12 @@ public class DetalleSocioNegocioMainFTabs extends Fragment{
               
            return v;
         
+    }
+
+    public void notificarCambioUbicacion(String latitud, String longitud){
+        DetalleSocioNegocioTabDirecciones tabDirecciones =
+                (DetalleSocioNegocioTabDirecciones) adapter.getRegisteredFragment(4);
+        tabDirecciones.updateLatLon(latitud, longitud);
     }
 
 }

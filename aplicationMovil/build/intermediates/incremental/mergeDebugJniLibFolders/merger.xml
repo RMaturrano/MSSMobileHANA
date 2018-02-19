@@ -1,2 +1,2 @@
 <?xml version="1.0" encoding="utf-8"?>
-<merger version="3"><dataSet config="main"><source path="C:\Users\PC\Desktop\Android Seidor\aplicationMovil\src\main\jniLibs"/></dataSet><dataSet config="debug"><source path="C:\Users\PC\Desktop\Android Seidor\aplicationMovil\src\debug\jniLibs"/></dataSet></merger>
+<merger version="3"><dataSet config="main"><source path="C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\jniLibs"/></dataSet><dataSet config="debug"><source path="C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\debug\jniLibs"/></dataSet></merger>

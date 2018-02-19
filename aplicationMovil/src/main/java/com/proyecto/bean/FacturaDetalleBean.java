@@ -1,7 +1,7 @@
 package com.proyecto.bean;
 
 public class FacturaDetalleBean {
-	
+
 	private String articulo, unidadMedida, almacen, cantidad, listaPrecio, precioUnitario,
 				porcentajeDescuento,impuesto, fechaEntrega;
 

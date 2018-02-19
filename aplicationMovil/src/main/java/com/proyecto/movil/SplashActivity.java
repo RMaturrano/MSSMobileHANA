@@ -29,7 +29,10 @@ import android.widget.Toast;
 
 import com.proyect.movil.LoginActivity;
 import com.proyect.movil.R;
+import com.proyecto.database.DataBaseHelper;
 import com.proyecto.utils.Variables;
+
+import java.io.IOException;
 
 public class SplashActivity extends Activity{
 
@@ -59,6 +62,8 @@ public class SplashActivity extends Activity{
 		
 		// Tenemos una plantilla llamada splash.xml donde mostraremos la información (logotipo)
         setContentView(R.layout.splash_screen);
+
+		DataBaseHelper dataBaseHelper = new DataBaseHelper(SplashActivity.this);
 
 		//Asignar permisos
 		if(Build.VERSION.SDK_INT >= 23){
@@ -111,7 +116,7 @@ public class SplashActivity extends Activity{
     			alert.setView(edt);
     			alert.setCancelable(false);
     			edt.setMaxLines(1);
-    			edt.setRawInputType(InputType.TYPE_CLASS_TEXT);
+    			edt.setRawInputType(InputType.TYPE_CLASS_NUMBER);
     			edt.setImeOptions(EditorInfo.IME_ACTION_GO);
     			edt.setFocusableInTouchMode(true);
     			edt.requestFocus();

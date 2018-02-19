@@ -5,8 +5,16 @@
     android:versionName="1.0" >
 
     <uses-sdk
-        android:minSdkVersion="13"
+        android:minSdkVersion="14"
         android:targetSdkVersion="23" />
+
+    <uses-feature
+        android:glEsVersion="0x00020000"
+        android:required="true" />
+
+    <meta-data
+        android:name="com.google.android.gms.version"
+        android:value="@integer/google_play_services_version" />
 
     <!-- ASIGNAR PERMISOS A LA APLICACION -->
     <uses-permission android:name="android.permission.INTERNET" />
@@ -17,10 +25,13 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_INTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
 
     <!--  -->
     <application
         android:allowBackup="true"
+        android:debuggable="true"
         android:icon="@drawable/logo_seidor_menu"
         android:label="@string/app_name"
         android:largeHeap="true"
@@ -34,6 +45,10 @@
             android:name="com.proyecto.movil.SplashActivity"
             android:label="@string/app_name"
             android:theme="@android:style/Theme.Light.NoTitleBar.Fullscreen" >
+        </activity>
+        <activity
+            android:name="com.proyecto.movil.MainActivityDrawer"
+            android:label="@string/titMenuPrincipal" >
 
             <!-- ACTIVITY EN SER LANZADO PRIMERO -->
             <intent-filter>
@@ -43,19 +58,13 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.proyecto.movil.MainActivityDrawer"
-            android:label="@string/titMenuPrincipal" >
-        </activity>
-        <activity
             android:name="com.proyecto.movil.MainActivity"
-            android:label="@string/titMenuPrincipal" >
-        </activity>
+            android:label="@string/titMenuPrincipal" />
 
         <!-- REGISTRO SOCIO DE NEGOCIO -->
         <activity
             android:name="com.proyecto.sociosnegocio.MainSocioNegocio"
-            android:label="@string/titCliente" >
-        </activity>
+            android:label="@string/titCliente" />
 
         <!-- PARAMETROS DE CONEXION -->
         <activity
@@ -69,8 +78,7 @@
         <!-- DETALLE SOCIO DE NEGOCIO -->
         <activity
             android:name="com.proyecto.sociosnegocio.DetalleSocioNegocioMain"
-            android:label="@string/titDetCliente" >
-        </activity>
+            android:label="@string/titDetCliente" />
 
         <!-- LISTA CONTACTOS DE AGENDA TELEFONICA -->
         <activity
@@ -78,8 +86,7 @@
             android:label="@string/activity_bp_list"
             android:windowSoftInputMode="adjustResize" >
             <intent-filter>
-                <action android:name="android.intent.action." >
-                </action>
+                <action android:name="android.intent.action." />
             </intent-filter>
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH" />
@@ -106,8 +113,7 @@
         </activity>
         <activity
             android:name="com.proyecto.ventas.DetalleVentaMain"
-            android:label="@string/titDetOrd" >
-        </activity>
+            android:label="@string/titDetOrd" />
         <activity
             android:name="com.proyecto.ventas.DetalleVentaLinea"
             android:label="@string/titDetOrd" >
@@ -129,29 +135,23 @@
         </activity>
         <activity
             android:name="com.proyecto.cobranza.DetalleCobranzaMain"
-            android:label="@string/titDetOrd" >
-        </activity>
+            android:label="@string/titDetOrd" />
         <activity
             android:name="com.proyecto.cobranza.DetalleFacturaMain"
-            android:label="@string/titDetOrd" >
-        </activity>
+            android:label="@string/titDetOrd" />
         <activity
             android:name="com.proyecto.informes.Informe"
-            android:label="@string/titInformes" >
-        </activity>
+            android:label="@string/titInformes" />
         <activity
             android:name="com.proyect.movil.LoginActivity"
             android:label="@string/title_activity_login"
-            android:windowSoftInputMode="adjustResize|stateVisible" >
-        </activity>
+            android:windowSoftInputMode="adjustResize|stateVisible" />
         <activity
             android:name="com.proyecto.facturas.DetalleFacturaLinea"
-            android:label="@string/titDetOrd" >
-        </activity>
+            android:label="@string/titDetOrd" />
         <activity
             android:name="com.proyecto.inventario.DetalleArticuloMain"
-            android:label="@string/titDetOrd" >
-        </activity>
+            android:label="@string/titDetOrd" />
 
         <receiver android:name="com.proyecto.broadcast.MainReceiver" >
             <intent-filter>
@@ -170,8 +170,7 @@
         <service
             android:name="com.proyecto.servicios.ServicioOvPr"
             android:enabled="true"
-            android:exported="false" >
-        </service>
+            android:exported="false" />
 
         <!--
             <service
@@ -181,6 +180,31 @@
         </service>
         -->
 
+
+        <!--
+             The API key for Google Maps-based APIs is defined as a string resource.
+             (See the file "res/values/google_maps_api.xml").
+             Note that the API key is linked to the encryption key used to sign the APK.
+             You need a different API key for each encryption key, including the release key that is used to
+             sign the APK for publishing.
+             You can define the keys for the debug and release targets in src/debug/ and src/release/. 
+        -->
+        <activity
+            android:name="com.proyecto.sociosnegocio.SocioDireccionActivity"
+            android:label="@string/title_activity_socio_direccion" />
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="@string/google_maps_key" />
+
+        <activity
+            android:name="com.google.android.gms.common.api.GoogleApiActivity"
+            android:exported="false"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
     </application>
 
 </manifest>

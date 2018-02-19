@@ -1725,23 +1725,37 @@ public class Select {
 		
 		Cursor rs = null;
 		if(customName.equals("detalleSNdirecciones")){
+//			rs = db.rawQuery(
+//					"select SN.Tipo,SN.Codigo, IFNULL(P.NOMBRE,''), " +
+//					"IFNULL(D.NOMBRE,''), IFNULL(PR.NOMBRE,'')," +
+//					"IFNULL(DT.NOMBRE,''), IFNULL(C.NOMBRE,'null'), IFNULL(SN.Referencia,'null') "
+//							+ " from TB_SOCIO_NEGOCIO_DIRECCION SN left join TB_PAIS P"
+//							+ " ON SN.Pais = P.CODIGO left join TB_DEPARTAMENTO D"
+//							+ " ON SN.Departamento = D.CODIGO left join TB_PROVINCIA PR"
+//							+ " ON SN.Provincia = PR.CODIGO left join TB_DISTRITO DT"
+//							+ " ON SN.Distrito = DT.CODIGO left join TB_CALLE C"
+//							+ " ON SN.Calle = C.CODIGO "
+//							+ " WHERE SN.CodigoSocioNegocio ='" + param + "'",
+//					null);
+
 			rs = db.rawQuery(
 					"select SN.Tipo,SN.Codigo, IFNULL(P.NOMBRE,''), " +
-					"IFNULL(D.NOMBRE,''), IFNULL(PR.NOMBRE,'')," +
-					"IFNULL(DT.NOMBRE,''), IFNULL(C.NOMBRE,'null'), IFNULL(SN.Referencia,'null') "
-							+ " from TB_SOCIO_NEGOCIO_DIRECCION SN left join TB_PAIS P" 
-							+ " ON SN.Pais = P.CODIGO left join TB_DEPARTAMENTO D" 
-							+ " ON SN.Departamento = D.CODIGO left join TB_PROVINCIA PR" 
-							+ " ON SN.Provincia = PR.CODIGO left join TB_DISTRITO DT" 
-							+ " ON SN.Distrito = DT.CODIGO left join TB_CALLE C" 
-							+ " ON SN.Calle = C.CODIGO "
+							"IFNULL(D.NOMBRE,''), IFNULL(SN.Provincia,'')," +
+							"IFNULL(SN.Distrito,''), IFNULL(SN.Calle,'null'), IFNULL(SN.Referencia,'null'),"
+							+ " IFNULL(SN.Latitud,'') as \"Latitud\", IFNULL(SN.Longitud,'') as \"Longitud\""
+							+ " from TB_SOCIO_NEGOCIO_DIRECCION SN  left join TB_PAIS P "
+							+ " ON SN.Pais = P.CODIGO left join TB_DEPARTAMENTO D"
+							+ " ON SN.Departamento = D.CODIGO "
 							+ " WHERE SN.CodigoSocioNegocio ='" + param + "'",
 					null);
 			
 			while (rs.moveToNext()) {
 
 				objeto = new FormatCustomListView();
-				objeto.setTitulo(rs.getString(0) +" - " + rs.getString(1));
+
+				objeto.setLatitud(rs.getString((rs.getColumnIndex("Latitud"))));
+				objeto.setLongitud(rs.getString((rs.getColumnIndex("Longitud"))));
+				objeto.setTitulo(rs.getString(1));
 				if(rs.getString(6) != null)
 					objeto.setData(rs.getString(6));
 				else
@@ -1758,10 +1772,8 @@ public class Select {
 					objeto.setExtra(rs.getString(2)+";"+ rs.getString(3)+";"+ rs.getString(4)+";"
 							   +rs.getString(5)+";"+ rs.getString(6)+";"+  rs.getString(7));
 				}
-				
-				
-				listaPersonalizada.add(objeto);
 
+				listaPersonalizada.add(objeto);
 			}
 		
 		}

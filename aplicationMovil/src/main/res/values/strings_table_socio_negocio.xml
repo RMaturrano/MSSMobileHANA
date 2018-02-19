@@ -60,6 +60,7 @@
     <string name="C_SN2_REFERENCIA">Referencia</string>
     <string name="C_SN2_TIPO">Tipo</string>
     <string name="C_SN2_IS_PRINCIPAL">Principal</string>
-    
+    <string name="C_SN2_LATITUD">Latitud</string>
+    <string name="C_SN2_LONGITUD">Longitud</string>
     
 </resources>

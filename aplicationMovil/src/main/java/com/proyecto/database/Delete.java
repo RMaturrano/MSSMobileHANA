@@ -24,7 +24,16 @@ public class Delete {
 		db = helper.getDataBase();
 		
 	}
-	
+
+	public void deleteSocioNegocioAll(ArrayList<SocioNegocioBean> lista){
+
+		db.execSQL("delete from "+ contexto.getResources().getString(R.string.T_SOCIO_NEGOCIO) + " where EstadoMovil <> 'L' ");
+		db.execSQL("delete from "+ contexto.getResources().getString(R.string.TD_CONTACTO_SOCIO_NEGOCIO)
+				+ " where CodigoSocioNegocio not in (select Codigo from TB_SOCIO_NEGOCIO where EstadoMovil = 'L')");
+		db.execSQL("delete from "+ contexto.getResources().getString(R.string.TD_DIRECCION_SOCIO_NEGOCIO)
+				+ " where CodigoSocioNegocio not in (select Codigo from TB_SOCIO_NEGOCIO where EstadoMovil = 'L')");
+
+	}
 	
 	public void deleteSocioNegocioLead(ArrayList<SocioNegocioBean> lista){
 		

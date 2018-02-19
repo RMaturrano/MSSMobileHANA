@@ -17,7 +17,6 @@ import android.widget.ListView;
 
 import com.proyect.movil.R;
 import com.proyecto.database.DataBaseHelper;
-import com.proyecto.database.MyDataBase;
 import com.proyecto.utils.FormatCustomListView;
 import com.proyecto.utils.ListViewCustomAdapterTwoLinesAndImgToolbar;
 
@@ -29,7 +28,9 @@ public class DetalleSocioNegocioMain extends AppCompatActivity {
 	private FormatCustomListView listFormat;
 	private ListView lvInToolbar;
 
+	public static int REQUEST_CHANGE_MAPS = 99;
 	public static String idBusinessPartner = null;
+	public static String MAIN_FRAGMENT = "F_MAIN";
 
 	@Override
 	protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -70,13 +71,26 @@ public class DetalleSocioNegocioMain extends AppCompatActivity {
 
 			FragmentManager manager = getSupportFragmentManager();
 			FragmentTransaction transaction = manager.beginTransaction();
-			transaction.replace(R.id.box, fragment);
+			transaction.replace(R.id.box, fragment, MAIN_FRAGMENT);
 			transaction.commit();
 
 		}
 
 	}
-	
+
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		if(resultCode == RESULT_OK && requestCode == REQUEST_CHANGE_MAPS){
+			if(data.getExtras().containsKey("latitud") && data.getExtras().containsKey("longitud")){
+				DetalleSocioNegocioMainFTabs detailsFragment = (DetalleSocioNegocioMainFTabs) getSupportFragmentManager()
+						.findFragmentByTag(MAIN_FRAGMENT);
+				if(detailsFragment != null) {
+					detailsFragment.notificarCambioUbicacion(data.getExtras().getString("latitud"),
+							data.getExtras().getString("longitud"));
+				}
+			}
+		}
+	}
 	
 	private void buildListInToolbar(){
 		

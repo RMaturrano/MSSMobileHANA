@@ -13,7 +13,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class MyDataBase extends SQLiteOpenHelper {
 
 	// VERSION DE BD
-	public static int DATABASE_VERSION = 61;
+	public static int DATABASE_VERSION = 63;
 
 	// DATABASE NAME
 	private static final String DATABASE_NAME = "BD_PRAGSA_SQLITE";
@@ -112,7 +112,9 @@ public class MyDataBase extends SQLiteOpenHelper {
 				+ contexto.getResources().getString(R.string.C_SN2_CALLE) +" TEXT, " 
 				+ contexto.getResources().getString(R.string.C_SN2_REFERENCIA) +" TEXT, " 
 				+ contexto.getResources().getString(R.string.C_SN2_TIPO) +" TEXT, " 
-				+ contexto.getResources().getString(R.string.C_SN2_IS_PRINCIPAL) +" TEXT)");
+				+ contexto.getResources().getString(R.string.C_SN2_IS_PRINCIPAL) +" TEXT, "
+				+ contexto.getResources().getString(R.string.C_SN2_LATITUD) +" TEXT, "
+				+ contexto.getResources().getString(R.string.C_SN2_LONGITUD) +" TEXT)");
 		db.execSQL(QUERY_CREATE_BP_DIRECC);
 		
 		
@@ -613,7 +615,19 @@ public class MyDataBase extends SQLiteOpenHelper {
 				"TipoEntidad TEXT NOT NULL , " +
 				"Estado BOOL NOT NULL) ");
 		db.execSQL(Q_CREATE_TB_AUDITORIA);
-				
+
+		//tabla empresas
+		String Q_CREATE_TB_EMPRESAS;
+		Q_CREATE_TB_EMPRESAS = ("CREATE TABLE TB_EMPRESA (Id INTEGER PRIMARY KEY NOT NULL, " +
+				"FechaInsercion DATETIME NOT NULL DEFAULT CURRENT_DATE, " +
+				"Descripcion TEXT, " +
+				"BaseDatos TEXT, " +
+				"Usuario TEXT, " +
+				"Clave TEXT, " +
+				"Estado TEXT," +
+				"Observacion TEXT) ");
+		db.execSQL(Q_CREATE_TB_EMPRESAS);
+
 		/************************************************************/
 		/************************** INSERTS *************************/
 		/*****************************+******************************/
@@ -707,6 +721,7 @@ public class MyDataBase extends SQLiteOpenHelper {
 		db.execSQL("DROP TABLE IF EXISTS "+contexto.getResources().getString(R.string.T_ESTADO_CUENTA_SOCIO));
 		db.execSQL("DROP TABLE IF EXISTS TB_AUDITORIA");
 		db.execSQL("DROP TABLE IF EXISTS TB_REPORTE_MODEL");
+		db.execSQL("DROP TABLE IF EXISTS TB_EMPRESA");
 
 		onCreate(db);
 

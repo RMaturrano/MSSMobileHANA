@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/Android Seidor.iml" filepath="$PROJECT_DIR$/Android Seidor.iml" />
+      <module fileurl="file://$PROJECT_DIR$/MSS-Mobile.iml" filepath="$PROJECT_DIR$/MSS-Mobile.iml" />
       <module fileurl="file://$PROJECT_DIR$/aplicationMovil/aplicationMovil.iml" filepath="$PROJECT_DIR$/aplicationMovil/aplicationMovil.iml" />
     </modules>
   </component>

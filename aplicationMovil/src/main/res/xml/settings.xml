@@ -28,12 +28,18 @@
             android:title="Id de dispositivo"/>
 
         <CheckBoxPreference
+            android:defaultValue="true"
             android:key="controlSincManual"
-            android:title="Controlar sincronización manual"
-            android:summaryOn="Habilitado"
             android:summaryOff="Deshabilitado"
-            android:defaultValue="true"/>
+            android:summaryOn="Habilitado"
+            android:title="Controlar sincronización manual"
+            android:visibility="gone" />
         
     </PreferenceCategory>
- 
+    <ListPreference
+        android:defaultValue="1"
+        android:key="sociedades"
+        android:summary="Elegir la sociedad a la que se desea conectar"
+        android:title="Sociedad" />
+
 </PreferenceScreen>

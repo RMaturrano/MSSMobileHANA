@@ -30,8 +30,14 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
 import com.proyect.movil.LoginActivity;
 import com.proyect.movil.R;
+import com.proyecto.bean.EmpresaBean;
 import com.proyecto.cobranza.ListaCobranzasMain;
 import com.proyecto.conectividad.Connectivity;
 import com.proyecto.facturas.ListaFacturasMain;
@@ -43,9 +49,18 @@ import com.proyecto.servicios.ServicioSocios;
 import com.proyecto.servicios.SincManualTaskDocumentos;
 import com.proyecto.servicios.SincManualTaskInicio;
 import com.proyecto.servicios.SincManualTaskMaestros;
+import com.proyecto.servicios.SyncRestInicio;
+import com.proyecto.servicios.SyncRestMaestros;
 import com.proyecto.sociosnegocio.ListaSocioNegocio;
 import com.proyecto.utils.Variables;
 import com.proyecto.ventas.ListaVentasMain;
+import com.proyecto.ws.VolleySingleton;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.Map;
 
 public class MainActivityDrawer extends AppCompatActivity {
 	
@@ -54,7 +69,9 @@ public class MainActivityDrawer extends AppCompatActivity {
 	
 	private DrawerLayout drawerLayout;
 	private String drawerTitle;
+	private NavigationView navigationView;
 	private Context contexto;
+	private SharedPreferences pref;
 	public static ProgressDialog pd = null;
 	
 	@Override
@@ -67,17 +84,19 @@ public class MainActivityDrawer extends AppCompatActivity {
 		setToolbar(); // Setear Toolbar como action bar
 
 		drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-		NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+		navigationView = (NavigationView) findViewById(R.id.nav_view);
 		if (navigationView != null) {
 			setupDrawerContent(navigationView);
 		}
-		
+
+		//navigationView.getMenu().getItem(2).setVisible(false);
+
 		View headerView = navigationView.inflateHeaderView(R.layout.nav_header); //Header del drawer
 		TextView txtUserName =  (TextView) headerView.findViewById(R.id.username);
 		TextView txtCodigo =  (TextView) headerView.findViewById(R.id.codigo);
 		
 		//LLenar head del drawer
-		SharedPreferences pref = PreferenceManager
+		pref = PreferenceManager
 				.getDefaultSharedPreferences(contexto);
 		
 		String nombreEmpleado = pref.getString(Variables.NOMBRE_EMPLEADO, "");
@@ -86,14 +105,187 @@ public class MainActivityDrawer extends AppCompatActivity {
 		String codigoEmpleado = pref.getString(Variables.USUARIO_EMPLEADO, "");
 		txtCodigo.setText(codigoEmpleado);
 
+		String sociedad = pref.getString("sociedades", "-1");
+		String perfil = pref.getString(Variables.PERFIL, "-1");
+		String ip = pref.getString("ipServidor", "200.10.84.66");
+		String port = pref.getString("puertoServidor", "80");
+
 		drawerTitle = getResources().getString(R.string.titMenuPrincipal);
 		if (savedInstanceState == null) {
 			selectItem(drawerTitle);
 		}
-		
-		
+
+		// VERIFICAR EL ESTADO DE LA CONEXION DEL MOVIL
+		boolean wifi = Connectivity.isConnectedWifi(contexto);
+		boolean movil = Connectivity.isConnectedMobile(contexto);
+
+		if (wifi || movil) {
+			validarOpcionesMenu(sociedad, perfil, ip, port);
+		}else{
+			validarOpcionesMenuOffLine();
+		}
 	}
-	
+
+
+	private void validarOpcionesMenu(String sociedad, String perfil, String ip, String puerto){
+		try {
+
+			String ws_ruta = ("http://" + ip + ":" + puerto +
+					"/MSS_MOBILE/service/menu/getMenu.xsjs?empId=" + Integer.parseInt(sociedad) +
+					"&prfId=" + perfil);
+
+			StringRequest stringRequest = new StringRequest(Request.Method.GET, ws_ruta,
+					new Response.Listener<String>() {
+						@Override
+						public void onResponse(String response) {
+							try {
+								JSONObject jsonObject = new JSONObject(response);
+								if(jsonObject.getString("ResponseStatus").equals("Success")){
+									JSONArray jsonArray = jsonObject.getJSONObject("Response")
+																	.getJSONObject("message")
+																	.getJSONArray("value");
+
+									int size = jsonArray.length();
+									boolean menuVisible = true;
+
+									setMenuVisible(false);
+
+									for (int i = 0; i < size; i++ ){
+
+
+										JSONObject jsonObj = jsonArray.getJSONObject(i);
+										menuVisible = jsonObj.getString("Accesa").equals("Y") ? true: false;
+
+										if(jsonObj.getString("Descripcion").contains(Variables.MENU_SOCIOS_NEGOCIO)){
+											navigationView.getMenu().findItem(R.id.nav_socios).setVisible(menuVisible);
+										}else if(jsonObj.getString("Descripcion").contains(Variables.MENU_INVENTARIO)){
+											navigationView.getMenu().findItem(R.id.nav_inventario).setVisible(menuVisible);
+										}else if(jsonObj.getString("Descripcion").contains(Variables.MENU_PEDIDOS)){
+											navigationView.getMenu().findItem(R.id.nav_ordenes).setVisible(menuVisible);;
+										}else if(jsonObj.getString("Descripcion").contains(Variables.MENU_FACTURAS)){
+											navigationView.getMenu().findItem(R.id.nav_facturas).setVisible(menuVisible);
+										}else if(jsonObj.getString("Descripcion").contains(Variables.MENU_COBRANZAS)){
+											navigationView.getMenu().findItem(R.id.nav_cobranzas).setVisible(menuVisible);
+										}else if(jsonObj.getString("Descripcion").contains(Variables.MENU_REPORTES)){
+											navigationView.getMenu().findItem(R.id.nav_reportes).setVisible(menuVisible);
+										}else if(jsonObj.getString("Descripcion").contains(Variables.MENU_ACTIVIDADES)){
+											navigationView.getMenu().findItem(R.id.nav_actividades).setVisible(menuVisible);
+										}
+
+										SharedPreferences.Editor editor = pref.edit();
+
+										JSONObject permisos = new JSONObject();
+										permisos.put(Variables.MOVIL_ACCESA, jsonObj.getString("Accesa"));
+										permisos.put(Variables.MOVIL_CREAR, jsonObj.getString("Crea"));
+										permisos.put(Variables.MOVIL_EDITAR, jsonObj.getString("Edita"));
+										permisos.put(Variables.MOVIL_APROBAR, jsonObj.getString("Aprueba"));
+										permisos.put(Variables.MOVIL_RECHAZAR, jsonObj.getString("Rechaza"));
+										permisos.put(Variables.MOVIL_ESCOGER_PRECIO, jsonObj.getString("SelListaPrecio"));
+
+										editor.putString(jsonObj.getString("Descripcion"), permisos.toString());
+										editor.commit();
+									}
+								}else{
+									showToast("No se han configurado los accesos para su perfil. Contacte con el administrador.");
+									setMenuVisible(false);
+								}
+							} catch (Exception e){
+								showToast(e.getMessage());
+							}
+						}
+					}, new Response.ErrorListener() {
+				@Override
+				public void onErrorResponse(VolleyError error) {
+					showToast("Ocurrió un error intentando conectar con el servidor " + error.getMessage());
+				}
+			});
+
+			VolleySingleton.getInstance(contexto).addToRequestQueue(stringRequest);
+		}catch (Exception e){
+			Toast.makeText(contexto, "Excepción no controlada validarOpcionesMenu() > " + e.getMessage(), Toast.LENGTH_SHORT);
+		}
+	}
+
+	private void validarOpcionesMenuOffLine(){
+
+		try {
+
+			boolean menuVisible;
+
+			if(pref.contains(Variables.MENU_SOCIOS_NEGOCIO)){
+				JSONObject permiso = new JSONObject(pref.getString(Variables.MENU_SOCIOS_NEGOCIO, "N"));
+				menuVisible = permiso.getString(Variables.MOVIL_ACCESA).equals("Y") ? true: false;
+				navigationView.getMenu().findItem(R.id.nav_socios).setVisible(menuVisible);
+			}else{
+				navigationView.getMenu().findItem(R.id.nav_socios).setVisible(false);
+			}
+
+			if(pref.contains(Variables.MENU_INVENTARIO)){
+				JSONObject permiso = new JSONObject(pref.getString(Variables.MENU_INVENTARIO, "N"));
+				menuVisible = permiso.getString(Variables.MOVIL_ACCESA).equals("Y") ? true: false;
+				navigationView.getMenu().findItem(R.id.nav_inventario).setVisible(menuVisible);
+			}else{
+				navigationView.getMenu().findItem(R.id.nav_inventario).setVisible(false);
+			}
+
+			if(pref.contains(Variables.MENU_PEDIDOS)){
+				JSONObject permiso = new JSONObject(pref.getString(Variables.MENU_PEDIDOS, "N"));
+				menuVisible = permiso.getString(Variables.MOVIL_ACCESA).equals("Y") ? true: false;
+				navigationView.getMenu().findItem(R.id.nav_ordenes).setVisible(menuVisible);
+			}else{
+				navigationView.getMenu().findItem(R.id.nav_ordenes).setVisible(false);
+			}
+
+			if(pref.contains(Variables.MENU_FACTURAS)){
+				JSONObject permiso = new JSONObject(pref.getString(Variables.MENU_FACTURAS, "N"));
+				menuVisible = permiso.getString(Variables.MOVIL_ACCESA).equals("Y") ? true: false;
+				navigationView.getMenu().findItem(R.id.nav_facturas).setVisible(menuVisible);
+			}else{
+				navigationView.getMenu().findItem(R.id.nav_facturas).setVisible(false);
+			}
+
+			if(pref.contains(Variables.MENU_COBRANZAS)){
+				JSONObject permiso = new JSONObject(pref.getString(Variables.MENU_COBRANZAS, "N"));
+				menuVisible = permiso.getString(Variables.MOVIL_ACCESA).equals("Y") ? true: false;
+				navigationView.getMenu().findItem(R.id.nav_cobranzas).setVisible(menuVisible);
+			}else{
+				navigationView.getMenu().findItem(R.id.nav_cobranzas).setVisible(false);
+			}
+
+			if(pref.contains(Variables.MENU_REPORTES)){
+				JSONObject permiso = new JSONObject(pref.getString(Variables.MENU_REPORTES, "N"));
+				menuVisible = permiso.getString(Variables.MOVIL_ACCESA).equals("Y") ? true: false;
+				navigationView.getMenu().findItem(R.id.nav_reportes).setVisible(menuVisible);
+			}else{
+				navigationView.getMenu().findItem(R.id.nav_reportes).setVisible(false);
+			}
+
+			if(pref.contains(Variables.MENU_ACTIVIDADES)){
+				JSONObject permiso = new JSONObject(pref.getString(Variables.MENU_ACTIVIDADES, "N"));
+				menuVisible = permiso.getString(Variables.MOVIL_ACCESA).equals("Y") ? true: false;
+				navigationView.getMenu().findItem(R.id.nav_actividades).setVisible(menuVisible);
+			}else{
+				navigationView.getMenu().findItem(R.id.nav_actividades).setVisible(false);
+			}
+
+		}catch (Exception e){
+			showToast("validarOpcionesMenuOffLine() > " + e.getMessage());
+		}
+	}
+
+	private void setMenuVisible(boolean visible){
+		navigationView.getMenu().getItem(1).setVisible(visible);
+		navigationView.getMenu().getItem(2).setVisible(visible);
+		navigationView.getMenu().getItem(3).setVisible(visible);
+		navigationView.getMenu().getItem(4).setVisible(visible);
+		navigationView.getMenu().getItem(5).setVisible(visible);
+		navigationView.getMenu().getItem(6).setVisible(visible);
+		navigationView.getMenu().getItem(7).setVisible(visible);
+	}
+
+	private void showToast(String message) {
+		Toast.makeText(MainActivityDrawer.this, message, Toast.LENGTH_SHORT).show();
+	}
 
 	private void setToolbar() {
 		Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -292,8 +484,6 @@ public class MainActivityDrawer extends AppCompatActivity {
 		}
 
 		drawerLayout.closeDrawers(); // Cerrar drawer
-	//	setTitle(title); // Setear título actual
-
 	}
 	
 	
@@ -338,19 +528,24 @@ public class MainActivityDrawer extends AppCompatActivity {
 				pd.setProgress(0);
 				pd.setMax(17);
 				pd.show();
-				SincManualTaskInicio job = new SincManualTaskInicio(pd, contexto, "");
-				job.execute();
+
+				SyncRestInicio syncInitial = new SyncRestInicio(contexto, pd);
+				boolean res = syncInitial.syncFromServer();
+
+				if(res)
+					Toast.makeText(contexto, "Sincronización finalizada.", Toast.LENGTH_SHORT).show();
+				else
+					Toast.makeText(contexto, "Ocurrió un error intentando conectar con el servidor", Toast.LENGTH_SHORT).show();
+				//SincManualTaskInicio job = new SincManualTaskInicio(pd, contexto, "");
+				//job.execute();
 				
 			} else {
 				Toast.makeText(contexto, "La conexión es inestable", Toast.LENGTH_LONG).show();
 			}
 		}else {
-			
 			Toast.makeText(contexto, "No está conectado a ninguna red de datos...", Toast.LENGTH_LONG).show();
-
 		}
 	}
-	
 	
 	private void sincronizarDocumentos(){
 		// VERIFICAR EL ESTADO DE LA CONEXION DEL MOVIL
@@ -372,13 +567,22 @@ public class MainActivityDrawer extends AppCompatActivity {
 				pd.setProgress(0);
 				pd.setMax(5);
 				pd.show();
-				SincManualTaskDocumentos job = new SincManualTaskDocumentos(pd, contexto, "");
-				
-				if( Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB ) {
+
+				//SincManualTaskDocumentos job = new SincManualTaskDocumentos(pd, contexto, "");
+
+				SyncRestMaestros syncRestMaestros = new SyncRestMaestros(contexto, pd);
+				boolean res = syncRestMaestros.syncFromServer();
+
+				if(res)
+					Toast.makeText(contexto, "Sincronización finalizada.", Toast.LENGTH_SHORT).show();
+				else
+					Toast.makeText(contexto, "Ocurrió un error intentando conectar con el servidor", Toast.LENGTH_SHORT).show();
+
+			/*	if( Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB ) {
 				    job.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
 				} else {
 					job.execute();
-				}
+				}	*/
 				
 			} else {
 				Toast.makeText(contexto, "La conexión es inestable", Toast.LENGTH_LONG).show();
@@ -389,8 +593,7 @@ public class MainActivityDrawer extends AppCompatActivity {
 
 		}
 	}
-	
-	
+
 	private void sincronizarMaestros(){
 		// VERIFICAR EL ESTADO DE LA CONEXION DEL MOVIL
 		boolean wifi = Connectivity.isConnectedWifi(contexto);
@@ -415,14 +618,24 @@ public class MainActivityDrawer extends AppCompatActivity {
 				pd.setProgress(0);
 				pd.setMax(6);
 				pd.show();
-				SincManualTaskMaestros job = new SincManualTaskMaestros(pd, contexto, "");
-				
-				if( Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB ) {
-				    job.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-				} else {
-					job.execute();
-				}
-				
+
+//				SincManualTaskMaestros job = new SincManualTaskMaestros(pd, contexto, "");
+//
+//				if( Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB ) {
+//				    job.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+//				} else {
+//					job.execute();
+//				}
+
+				SyncRestMaestros syncRestMaestros = new SyncRestMaestros(contexto, pd);
+				boolean res = syncRestMaestros.syncFromServer();
+
+				if(res)
+					Toast.makeText(contexto, "Sincronización finalizada.", Toast.LENGTH_SHORT).show();
+				else
+					Toast.makeText(contexto, "Ocurrió un error intentando conectar con el servidor", Toast.LENGTH_SHORT).show();
+
+
 			} else {
 				Toast.makeText(contexto, "La conexión es inestable", Toast.LENGTH_LONG).show();
 			}

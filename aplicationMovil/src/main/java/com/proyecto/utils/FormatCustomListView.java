@@ -2,7 +2,12 @@ package com.proyecto.utils;
 
 public class FormatCustomListView {
 	
-	private String titulo, data, extra, extra2;
+	private String titulo;
+	private String data;
+	private String extra;
+	private String extra2;
+	private String latitud;
+	private String longitud;
 	private int icon, id;
 	private boolean chck;
 	
@@ -50,7 +55,21 @@ public class FormatCustomListView {
 	public void setExtra2(String extra2) {
 		this.extra2 = extra2;
 	}
+	public String getLatitud() {
+		return latitud;
+	}
 
+	public void setLatitud(String latitud) {
+		this.latitud = latitud;
+	}
+
+	public String getLongitud() {
+		return longitud;
+	}
+
+	public void setLongitud(String longitud) {
+		this.longitud = longitud;
+	}
 	
 	
 	
