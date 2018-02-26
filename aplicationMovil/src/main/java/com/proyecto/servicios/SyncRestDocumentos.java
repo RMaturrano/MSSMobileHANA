@@ -17,7 +17,9 @@ import com.proyecto.bean.OrdenVentaDetalleBean;
 import com.proyecto.bean.PagoBean;
 import com.proyecto.bean.PagoDetalleBean;
 import com.proyecto.bean.PaisBean;
+import com.proyecto.bean.ReporteModel;
 import com.proyecto.database.Insert;
+import com.proyecto.reportes.ReporteEstadoCuenta;
 import com.proyecto.utils.Variables;
 import com.proyecto.ws.VolleySingleton;
 
@@ -359,7 +361,35 @@ public class SyncRestDocumentos {
                             .getJSONArray("value");
 
                     int size = jsonArray.length();
+                    ArrayList<ReporteEstadoCuenta> lstResults = new ArrayList<>();
+                    ReporteEstadoCuenta bean;
 
+                    for (int i = 0; i < size; i++ ) {
+                        JSONObject jsonObj = jsonArray.getJSONObject(i);
+                        bean = new ReporteEstadoCuenta();
+                        bean.setTipoReporte(jsonObj.getString("TipoReporte"));
+                        bean.setCliente(jsonObj.getString("Cliente"));
+                        bean.setNombre(jsonObj.getString("Nombre"));
+                        bean.setListaPrecio(jsonObj.getString("ListaPrecio"));
+                        bean.setLineaCredito(jsonObj.getString("LineaCredito"));
+                        bean.setCondicionPago(jsonObj.getString("CondicionPago"));
+                        bean.setClave(String.valueOf(jsonObj.getInt("Clave")));
+                        bean.setSunat(jsonObj.getString("Sunat"));
+                        bean.setCondicion(jsonObj.getString("Condicion"));
+                        bean.setVendedor(jsonObj.getString("Vendedor"));
+                        bean.setEmision(jsonObj.getString("Emision"));
+                        bean.setMoneda(jsonObj.getString("Moneda"));
+                        bean.setTotal(jsonObj.getString("Total"));
+                        bean.setSaldo(jsonObj.getString("Saldo"));
+                        bean.setPago_Fecha(jsonObj.getString("Pago_Fecha"));
+                        bean.setPago_Dias(String.valueOf(jsonObj.getInt("Pago_Dias")));
+                        bean.setPago_Moneda(jsonObj.getString("Pago_Moneda"));
+                        bean.setPagado_Importe(jsonObj.getString("Pagado_Importe"));
+
+                        lstResults.add(bean);
+                    }
+
+                    mInsert.insertEstadoCuentaCliente(lstResults);
 
                 }else{
                     showToast(response.getJSONObject("Response").getJSONObject("message").getString("value"));
@@ -391,12 +421,35 @@ public class SyncRestDocumentos {
                             .getJSONArray("value");
 
                     int size = jsonArray.length();
+                    ArrayList<ReporteModel> lstResults = new ArrayList<>();
+                    ReporteModel bean;
 
+                    for (int i = 0; i < size; i++ ) {
+                        JSONObject jsonObj = jsonArray.getJSONObject(i);
+                        bean = new ReporteModel();
+                        bean.setClave(String.valueOf(jsonObj.getInt("Clave")));
+                        bean.setSunat(jsonObj.getString("Sunat"));
+                        bean.setEmision(jsonObj.getString("Emision"));
+                        bean.setDias(String.valueOf(jsonObj.getString("Dias")));
+                        bean.setRuc(jsonObj.getString("Ruc"));
+                        bean.setNombre(jsonObj.getString("Nombre"));
+                        bean.setDireccion(jsonObj.getString("Direccion"));
+                        bean.setTotal(jsonObj.getString("Total"));
+                        bean.setPagado(jsonObj.getString("Pagado"));
+                        bean.setSaldo(jsonObj.getString("Saldo"));
+
+                        lstResults.add(bean);
+                    }
+
+                    mInsert.insertNotaCredito(lstResults);
+
+                    mProgressDialog.dismiss();
 
                 }else{
                     showToast(response.getJSONObject("Response").getJSONObject("message").getString("value"));
                 }
             }catch (Exception e){
+                mProgressDialog.dismiss();
                 showToast("listenerGetNotaCredito() > " + e.getMessage());
             }
         }
@@ -405,6 +458,7 @@ public class SyncRestDocumentos {
     Response.ErrorListener errorListenerGetNotaCredito = new Response.ErrorListener() {
         @Override
         public void onErrorResponse(VolleyError error) {
+            mProgressDialog.dismiss();
             showToast("Ocurrió un error intentando conectar con el servidor, " + error.getMessage());
         }
     };

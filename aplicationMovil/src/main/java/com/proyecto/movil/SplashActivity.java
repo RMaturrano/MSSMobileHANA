@@ -96,7 +96,10 @@ public class SplashActivity extends Activity{
 
         		if(!usuario.equals("") && !password.equals("")){
         			
-        			construirAlertPassword(password);
+        			//construirAlertPassword(password);
+					Intent intent = new Intent(SplashActivity.this, PinVerified.class);
+					startActivity(intent);
+					finish();
         			
         		}else{
         			Intent intent = new Intent(SplashActivity.this, LoginActivity.class);

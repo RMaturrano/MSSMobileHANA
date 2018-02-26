@@ -40,6 +40,7 @@ import com.proyect.movil.R;
 import com.proyecto.bean.EmpresaBean;
 import com.proyecto.cobranza.ListaCobranzasMain;
 import com.proyecto.conectividad.Connectivity;
+import com.proyecto.database.Delete;
 import com.proyecto.facturas.ListaFacturasMain;
 import com.proyecto.inventario.ListaArticulosMain;
 import com.proyecto.preferences.SettingsMain;
@@ -49,6 +50,7 @@ import com.proyecto.servicios.ServicioSocios;
 import com.proyecto.servicios.SincManualTaskDocumentos;
 import com.proyecto.servicios.SincManualTaskInicio;
 import com.proyecto.servicios.SincManualTaskMaestros;
+import com.proyecto.servicios.SyncRestDocumentos;
 import com.proyecto.servicios.SyncRestInicio;
 import com.proyecto.servicios.SyncRestMaestros;
 import com.proyecto.sociosnegocio.ListaSocioNegocio;
@@ -358,8 +360,8 @@ public class MainActivityDrawer extends AppCompatActivity {
 				editor.commit();
 
 
-//				Delete delete = new Delete(contexto);
-//				delete.deleteAll();
+				Delete delete = new Delete(contexto);
+				delete.deleteAll();
 				
 				//DETENER LOS SERVICIOS
 				Intent intent = new Intent(contexto, ServicioSocios.class);
@@ -570,8 +572,8 @@ public class MainActivityDrawer extends AppCompatActivity {
 
 				//SincManualTaskDocumentos job = new SincManualTaskDocumentos(pd, contexto, "");
 
-				SyncRestMaestros syncRestMaestros = new SyncRestMaestros(contexto, pd);
-				boolean res = syncRestMaestros.syncFromServer();
+				SyncRestDocumentos syncRestDocumentos = new SyncRestDocumentos(contexto, pd);
+				boolean res = syncRestDocumentos.syncFromServer();
 
 				if(res)
 					Toast.makeText(contexto, "Sincronización finalizada.", Toast.LENGTH_SHORT).show();

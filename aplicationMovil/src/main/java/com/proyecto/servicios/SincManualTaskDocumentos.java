@@ -42,8 +42,7 @@ public class SincManualTaskDocumentos extends AsyncTask<String, String, Object> 
 		
 		//Envio
 		ws.EnviarPedidoCliente(codigoEmpleado);
-		
-		
+
 		//1. Lista ordenes de venta
 		String[] progress = new String[2];
 		progress[0] = "Obteniendo pedidos";

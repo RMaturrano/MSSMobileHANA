@@ -10,6 +10,7 @@ MERGED from [com.android.support:recyclerview-v7:23.3.0] C:\Users\PC\.gradle\cac
 MERGED from [com.android.support:cardview-v7:23.0.1] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\cardview-v7-23.0.1.aar\189f6b2ca990ead60d2a4ee74e25f047\AndroidManifest.xml:17:1-24:12
 MERGED from [com.android.volley:volley:1.1.0] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\volley-1.1.0.aar\345ea0c5f832cf615e4a954ceb712551\AndroidManifest.xml:2:1-11:12
 MERGED from [com.google.android.gms:play-services-maps:11.8.0] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\play-services-maps-11.8.0.aar\0729734fc266b5e80ed8382a4a422739\AndroidManifest.xml:17:1-32:12
+MERGED from [com.android.support.constraint:constraint-layout:1.0.2] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\constraint-layout-1.0.2.aar\5d1e2779ba42d84667a2d1970330cfd5\AndroidManifest.xml:2:1-11:12
 MERGED from [com.google.android.gms:play-services-base:11.8.0] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\play-services-base-11.8.0.aar\36bd668d01fd7ddabe8282c41976aef9\AndroidManifest.xml:17:1-29:12
 MERGED from [com.google.android.gms:play-services-tasks:11.8.0] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\play-services-tasks-11.8.0.aar\9f70b3425a6ce3da483cedb035394d02\AndroidManifest.xml:2:1-9:12
 MERGED from [com.google.android.gms:play-services-basement:11.8.0] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\play-services-basement-11.8.0.aar\0116f5bd8c43e2dc716f90693dfc29c3\AndroidManifest.xml:17:1-28:12
@@ -58,6 +59,8 @@ MERGED from [com.android.volley:volley:1.1.0] C:\Users\PC\.gradle\caches\transfo
 MERGED from [com.android.volley:volley:1.1.0] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\volley-1.1.0.aar\345ea0c5f832cf615e4a954ceb712551\AndroidManifest.xml:7:5-43
 MERGED from [com.google.android.gms:play-services-maps:11.8.0] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\play-services-maps-11.8.0.aar\0729734fc266b5e80ed8382a4a422739\AndroidManifest.xml:20:5-44
 MERGED from [com.google.android.gms:play-services-maps:11.8.0] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\play-services-maps-11.8.0.aar\0729734fc266b5e80ed8382a4a422739\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support.constraint:constraint-layout:1.0.2] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\constraint-layout-1.0.2.aar\5d1e2779ba42d84667a2d1970330cfd5\AndroidManifest.xml:5:5-7:41
+MERGED from [com.android.support.constraint:constraint-layout:1.0.2] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\constraint-layout-1.0.2.aar\5d1e2779ba42d84667a2d1970330cfd5\AndroidManifest.xml:5:5-7:41
 MERGED from [com.google.android.gms:play-services-base:11.8.0] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\play-services-base-11.8.0.aar\36bd668d01fd7ddabe8282c41976aef9\AndroidManifest.xml:20:5-44
 MERGED from [com.google.android.gms:play-services-base:11.8.0] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\play-services-base-11.8.0.aar\36bd668d01fd7ddabe8282c41976aef9\AndroidManifest.xml:20:5-44
 MERGED from [com.google.android.gms:play-services-tasks:11.8.0] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\play-services-tasks-11.8.0.aar\9f70b3425a6ce3da483cedb035394d02\AndroidManifest.xml:5:5-44
@@ -101,65 +104,65 @@ INJECTED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src
 		INJECTED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml
 		INJECTED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml
 uses-feature#0x00020000
-ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:11:5-12:35
+ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:11:5-13:35
 MERGED from [com.google.android.gms:play-services-maps:11.8.0] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\play-services-maps-11.8.0.aar\0729734fc266b5e80ed8382a4a422739\AndroidManifest.xml:26:5-28:35
 MERGED from [com.google.android.gms:play-services-maps:11.8.0] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\play-services-maps-11.8.0.aar\0729734fc266b5e80ed8382a4a422739\AndroidManifest.xml:26:5-28:35
 	android:glEsVersion
-		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:11:19-51
+		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:12:9-41
 	android:required
-		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:12:9-32
+		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:13:9-32
 meta-data#com.google.android.gms.version
-ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:14:5-15:64
+ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:15:5-17:65
 	android:value
-		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:15:9-62
+		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:17:9-62
 	android:name
-		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:14:16-61
+		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:16:9-54
 uses-permission#android.permission.INTERNET
-ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:18:5-67
+ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:20:5-67
 MERGED from [com.google.android.gms:play-services-maps:11.8.0] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\play-services-maps-11.8.0.aar\0729734fc266b5e80ed8382a4a422739\AndroidManifest.xml:24:5-67
 MERGED from [com.google.android.gms:play-services-maps:11.8.0] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\play-services-maps-11.8.0.aar\0729734fc266b5e80ed8382a4a422739\AndroidManifest.xml:24:5-67
 	android:name
-		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:18:22-64
+		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:20:22-64
 uses-permission#android.permission.ACCESS_NETWORK_STATE
-ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:19:5-79
+ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:21:5-79
 MERGED from [com.google.android.gms:play-services-maps:11.8.0] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\play-services-maps-11.8.0.aar\0729734fc266b5e80ed8382a4a422739\AndroidManifest.xml:23:5-79
 MERGED from [com.google.android.gms:play-services-maps:11.8.0] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\play-services-maps-11.8.0.aar\0729734fc266b5e80ed8382a4a422739\AndroidManifest.xml:23:5-79
 	android:name
-		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:19:22-76
+		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:21:22-76
 uses-permission#android.permission.READ_CONTACTS
-ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:20:5-72
+ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:22:5-72
 	android:name
-		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:20:22-69
+		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:22:22-69
 uses-permission#android.permission.WRITE_CONTACTS
-ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:21:5-73
+ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:23:5-73
 	android:name
-		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:21:22-70
+		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:23:22-70
 uses-permission#android.permission.WRITE_EXTERNAL_STORAGE
-ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:22:5-81
-	android:name
-		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:22:22-78
-uses-permission#android.permission.READ_EXTERNAL_STORAGE
-ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:23:5-80
-	android:name
-		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:23:22-77
-uses-permission#android.permission.WRITE_INTERNAL_STORAGE
 ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:24:5-81
 	android:name
 		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:24:22-78
+uses-permission#android.permission.READ_EXTERNAL_STORAGE
+ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:25:5-80
+	android:name
+		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:25:22-77
+uses-permission#android.permission.WRITE_INTERNAL_STORAGE
+ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:26:5-81
+	android:name
+		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:26:22-78
 uses-permission#android.permission.RECEIVE_BOOT_COMPLETED
-ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:25:5-81
+ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:27:5-81
 	android:name
-		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:25:22-78
+		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:27:22-78
 uses-permission#android.permission.ACCESS_FINE_LOCATION
-ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:26:5-79
+ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:28:5-79
 	android:name
-		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:26:22-76
+		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:28:22-76
 uses-permission#android.permission.READ_PHONE_STATE
-ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:27:5-75
+ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:29:5-75
 	android:name
-		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:27:22-72
+		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:29:22-72
 application
-ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:29:5-199:19
+ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:32:5-199:19
 MERGED from [com.android.support:design:23.3.0] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\design-23.3.0.aar\809b713254331d37cde75dabb44c7926\AndroidManifest.xml:22:5-20
 MERGED from [com.android.support:design:23.3.0] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\design-23.3.0.aar\809b713254331d37cde75dabb44c7926\AndroidManifest.xml:22:5-20
 MERGED from [com.android.support:appcompat-v7:23.4.0] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\appcompat-v7-23.4.0.aar\699b6d9e323b66362cf9e67c96bef4d8\AndroidManifest.xml:25:5-20
@@ -170,6 +173,8 @@ MERGED from [com.android.volley:volley:1.1.0] C:\Users\PC\.gradle\caches\transfo
 MERGED from [com.android.volley:volley:1.1.0] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\volley-1.1.0.aar\345ea0c5f832cf615e4a954ceb712551\AndroidManifest.xml:9:5-20
 MERGED from [com.google.android.gms:play-services-maps:11.8.0] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\play-services-maps-11.8.0.aar\0729734fc266b5e80ed8382a4a422739\AndroidManifest.xml:30:5-20
 MERGED from [com.google.android.gms:play-services-maps:11.8.0] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\play-services-maps-11.8.0.aar\0729734fc266b5e80ed8382a4a422739\AndroidManifest.xml:30:5-20
+MERGED from [com.android.support.constraint:constraint-layout:1.0.2] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\constraint-layout-1.0.2.aar\5d1e2779ba42d84667a2d1970330cfd5\AndroidManifest.xml:9:5-20
+MERGED from [com.android.support.constraint:constraint-layout:1.0.2] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\constraint-layout-1.0.2.aar\5d1e2779ba42d84667a2d1970330cfd5\AndroidManifest.xml:9:5-20
 MERGED from [com.google.android.gms:play-services-base:11.8.0] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\play-services-base-11.8.0.aar\36bd668d01fd7ddabe8282c41976aef9\AndroidManifest.xml:22:5-27:19
 MERGED from [com.google.android.gms:play-services-base:11.8.0] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\play-services-base-11.8.0.aar\36bd668d01fd7ddabe8282c41976aef9\AndroidManifest.xml:22:5-27:19
 MERGED from [com.google.android.gms:play-services-tasks:11.8.0] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\play-services-tasks-11.8.0.aar\9f70b3425a6ce3da483cedb035394d02\AndroidManifest.xml:7:5-20
@@ -201,193 +206,197 @@ MERGED from [com.google.android.gms:play-services-basement-license:11.8.0] C:\Us
 MERGED from [com.google.android.gms:play-services-tasks-license:11.8.0] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\play-services-tasks-license-11.8.0.aar\4209d8d07197dbefca092e6182c6d22d\AndroidManifest.xml:5:5-20
 MERGED from [com.google.android.gms:play-services-tasks-license:11.8.0] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\play-services-tasks-license-11.8.0.aar\4209d8d07197dbefca092e6182c6d22d\AndroidManifest.xml:5:5-20
 	android:label
-		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:32:9-41
+		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:35:9-41
 	android:versionName
-		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:37:9-34
+		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:40:9-34
 	android:versionCode
-		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:36:9-32
+		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:39:9-32
 	android:largeHeap
-		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:33:9-33
+		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:36:9-33
 	android:icon
-		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:31:9-50
-	android:allowBackup
-		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:30:9-35
-	android:theme
-		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:35:9-40
-	android:logo
 		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:34:9-50
-activity#com.proyecto.movil.SplashActivity
-ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:40:9-46:20
-	android:label
-		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:42:13-45
+	android:allowBackup
+		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:33:9-35
 	android:theme
-		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:43:13-77
-	android:name
-		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:41:13-61
-activity#com.proyecto.movil.MainActivityDrawer
-ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:47:9-58:20
+		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:38:9-40
+	android:logo
+		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:37:9-50
+activity#com.proyecto.movil.SplashActivity
+ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:43:9-53:20
 	android:label
-		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:49:13-53
+		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:45:13-45
+	android:theme
+		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:46:13-77
 	android:name
-		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:48:13-65
+		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:44:13-61
 intent-filter#android.intent.action.MAIN+android.intent.category.LAUNCHER
-ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:52:13-56:29
+ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:49:13-52:29
 action#android.intent.action.MAIN
-ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:53:17-69
+ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:50:17-69
 	android:name
-		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:53:25-66
+		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:50:25-66
 category#android.intent.category.LAUNCHER
-ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:55:17-77
+ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:51:17-77
 	android:name
-		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:55:27-74
+		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:51:27-74
+activity#com.proyecto.movil.MainActivityDrawer
+ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:54:9-56:65
+	android:label
+		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:56:13-53
+	android:name
+		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:55:13-65
 activity#com.proyecto.movil.MainActivity
-ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:59:9-61:65
+ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:57:9-59:56
 	android:label
-		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:61:13-53
+		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:59:13-53
 	android:name
-		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:60:13-59
+		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:58:13-59
 activity#com.proyecto.sociosnegocio.MainSocioNegocio
-ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:64:9-66:59
+ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:62:9-64:50
 	android:label
-		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:66:13-47
+		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:64:13-47
 	android:name
-		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:65:13-71
+		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:63:13-71
 activity#com.proyecto.preferences.SettingsMain
-ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:69:9-75:20
+ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:67:9-73:20
 	android:label
-		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:71:13-44
+		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:69:13-44
 	android:name
-		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:70:13-65
+		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:68:13-65
 meta-data#android.support.PARENT_ACTIVITY
-ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:72:13-74:67
+ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:70:13-72:67
 	android:value
-		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:74:17-64
+		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:72:17-64
 	android:name
-		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:73:17-63
+		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:71:17-63
 activity#com.proyecto.sociosnegocio.DetalleSocioNegocioMain
-ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:78:9-80:62
+ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:76:9-78:53
 	android:label
-		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:80:13-50
+		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:78:13-50
 	android:name
-		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:79:13-78
+		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:77:13-78
 activity#com.proyecto.sociosnegocio.PhoneContactsListActivity
-ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:83:9-97:20
+ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:81:9-95:20
 	android:label
-		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:85:13-53
+		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:83:13-53
 	android:windowSoftInputMode
-		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:86:13-55
+		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:84:13-55
 	android:name
-		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:84:13-80
+		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:82:13-80
 intent-filter#android.intent.action.
-ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:87:13-89:29
+ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:85:13-87:29
 action#android.intent.action.
-ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:88:17-72
+ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:86:17-65
 	android:name
-		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:88:25-62
+		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:86:25-62
 intent-filter#android.intent.action.SEARCH
-ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:90:13-92:29
+ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:88:13-90:29
 action#android.intent.action.SEARCH
-ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:91:17-71
+ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:89:17-71
 	android:name
-		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:91:25-68
+		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:89:25-68
 meta-data#android.app.searchable
-ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:94:13-96:63
+ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:92:13-94:63
 	android:resource
-		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:96:17-60
+		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:94:17-60
 	android:name
-		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:95:17-54
+		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:93:17-54
 activity#com.proyecto.ventas.MainVentas
-ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:100:9-112:20
+ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:98:9-110:20
 	android:label
-		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:102:13-50
+		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:100:13-50
 	android:name
-		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:101:13-58
+		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:99:13-58
 activity#com.proyecto.ventas.DetalleVentaMain
-ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:113:9-115:58
+ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:111:9-113:49
 	android:label
-		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:115:13-46
+		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:113:13-46
 	android:name
-		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:114:13-64
+		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:112:13-64
 activity#com.proyecto.ventas.DetalleVentaLinea
-ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:116:9-122:20
+ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:114:9-120:20
 	android:label
-		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:118:13-46
+		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:116:13-46
 	android:name
-		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:117:13-65
+		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:115:13-65
 activity#com.proyecto.cobranza.MainCobranzas
-ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:128:9-134:20
+ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:126:9-132:20
 	android:label
-		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:130:13-49
+		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:128:13-49
 	android:name
-		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:129:13-63
+		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:127:13-63
 activity#com.proyecto.cobranza.DetalleCobranzaMain
-ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:135:9-137:58
+ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:133:9-135:49
 	android:label
-		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:137:13-46
+		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:135:13-46
 	android:name
-		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:136:13-69
+		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:134:13-69
 activity#com.proyecto.cobranza.DetalleFacturaMain
-ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:138:9-140:58
+ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:136:9-138:49
 	android:label
-		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:140:13-46
+		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:138:13-46
 	android:name
-		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:139:13-68
+		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:137:13-68
 activity#com.proyecto.informes.Informe
-ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:141:9-143:60
+ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:139:9-141:51
 	android:label
-		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:143:13-48
+		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:141:13-48
 	android:name
-		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:142:13-57
+		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:140:13-57
 activity#com.proyect.movil.LoginActivity
-ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:144:9-147:80
+ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:142:9-145:71
 	android:label
-		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:146:13-57
+		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:144:13-57
 	android:windowSoftInputMode
-		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:147:13-68
+		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:145:13-68
 	android:name
-		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:145:13-42
+		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:143:13-42
 activity#com.proyecto.facturas.DetalleFacturaLinea
-ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:148:9-150:58
+ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:146:9-148:49
 	android:label
-		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:150:13-46
+		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:148:13-46
 	android:name
-		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:149:13-69
+		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:147:13-69
 activity#com.proyecto.inventario.DetalleArticuloMain
-ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:151:9-153:58
+ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:149:9-151:49
 	android:label
-		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:153:13-46
+		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:151:13-46
 	android:name
-		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:152:13-71
+		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:150:13-71
 receiver#com.proyecto.broadcast.MainReceiver
-ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:155:9-159:20
+ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:153:9-157:20
 	android:name
-		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:155:19-69
+		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:153:19-69
 intent-filter#android.intent.action.BOOT_COMPLETED
-ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:156:13-158:29
+ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:154:13-156:29
 action#android.intent.action.BOOT_COMPLETED
-ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:157:17-79
+ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:155:17-79
 	android:name
-		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:157:25-76
+		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:155:25-76
 service#com.proyecto.servicios.ServicioOvPr
-ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:169:9-172:48
+ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:167:9-170:40
 	android:enabled
-		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:171:13-35
+		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:169:13-35
 	android:exported
-		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:172:13-37
+		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:170:13-37
 	android:name
-		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:170:13-63
+		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:168:13-63
 activity#com.proyecto.sociosnegocio.SocioDireccionActivity
-ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:191:9-193:79
+ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:189:9-191:70
 	android:label
-		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:193:13-67
+		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:191:13-67
 	android:name
-		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:192:13-77
+		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:190:13-77
 meta-data#com.google.android.geo.API_KEY
-ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:195:9-197:55
+ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:193:9-195:55
 	android:value
-		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:197:13-52
+		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:195:13-52
 	android:name
-		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:196:13-58
+		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:194:13-58
+activity#com.proyecto.movil.PinVerified
+ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:197:9-198:20
+	android:name
+		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:197:19-64
 activity#com.google.android.gms.common.api.GoogleApiActivity
 ADDED from [com.google.android.gms:play-services-base:11.8.0] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\play-services-base-11.8.0.aar\36bd668d01fd7ddabe8282c41976aef9\AndroidManifest.xml:23:9-26:75
 	android:exported

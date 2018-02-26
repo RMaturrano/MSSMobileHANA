@@ -68,7 +68,7 @@ public class SyncRestInicio {
             String ruta = "http://" + ip + ":" + port + "/MSS_MOBILE/service/";
 
             //region REQUEST COUNTRY
-            mProgressDialog.setMessage("Registrando países...");
+            mProgressDialog.setMessage("Registrando paï¿½ses...");
             JsonObjectRequest mJSONRequest = new JsonObjectRequest(Request.Method.GET,
                     ruta + "country/getCountry.xsjs?empId=" + sociedad, null,
                     listenerGetPaises, errorListenerGetPaises);
@@ -142,7 +142,7 @@ public class SyncRestInicio {
             //endregion
 
             //region REQUEST IMPUESTOS
-            mProgressDialog.setMessage("Registrando códigos de impuesto...");
+            mProgressDialog.setMessage("Registrando cï¿½digos de impuesto...");
             mJSONRequest = new JsonObjectRequest(Request.Method.GET,
                     ruta + "taxcodes/getTaxCodes.xsjs?empId=" + sociedad, null,
                     listenerGetImpuesto, errorListenerGetImpuesto);
@@ -174,7 +174,7 @@ public class SyncRestInicio {
             //endregion
 
             //region REQUEST GRUPOS ARTICULO
-            mProgressDialog.setMessage("Registrando grupos de artículo...");
+            mProgressDialog.setMessage("Registrando grupos de artï¿½culo...");
             mJSONRequest = new JsonObjectRequest(Request.Method.GET,
                     ruta + "itemgroups/getItemGroup.xsjs?empId=" + sociedad, null,
                     listenerGetGrupoArticulo, errorListenerGetGrupoArticulo);
@@ -241,7 +241,7 @@ public class SyncRestInicio {
     Response.ErrorListener errorListenerGetPaises = new Response.ErrorListener() {
         @Override
         public void onErrorResponse(VolleyError error) {
-            showToast("Ocurrió un error intentando conectar con el servidor, " + error.getMessage());
+            showToast("Ocurriï¿½ un error intentando conectar con el servidor, " + error.getMessage());
         }
     };
     //endregion
@@ -285,7 +285,7 @@ public class SyncRestInicio {
     Response.ErrorListener errorListenerGetDepartamentos = new Response.ErrorListener() {
         @Override
         public void onErrorResponse(VolleyError error) {
-            showToast("Ocurrió un error intentando conectar con el servidor, " + error.getMessage());
+            showToast("Ocurriï¿½ un error intentando conectar con el servidor, " + error.getMessage());
         }
     };
     //endregion
@@ -329,7 +329,7 @@ public class SyncRestInicio {
     Response.ErrorListener errorListenerGetProvincias = new Response.ErrorListener() {
         @Override
         public void onErrorResponse(VolleyError error) {
-            showToast("Ocurrió un error intentando conectar con el servidor, " + error.getMessage());
+            showToast("Ocurriï¿½ un error intentando conectar con el servidor, " + error.getMessage());
         }
     };
     //endregion
@@ -373,7 +373,7 @@ public class SyncRestInicio {
     Response.ErrorListener errorListenerGetDistritos = new Response.ErrorListener() {
         @Override
         public void onErrorResponse(VolleyError error) {
-            showToast("Ocurrió un error intentando conectar con el servidor, " + error.getMessage());
+            showToast("Ocurriï¿½ un error intentando conectar con el servidor, " + error.getMessage());
         }
     };
     //endregion
@@ -416,7 +416,7 @@ public class SyncRestInicio {
     Response.ErrorListener errorListenerGetBancos = new Response.ErrorListener() {
         @Override
         public void onErrorResponse(VolleyError error) {
-            showToast("Ocurrió un error intentando conectar con el servidor, " + error.getMessage());
+            showToast("Ocurriï¿½ un error intentando conectar con el servidor, " + error.getMessage());
         }
     };
     //endregion
@@ -459,7 +459,7 @@ public class SyncRestInicio {
     Response.ErrorListener errorListenerGetCuentas = new Response.ErrorListener() {
         @Override
         public void onErrorResponse(VolleyError error) {
-            showToast("Ocurrió un error intentando conectar con el servidor, " + error.getMessage());
+            showToast("Ocurriï¿½ un error intentando conectar con el servidor, " + error.getMessage());
         }
     };
     //endregion
@@ -502,7 +502,7 @@ public class SyncRestInicio {
     Response.ErrorListener errorListenerGetMonedas = new Response.ErrorListener() {
         @Override
         public void onErrorResponse(VolleyError error) {
-            showToast("Ocurrió un error intentando conectar con el servidor, " + error.getMessage());
+            showToast("Ocurriï¿½ un error intentando conectar con el servidor, " + error.getMessage());
         }
     };
     //endregion
@@ -545,7 +545,7 @@ public class SyncRestInicio {
     Response.ErrorListener errorListenerGetCondicionPago = new Response.ErrorListener() {
         @Override
         public void onErrorResponse(VolleyError error) {
-            showToast("Ocurrió un error intentando conectar con el servidor, " + error.getMessage());
+            showToast("Ocurriï¿½ un error intentando conectar con el servidor, " + error.getMessage());
         }
     };
     //endregion
@@ -588,7 +588,7 @@ public class SyncRestInicio {
     Response.ErrorListener errorListenerGetIndicadores = new Response.ErrorListener() {
         @Override
         public void onErrorResponse(VolleyError error) {
-            showToast("Ocurrió un error intentando conectar con el servidor, " + error.getMessage());
+            showToast("Ocurriï¿½ un error intentando conectar con el servidor, " + error.getMessage());
         }
     };
     //endregion
@@ -631,7 +631,7 @@ public class SyncRestInicio {
     Response.ErrorListener errorListenerGetImpuesto = new Response.ErrorListener() {
         @Override
         public void onErrorResponse(VolleyError error) {
-            showToast("Ocurrió un error intentando conectar con el servidor, " + error.getMessage());
+            showToast("Ocurriï¿½ un error intentando conectar con el servidor, " + error.getMessage());
         }
     };
     //endregion
@@ -674,7 +674,7 @@ public class SyncRestInicio {
     Response.ErrorListener errorListenerGetGrupoSocio = new Response.ErrorListener() {
         @Override
         public void onErrorResponse(VolleyError error) {
-            showToast("Ocurrió un error intentando conectar con el servidor, " + error.getMessage());
+            showToast("Ocurriï¿½ un error intentando conectar con el servidor, " + error.getMessage());
         }
     };
     //endregion
@@ -717,7 +717,7 @@ public class SyncRestInicio {
     Response.ErrorListener errorListenerGetZona = new Response.ErrorListener() {
         @Override
         public void onErrorResponse(VolleyError error) {
-            showToast("Ocurrió un error intentando conectar con el servidor, " + error.getMessage());
+            showToast("Ocurriï¿½ un error intentando conectar con el servidor, " + error.getMessage());
         }
     };
     //endregion
@@ -760,7 +760,7 @@ public class SyncRestInicio {
     Response.ErrorListener errorListenerGetFabricantes = new Response.ErrorListener() {
         @Override
         public void onErrorResponse(VolleyError error) {
-            showToast("Ocurrió un error intentando conectar con el servidor, " + error.getMessage());
+            showToast("Ocurriï¿½ un error intentando conectar con el servidor, " + error.getMessage());
         }
     };
     //endregion
@@ -803,7 +803,7 @@ public class SyncRestInicio {
     Response.ErrorListener errorListenerGetGrupoArticulo = new Response.ErrorListener() {
         @Override
         public void onErrorResponse(VolleyError error) {
-            showToast("Ocurrió un error intentando conectar con el servidor, " + error.getMessage());
+            showToast("Ocurriï¿½ un error intentando conectar con el servidor, " + error.getMessage());
         }
     };
     //endregion
@@ -846,7 +846,7 @@ public class SyncRestInicio {
     Response.ErrorListener errorListenerGetUnidadMedida = new Response.ErrorListener() {
         @Override
         public void onErrorResponse(VolleyError error) {
-            showToast("Ocurrió un error intentando conectar con el servidor, " + error.getMessage());
+            showToast("Ocurriï¿½ un error intentando conectar con el servidor, " + error.getMessage());
         }
     };
     //endregion
@@ -905,7 +905,7 @@ public class SyncRestInicio {
         @Override
         public void onErrorResponse(VolleyError error) {
             mProgressDialog.dismiss();
-            showToast("Ocurrió un error intentando conectar con el servidor, " + error.getMessage());
+            showToast("OcurriÃ³ un error intentando conectar con el servidor, " + error.getMessage());
         }
     };
     //endregion
