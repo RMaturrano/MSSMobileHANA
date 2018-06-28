@@ -1,5 +1,6 @@
 package com.proyecto.sociosnegocio;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -10,6 +11,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
 import com.proyect.movil.R;
+import com.proyecto.geolocalizacion.MapsActivity;
 
 public class MainSocioNegocio extends AppCompatActivity{
 	
@@ -55,16 +57,35 @@ public class MainSocioNegocio extends AppCompatActivity{
 		
 	}
 
-
-
-
 	@Override
 	protected void onSaveInstanceState(Bundle outState) {
 		super.onSaveInstanceState(outState);
 		getSupportFragmentManager().putFragment(outState, "mFragmentSocioNuevo", fragment);
 
 	}
-	
 
-
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		if(resultCode == RESULT_OK && requestCode == MapsActivity.REQUEST_MAPAS){
+			if(data.getExtras().containsKey(MapsActivity.KEY_PARAM_LATITUD) &&
+					data.getExtras().containsKey(MapsActivity.KEY_PARAM_LONGITUD)){
+				DireccionSocioNegocio agregarDireccion = (DireccionSocioNegocio) getSupportFragmentManager()
+						.findFragmentByTag(DireccionSocioNegocio.TAG_AGREGAR_DIRECCION);
+				if(agregarDireccion != null) {
+					agregarDireccion.actualizarUbicacion(data.getExtras().getDouble(MapsActivity.KEY_PARAM_LATITUD),
+												 data.getExtras().getDouble(MapsActivity.KEY_PARAM_LONGITUD));
+				}
+			}
+		}else if(resultCode == RESULT_OK && requestCode == PhoneContactsListActivity.REQUEST_CONTACT_TLF){
+			if(data.getExtras().containsKey(PhoneContactsListActivity.KEY_PARAM_NAME) &&
+					data.getExtras().containsKey(PhoneContactsListActivity.KEY_PARAM_PHONE)){
+				ListaContactosFragment lstContactos = (ListaContactosFragment) getSupportFragmentManager()
+						.findFragmentByTag(ListaContactosFragment.TAG_LISTA_CONTACTOS);
+				if(lstContactos != null){
+					lstContactos.agregarNuevoContacto(data.getExtras().getString(PhoneContactsListActivity.KEY_PARAM_NAME),
+							data.getExtras().getString(PhoneContactsListActivity.KEY_PARAM_PHONE));
+				}
+			}
+		}
+	}
 }

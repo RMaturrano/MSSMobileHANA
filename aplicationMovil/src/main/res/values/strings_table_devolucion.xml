@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    
+    <string name="T_DEVOLUCION">TB_DEVOLUCION</string>
+    
+    <string name="C_DEV_TIPO">Tipo</string>
+    <string name="C_DEV_CLAVE">Clave</string>
+    <string name="C_DEV_CLAVE_MOVIL">ClaveMovil</string>
+    <string name="C_DEV_NUMERO">Numero</string>
+    <string name="C_DEV_REFERENCIA">Referencia</string>
+    <string name="C_DEV_SOCIO_NEGOCIO">SocioNegocio</string>
+    <string name="C_DEV_LISTA_PRECIO">ListaPrecio</string>
+    <string name="C_DEV_CONTACTO">Contacto</string>
+    <string name="C_DEV_MONEDA">Moneda</string>
+    <string name="C_DEV_EMP_VENTA">EmpleadoVenta</string>
+    <string name="C_DEV_COMENT">Comentario</string>
+    <string name="C_DEV_FEC_CONT">FechaContable</string>
+    <string name="C_DEV_FEC_VEN">FechaVencimiento</string>
+    <string name="C_DEV_DIR_FISCAL">DireccionFiscal</string>
+    <string name="C_DEV_DIR_ENTREGA">DireccionEntrega</string>
+    <string name="C_DEV_COND_PAGO">CondicionPago</string>
+    <string name="C_DEV_INDICADOR">Indicador</string>
+    <string name="C_DEV_SUB_TOTAL">SubTotal</string>
+    <string name="C_DEV_DESCUENTO">Descuento</string>
+    <string name="C_DEV_IMPUESTO">Impuesto</string>
+    <string name="C_DEV_TOTAL">Total</string>
+    <string name="C_DEV_SALDO">Saldo</string>
+    <string name="C_DEV_ESTADO_MOVIL">EstadoMovil</string>
+    <string name="C_DEV_CLAVE_BASE">ClaveBase</string>
+    
+    <!-- LINEAS -->
+    <string name="TD_DEVOLUCION1">TB_DEVOLUCION_DETALLE</string>
+    
+    <string name="C_DEV1_CLAVE">ClaveDevolucion</string>
+    <string name="C_DEV1_LINEA">Linea</string>
+    <string name="C_DEV1_LINEA_BASE">LineaBase</string>
+    <string name="C_DEV1_ART">Articulo</string>
+    <string name="C_DEV1_UM">UnidadMedida</string>
+    <string name="C_DEV1_ALMACEN">Almacen</string>
+    <string name="C_DEV1_CANT">Cantidad</string>
+    <string name="C_DEV1_LST_PRE">ListaPrecio</string>
+    <string name="C_DEV1_PRE_UNI">PrecioUnitario</string>
+    <string name="C_DEV1_PORC_DESCUENTO">PorcentajeDescuento</string>
+    <string name="C_DEV1_IMPUESTO">Impuesto</string>
+
+    <!-- LOTES -->
+    <string name="TD_DEVOLUCION2">TB_DEVOLUCION_DETALLE_LOTE</string>
+
+    <string name="C_DEV2_CLAVE">ClaveEntrega</string>
+    <string name="C_DEV2_LOTE">Lote</string>
+    <string name="C_DEV2_CANT">Cantidad</string>
+    <string name="C_DEV2_LINEA">LineaBase</string>
+    
+</resources>

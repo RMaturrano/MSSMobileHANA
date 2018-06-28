@@ -5,5 +5,6 @@
     
     <string name="C_IMPUESTO_COD">Codigo</string>
     <string name="C_IMPUESTO_NOM">Nombre</string>
+    <string name="C_IMPUESTO_TAS">Tasa</string>
     
 </resources>

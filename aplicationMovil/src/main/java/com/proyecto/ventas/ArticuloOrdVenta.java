@@ -437,103 +437,106 @@ public class ArticuloOrdVenta extends Fragment {
 
         } else if (position == 3) {
 
-            if (grupoUnidadMedidaSel != null && !grupoUnidadMedidaSel.getCodigo().equals("-1")) {
+            try{
+                if (grupoUnidadMedidaSel != null && !grupoUnidadMedidaSel.getCodigo().equals("-1")) {
 
-                String[] parts = grupoUnidadMedidaSel.getNombre().split(":");
-                cargarListasUMManual(grupoUnidadMedidaSel.getCodigo());
+                    String[] parts = grupoUnidadMedidaSel.getNombre().split(":");
+                    cargarListasUMManual(grupoUnidadMedidaSel.getCodigo());
 
-                // Parte UNO de la unidad de medida , ejem: 1-CAJA
-                String[] part_1 = parts[0].split("-");
-                final String part_1_nom = part_1[1];
+                    // Parte UNO de la unidad de medida , ejem: 1-CAJA
+                    String[] part_1 = parts[0].split("-");
+                    final String part_1_nom = part_1[1];
 
-                // Parte DOS de la unidad de medida , ejem: 12-BOTELLA
-                String[] part_2 = parts[1].split("-");
-                final String um2 = part_2[1];
-                final int nroDividir = Integer.parseInt(part_2[0]);
+                    // Parte DOS de la unidad de medida , ejem: 12-BOTELLA
+                    String[] part_2 = parts[1].split("-");
+                    final String um2 = part_2[1];
+                    final int nroDividir = Integer.parseInt(part_2[0]);
 
-                //Unidad Medida
-                posicion = position;
+                    //Unidad Medida
+                    posicion = position;
 
-                //Capturar el objeto
-                Object o = lvPrincipal.getItemAtPosition(position);
-                fullObject = new FormatCustomListView();
-                fullObject = (FormatCustomListView) o;
+                    //Capturar el objeto
+                    Object o = lvPrincipal.getItemAtPosition(position);
+                    fullObject = new FormatCustomListView();
+                    fullObject = (FormatCustomListView) o;
 
-                AlertDialog.Builder alert = new AlertDialog.Builder(contexto);
-                alert.setTitle("Unidad de medida");
+                    AlertDialog.Builder alert = new AlertDialog.Builder(contexto);
+                    alert.setTitle("Unidad de medida");
 
-                //Spinner
-                final Spinner spnAlmacen = new Spinner(contexto);
-
-
-                ArrayAdapter<UnidadMedidaBean> adapter = new ArrayAdapter<UnidadMedidaBean>(contexto,
-                        android.R.layout.simple_list_item_1,
-                        listaUnidadesMedidaManual);
-                spnAlmacen.setAdapter(adapter);
-                spnAlmacen.setOnItemSelectedListener(new OnItemSelectedListener() {
-
-                    @Override
-                    public void onItemSelected(AdapterView<?> parent,
-                                               View arg1, int pos, long arg3) {
-                        unidadMedidaSel = new UnidadMedidaBean();
-                        unidadMedidaSel = (UnidadMedidaBean) parent.getItemAtPosition(pos);
-
-                    }
-
-                    @Override
-                    public void onNothingSelected(
-                            AdapterView<?> arg0) {
+                    //Spinner
+                    final Spinner spnAlmacen = new Spinner(contexto);
 
 
-                    }
-                });
+                    ArrayAdapter<UnidadMedidaBean> adapter = new ArrayAdapter<UnidadMedidaBean>(contexto,
+                            android.R.layout.simple_list_item_1,
+                            listaUnidadesMedidaManual);
+                    spnAlmacen.setAdapter(adapter);
+                    spnAlmacen.setOnItemSelectedListener(new OnItemSelectedListener() {
 
-                alert.setView(spnAlmacen);
+                        @Override
+                        public void onItemSelected(AdapterView<?> parent,
+                                                   View arg1, int pos, long arg3) {
+                            unidadMedidaSel = new UnidadMedidaBean();
+                            unidadMedidaSel = (UnidadMedidaBean) parent.getItemAtPosition(pos);
 
-                alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int whichButton) {
+                        }
 
-                        // Do something with value!
-                        fullObject.setData(unidadMedidaSel.toString());
-                        searchResults.set(posicion, fullObject);
+                        @Override
+                        public void onNothingSelected(
+                                AdapterView<?> arg0) {
 
-                        if(!unidadMedidaSel.getCodigo().equals(unidadMedidaSelOriginal.getCodigo())) {
 
-                            if (unidadMedidaSel.toString().equals(um2)) {
-                                double pre = Double.parseDouble(searchResults.get(7).getData().toString());
-                                if (pre > 0) {
+                        }
+                    });
+
+                    alert.setView(spnAlmacen);
+
+                    alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int whichButton) {
+
+                            // Do something with value!
+                            fullObject.setData(unidadMedidaSel.toString());
+                            searchResults.set(posicion, fullObject);
+
+                            if(!unidadMedidaSel.getCodigo().equals(unidadMedidaSelOriginal.getCodigo())) {
+
+                                if (unidadMedidaSel.toString().equals(um2)) {
+                                    double pre = Double.parseDouble(searchResults.get(7).getData().toString());
+                                    if (pre > 0) {
+                                        fullObject = new FormatCustomListView();
+                                        fullObject = (FormatCustomListView) lvPrincipal.getItemAtPosition(7);
+                                        fullObject.setData(String.valueOf(DoubleRound.round((pre / nroDividir), 6)));
+                                        searchResults.set(7, fullObject);
+                                    }
+                                } else if (unidadMedidaSel.toString().equals(part_1_nom)) {
+                                    double pre = Double.parseDouble(searchResults.get(7).getData().toString());
+                                    if (pre > 0)
+                                        searchResults.get(7).setData(String.valueOf(DoubleRound.round((pre * nroDividir), 6)));
+
+                                } else {
                                     fullObject = new FormatCustomListView();
                                     fullObject = (FormatCustomListView) lvPrincipal.getItemAtPosition(7);
-                                    fullObject.setData(String.valueOf(DoubleRound.round((pre / nroDividir), 6)));
+                                    fullObject.setData(precioVenta);
                                     searchResults.set(7, fullObject);
                                 }
-                            } else if (unidadMedidaSel.toString().equals(part_1_nom)) {
-                                double pre = Double.parseDouble(searchResults.get(7).getData().toString());
-                                if (pre > 0)
-                                    searchResults.get(7).setData(String.valueOf(DoubleRound.round((pre * nroDividir), 6)));
-
-                            } else {
-                                fullObject = new FormatCustomListView();
-                                fullObject = (FormatCustomListView) lvPrincipal.getItemAtPosition(7);
-                                fullObject.setData(precioVenta);
-                                searchResults.set(7, fullObject);
+                                doMaths();
+                                unidadMedidaSelOriginal = unidadMedidaSel;
+                                lvPrincipal.invalidateViews();
                             }
-                            doMaths();
-                            unidadMedidaSelOriginal = unidadMedidaSel;
-                            lvPrincipal.invalidateViews();
                         }
-                    }
-                });
+                    });
 
-                alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int whichButton) {
-                        // Canceled.
-                    }
-                });
+                    alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int whichButton) {
+                            // Canceled.
+                        }
+                    });
 
-                alert.show();
+                    alert.show();
+                }
+            }catch(Exception e){
+                Toast.makeText(contexto, e.getMessage(), Toast.LENGTH_SHORT).show();
             }
-
         } else if (position == 4) {
 
             posicion = position;
@@ -960,88 +963,92 @@ public class ArticuloOrdVenta extends Fragment {
 
             case R.id.action_aceptar:
 
-                if (searchResults.get(0).getData() != "" && searchResults.get(0).getData() != null &&
-                        searchResults.get(5).getData() != "" && searchResults.get(5).getData() != null) {
+                try{
+                    if (searchResults.get(0).getData() != "" && searchResults.get(0).getData() != null &&
+                            searchResults.get(5).getData() != "" && searchResults.get(5).getData() != null) {
 
-                    Bundle arguments = new Bundle();
-                    String cabe = searchResults.get(0).getData() + " - " + searchResults.get(1).getData();
-                    String desc = searchResults.get(4).getData();
+                        Bundle arguments = new Bundle();
+                        String cabe = searchResults.get(0).getData() + " - " + searchResults.get(1).getData();
+                        String desc = searchResults.get(4).getData();
 
-                    arguments.putString("cabe", cabe);
-                    arguments.putString("desc", desc);
+                        arguments.putString("cabe", cabe);
+                        arguments.putString("desc", desc);
 
 
-                    art_bean = new ArticuloBean();
-                    art_bean.setCod(searchResults.get(0).getData());
-                    art_bean.setDesc(searchResults.get(1).getData());
-                    art_bean.setGrupoArticulo(grupoUnidadMedidaSel.getCodigo());
-                    art_bean.setNombreGrupoArt(grupoUnidadMedidaSel.getNombre());
-                    art_bean.setCodUM(unidadMedidaSel.getCodigo());
-                    art_bean.setNombreUnidadMedida(unidadMedidaSel.getNombre());
-                    art_bean.setAlmacen(almacenSel.getCodigo());
-                    if(Double.parseDouble(searchResults.get(5).getData()) > 0)
-                        art_bean.setCant(Double.parseDouble(searchResults.get(5).getData()));
-                    else{
-                        Toast.makeText(contexto,"La cantidad debe ser mayor a cero.",Toast.LENGTH_SHORT).show();
-                        return true;
-                    }
-                    if(searchResults.get(7).getData() != null && !searchResults.get(7).getData().equals(""))
-                        art_bean.setPre(Double.parseDouble(searchResults.get(7).getData()));
-                    else{
-                        Toast.makeText(contexto,"El articulo no tiene precio",Toast.LENGTH_SHORT).show();
-                        return true;
-                    }
-                    art_bean.setDescuento(Double.parseDouble(searchResults.get(8).getData()));
-                    if (!listaImpuestoSel.getCodigo().equals("IGV_EXO"))
-                        art_bean.setImpuesto(18);
-                    else
-                        art_bean.setImpuesto(0);
-                    art_bean.setCodigoImpuesto(listaImpuestoSel.getCodigo());
-                    art_bean.setUtilIcon(iconId);
-                    if(listaPreSel != null) {
-                        art_bean.setCodigoListaPrecio(listaPreSel.getCodigo());
-                        art_bean.setDescripcionListaPrecio(listaPreSel.getNombre());
-                    }else{
-                        Toast.makeText(contexto,"Seleccione la lista de precios",Toast.LENGTH_SHORT).show();
-                        return true;
-                    }
-
-                    if (MainVentas.codigoArticulo.equals(""))
-                        OrdenVentaFragment.listaDetalleArticulos.add(art_bean);
-                    else {
-                        for (int i = 0; i < OrdenVentaFragment.listaDetalleArticulos.size(); i++) {
-                            if (OrdenVentaFragment.
-                                    listaDetalleArticulos.
-                                    get(i).
-                                    getCod().equals(art_bean.getCod())) {
-                                OrdenVentaFragment.listaDetalleArticulos.remove(i);
-                                OrdenVentaFragment.listaDetalleArticulos.add(i, art_bean);
-                                break;
-                            }
+                        art_bean = new ArticuloBean();
+                        art_bean.setCod(searchResults.get(0).getData());
+                        art_bean.setDesc(searchResults.get(1).getData());
+                        if(grupoUnidadMedidaSel != null) {
+                            art_bean.setGrupoArticulo(grupoUnidadMedidaSel.getCodigo());
+                            art_bean.setNombreGrupoArt(grupoUnidadMedidaSel.getNombre());
                         }
-                        MainVentas.codigoArticulo = "";
+                        if (unidadMedidaSel != null){
+                            art_bean.setCodUM(unidadMedidaSel.getCodigo());
+                            art_bean.setNombreUnidadMedida(unidadMedidaSel.getNombre());
+                        }
+                        art_bean.setAlmacen(almacenSel.getCodigo());
+                        if(Double.parseDouble(searchResults.get(5).getData()) > 0)
+                            art_bean.setCant(Double.parseDouble(searchResults.get(5).getData()));
+                        else{
+                            Toast.makeText(contexto,"La cantidad debe ser mayor a cero.",Toast.LENGTH_SHORT).show();
+                            return true;
+                        }
+                        if(searchResults.get(7).getData() != null && !searchResults.get(7).getData().equals(""))
+                            art_bean.setPre(Double.parseDouble(searchResults.get(7).getData()));
+                        else{
+                            Toast.makeText(contexto,"El articulo no tiene precio",Toast.LENGTH_SHORT).show();
+                            return true;
+                        }
+                        art_bean.setDescuento(Double.parseDouble(searchResults.get(8).getData()));
+                        if (!listaImpuestoSel.getCodigo().equals("IGV_EXO"))
+                            art_bean.setImpuesto(18);
+                        else
+                            art_bean.setImpuesto(0);
+                        art_bean.setCodigoImpuesto(listaImpuestoSel.getCodigo());
+                        art_bean.setUtilIcon(iconId);
+                        if(listaPreSel != null) {
+                            art_bean.setCodigoListaPrecio(listaPreSel.getCodigo());
+                            art_bean.setDescripcionListaPrecio(listaPreSel.getNombre());
+                        }else{
+                            Toast.makeText(contexto,"Seleccione la lista de precios",Toast.LENGTH_SHORT).show();
+                            return true;
+                        }
+
+                        if (MainVentas.codigoArticulo.equals(""))
+                            OrdenVentaFragment.listaDetalleArticulos.add(art_bean);
+                        else {
+                            for (int i = 0; i < OrdenVentaFragment.listaDetalleArticulos.size(); i++) {
+                                if (OrdenVentaFragment.
+                                        listaDetalleArticulos.
+                                        get(i).
+                                        getCod().equals(art_bean.getCod())) {
+                                    OrdenVentaFragment.listaDetalleArticulos.remove(i);
+                                    OrdenVentaFragment.listaDetalleArticulos.add(i, art_bean);
+                                    break;
+                                }
+                            }
+                            MainVentas.codigoArticulo = "";
+                        }
+
+
+                        //MANDAR LOS PAR�METROS EN LOCALBORADCAST INTENT
+                        Intent localBroadcastIntent = new Intent("event-send-art-to-list");
+                        localBroadcastIntent.putExtras(arguments);
+                        LocalBroadcastManager myLocalBroadcastManager = LocalBroadcastManager.getInstance(getActivity());
+                        myLocalBroadcastManager.sendBroadcast(localBroadcastIntent);
+
+                        transaction.remove(this);
+                        transaction.commit();
+
+                        getActivity().setTitle("Contenido");
+                        getActivity().getFragmentManager().popBackStack();
+
+                    } else {
+                        Toast.makeText(contexto, "Seleccione el articulo o ingrese el precio correspondiente", Toast.LENGTH_LONG).show();
                     }
-
-
-                    //MANDAR LOS PAR�METROS EN LOCALBORADCAST INTENT
-                    Intent localBroadcastIntent = new Intent("event-send-art-to-list");
-                    localBroadcastIntent.putExtras(arguments);
-                    LocalBroadcastManager myLocalBroadcastManager = LocalBroadcastManager.getInstance(getActivity());
-                    myLocalBroadcastManager.sendBroadcast(localBroadcastIntent);
-
-                    transaction.remove(this);
-                    transaction.commit();
-
-                    getActivity().setTitle("Contenido");
-                    getActivity().getFragmentManager().popBackStack();
-
-                } else {
-
-                    Toast.makeText(contexto, "Seleccione el art�culo o ingrese el precio correspondiente", Toast.LENGTH_LONG).show();
-
+                }catch (Exception e){
+                    Toast.makeText(contexto, e.getMessage(), Toast.LENGTH_LONG).show();
                 }
-
-
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

@@ -6,20 +6,37 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.proyecto.bean.DevolucionBean;
+import com.proyecto.bean.EntregaBean;
+import com.proyecto.bean.EntregaDetalleBean;
+import com.proyecto.bean.EntregaDetalleLoteBean;
 import com.proyecto.bean.FacturaBean;
 import com.proyecto.bean.FacturaDetalleBean;
+import com.proyecto.bean.FacturaDetalleLoteBean;
+import com.proyecto.bean.IncidenciaBean;
+import com.proyecto.bean.NotaCreditoBean;
 import com.proyecto.bean.OrdenVentaBean;
 import com.proyecto.bean.OrdenVentaDetalleBean;
 import com.proyecto.bean.PagoBean;
 import com.proyecto.bean.PagoDetalleBean;
-import com.proyecto.bean.PaisBean;
 import com.proyecto.bean.ReporteModel;
+import com.proyecto.dao.DevolucionDAO;
+import com.proyecto.dao.EntregaDAO;
+import com.proyecto.dao.FacturaDAO;
+import com.proyecto.dao.IncidenciaDAO;
+import com.proyecto.dao.NotaCreditoDAO;
+import com.proyecto.dao.OrdenVentaDAO;
+import com.proyecto.dao.PagoDAO;
 import com.proyecto.database.Insert;
+import com.proyecto.database.Select;
 import com.proyecto.reportes.ReporteEstadoCuenta;
+import com.proyecto.utils.Constantes;
 import com.proyecto.utils.Variables;
 import com.proyecto.ws.VolleySingleton;
 
@@ -27,14 +44,18 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class SyncRestDocumentos {
 
     private ProgressDialog mProgressDialog;
     private Context mContext;
     private Insert mInsert;
+    private Select mSelect;
     private SharedPreferences mSharedPreferences;
+    private int MY_SOCKET_TIMEOUT_MS = 50000;
 
     public SyncRestDocumentos(Context contexto, ProgressDialog progressDialog){
         mProgressDialog = progressDialog;
@@ -49,33 +70,309 @@ public class SyncRestDocumentos {
         try {
 
             mInsert = new Insert(mContext);
+            mSelect = new Select(mContext);
 
-            String ip = mSharedPreferences.getString("ipServidor", "200.10.84.66");
-            String port = mSharedPreferences.getString("puertoServidor", "80");
+            String ip = mSharedPreferences.getString("ipServidor", Constantes.DEFAULT_IP);
+            String port = mSharedPreferences.getString("puertoServidor", Constantes.DEFAULT_PORT);
             String sociedad = mSharedPreferences.getString("sociedades", "-1");
             String ruta = "http://" + ip + ":" + port + "/MSS_MOBILE/service/";
+            String codigoEmpleado = mSharedPreferences.getString(Variables.CODIGO_EMPLEADO, "-1");
+            String esSupervisor = mSharedPreferences.getString(Variables.SUPERVISOR, "N");
+            String esCobrador = mSharedPreferences.getString(Variables.COBRADOR, "N");
+
+            //region POST ORDEN VENTA
+            List<OrdenVentaBean> listToSend = mSelect.listaOrdenesVentas();
+
+            if(listToSend.size() > 0){
+                mProgressDialog.setMessage("Enviando √≥rdenes de venta...");
+
+                for (final OrdenVentaBean ov : listToSend){
+                    try {
+
+                        JSONObject jsonObject = OrdenVentaBean.transformOVToJSON(ov, sociedad);
+
+                        //request to server
+                        JsonObjectRequest jsonObjectRequest =
+                                new JsonObjectRequest(Request.Method.POST, ruta + "salesorder/addSalesOrder.xsjs", jsonObject,
+                                        new Response.Listener<JSONObject>() {
+                                            @Override
+                                            public void onResponse(JSONObject response) {
+                                                try
+                                                {
+                                                    if(response.getString("ResponseStatus").equals("Success")){
+                                                        mInsert.updateEstadoOrdenVenta(ov.getClaveMovil());
+                                                    }else{
+                                                        showToast(response.getJSONObject("Response")
+                                                                .getJSONObject("message")
+                                                                .getString("value"));
+                                                    }
+
+                                                }catch (Exception e){showToast("Response - " + e.getMessage());}
+                                            }
+                                        },
+                                        new Response.ErrorListener() {
+                                            @Override
+                                            public void onErrorResponse(VolleyError error) {
+                                                showToast("VolleyError - " + error.getMessage());
+                                            }
+                                        }){
+                                    @Override
+                                    public Map<String, String> getHeaders() throws AuthFailureError {
+                                        HashMap<String, String> headers = new HashMap<String, String>();
+                                        headers.put("Content-Type", "application/json; charset=utf-8");
+                                        return headers;
+                                    }
+                                };
+                        VolleySingleton.getInstance(mContext).addToRequestQueue(jsonObjectRequest);
+
+                    }catch (Exception ex){
+                        showToast("Enviando ordenes de venta: " + ex.getMessage());
+                    }
+                }
+            }
+            //endregion
+
+            //region POST PAGO RECIBIDO
+            List<PagoBean> listPagoSend = mSelect.listaPagosRecibidos();
+
+            if(listPagoSend.size() > 0){
+                mProgressDialog.setMessage("Enviando pagos recibidos...");
+
+                for (final PagoBean pr : listPagoSend){
+                    try {
+
+                        JSONObject jsonObject = PagoBean.transformPRToJSON(pr, sociedad);
+
+                        //request to server
+                        JsonObjectRequest jsonObjectRequest =
+                                new JsonObjectRequest(Request.Method.POST, ruta + "incomingpayment/addIncomingPayment.xsjs", jsonObject,
+                                        new Response.Listener<JSONObject>() {
+                                            @Override
+                                            public void onResponse(JSONObject response) {
+                                                try
+                                                {
+                                                    if(response.getString("ResponseStatus").equals("Success")){
+                                                        mInsert.updateEstadoPago(pr.getClaveMovil());
+                                                    }else{
+                                                        showToast(response.getJSONObject("Response")
+                                                                .getJSONObject("message")
+                                                                .getString("value"));
+                                                    }
+
+                                                }catch (Exception e){showToast("Response - " + e.getMessage());}
+                                            }
+                                        },
+                                        new Response.ErrorListener() {
+                                            @Override
+                                            public void onErrorResponse(VolleyError error) {
+                                                showToast("VolleyError - " + error.getMessage());
+                                            }
+                                        }){
+                                    @Override
+                                    public Map<String, String> getHeaders() throws AuthFailureError {
+                                        HashMap<String, String> headers = new HashMap<String, String>();
+                                        headers.put("Content-Type", "application/json; charset=utf-8");
+                                        return headers;
+                                    }
+                                };
+                        VolleySingleton.getInstance(mContext).addToRequestQueue(jsonObjectRequest);
+
+                    }catch (Exception ex){
+                        showToast("Enviando pagos recibidos: " + ex.getMessage());
+                    }
+                }
+            }
+            //endregion
+
+            //region POST INCIDENCIA
+            List<IncidenciaBean> lstSendIncidencia = new IncidenciaDAO().listar();
+
+            if(lstSendIncidencia.size() > 0){
+                mProgressDialog.setMessage("Enviando incidencias...");
+
+                for (final IncidenciaBean incidencia : lstSendIncidencia){
+                    try {
+
+                        JSONObject jsonObject = IncidenciaBean.transformIncidenciaToJSON(incidencia, sociedad);
+
+                        //request to server
+                        JsonObjectRequest jsonObjectRequest =
+                                new JsonObjectRequest(Request.Method.POST, ruta + "activity/addActivity.xsjs", jsonObject,
+                                        new Response.Listener<JSONObject>() {
+                                            @Override
+                                            public void onResponse(JSONObject response) {
+                                                try
+                                                {
+                                                    if(response.getString("ResponseStatus").equals("Success")){
+                                                       new IncidenciaDAO().actualizarSincronizado(incidencia.getClaveMovil());
+                                                    }else{
+                                                        showToast(response.getJSONObject("Response")
+                                                                .getJSONObject("message")
+                                                                .getString("value"));
+                                                    }
+                                                }catch (Exception e){
+                                                    showToast("Response - " + e.getMessage());
+                                                }
+                                            }
+                                        },
+                                        new Response.ErrorListener() {
+                                            @Override
+                                            public void onErrorResponse(VolleyError error) {showToast("VolleyError - " + error.getMessage());}
+                                        }){
+                                    @Override
+                                    public Map<String, String> getHeaders() throws AuthFailureError {
+                                        HashMap<String, String> headers = new HashMap<String, String>();
+                                        headers.put("Content-Type", "application/json; charset=utf-8");
+                                        return headers;
+                                    }
+                                };
+                        VolleySingleton.getInstance(mContext).addToRequestQueue(jsonObjectRequest);
+
+                    }catch (Exception ex){
+                        showToast("Enviando incidencias: " + ex.getMessage());
+                    }
+                }
+            }
+            //endregion
+
+            //region POST DEVOLUCION
+            List<DevolucionBean> lstSendDevolucion = new DevolucionDAO().listar("L");
+
+            if(lstSendDevolucion.size() > 0){
+                mProgressDialog.setMessage("Enviando devoluciones...");
+
+                for (final DevolucionBean devolucion : lstSendDevolucion){
+                    try {
+
+                        JSONObject jsonObject = DevolucionBean.transformDevolucionToJSON(devolucion, sociedad);
+
+                        //request to server
+                        JsonObjectRequest jsonObjectRequest =
+                                new JsonObjectRequest(Request.Method.POST, ruta + "returns/addReturn.xsjs", jsonObject,
+                                        new Response.Listener<JSONObject>() {
+                                            @Override
+                                            public void onResponse(JSONObject response) {
+                                                try
+                                                {
+                                                    if(response.getString("ResponseStatus").equals("Success")){
+                                                        new DevolucionDAO().actualizarSincronizado(devolucion.getClaveMovil());
+                                                    }else{
+                                                        showToast(response.getJSONObject("Response")
+                                                                .getJSONObject("message")
+                                                                .getString("value"));
+                                                    }
+                                                }catch (Exception e){
+                                                    showToast("Response - " + e.getMessage());
+                                                }
+                                            }
+                                        },
+                                        new Response.ErrorListener() {
+                                            @Override
+                                            public void onErrorResponse(VolleyError error) {showToast("VolleyError - " + error.getMessage());}
+                                        }){
+                                    @Override
+                                    public Map<String, String> getHeaders() throws AuthFailureError {
+                                        HashMap<String, String> headers = new HashMap<String, String>();
+                                        headers.put("Content-Type", "application/json; charset=utf-8");
+                                        return headers;
+                                    }
+                                };
+                        VolleySingleton.getInstance(mContext).addToRequestQueue(jsonObjectRequest);
+
+                    }catch (Exception ex){
+                        showToast("Enviando devoluciones: " + ex.getMessage());
+                    }
+                }
+            }
+            //endregion
+
+            //region POST NOTA CREDITO
+            List<NotaCreditoBean> lstSendNotaCredito = new NotaCreditoDAO().listar("L");
+
+            if(lstSendDevolucion.size() > 0){
+                mProgressDialog.setMessage("Enviando notas de credito...");
+
+                for (final NotaCreditoBean notacredito : lstSendNotaCredito){
+                    try {
+
+                        JSONObject jsonObject = NotaCreditoBean.transformNotaCreditoToJSON(notacredito, sociedad);
+
+                        //request to server
+                        JsonObjectRequest jsonObjectRequest =
+                                new JsonObjectRequest(Request.Method.POST, ruta + "creditmemo/addCreditMemo.xsjs", jsonObject,
+                                        new Response.Listener<JSONObject>() {
+                                            @Override
+                                            public void onResponse(JSONObject response) {
+                                                try
+                                                {
+                                                    if(response.getString("ResponseStatus").equals("Success")){
+                                                        new NotaCreditoDAO().actualizarSincronizado(notacredito.getClaveMovil());
+                                                    }else{
+                                                        showToast(response.getJSONObject("Response")
+                                                                .getJSONObject("message")
+                                                                .getString("value"));
+                                                    }
+                                                }catch (Exception e){
+                                                    showToast("Response - " + e.getMessage());
+                                                }
+                                            }
+                                        },
+                                        new Response.ErrorListener() {
+                                            @Override
+                                            public void onErrorResponse(VolleyError error) {showToast("VolleyError - " + error.getMessage());}
+                                        }){
+                                    @Override
+                                    public Map<String, String> getHeaders() throws AuthFailureError {
+                                        HashMap<String, String> headers = new HashMap<String, String>();
+                                        headers.put("Content-Type", "application/json; charset=utf-8");
+                                        return headers;
+                                    }
+                                };
+                        VolleySingleton.getInstance(mContext).addToRequestQueue(jsonObjectRequest);
+
+                    }catch (Exception ex){
+                        showToast("Enviando notas credito: " + ex.getMessage());
+                    }
+                }
+            }
+            //endregion
 
             //region REQUEST ORDEN VENTA
-            mProgressDialog.setMessage("Registrando Ûrdenes de venta...");
+            mProgressDialog.setMessage("Registrando √≥rdenes de venta...");
+            String urlGETSO = esCobrador.equals("N") ? "getSalesOrder": "getSalesOrderDispatcher";
             JsonObjectRequest mJSONRequest = new JsonObjectRequest(Request.Method.GET,
-                    ruta + "purchaseorder/getPurchaseOrder.xsjs?empId=" + sociedad, null,
+                    ruta + "salesorder/"+urlGETSO+".xsjs?empId=" + sociedad + "&usrId=" + codigoEmpleado, null,
                     listenerGetOrdenVenta, errorListenerGetOrdenVenta);
+            mJSONRequest.setRetryPolicy(new DefaultRetryPolicy(
+                    MY_SOCKET_TIMEOUT_MS,
+                    DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                    DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
             VolleySingleton.getInstance(mContext).addToRequestQueue(mJSONRequest);
             //endregion
 
             //region REQUEST FACTURAS
             mProgressDialog.setMessage("Registrando facturas...");
+            String urlGETIV = esCobrador.equals("N") ? "getInvoice" : "getInvoiceDispatcher";
             mJSONRequest = new JsonObjectRequest(Request.Method.GET,
-                    ruta + "invoice/getInvoice.xsjs?empId=" + sociedad, null,
+                    ruta + "invoice/"+urlGETIV+".xsjs?empId=" + sociedad + "&cove=" +
+                            codigoEmpleado, null,
                     listenerGetFactura, errorListenerGetFactura);
+            mJSONRequest.setRetryPolicy(new DefaultRetryPolicy(
+                    MY_SOCKET_TIMEOUT_MS,
+                    DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                    DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
             VolleySingleton.getInstance(mContext).addToRequestQueue(mJSONRequest);
             //endregion
 
             //region REQUEST PAGO RECIBIDO
             mProgressDialog.setMessage("Registrando pagos...");
             mJSONRequest = new JsonObjectRequest(Request.Method.GET,
-                    ruta + "incomingpayment/getIncomingPayment.xsjs?empId=" + sociedad, null,
+                    ruta + "incomingpayment/getIncomingPayment.xsjs?empId=" + sociedad + "&usrId=" + codigoEmpleado, null,
                     listenerGetPagoRecibido, errorListenerGetPagoRecibido);
+            mJSONRequest.setRetryPolicy(new DefaultRetryPolicy(
+                    MY_SOCKET_TIMEOUT_MS,
+                    DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                    DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
             VolleySingleton.getInstance(mContext).addToRequestQueue(mJSONRequest);
             //endregion
 
@@ -84,6 +381,24 @@ public class SyncRestDocumentos {
             mJSONRequest = new JsonObjectRequest(Request.Method.GET,
                     ruta + "reportes/estadoCuenta.xsjs?empId=" + sociedad, null,
                     listenerGetEstadoCuenta, errorListenerGetEstadoCuenta);
+            mJSONRequest.setRetryPolicy(new DefaultRetryPolicy(
+                    MY_SOCKET_TIMEOUT_MS,
+                    DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                    DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+            VolleySingleton.getInstance(mContext).addToRequestQueue(mJSONRequest);
+            //endregion
+
+            //region REQUEST ENTREGA
+            mProgressDialog.setMessage("Registrando entregas...");
+            String urlGETDN = esCobrador.equals("N") ? "getDeliveryNote" : "getDeliveryNoteDispatcher";
+            mJSONRequest = new JsonObjectRequest(Request.Method.GET,
+                    ruta + "deliverynote/"+urlGETDN+".xsjs?empId=" + sociedad + "&cove=" +
+                            codigoEmpleado, null,
+                    listenerGetEntrega, errorListenerGetEntrega);
+            mJSONRequest.setRetryPolicy(new DefaultRetryPolicy(
+                    MY_SOCKET_TIMEOUT_MS,
+                    DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                    DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
             VolleySingleton.getInstance(mContext).addToRequestQueue(mJSONRequest);
             //endregion
 
@@ -92,6 +407,10 @@ public class SyncRestDocumentos {
             mJSONRequest = new JsonObjectRequest(Request.Method.GET,
                     ruta + "reportes/saldosXVendedor.xsjs?empId=" + sociedad, null,
                     listenerGetNotaCredito, errorListenerGetNotaCredito);
+            mJSONRequest.setRetryPolicy(new DefaultRetryPolicy(
+                    MY_SOCKET_TIMEOUT_MS,
+                    DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                    DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
             VolleySingleton.getInstance(mContext).addToRequestQueue(mJSONRequest);
             //endregion
 
@@ -136,13 +455,18 @@ public class SyncRestDocumentos {
                         bean.setDirFiscal(jsonObj.getString("DireccionFiscal"));
                         bean.setDirEntrega(jsonObj.getString("DireccionEntrega"));
                         bean.setCondPago(String.valueOf(jsonObj.getInt("CondicionPago")));
-                        bean.setIndicador(String.valueOf(jsonObj.getInt("Indicador")));
-                        bean.setSubTotal(String.valueOf(jsonObj.getInt("SubTotal")));
-                        bean.setImpuesto(String.valueOf(jsonObj.getInt("Impuesto")));
+                        bean.setIndicador(jsonObj.getString("Indicador"));
+                        bean.setSubTotal(jsonObj.getString("SubTotal"));
+                        bean.setImpuesto(jsonObj.getString("Impuesto"));
                         bean.setTotal(jsonObj.getString("Total"));
                         bean.setCreadoMovil(jsonObj.getString("CreadMovil"));
                         bean.setClaveMovil(jsonObj.getString("ClaveMovil"));
                         bean.setTransaccionMovil(jsonObj.getString("TransaccionMovil"));
+                        bean.setModoOffLine(jsonObj.getString("ModoOffLine"));
+                        bean.setLatitud(jsonObj.getString("Latitud"));
+                        bean.setLongitud(jsonObj.getString("Longitud"));
+                        bean.setHoraCreacion(jsonObj.getString("HoraCreacion"));
+                        bean.setRangoDireccion(jsonObj.getString("RangoDireccion"));
 
                         JSONArray contacts = jsonObj.getJSONArray("Lineas");
                         OrdenVentaDetalleBean detalle;
@@ -168,9 +492,14 @@ public class SyncRestDocumentos {
                     }
 
                     mInsert.insertOrdenVenta(lstResults);
+                    new OrdenVentaDAO().validarOrdenesLocales();
 
                 }else{
-                    showToast(response.getJSONObject("Response").getJSONObject("message").getString("value"));
+                    //Error producido cuando no se encontraron documentos del usuario
+                    if(response.getJSONObject("Response").getInt("code") == -101){
+                        new OrdenVentaDAO().eliminarOrdenesNoLocales();
+                    }else
+                        showToast("ORDEN DE VENTA > " + response.getJSONObject("Response").getJSONObject("message").getString("value"));
                 }
             }catch (Exception e){
                 showToast("listenerGetOrdenVenta() > " + e.getMessage());
@@ -181,7 +510,7 @@ public class SyncRestDocumentos {
     Response.ErrorListener errorListenerGetOrdenVenta = new Response.ErrorListener() {
         @Override
         public void onErrorResponse(VolleyError error) {
-            showToast("OcurriÛ un error intentando conectar con el servidor, " + error.getMessage());
+            showToast("ORDEN DE VENTA > Ocurri√≥ un error intentando conectar con el servidor, " + error.getMessage());
         }
     };
     //endregion
@@ -234,14 +563,32 @@ public class SyncRestDocumentos {
                         for (int j = 0; j < lines.length(); j++){
                             JSONObject detail = lines.getJSONObject(j);
                             detalle = new FacturaDetalleBean();
+                            detalle.setLinea(detail.getInt("Linea"));
                             detalle.setArticulo(detail.getString("Articulo"));
                             detalle.setUnidadMedida(detail.getString("UnidadMedida"));
                             detalle.setAlmacen(detail.getString("Almacen"));
                             detalle.setCantidad(detail.getString("Cantidad"));
+                            detalle.setDiponible(detail.getString("Disponible"));
                             detalle.setListaPrecio(String.valueOf(detail.getInt("ListaPrecio")));
                             detalle.setPrecioUnitario(detail.getString("PrecioUnitario"));
                             detalle.setPorcentajeDescuento(detail.getString("PorcentajeDescuento"));
                             detalle.setImpuesto(detail.getString("Impuesto"));
+
+                            JSONArray lotes = detail.getJSONArray("Lotes");
+                            FacturaDetalleLoteBean lote;
+                            ArrayList<FacturaDetalleLoteBean> listDet2 = new ArrayList<>();
+
+                            for (int k = 0; k < lotes.length(); k++) {
+                                JSONObject joLote = lotes.getJSONObject(k);
+                                lote = new FacturaDetalleLoteBean();
+                                lote.setClaveBase(Integer.parseInt(bean.getClave()));
+                                lote.setLote(joLote.getString("Lote"));
+                                lote.setCantidad(joLote.getDouble("Cantidad"));
+                                lote.setLineaBase(joLote.getInt("LineaBase"));
+                                listDet2.add(lote);
+                            }
+
+                            detalle.setLotes(listDet2);
                             listDet1.add(detalle);
                         }
 
@@ -253,7 +600,10 @@ public class SyncRestDocumentos {
                     mInsert.insertFacturas(lstResults);
 
                 }else{
-                    showToast(response.getJSONObject("Response").getJSONObject("message").getString("value"));
+                    if(response.getJSONObject("Response").getInt("code") == -101){
+                        new FacturaDAO().eliminarFacturas();
+                    }else
+                        showToast("FACTURA > " + response.getJSONObject("Response").getJSONObject("message").getString("value"));
                 }
             }catch (Exception e){
                 showToast("listenerGetFactura() > " + e.getMessage());
@@ -264,7 +614,7 @@ public class SyncRestDocumentos {
     Response.ErrorListener errorListenerGetFactura = new Response.ErrorListener() {
         @Override
         public void onErrorResponse(VolleyError error) {
-            showToast("OcurriÛ un error intentando conectar con el servidor, " + error.getMessage());
+            showToast("FACTURA > Ocurrio un error intentando conectar con el servidor, " + error.getMessage());
         }
     };
     //endregion
@@ -332,7 +682,10 @@ public class SyncRestDocumentos {
                     mInsert.insertPagoCliente(lstResults);
 
                 }else{
-                    showToast(response.getJSONObject("Response").getJSONObject("message").getString("value"));
+                    if(response.getJSONObject("Response").getInt("code") == -101){
+                        new PagoDAO().eliminarPagosNoLocales();
+                    } else
+                        showToast("PAGO RECIBIDO > " + response.getJSONObject("Response").getJSONObject("message").getString("value"));
                 }
             }catch (Exception e){
                 showToast("listenerGetPagoRecibido() > " + e.getMessage());
@@ -343,7 +696,7 @@ public class SyncRestDocumentos {
     Response.ErrorListener errorListenerGetPagoRecibido = new Response.ErrorListener() {
         @Override
         public void onErrorResponse(VolleyError error) {
-            showToast("OcurriÛ un error intentando conectar con el servidor, " + error.getMessage());
+            showToast("PAGO RECIBIDO > Ocurrio un error intentando conectar con el servidor, " + error.getMessage());
         }
     };
     //endregion
@@ -392,7 +745,7 @@ public class SyncRestDocumentos {
                     mInsert.insertEstadoCuentaCliente(lstResults);
 
                 }else{
-                    showToast(response.getJSONObject("Response").getJSONObject("message").getString("value"));
+                    showToast("ESTADO DE CUENTA > " + response.getJSONObject("Response").getJSONObject("message").getString("value"));
                 }
             }catch (Exception e){
                 showToast("listenerGetEstadoCuenta() > " + e.getMessage());
@@ -403,7 +756,107 @@ public class SyncRestDocumentos {
     Response.ErrorListener errorListenerGetEstadoCuenta = new Response.ErrorListener() {
         @Override
         public void onErrorResponse(VolleyError error) {
-            showToast("OcurriÛ un error intentando conectar con el servidor, " + error.getMessage());
+            showToast("ESTADO DE CUENTA > Ocurrio un error intentando conectar con el servidor, " + error.getMessage());
+        }
+    };
+    //endregion
+
+    //region RESPONSE ENTREGA
+    Response.Listener listenerGetEntrega = new Response.Listener<JSONObject>(){
+        @Override
+        public void onResponse(JSONObject response) {
+            try {
+                mProgressDialog.incrementProgressBy(1);
+
+                if(response.getString("ResponseStatus").equals(Variables.RESPONSE_SUCCESS)){
+                    JSONArray jsonArray = response.getJSONObject("Response")
+                            .getJSONObject("message")
+                            .getJSONArray("value");
+
+                    int size = jsonArray.length();
+                    EntregaBean bean;
+                    EntregaDAO dao = new EntregaDAO();
+                    dao.deleteAll();
+
+                    for (int i = 0; i < size; i++ ) {
+                        JSONObject jsonObj = jsonArray.getJSONObject(i);
+                        bean = new EntregaBean();
+                        bean.setTipo(jsonObj.getString("Tipo"));
+                        bean.setClave(jsonObj.getInt("Clave"));
+                        bean.setNumero(jsonObj.getInt("Numero"));
+                        bean.setReferencia(jsonObj.getString("Referencia"));
+                        bean.setSocioNegocio(jsonObj.getString("SocioNegocio"));
+                        bean.setListaPrecio(jsonObj.getInt("ListaPrecio"));
+                        bean.setContacto(jsonObj.getInt("Contacto"));
+                        bean.setMoneda(jsonObj.getString("Moneda"));
+                        bean.setEmpleadoVenta(jsonObj.getString("EmpleadoVenta"));
+                        bean.setComentario(jsonObj.getString("Comentario"));
+                        bean.setFechaContable(jsonObj.getString("FechaContable"));
+                        bean.setFechaVencimiento(jsonObj.getString("FechaVencimiento"));
+                        bean.setDireccionFiscal(jsonObj.getString("DireccionFiscal"));
+                        bean.setDireccionEntrega(jsonObj.getString("DireccionEntrega"));
+                        bean.setCondicionPago(jsonObj.getString("CondicionPago"));
+                        bean.setIndicador(jsonObj.getString("Indicador"));
+                        bean.setSubTotal(jsonObj.getString("SubTotal"));
+                        bean.setDescuento(jsonObj.getString("Descuento"));
+                        bean.setImpuesto(jsonObj.getString("Impuesto"));
+                        bean.setTotal(jsonObj.getString("Total"));
+                        bean.setSaldo(jsonObj.getString("Saldo"));
+
+                        JSONArray lines = jsonObj.getJSONArray("Lineas");
+                        EntregaDetalleBean detalle;
+                        ArrayList<EntregaDetalleBean> listDet1 = new ArrayList<>();
+
+                        for (int j = 0; j < lines.length(); j++){
+                            JSONObject detail = lines.getJSONObject(j);
+                            detalle = new EntregaDetalleBean();
+                            detalle.setClaveEntrega(bean.getClave());
+                            detalle.setLinea(detail.getInt("Linea"));
+                            detalle.setArticulo(detail.getString("Articulo"));
+                            detalle.setUnidadMedida(detail.getString("UnidadMedida"));
+                            detalle.setAlmacen(detail.getString("Almacen"));
+                            detalle.setCantidad(detail.getString("Cantidad"));
+                            detalle.setDiponible(detail.getString("Disponible"));
+                            detalle.setListaPrecio(detail.getInt("ListaPrecio"));
+                            detalle.setPrecioUnitario(detail.getString("PrecioUnitario"));
+                            detalle.setPorcentajeDescuento(detail.getString("PorcentajeDescuento"));
+                            detalle.setImpuesto(detail.getString("Impuesto"));
+
+                            JSONArray lotes = detail.getJSONArray("Lotes");
+                            EntregaDetalleLoteBean lote;
+                            ArrayList<EntregaDetalleLoteBean> listDet2 = new ArrayList<>();
+
+                            for (int k = 0; k < lotes.length(); k++) {
+                                JSONObject joLote = lotes.getJSONObject(k);
+                                lote = new EntregaDetalleLoteBean();
+                                lote.setClaveBase(bean.getClave());
+                                lote.setLote(joLote.getString("Lote"));
+                                lote.setCantidad(joLote.getDouble("Cantidad"));
+                                lote.setLineaBase(joLote.getInt("LineaBase"));
+                                listDet2.add(lote);
+                            }
+
+                            detalle.setLotes(listDet2);
+                            listDet1.add(detalle);
+                        }
+
+                        bean.setLineas(listDet1);
+                        dao.insertar(bean);
+                    }
+
+                }else{
+                    showToast("ENTREGA > " +response.getJSONObject("Response").getJSONObject("message").getString("value"));
+                }
+            }catch (Exception e){
+                showToast("listenerGetEntrega() > " + e.getMessage());
+            }
+        }
+    };
+
+    Response.ErrorListener errorListenerGetEntrega = new Response.ErrorListener() {
+        @Override
+        public void onErrorResponse(VolleyError error) {
+            showToast("ENTREGA > Ocurrio un error intentando conectar con el servidor, " + error.getMessage());
         }
     };
     //endregion
@@ -414,6 +867,7 @@ public class SyncRestDocumentos {
         public void onResponse(JSONObject response) {
             try {
                 mProgressDialog.incrementProgressBy(1);
+                mProgressDialog.dismiss();
 
                 if(response.getString("ResponseStatus").equals(Variables.RESPONSE_SUCCESS)){
                     JSONArray jsonArray = response.getJSONObject("Response")
@@ -443,14 +897,14 @@ public class SyncRestDocumentos {
 
                     mInsert.insertNotaCredito(lstResults);
 
-                    mProgressDialog.dismiss();
-
                 }else{
-                    showToast(response.getJSONObject("Response").getJSONObject("message").getString("value"));
+                    showToast("NOTA DE CREDITO > " + response.getJSONObject("Response").getJSONObject("message").getString("value"));
                 }
             }catch (Exception e){
-                mProgressDialog.dismiss();
+
                 showToast("listenerGetNotaCredito() > " + e.getMessage());
+            }finally {
+                mProgressDialog.dismiss();
             }
         }
     };
@@ -459,12 +913,12 @@ public class SyncRestDocumentos {
         @Override
         public void onErrorResponse(VolleyError error) {
             mProgressDialog.dismiss();
-            showToast("OcurriÛ un error intentando conectar con el servidor, " + error.getMessage());
+            showToast("NOTA DE CREDITO > Ocurrio un error intentando conectar con el servidor, " + error.getMessage());
         }
     };
     //endregion
 
     private  void showToast(String message){
-        Toast.makeText(mContext, message, Toast.LENGTH_SHORT);
+        Toast.makeText(mContext, message, Toast.LENGTH_SHORT).show();
     }
 }

@@ -1,0 +1,168 @@
+<RelativeLayout android:id="@+id/main_layout"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+    <android.support.design.widget.TabLayout
+        android:id="@+id/tabListaIncidencia"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorPrimary"
+        android:elevation="@dimen/tabLayoutElevation"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"/>
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/pgrListaIncidencia"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/tabListaIncidencia"/>
+
+    <LinearLayout
+        android:id="@+id/lytFabAddIncidencia3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/pgrListaIncidencia"
+        android:layout_marginBottom="@dimen/itemFab3MarginBottom"
+        android:layout_marginRight="@dimen/itemFabMarginRight"
+        android:layout_alignParentRight="true"
+        android:orientation="horizontal">
+
+        <android.support.v7.widget.CardView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:cardBackgroundColor="@color/white"
+            app:cardCornerRadius="@dimen/itemFabCardCornerRadius"
+            app:cardElevation="@dimen/itemFabCardElevation"
+            app:cardUseCompatPadding="true" >
+            <TextView
+                android:id="@+id/fabAddIncidencia3Text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Factura"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textStyle="bold"
+                android:textColor="@color/colorSilver"
+                android:padding="@dimen/itemFabTextPadding"/>
+        </android.support.v7.widget.CardView>
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fabAddIncidencia3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:elevation="@dimen/itemFabButtonElevation"
+            android:src="@drawable/ic_details_white_36dp"
+            app:backgroundTint="@color/floattingButtonColor"
+            app:fabSize="mini"
+            app:pressedTranslationZ="12dp"
+            app:rippleColor="@color/floattingButtonColorPressed"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/lytFabAddIncidencia2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/pgrListaIncidencia"
+        android:layout_marginBottom="@dimen/itemFab2MarginBottom"
+        android:layout_marginRight="@dimen/itemFabMarginRight"
+        android:layout_alignParentRight="true"
+        android:orientation="horizontal">
+
+        <android.support.v7.widget.CardView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:cardBackgroundColor="@color/white"
+            app:cardCornerRadius="@dimen/itemFabCardCornerRadius"
+            app:cardElevation="@dimen/itemFabCardElevation"
+            app:cardUseCompatPadding="true" >
+            <TextView
+                android:id="@+id/fabAddIncidencia2Text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Entrega"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textStyle="bold"
+                android:textColor="@color/colorSilver"
+                android:padding="@dimen/itemFabTextPadding"/>
+        </android.support.v7.widget.CardView>
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fabAddIncidencia2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:elevation="@dimen/itemFabButtonElevation"
+            android:src="@drawable/ic_event_available_24dp"
+            app:backgroundTint="@color/floattingButtonColor"
+            app:fabSize="mini"
+            app:pressedTranslationZ="12dp"
+            app:rippleColor="@color/floattingButtonColorPressed"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/lytFabAddIncidencia1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/pgrListaIncidencia"
+        android:layout_marginBottom="@dimen/itemFab1MarginBottom"
+        android:layout_marginRight="@dimen/itemFabMarginRight"
+        android:layout_alignParentRight="true"
+        android:orientation="horizontal">
+
+        <android.support.v7.widget.CardView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:cardBackgroundColor="@color/white"
+            app:cardCornerRadius="@dimen/itemFabCardCornerRadius"
+            app:cardElevation="@dimen/itemFabCardElevation"
+            app:cardUseCompatPadding="true" >
+            <TextView
+                android:id="@+id/fabAddIncidencia1Text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Orden de venta"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textStyle="bold"
+                android:textColor="@color/colorSilver"
+                android:padding = "@dimen/itemFabTextPadding" />
+        </android.support.v7.widget.CardView>
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fabAddIncidencia1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:elevation="@dimen/itemFabButtonElevation"
+            android:src="@drawable/ic_content_paste_24dp"
+            app:backgroundTint="@color/floattingButtonColor"
+            app:fabSize="mini"
+            app:pressedTranslationZ="12dp"
+            app:rippleColor="@color/floattingButtonColorPressed"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/lytFabAddIncidencia"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/pgrListaIncidencia"
+        android:layout_marginBottom="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_alignParentRight="true"
+        android:orientation="horizontal">
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fabAddIncidencia"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:elevation="0dp"
+            app:srcCompat="@drawable/ic_add_white_36dp"
+            app:backgroundTint="#f44336"
+            app:fabSize="normal"
+            app:pressedTranslationZ="12dp"
+            app:rippleColor="#ef5350"/>
+
+    </LinearLayout>
+
+</RelativeLayout>

@@ -30,14 +30,23 @@
     <string name="TD_FACTURA1">TB_FACTURA_DETALLE</string>
     
     <string name="C_FACT1_CLAVE">ClaveFactura</string>
-    <string name="C_FACT1_CODIGO">Codigo</string>
+    <string name="C_FACT1_CODIGO">Linea</string>
     <string name="C_FACT1_ART">Articulo</string>
     <string name="C_FACT1_UM">UnidadMedida</string>
     <string name="C_FACT1_ALMACEN">Almacen</string>
     <string name="C_FACT1_CANT">Cantidad</string>
+    <string name="C_FACT1_DISP">Disponible</string>
     <string name="C_FACT1_LST_PRE">ListaPrecio</string>
     <string name="C_FACT1_PRE_UNI">PrecioUnitario</string>
     <string name="C_FACT1_PORC_DESCUENTO">PorcentajeDescuento</string>
     <string name="C_FACT1_IMPUESTO">Impuesto</string>
+
+    <!-- LOTES -->
+    <string name="TD_FACTURA2">TB_FACTURA_DETALLE_LOTE</string>
+
+    <string name="C_FACT2_CLAVE">ClaveFactura</string>
+    <string name="C_FACT2_LOTE">Lote</string>
+    <string name="C_FACT2_CANT">Cantidad</string>
+    <string name="C_FACT2_LINEA">LineaBase</string>
     
 </resources>

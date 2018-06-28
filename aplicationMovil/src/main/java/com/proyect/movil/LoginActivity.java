@@ -341,22 +341,9 @@ public class LoginActivity extends AppCompatActivity {
 								editor.putString(Variables.USUARIO_EMPLEADO, objUser.getString("Usuario"));
 								editor.putString(Variables.PASSWORD_EMPLEADO, String.valueOf(objUser.getInt("Clave")));
 								editor.putString(Variables.PERFIL, objUser.getString("Perfil"));
-
-								JSONObject permisos = new JSONObject();
-								permisos.put(Variables.MOVIL_ACCESA, "N");
-								permisos.put(Variables.MOVIL_CREAR, "N");
-								permisos.put(Variables.MOVIL_EDITAR, "N");
-								permisos.put(Variables.MOVIL_APROBAR, "N");
-								permisos.put(Variables.MOVIL_RECHAZAR, "N");
-								permisos.put(Variables.MOVIL_ESCOGER_PRECIO, "N");
-
-								editor.putString(Variables.MENU_SOCIOS_NEGOCIO, permisos.toString());
-								editor.putString(Variables.MENU_INVENTARIO, permisos.toString());
-								editor.putString(Variables.MENU_PEDIDOS, permisos.toString());
-								editor.putString(Variables.MENU_FACTURAS, permisos.toString());
-								editor.putString(Variables.MENU_COBRANZAS, permisos.toString());
-								editor.putString(Variables.MENU_REPORTES, permisos.toString());
-								editor.putString(Variables.MENU_ACTIVIDADES, permisos.toString());
+								editor.putString(Variables.SUPERVISOR, objUser.getString("Supervisor"));
+								editor.putString(Variables.COBRADOR, objUser.getString("Cobrador"));
+								editor.putInt(Variables.MAXIMO_LINEAS, objUser.getInt("MaxLineas"));
 
 								editor.commit();
 
@@ -374,7 +361,7 @@ public class LoginActivity extends AppCompatActivity {
 					@Override
 					public void onErrorResponse(VolleyError error) {
 						showProgress(false);
-						showToast("Ocurrio un error intentando conectar con el servidor");
+						showToast("Ocurrio un error intentando conectar con el servidor " + error.getMessage());
 					}
 				}) {
 			@Override
@@ -389,7 +376,8 @@ public class LoginActivity extends AppCompatActivity {
 	}
 
 	private void showToast(String message) {
-		Toast.makeText(LoginActivity.this, message, Toast.LENGTH_SHORT).show();
+		if(message != null)
+			Toast.makeText(LoginActivity.this, message, Toast.LENGTH_SHORT).show();
 	}
 	/**
 	 * Represents an asynchronous login/registration task used to authenticate

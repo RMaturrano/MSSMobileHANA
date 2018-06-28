@@ -7,13 +7,16 @@
 	<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
 	                android:layout_width="match_parent"
 	                android:layout_height="match_parent"
-	                android:orientation="vertical">
+	                android:orientation="vertical"
+		android:background="@color/backgrnd_layout_color">
 	 
 	    <ListView
 	        android:layout_height="wrap_content"
 	        android:layout_width="match_parent"
+			android:layout_marginTop="5dp"
 	        android:id="@+id/lvLstFacturaCliTabPend"
-	        android:layout_alignParentLeft="true">
+	        android:layout_alignParentLeft="true"
+			android:background="@color/white">
 	    </ListView>
 	  
 	 

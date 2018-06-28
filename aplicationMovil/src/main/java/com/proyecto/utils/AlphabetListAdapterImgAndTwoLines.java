@@ -93,19 +93,21 @@ public class AlphabetListAdapterImgAndTwoLines extends BaseAdapter implements
 			if (view == null) {
 				LayoutInflater inflater = (LayoutInflater) parent.getContext()
 						.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-				view = (RelativeLayout) inflater.inflate(R.layout.custom_row_lstsn,
+				view = (RelativeLayout) inflater.inflate(R.layout.lv_buscar_articulo,
 						parent, false);
 			}
 			
 			Item item = (Item) getItem(position);
 			TextView txtViewDescription = (TextView) view.findViewById(R.id.txtViewDescription);
 			TextView txtViewTitle = (TextView) view.findViewById(R.id.txtViewTitle);
+			TextView txtViewGrupo = (TextView) view.findViewById(R.id.txtViewGrupo);
 			ImageView imgViewLogo = (ImageView) view.findViewById(R.id.imgViewLogo);
 			
 			
 				txtViewDescription.setText(item.element.getData());
 				txtViewTitle.setText(item.element.getTitulo());
 				imgViewLogo.setImageResource(item.element.getIcon());
+				txtViewGrupo.setText(item.element.getGrupo());
 			
 			
 		}else{ // Section

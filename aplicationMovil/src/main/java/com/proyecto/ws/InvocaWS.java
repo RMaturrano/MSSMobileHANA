@@ -54,6 +54,7 @@ import com.proyecto.bean.ZonaBean;
 import com.proyecto.database.Insert;
 import com.proyecto.database.Select;
 import com.proyecto.reportes.ReporteEstadoCuenta;
+import com.proyecto.utils.Constantes;
 import com.proyecto.utils.StringCast;
 
 public class InvocaWS {
@@ -69,8 +70,8 @@ public class InvocaWS {
 				.getDefaultSharedPreferences(contexto);
 
 		//   10.194.203.47
-		String ip = pref.getString("ipServidor", "200.10.84.66");
-		String port = pref.getString("puertoServidor", "80");
+		String ip = pref.getString("ipServidor", Constantes.DEFAULT_IP);
+		String port = pref.getString("puertoServidor", Constantes.DEFAULT_PORT);
 
 		URL = "http://" + ip + ":" + port + "/" + "WebServPragsaSoap/"
 				+ "ServicioPragsa.asmx";
@@ -734,7 +735,7 @@ public class InvocaWS {
 		ArrayList<DireccionBean> listaDirections = null;
 
 		try {
-			URL url = new URL("http://"+PreferenceManager.getDefaultSharedPreferences(contexto).getString("ipServidor","200.10.84.66")+
+			URL url = new URL("http://"+PreferenceManager.getDefaultSharedPreferences(contexto).getString("ipServidor",Constantes.DEFAULT_IP)+
 					"/WebApiPragsa/api/socionegocio?codigoVendedor="+codVendedor);
 			HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
 			try {

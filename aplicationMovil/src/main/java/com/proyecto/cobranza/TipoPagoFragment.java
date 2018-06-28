@@ -75,7 +75,7 @@ public class TipoPagoFragment extends Fragment implements OnItemClickListener{
         if(CobranzaFragment.tipoPago.getTipoPago() != null 
         		&& !CobranzaFragment.tipoPago.getTipoPago().equals("")){
         	tipoPagoSel = CobranzaFragment.tipoPago.getTipoPago();
-        	if(tipoPagoSel.equalsIgnoreCase("Transferencia")){
+        	if(tipoPagoSel.equalsIgnoreCase("Transferencia/Deposito")){
         		llenarListaTransferencia();
         		
         		for (CuentaBean cuenta : listaCuentas) {
@@ -152,7 +152,7 @@ public class TipoPagoFragment extends Fragment implements OnItemClickListener{
 		
 		final String[] tipoPago = new String[3];
 		tipoPago[0] = "Efectivo";
-		tipoPago[1] = "Transferencia";
+		tipoPago[1] = "Transferencia/Deposito";
 		tipoPago[2] = "Cheque";
 		
 		int checkedItem = -1;
@@ -176,7 +176,7 @@ public class TipoPagoFragment extends Fragment implements OnItemClickListener{
 		alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
 		public void onClick(DialogInterface dialog, int whichButton) {
 			
-				if(tipoPagoSel.equalsIgnoreCase("Transferencia")){
+				if(tipoPagoSel.equalsIgnoreCase("Transferencia/Deposito")){
 					CobranzaFragment.tipoPago.setTipoPago(tipoPagoSel);
 					llenarListaTransferencia();
 				}
@@ -201,7 +201,7 @@ public class TipoPagoFragment extends Fragment implements OnItemClickListener{
 	public void onItemClick(AdapterView<?> parent, View view, int position,
 			long id) {
 		alert = new ConstruirAlert();
-		if(tipoPagoSel.equalsIgnoreCase("Transferencia")){
+		if(tipoPagoSel.equalsIgnoreCase("Transferencia/Deposito")){
 			if(position == 0)
 				buildFirstAlert();
 			if(position == 1){
@@ -609,7 +609,14 @@ public class TipoPagoFragment extends Fragment implements OnItemClickListener{
     		return true;
 		case R.id.action_aceptar:
 			
-			if(tipoPagoSel.equalsIgnoreCase("Transferencia")){
+			if(tipoPagoSel.equalsIgnoreCase("Transferencia/Deposito")){
+
+				if(searchResults.get(2).getData() == null ||
+						searchResults.get(2).getData().trim().equals("")){
+					Toast.makeText(contexto,"Ingrese la referencia.",Toast.LENGTH_SHORT).show();
+					return true;
+				}
+
 				CobranzaFragment.tipoPago.setTransferenciaCuenta(cuentaSel.getCodigo());
 				CobranzaFragment.tipoPago.setTransferenciaReferencia(searchResults.get(2).getData());
 				CobranzaFragment.tipoPago.setTransferenciaImporte(searchResults.get(3).getData());

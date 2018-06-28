@@ -55,6 +55,8 @@ import com.proyecto.utils.FormatCustomListView;
 import com.proyecto.utils.Utils;
 import com.proyecto.utils.Variables;
 
+import org.json.JSONObject;
+
 public class ListaSocioNegocioTabLead extends Fragment implements
 		OnScrollListener, OnItemLongClickListener {
 
@@ -76,6 +78,7 @@ public class ListaSocioNegocioTabLead extends Fragment implements
 	private String movilEditar = "";
 	private String movilCrear = "";
 	private String movilRechazar = "";
+	private FloatingActionButton fabCrear;
 
 	// /// INDEXER
 	private AlphabetListAdapterImgAndTwoLinesLead alphabetAdapter = new AlphabetListAdapterImgAndTwoLinesLead();
@@ -142,9 +145,9 @@ public class ListaSocioNegocioTabLead extends Fragment implements
 				R.color.s3, R.color.s4);
 
 		// FLOATING BUTTON
-		FloatingActionButton fab = (FloatingActionButton) v
+		fabCrear = (FloatingActionButton) v
 				.findViewById(R.id.fab);
-		fab.setOnClickListener(new View.OnClickListener() {
+		fabCrear.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
 
@@ -153,6 +156,7 @@ public class ListaSocioNegocioTabLead extends Fragment implements
 				startActivity(registrarSN);
 			}
 		});
+		fabCrear.setVisibility(View.INVISIBLE);
 		// FLOATING BUTTON
 
 
@@ -198,10 +202,6 @@ public class ListaSocioNegocioTabLead extends Fragment implements
 
 		pref = PreferenceManager
 				.getDefaultSharedPreferences(contexto);
-		movilAprobar = pref.getString(Variables.MOVIL_APROBAR, "");
-		movilEditar = pref.getString(Variables.MOVIL_EDITAR, "");
-		movilCrear = pref.getString(Variables.MOVIL_CREAR, "");
-		movilRechazar = pref.getString(Variables.MOVIL_RECHAZAR, "");
 
 		// Iniciar la tarea al revelar el indicador
 		refreshLayout
@@ -215,8 +215,37 @@ public class ListaSocioNegocioTabLead extends Fragment implements
 						refreshLayout.setRefreshing(false);
 					}
 				});
+	}
 
+	@Override
+	public void onStart() {
+		super.onStart();
+		comprobarPermisos();
+	}
 
+	private void comprobarPermisos(){
+
+		String permisosMenu = pref.getString(Variables.MENU_SOCIOS_NEGOCIO, null);
+		if (permisosMenu != null) {
+			try {
+				JSONObject permisos = new JSONObject(permisosMenu);
+				movilCrear = permisos.getString(Variables.MOVIL_CREAR);
+				movilEditar = permisos.getString(Variables.MOVIL_EDITAR);
+				movilAprobar = permisos.getString(Variables.MOVIL_APROBAR);
+				movilRechazar = permisos.getString(Variables.MOVIL_RECHAZAR);
+
+				if(movilCrear != null && !movilCrear.trim().equals("")){
+					if (!movilCrear.equals("")) {
+						if (movilCrear.equalsIgnoreCase("Y")) {
+							fabCrear.setVisibility(FloatingActionButton.VISIBLE);
+						}
+					}
+				}
+
+			} catch (Exception e) {
+				Toast.makeText(contexto, "Ocurrió un error intentando obtener los permisos del menú", Toast.LENGTH_SHORT).show();
+			}
+		}
 	}
 
 	private void builDataBusinessPartner() {
@@ -254,6 +283,8 @@ public class ListaSocioNegocioTabLead extends Fragment implements
 			} else if(rs.getString(2).toString().equals("U") &&
 					rs.getString(4).equalsIgnoreCase("4")){
 				customListObjet.setIcon(icon_cloud_done_green);
+			}else{
+				customListObjet.setIcon(icon_local);
 			}
 
 			customListObjet.setTitulo(rs.getString(1));

@@ -132,7 +132,7 @@ public class UpdateIntentService extends IntentService {
 							notifyMgr.notify(1, builder.build());
 							insert.insertFabricante(ws.getFabricantes(codEmp));
 							
-							builder.setContentText("Obteniendo: grupos de art�culo");
+							builder.setContentText("Obteniendo: grupos de articulo");
 							builder.setProgress(30, 7, false);
 							notifyMgr.notify(1, builder.build());
 							insert.insertGruposArticulo(ws.getGrupoArticulo(codEmp));
@@ -282,7 +282,7 @@ public class UpdateIntentService extends IntentService {
 									.setSmallIcon(R.drawable.ic_sync_white_24dp)
 									.setContentTitle("Business One")
 									.setContentText(
-											"Sincronizaci�n exitosa");
+											"Sincronizacion exitosa");
 							notifyMgr.notify(2, builder2.build());
 							
 							counter++;

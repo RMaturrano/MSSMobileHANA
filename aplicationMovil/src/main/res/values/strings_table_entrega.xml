@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    
+    <string name="T_ENTREGA">TB_ENTREGA</string>
+    
+    <string name="C_ENTR_TIPO">Tipo</string>
+    <string name="C_ENTR_CLAVE">Clave</string>
+    <string name="C_ENTR_NUMERO">Numero</string>
+    <string name="C_ENTR_REFERENCIA">Referencia</string>
+    <string name="C_ENTR_SOCIO_NEGOCIO">SocioNegocio</string>
+    <string name="C_ENTR_LISTA_PRECIO">ListaPrecio</string>
+    <string name="C_ENTR_CONTACTO">Contacto</string>
+    <string name="C_ENTR_MONEDA">Moneda</string>
+    <string name="C_ENTR_EMP_VENTA">EmpleadoVenta</string>
+    <string name="C_ENTR_COMENT">Comentario</string>
+    <string name="C_ENTR_FEC_CONT">FechaContable</string>
+    <string name="C_ENTR_FEC_VEN">FechaVencimiento</string>
+    <string name="C_ENTR_DIR_FISCAL">DireccionFiscal</string>
+    <string name="C_ENTR_DIR_ENTREGA">DireccionEntrega</string>
+    <string name="C_ENTR_COND_PAGO">CondicionPago</string>
+    <string name="C_ENTR_INDICADOR">Indicador</string>
+    <string name="C_ENTR_SUB_TOTAL">SubTotal</string>
+    <string name="C_ENTR_DESCUENTO">Descuento</string>
+    <string name="C_ENTR_IMPUESTO">Impuesto</string>
+    <string name="C_ENTR_TOTAL">Total</string>
+    <string name="C_ENTR_SALDO">Saldo</string>
+    
+    
+    <!-- LINEAS -->
+    <string name="TD_ENTREGA1">TB_ENTREGA_DETALLE</string>
+    
+    <string name="C_ENTR1_CLAVE">ClaveEntrega</string>
+    <string name="C_ENTR1_CODIGO">Linea</string>
+    <string name="C_ENTR1_ART">Articulo</string>
+    <string name="C_ENTR1_UM">UnidadMedida</string>
+    <string name="C_ENTR1_ALMACEN">Almacen</string>
+    <string name="C_ENTR1_CANT">Cantidad</string>
+    <string name="C_ENTR1_DISP">Disponible</string>
+    <string name="C_ENTR1_LST_PRE">ListaPrecio</string>
+    <string name="C_ENTR1_PRE_UNI">PrecioUnitario</string>
+    <string name="C_ENTR1_PORC_DESCUENTO">PorcentajeDescuento</string>
+    <string name="C_ENTR1_IMPUESTO">Impuesto</string>
+
+    <!-- LOTES -->
+    <string name="TD_ENTREGA2">TB_ENTREGA_DETALLE_LOTE</string>
+
+    <string name="C_ENTR2_CLAVE">ClaveEntrega</string>
+    <string name="C_ENTR2_LOTE">Lote</string>
+    <string name="C_ENTR2_CANT">Cantidad</string>
+    <string name="C_ENTR2_LINEA">LineaBase</string>
+
+</resources>

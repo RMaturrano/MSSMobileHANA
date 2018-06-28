@@ -1,6 +1,7 @@
 package com.proyecto.inventario;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import android.app.AlertDialog;
 import android.app.SearchManager;
@@ -27,12 +28,17 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Spinner;
 
 import com.proyect.movil.R;
 import com.proyecto.bean.ArticuloBean;
 import com.proyecto.bean.GrupoArticuloBean;
+import com.proyecto.bean.ListaPrecioBean;
+import com.proyecto.dao.ArticuloDAO;
+import com.proyecto.dao.ListaPrecioDAO;
 import com.proyecto.database.DataBaseHelper;
 import com.proyecto.database.Select;
+import com.proyecto.inventario.adapter.spinner.SPAdapterListaPrecio;
 import com.proyecto.utils.ListViewCustomAdapterFourRowAndImgART_LIST;
 import com.proyecto.utils.Utils;
 
@@ -40,8 +46,11 @@ public class ListaArticulosTabTodosFragment extends Fragment
 						implements OnItemClickListener, OnScrollListener{
 	
 	private ListView lvArticulo;
+	private SPAdapterListaPrecio mAdapterListaPrecio;
+	private Spinner spListaPrecio;
+	private ListaPrecioBean mListaPrecio;
 	private ListViewCustomAdapterFourRowAndImgART_LIST adapter;
-	private ArrayList<ArticuloBean> listaAdapter;
+	private List<ArticuloBean> listaAdapter;
 	private ArticuloBean customListObjet = null;
     private Context contexto;
     private static int icon = R.drawable.ic_keyboard_arrow_right_blue_36dp;
@@ -60,6 +69,13 @@ public class ListaArticulosTabTodosFragment extends Fragment
 		lvArticulo.setOnItemClickListener(this);
 		lvArticulo.setAdapter(adapter);
 
+		spListaPrecio =(Spinner) v.findViewById(R.id.spListaPrecio);
+		mAdapterListaPrecio = new SPAdapterListaPrecio(v.getContext());
+		mAdapterListaPrecio.addAll(new ListaPrecioDAO().listar());
+		spListaPrecio.setAdapter(mAdapterListaPrecio);
+		spListaPrecio.setVisibility(View.VISIBLE);
+		spListaPrecio.setOnItemSelectedListener(spListaPrecioOnItemSelectedListener);
+
 		refreshLayout = (SwipeRefreshLayout) v.findViewById(R.id.swipeRefresh);
 		refreshLayout.setColorSchemeResources(R.color.s1, R.color.s2,
 				R.color.s3, R.color.s4);
@@ -76,56 +92,29 @@ public class ListaArticulosTabTodosFragment extends Fragment
 		lvArticulo.setOnScrollListener(this);
         setHasOptionsMenu(true);
         return v;
-        
     }
 
 
-	private void builDataArticulos(){
+    private AdapterView.OnItemSelectedListener spListaPrecioOnItemSelectedListener = new
+			AdapterView.OnItemSelectedListener() {
+				@Override
+				public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+					mListaPrecio = (ListaPrecioBean) parent.getSelectedItem();
+					incializarListaArticulos();
+				}
 
-		listaAdapter = new ArrayList<ArticuloBean>();
-		
-		//TRAER TODO DE SQLITE
-		DataBaseHelper helper = DataBaseHelper.getHelper(contexto);
-		SQLiteDatabase db = helper.getDataBase();
-		
-		Cursor rs= db.rawQuery(
-				"select " +
-				"A.Codigo, " +
-				"A.Nombre," +
-				"(select IFNULL(SUM(CAST(STOCK AS NUMERIC)),0) from TB_CANTIDAD where ARTICULO = A.Codigo), " +
-				"G.NOMBRE "
-						+ "from TB_ARTICULO A join TB_GRUPO_ARTICULO G " +
-						"ON A.GrupoArticulo = G.CODIGO join TB_FABRICANTE F " +
-						"ON A.Fabricante = F.CODIGO " +
-						"order by A.Nombre" , null);
+				@Override
+				public void onNothingSelected(AdapterView<?> parent) {
 
-		while (rs.moveToNext()) {		
-			
-			customListObjet = new ArticuloBean();
-			customListObjet.setUtilIcon(icon);
-			customListObjet.setCod(rs.getString(0));
-			customListObjet.setDesc(rs.getString(1));
-			customListObjet.setStock(rs.getString(2));
-			customListObjet.setGrupoArticulo(rs.getString(3));
-			listaAdapter.add(customListObjet);
+				}
+			};
 
-		}
-
-	/*	if(listaAdapter.size()>0){
-			lvArticulo.setVisibility(View.VISIBLE);
-			adapter = new ListViewCustomAdapterFourRowAndImgART_LIST( contexto, listaAdapter);
-        	lvArticulo.setAdapter(adapter);
-
-		} */
-		
-		rs.close();
-//		db.close();
-
-		adapter.clearAndAddAll(listaAdapter);
-		
+    
+    private  void incializarListaArticulos(){
+		refreshLayout.setRefreshing(true);
+		new fillDataInBackGround().execute();
 	}
-    
-    
+
     @Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
     	menu.clear();
@@ -173,28 +162,6 @@ public class ListaArticulosTabTodosFragment extends Fragment
         
 	}
 
-/*
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-    	
-    	switch (item.getItemId()) {
-		case R.id.action_filtro:
-			
-			buildAlertFiltrar(ordenSel,filtroSel);
-			
-			return true;
-		case R.id.action_ordenar:
-			
-			buildAlertOrdenar(ordenSel,filtroSel);
-			
-			return true;
-		default:
-			return super.onOptionsItemSelected(item);
-		}
-    	
-    }			*/
-
-
 	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position,
 			long id) {
@@ -203,16 +170,12 @@ public class ListaArticulosTabTodosFragment extends Fragment
     	myIntent.putExtra("id", bean.getCod());
     	startActivity(myIntent);
 	}
-	
-	
-	@Override
-	public void onScrollStateChanged(AbsListView view, int scrollState) {
-		
-	}
-
 
 	@Override
-	public void onScroll(AbsListView view, int firstVisibleItem,
+	public void onScrollStateChanged(AbsListView view, int scrollState) {}
+
+	@Override
+	public void onScroll(AbsListView view, int  firstVisibleItem,
 			int visibleItemCount, int totalItemCount) {
 		
 		boolean enable = false;
@@ -236,45 +199,7 @@ public class ListaArticulosTabTodosFragment extends Fragment
 
 		@Override
 		protected Object doInBackground(String... params) {
-
-			listaAdapter = new ArrayList<ArticuloBean>();
-
-			//TRAER TODO DE SQLITE
-			DataBaseHelper helper = DataBaseHelper.getHelper(contexto);
-			SQLiteDatabase db = helper.getDataBase();
-
-			Cursor rs= db.rawQuery(
-					"select " +
-							"A.Codigo, " +
-							"A.Nombre," +
-							"(select IFNULL(SUM(CAST(STOCK AS NUMERIC)),0) from TB_CANTIDAD where ARTICULO = A.Codigo), " +
-							"G.NOMBRE "
-							+ "from TB_ARTICULO A join TB_GRUPO_ARTICULO G " +
-							"ON A.GrupoArticulo = G.CODIGO " +
-							"order by A.Nombre" , null);
-
-			while (rs.moveToNext()) {
-
-				customListObjet = new ArticuloBean();
-				customListObjet.setUtilIcon(icon);
-				customListObjet.setCod(rs.getString(0));
-				customListObjet.setDesc(rs.getString(1));
-				customListObjet.setStock(rs.getString(2));
-				customListObjet.setGrupoArticulo(rs.getString(3));
-				listaAdapter.add(customListObjet);
-
-			}
-
-	/*	if(listaAdapter.size()>0){
-			lvArticulo.setVisibility(View.VISIBLE);
-			adapter = new ListViewCustomAdapterFourRowAndImgART_LIST( contexto, listaAdapter);
-        	lvArticulo.setAdapter(adapter);
-
-		} */
-
-			rs.close();
-//		db.close();
-
+			listaAdapter = new ArticuloDAO().listar(mListaPrecio != null ? mListaPrecio.getCodigo() : null);
 			return null;
 		}
 

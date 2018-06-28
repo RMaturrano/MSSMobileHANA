@@ -132,7 +132,25 @@ public class Delete {
 		db.execSQL("delete from "+ contexto.getResources().getString(R.string.T_ARTICULO));
 		
 	}
-	
+
+	public void deleteAlmacen(){
+
+		db.execSQL("delete from "+ contexto.getResources().getString(R.string.T_ALMACEN));
+
+	}
+
+	public void deleteBancos(){
+
+		db.execSQL("delete from "+ contexto.getResources().getString(R.string.T_BANCO));
+
+	}
+
+	public void deleteCalle(){
+
+		db.execSQL("delete from "+ contexto.getResources().getString(R.string.T_CALLE));
+
+	}
+
 	public void deleteCantidad(){
 		
 		db.execSQL("delete from "+ contexto.getResources().getString(R.string.T_CANTIDAD));
@@ -143,6 +161,7 @@ public class Delete {
 		
 		db.execSQL("delete from "+ contexto.getResources().getString(R.string.T_FACTURA));
 		db.execSQL("delete from "+ contexto.getResources().getString(R.string.TD_FACTURA1));
+		db.execSQL("delete from "+ contexto.getResources().getString(R.string.TD_FACTURA2));
 		
 	}
 	
@@ -204,11 +223,65 @@ public class Delete {
 		db.execSQL("delete from "+ contexto.getResources().getString(R.string.T_PRECIO));
 		
 	}
+
+	public void deleteConPago(){
+
+		db.execSQL("delete from "+ contexto.getResources().getString(R.string.T_COND_PAGO));
+
+	}
 	
 	public void deleteRegistroEstadoCuenta(){
 		
 		db.execSQL("delete from "+ contexto.getResources().getString(R.string.T_ESTADO_CUENTA_SOCIO));
 		
+	}
+
+	public void deleteCuenta(){
+
+		db.execSQL("delete from "+ contexto.getResources().getString(R.string.T_CUENTA));
+
+	}
+
+	public void deleteDepartamento(){
+
+		db.execSQL("delete from "+ contexto.getResources().getString(R.string.T_DEPARTAMENTO));
+
+	}
+
+	public void deleteGruposArticulo(){
+
+		db.execSQL("delete from "+ contexto.getResources().getString(R.string.T_GRUPO_ART));
+
+	}
+
+	public void deleteDistrito(){
+
+		db.execSQL("delete from "+ contexto.getResources().getString(R.string.T_DISTRITO));
+
+	}
+
+	public void deleteFabricante(){
+
+		db.execSQL("delete from "+ contexto.getResources().getString(R.string.T_FABRICANTE));
+
+	}
+
+	public void deleteIndicador(){
+
+		db.execSQL("delete from "+ contexto.getResources().getString(R.string.T_INDICADOR));
+
+	}
+
+	public void deleteRest(){
+
+		db.execSQL("delete from "+ contexto.getResources().getString(R.string.T_MONEDA));
+		db.execSQL("delete from "+ contexto.getResources().getString(R.string.T_GRUPO_SN));
+		db.execSQL("delete from "+ contexto.getResources().getString(R.string.T_IMPUESTO));
+		db.execSQL("delete from "+ contexto.getResources().getString(R.string.T_PAIS));
+		db.execSQL("delete from "+ contexto.getResources().getString(R.string.T_PROVINCIA));
+		db.execSQL("delete from "+ contexto.getResources().getString(R.string.T_UNIDAD_MEDIDA));
+		db.execSQL("delete from "+ contexto.getResources().getString(R.string.T_ZONA));
+
 	}
 
 	public void deleteRegistroNC(){
@@ -219,19 +292,54 @@ public class Delete {
 	public void close(){}
 	
 	public void deleteAll(){
-		
+		deleteAlmacen();
 		deleteArticulo();
+		deleteBancos();
+		deleteCalle();
 		deleteCantidad();
+		deleteConPago();
+		deleteCuenta();
+		deleteDepartamento();
+		deleteDistrito();
+		deleteRegistroEstadoCuenta();
+		deleteFabricante();
 		deleteFacturas();
+		deleteGruposArticulo();
+		deleteGrupoUnidadMedida();
+		deleteIndicador();
 		deleteListaPrecios();
-		deletePrecios();
 		deleteOrdenVentaFull();
 		deletePagosFull();
 		deleteSocioNegocioFull();
+		deletePrecios();
 		deleteRegistroEstadoCuenta();
-		
+		deleteRegistroNC();
+		deleteIncidencia();
+		deleteEntregas();
+		deleteDevolucion();
+		deleteGrupoSocio();
 	}
-	
+
+	private void deleteIncidencia(){
+		db.execSQL("delete from TB_INCIDENCIA");
+		db.execSQL("delete from "+ contexto.getResources().getString(R.string.TD_ORDEN_VENTA_DETALLE));
+	}
+
+	private void deleteGrupoSocio(){
+		db.execSQL("delete from "+ contexto.getResources().getString(R.string.T_GRUPO_SN));
+	}
+
+	private void deleteEntregas(){
+		db.execSQL("delete from "+ contexto.getResources().getString(R.string.T_ENTREGA));
+		db.execSQL("delete from "+ contexto.getResources().getString(R.string.TD_ENTREGA1));
+		db.execSQL("delete from "+ contexto.getResources().getString(R.string.TD_ENTREGA2));
+	}
+
+	private void deleteDevolucion(){
+		db.execSQL("delete from "+ contexto.getResources().getString(R.string.T_DEVOLUCION));
+		db.execSQL("delete from "+ contexto.getResources().getString(R.string.TD_DEVOLUCION1));
+		db.execSQL("delete from "+ contexto.getResources().getString(R.string.TD_DEVOLUCION2));
+	}
 	
 	private void deleteOrdenVentaFull(){
 		db.execSQL("delete from "+ contexto.getResources().getString(R.string.T_ORDEN_VENTA));

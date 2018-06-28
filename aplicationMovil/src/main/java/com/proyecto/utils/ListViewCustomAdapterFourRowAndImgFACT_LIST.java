@@ -58,6 +58,8 @@ public class ListViewCustomAdapterFourRowAndImgFACT_LIST extends BaseAdapter imp
         TextView txtViewDescription;
         TextView txtViewTitleRight;
         TextView txtViewDescriptionRight;
+        TextView txtCodigoCliente;
+        TextView txtNomCliente;
     }
 	
 
@@ -69,14 +71,16 @@ public class ListViewCustomAdapterFourRowAndImgFACT_LIST extends BaseAdapter imp
         if(convertView==null)
         {
             holder = new ViewHolder();
-            convertView = inflater.inflate(R.layout.custom_four_row_and_img_det_ord, null);
+            convertView = inflater.inflate(R.layout.custom_four_row_and_img_lst_factura, null);
  
             holder.txtViewTitle = (TextView) convertView.findViewById(R.id.txtViewTitle);
             holder.txtViewDescription = (TextView) convertView.findViewById(R.id.txtViewDescription);
             holder.imgViewLogo = (ImageView) convertView.findViewById(R.id.imgViewLogo);
             holder.txtViewTitleRight = (TextView) convertView.findViewById(R.id.txtViewTitleRight);
             holder.txtViewDescriptionRight = (TextView) convertView.findViewById(R.id.txtViewDescriptionRight);
- 
+            holder.txtCodigoCliente = (TextView) convertView.findViewById(R.id.txtCodCliente);
+            holder.txtNomCliente = (TextView) convertView.findViewById(R.id.txtNomCliente);
+
             convertView.setTag(holder);
         }
         else
@@ -87,10 +91,10 @@ public class ListViewCustomAdapterFourRowAndImgFACT_LIST extends BaseAdapter imp
         holder.imgViewLogo.setImageResource(lista.get(position).getUtilIcon());
         holder.txtViewDescriptionRight.setText("Saldo: "+ String.valueOf(lista.get(position).getSaldo()));
         holder.txtViewTitleRight.setText("Total: "+ String.valueOf(lista.get(position).getTotal()));
- 
+        holder.txtCodigoCliente.setText(lista.get(position).getSocioNegocio());
+        holder.txtNomCliente.setText(lista.get(position).getNombreSocio());
+
         return convertView;
-		
-		
 	}
 	
 	
@@ -103,12 +107,8 @@ public class ListViewCustomAdapterFourRowAndImgFACT_LIST extends BaseAdapter imp
                @SuppressWarnings("unchecked")
                @Override
                protected void publishResults(CharSequence constraint, FilterResults results) {
-
             	   lista = (ArrayList<FacturaBean>) results.values;
-
             	   notifyDataSetChanged();
-  
-                   
                }
 
                @SuppressLint("DefaultLocale") 
@@ -137,14 +137,17 @@ public class ListViewCustomAdapterFourRowAndImgFACT_LIST extends BaseAdapter imp
 	                   // perform your search here using the searchConstraint String.
 	
 	                   for (int i = 0; i < lista.size(); i++) {
-	                   	
-	                	   FacturaBean data = lista.get(i);
-	                   	
-	                       if (data.getReferencia().toLowerCase().startsWith(mSearchTerm.toString()))  {
-	       
-	                       		FilteredArrayList.add(data);
-	                       }
-	                       
+
+	                       try{
+                               FacturaBean data = lista.get(i);
+
+                               if (data.getReferencia().toLowerCase().contains(mSearchTerm.toString()) ||
+                                       data.getSocioNegocio().toLowerCase().contains(mSearchTerm.toString()) ||
+                                       data.getNombreSocio().toLowerCase().contains(mSearchTerm.toString()))  {
+
+                                   FilteredArrayList.add(data);
+                               }
+                           }catch (Exception e){}
 	                   }
 	
 	                   

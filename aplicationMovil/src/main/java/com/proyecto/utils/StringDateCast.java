@@ -12,11 +12,13 @@ public class StringDateCast {
 	
 	
 	public static String castDatetoDateWithoutSlash(String cadena){
-		
-		return cadena.substring(0, 4) +
-				cadena.substring(5, 7) +
-				cadena.substring(8);
-		
+
+		if(cadena != null && cadena.length() == 10){
+			return cadena.substring(0, 4) +
+					cadena.substring(5, 7) +
+					cadena.substring(8);
+		}else
+			return cadena;
 	}
 
 }

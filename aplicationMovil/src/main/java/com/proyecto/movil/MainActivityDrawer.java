@@ -9,10 +9,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
-import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.preference.PreferenceManager;
 import android.provider.CalendarContract;
 import android.support.design.widget.NavigationView;
@@ -30,39 +27,38 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.proyect.movil.LoginActivity;
 import com.proyect.movil.R;
-import com.proyecto.bean.EmpresaBean;
 import com.proyecto.cobranza.ListaCobranzasMain;
 import com.proyecto.conectividad.Connectivity;
 import com.proyecto.database.Delete;
+import com.proyecto.devoluciones.DevolucionActivity;
+import com.proyecto.devoluciones.fragments.ListaDevolucionFragment;
+import com.proyecto.entregas.fragments.ListaEntregaFragment;
 import com.proyecto.facturas.ListaFacturasMain;
+import com.proyecto.incidencias.fragments.ListaIncidenciaFragment;
 import com.proyecto.inventario.ListaArticulosMain;
+import com.proyecto.notacredito.fragments.ListaNotaCreditoFragment;
 import com.proyecto.preferences.SettingsMain;
 import com.proyecto.reportes.ReporteFragment;
 import com.proyecto.servicios.ServicioOvPr;
 import com.proyecto.servicios.ServicioSocios;
-import com.proyecto.servicios.SincManualTaskDocumentos;
-import com.proyecto.servicios.SincManualTaskInicio;
-import com.proyecto.servicios.SincManualTaskMaestros;
 import com.proyecto.servicios.SyncRestDocumentos;
 import com.proyecto.servicios.SyncRestInicio;
 import com.proyecto.servicios.SyncRestMaestros;
 import com.proyecto.sociosnegocio.ListaSocioNegocio;
+import com.proyecto.utils.Constantes;
 import com.proyecto.utils.Variables;
 import com.proyecto.ventas.ListaVentasMain;
+import com.proyecto.visitas.fragment.ListaDireccionesFragment;
 import com.proyecto.ws.VolleySingleton;
 
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.util.Map;
 
 public class MainActivityDrawer extends AppCompatActivity {
 	
@@ -109,8 +105,8 @@ public class MainActivityDrawer extends AppCompatActivity {
 
 		String sociedad = pref.getString("sociedades", "-1");
 		String perfil = pref.getString(Variables.PERFIL, "-1");
-		String ip = pref.getString("ipServidor", "200.10.84.66");
-		String port = pref.getString("puertoServidor", "80");
+		String ip = pref.getString("ipServidor", Constantes.DEFAULT_IP);
+		String port = pref.getString("puertoServidor", Constantes.DEFAULT_PORT);
 
 		drawerTitle = getResources().getString(R.string.titMenuPrincipal);
 		if (savedInstanceState == null) {
@@ -122,19 +118,19 @@ public class MainActivityDrawer extends AppCompatActivity {
 		boolean movil = Connectivity.isConnectedMobile(contexto);
 
 		if (wifi || movil) {
-			validarOpcionesMenu(sociedad, perfil, ip, port);
+			validarOpcionesMenu(sociedad, perfil, ip, port,codigoEmpleado);
 		}else{
 			validarOpcionesMenuOffLine();
 		}
 	}
 
 
-	private void validarOpcionesMenu(String sociedad, String perfil, String ip, String puerto){
+	private void validarOpcionesMenu(String sociedad, String perfil, String ip, String puerto, String codEmpleado){
 		try {
 
 			String ws_ruta = ("http://" + ip + ":" + puerto +
 					"/MSS_MOBILE/service/menu/getMenu.xsjs?empId=" + Integer.parseInt(sociedad) +
-					"&prfId=" + perfil);
+					"&prfId=" + perfil + "&usrId=" + codEmpleado);
 
 			StringRequest stringRequest = new StringRequest(Request.Method.GET, ws_ruta,
 					new Response.Listener<String>() {
@@ -154,7 +150,6 @@ public class MainActivityDrawer extends AppCompatActivity {
 
 									for (int i = 0; i < size; i++ ){
 
-
 										JSONObject jsonObj = jsonArray.getJSONObject(i);
 										menuVisible = jsonObj.getString("Accesa").equals("Y") ? true: false;
 
@@ -172,6 +167,16 @@ public class MainActivityDrawer extends AppCompatActivity {
 											navigationView.getMenu().findItem(R.id.nav_reportes).setVisible(menuVisible);
 										}else if(jsonObj.getString("Descripcion").contains(Variables.MENU_ACTIVIDADES)){
 											navigationView.getMenu().findItem(R.id.nav_actividades).setVisible(menuVisible);
+										}else if(jsonObj.getString("Descripcion").contains(Variables.MENU_ENTREGAS)){
+											navigationView.getMenu().findItem(R.id.nav_entregas).setVisible(menuVisible);
+										}else if(jsonObj.getString("Descripcion").contains(Variables.MENU_INCIDENCIAS)){
+											navigationView.getMenu().findItem(R.id.nav_incidencias).setVisible(menuVisible);
+										}else if(jsonObj.getString("Descripcion").contains(Variables.MENU_PUNTOS_VISITA)){
+											navigationView.getMenu().findItem(R.id.nav_puntos_visita).setVisible(menuVisible);
+										}else if(jsonObj.getString("Descripcion").contains(Variables.MENU_DEVOLUCIONES)){
+											navigationView.getMenu().findItem(R.id.nav_devoluciones).setVisible(menuVisible);
+										}else if(jsonObj.getString("Descripcion").contains(Variables.MENU_NOTA_CREDITO)){
+											navigationView.getMenu().findItem(R.id.nav_notas_credito).setVisible(menuVisible);
 										}
 
 										SharedPreferences.Editor editor = pref.edit();
@@ -198,13 +203,13 @@ public class MainActivityDrawer extends AppCompatActivity {
 					}, new Response.ErrorListener() {
 				@Override
 				public void onErrorResponse(VolleyError error) {
-					showToast("Ocurrió un error intentando conectar con el servidor " + error.getMessage());
+					showToast("Ocurrio un error intentando conectar con el servidor " + error.getMessage());
 				}
 			});
 
 			VolleySingleton.getInstance(contexto).addToRequestQueue(stringRequest);
 		}catch (Exception e){
-			Toast.makeText(contexto, "Excepción no controlada validarOpcionesMenu() > " + e.getMessage(), Toast.LENGTH_SHORT);
+			Toast.makeText(contexto, "Excepcion no controlada validarOpcionesMenu() > " + e.getMessage(), Toast.LENGTH_SHORT);
 		}
 	}
 
@@ -270,6 +275,46 @@ public class MainActivityDrawer extends AppCompatActivity {
 				navigationView.getMenu().findItem(R.id.nav_actividades).setVisible(false);
 			}
 
+			if(pref.contains(Variables.MENU_INCIDENCIAS)){
+				JSONObject permiso = new JSONObject(pref.getString(Variables.MENU_INCIDENCIAS, "N"));
+				menuVisible = permiso.getString(Variables.MOVIL_ACCESA).equals("Y") ? true: false;
+				navigationView.getMenu().findItem(R.id.nav_incidencias).setVisible(menuVisible);
+			}else{
+				navigationView.getMenu().findItem(R.id.nav_incidencias).setVisible(false);
+			}
+
+			if(pref.contains(Variables.MENU_ENTREGAS)){
+				JSONObject permiso = new JSONObject(pref.getString(Variables.MENU_ENTREGAS, "N"));
+				menuVisible = permiso.getString(Variables.MOVIL_ACCESA).equals("Y") ? true: false;
+				navigationView.getMenu().findItem(R.id.nav_entregas).setVisible(menuVisible);
+			}else{
+				navigationView.getMenu().findItem(R.id.nav_entregas).setVisible(false);
+			}
+
+			if(pref.contains(Variables.MENU_PUNTOS_VISITA)){
+				JSONObject permiso = new JSONObject(pref.getString(Variables.MENU_PUNTOS_VISITA, "N"));
+				menuVisible = permiso.getString(Variables.MOVIL_ACCESA).equals("Y") ? true: false;
+				navigationView.getMenu().findItem(R.id.nav_puntos_visita).setVisible(menuVisible);
+			}else{
+				navigationView.getMenu().findItem(R.id.nav_puntos_visita).setVisible(false);
+			}
+
+			if(pref.contains(Variables.MENU_DEVOLUCIONES)){
+				JSONObject permiso = new JSONObject(pref.getString(Variables.MENU_DEVOLUCIONES, "N"));
+				menuVisible = permiso.getString(Variables.MOVIL_ACCESA).equals("Y") ? true: false;
+				navigationView.getMenu().findItem(R.id.nav_devoluciones).setVisible(menuVisible);
+			}else{
+				navigationView.getMenu().findItem(R.id.nav_devoluciones).setVisible(false);
+			}
+
+			if(pref.contains(Variables.MENU_NOTA_CREDITO)){
+				JSONObject permiso = new JSONObject(pref.getString(Variables.MENU_NOTA_CREDITO, "N"));
+				menuVisible = permiso.getString(Variables.MOVIL_ACCESA).equals("Y") ? true: false;
+				navigationView.getMenu().findItem(R.id.nav_notas_credito).setVisible(menuVisible);
+			}else{
+				navigationView.getMenu().findItem(R.id.nav_notas_credito).setVisible(false);
+			}
+
 		}catch (Exception e){
 			showToast("validarOpcionesMenuOffLine() > " + e.getMessage());
 		}
@@ -283,10 +328,16 @@ public class MainActivityDrawer extends AppCompatActivity {
 		navigationView.getMenu().getItem(5).setVisible(visible);
 		navigationView.getMenu().getItem(6).setVisible(visible);
 		navigationView.getMenu().getItem(7).setVisible(visible);
+		navigationView.getMenu().getItem(8).setVisible(visible);
+		navigationView.getMenu().getItem(9).setVisible(visible);
+		navigationView.getMenu().getItem(10).setVisible(visible);
+		navigationView.getMenu().getItem(11).setVisible(visible);
+		navigationView.getMenu().getItem(12).setVisible(visible);
 	}
 
 	private void showToast(String message) {
-		Toast.makeText(MainActivityDrawer.this, message, Toast.LENGTH_SHORT).show();
+		if(message != null)
+			Toast.makeText(MainActivityDrawer.this, message, Toast.LENGTH_SHORT).show();
 	}
 
 	private void setToolbar() {
@@ -294,7 +345,7 @@ public class MainActivityDrawer extends AppCompatActivity {
 		setSupportActionBar(toolbar);
 		final ActionBar ab = getSupportActionBar();
 		if (ab != null) {
-			// Poner ícono del drawer toggle
+			// Poner ï¿½cono del drawer toggle
 			ab.setHomeAsUpIndicator(R.drawable.ic_menu);
 			ab.setDisplayHomeAsUpEnabled(true);
 		}
@@ -344,8 +395,8 @@ public class MainActivityDrawer extends AppCompatActivity {
 	private void closeSession(){
 		
 		AlertDialog.Builder alert = new AlertDialog.Builder(contexto);
-		alert.setTitle("Confirmación");
-		alert.setMessage("¿Realmente desea salir de la aplicación?");
+		alert.setTitle("Confirmacion");
+		alert.setMessage("Realmente desea salir de la aplicacion?");
 		alert.setPositiveButton("Si", new DialogInterface.OnClickListener() {
 			@SuppressLint("DefaultLocale")
 			public void onClick(DialogInterface dialog, int whichButton) {
@@ -382,8 +433,6 @@ public class MainActivityDrawer extends AppCompatActivity {
 		alert.setNegativeButton("No",new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int whichButton) {
 
-			
-			
 			}
 		});
 		alert.show();
@@ -392,7 +441,7 @@ public class MainActivityDrawer extends AppCompatActivity {
 
 	private void selectItem(String title) {
 		
-		// Enviar título como argumento del fragmento
+		// Enviar tï¿½tulo como argumento del fragmento
 		Bundle args = new Bundle();
 		args.putString(PlaceholderFragment.ARG_SECTION_TITLE, title);
 		
@@ -403,7 +452,7 @@ public class MainActivityDrawer extends AppCompatActivity {
 			FragmentManager fragmentManager = getSupportFragmentManager();
 			fragmentManager.beginTransaction().replace(R.id.main_content, fragment)
 					.commit();
-			setTitle(title); // Setear título actual
+			setTitle(title); // Setear tï¿½tulo actual
 			
 		}else if(title.equalsIgnoreCase(getResources().getString(R.string.menu_socio_negocio))){
 			
@@ -434,7 +483,7 @@ public class MainActivityDrawer extends AppCompatActivity {
             FragmentTransaction transaction = manager.beginTransaction();
             transaction.replace(R.id.main_content, fragment);
             transaction.commit();
-            setTitle(title); // Setear título actual
+            setTitle(title); // Setear tï¿½tulo actual
 			
 		}else if(title.equalsIgnoreCase(getResources().getString(R.string.menu_facturas))){
 			
@@ -443,7 +492,7 @@ public class MainActivityDrawer extends AppCompatActivity {
             FragmentTransaction transaction = manager.beginTransaction();
             transaction.replace(R.id.main_content, fragment);
             transaction.commit();
-            setTitle(title); // Setear título actual
+            setTitle(title); // Setear tï¿½tulo actual
 			
 		}else if(title.equalsIgnoreCase(getResources().getString(R.string.menu_cobranzas))){
 			
@@ -452,7 +501,7 @@ public class MainActivityDrawer extends AppCompatActivity {
             FragmentTransaction transaction = manager.beginTransaction();
             transaction.replace(R.id.main_content, fragment);
             transaction.commit();
-            setTitle(title); // Setear título actual
+            setTitle(title); // Setear tï¿½tulo actual
 			
 		}else if(title.equalsIgnoreCase(getResources().getString(R.string.menu_conexion))){
 			
@@ -475,8 +524,41 @@ public class MainActivityDrawer extends AppCompatActivity {
             FragmentTransaction transaction = manager.beginTransaction();
             transaction.replace(R.id.main_content, fragment);
             transaction.commit();
-            setTitle(title); // Setear título actual
+            setTitle(title); // Setear tï¿½tulo actual
 			
+		}else if(title.equals(getResources().getString(R.string.menu_incidencias))) {
+			Fragment fragment = new ListaIncidenciaFragment();
+			FragmentManager manager = getSupportFragmentManager();
+			FragmentTransaction transaction = manager.beginTransaction();
+			transaction.replace(R.id.main_content, fragment);
+			transaction.commit();
+			setTitle(title);
+		}else if(title.equals(getResources().getString(R.string.menu_entregas))){
+			Fragment fragment = new ListaEntregaFragment();
+			FragmentManager manager = getSupportFragmentManager();
+			FragmentTransaction transaction = manager.beginTransaction();
+			transaction.replace(R.id.main_content, fragment);
+			transaction.commit();
+			setTitle(title);
+		}else if(title.equals(getResources().getString(R.string.menu_puntos_visita))){
+			Fragment fragment = new ListaDireccionesFragment();
+			FragmentManager manager = getSupportFragmentManager();
+			FragmentTransaction transaction = manager.beginTransaction();
+			transaction.replace(R.id.main_content, fragment);
+			transaction.commit();
+			setTitle(title);
+		}else if(title.equals(getResources().getString(R.string.menu_devoluciones))){
+			Fragment fragment = new ListaDevolucionFragment();
+			fragment.setArguments(args);
+			FragmentManager fragmentManager = getSupportFragmentManager();
+			fragmentManager.beginTransaction().replace(R.id.main_content, fragment).commit();
+			setTitle(title);
+		}else if(title.equals(getResources().getString(R.string.menu_nota_credito))){
+			Fragment fragment = new ListaNotaCreditoFragment();
+			fragment.setArguments(args);
+			FragmentManager fragmentManager = getSupportFragmentManager();
+			fragmentManager.beginTransaction().replace(R.id.main_content, fragment).commit();
+			setTitle(title);
 		}else{
 			Fragment fragment = PlaceholderFragment.newInstance(title);
 			fragment.setArguments(args);
@@ -498,7 +580,7 @@ public class MainActivityDrawer extends AppCompatActivity {
 		i.putExtra("allDay", false);
 		i.putExtra("rule", "FREQ=YEARLY");
 		i.putExtra("endTime", calendarEvent.getTimeInMillis() + 60 * 60 * 1000);
-		i.putExtra("title", "Editar el título de su actividad aquí");
+		i.putExtra("title", "Editar el tï¿½tulo de su actividad aquï¿½");
 		startActivity(i);			*/
 		
 		long startMillis = System.currentTimeMillis();
@@ -535,17 +617,17 @@ public class MainActivityDrawer extends AppCompatActivity {
 				boolean res = syncInitial.syncFromServer();
 
 				if(res)
-					Toast.makeText(contexto, "Sincronización finalizada.", Toast.LENGTH_SHORT).show();
+					Toast.makeText(contexto, "Sincronizacion finalizada.", Toast.LENGTH_SHORT).show();
 				else
-					Toast.makeText(contexto, "Ocurrió un error intentando conectar con el servidor", Toast.LENGTH_SHORT).show();
+					Toast.makeText(contexto, "Ocurrio un error intentando conectar con el servidor", Toast.LENGTH_SHORT).show();
 				//SincManualTaskInicio job = new SincManualTaskInicio(pd, contexto, "");
 				//job.execute();
 				
 			} else {
-				Toast.makeText(contexto, "La conexión es inestable", Toast.LENGTH_LONG).show();
+				Toast.makeText(contexto, "La conexion es inestable", Toast.LENGTH_LONG).show();
 			}
 		}else {
-			Toast.makeText(contexto, "No está conectado a ninguna red de datos...", Toast.LENGTH_LONG).show();
+			Toast.makeText(contexto, "No esta conectado a ninguna red de datos...", Toast.LENGTH_LONG).show();
 		}
 	}
 	
@@ -567,7 +649,7 @@ public class MainActivityDrawer extends AppCompatActivity {
 				pd.setIndeterminate(false);
 				pd.setMessage("Por favor, espere...");
 				pd.setProgress(0);
-				pd.setMax(5);
+				pd.setMax(6);
 				pd.show();
 
 				//SincManualTaskDocumentos job = new SincManualTaskDocumentos(pd, contexto, "");
@@ -576,9 +658,9 @@ public class MainActivityDrawer extends AppCompatActivity {
 				boolean res = syncRestDocumentos.syncFromServer();
 
 				if(res)
-					Toast.makeText(contexto, "Sincronización finalizada.", Toast.LENGTH_SHORT).show();
+					Toast.makeText(contexto, "Sincronizacion finalizada.", Toast.LENGTH_SHORT).show();
 				else
-					Toast.makeText(contexto, "Ocurrió un error intentando conectar con el servidor", Toast.LENGTH_SHORT).show();
+					Toast.makeText(contexto, "Ocurrio un error intentando conectar con el servidor", Toast.LENGTH_SHORT).show();
 
 			/*	if( Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB ) {
 				    job.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
@@ -587,11 +669,11 @@ public class MainActivityDrawer extends AppCompatActivity {
 				}	*/
 				
 			} else {
-				Toast.makeText(contexto, "La conexión es inestable", Toast.LENGTH_LONG).show();
+				Toast.makeText(contexto, "La conexion es inestable", Toast.LENGTH_LONG).show();
 			}
 		}else {
 			
-			Toast.makeText(contexto, "No está conectado a ninguna red de datos...", Toast.LENGTH_LONG).show();
+			Toast.makeText(contexto, "No esta conectado a ninguna red de datos...", Toast.LENGTH_LONG).show();
 
 		}
 	}
@@ -633,17 +715,17 @@ public class MainActivityDrawer extends AppCompatActivity {
 				boolean res = syncRestMaestros.syncFromServer();
 
 				if(res)
-					Toast.makeText(contexto, "Sincronización finalizada.", Toast.LENGTH_SHORT).show();
+					Toast.makeText(contexto, "Sincronizacion finalizada.", Toast.LENGTH_SHORT).show();
 				else
-					Toast.makeText(contexto, "Ocurrió un error intentando conectar con el servidor", Toast.LENGTH_SHORT).show();
+					Toast.makeText(contexto, "Ocurrio un error intentando conectar con el servidor", Toast.LENGTH_SHORT).show();
 
 
 			} else {
-				Toast.makeText(contexto, "La conexión es inestable", Toast.LENGTH_LONG).show();
+				Toast.makeText(contexto, "La conexion es inestable", Toast.LENGTH_LONG).show();
 			}
 		}else {
 			
-			Toast.makeText(contexto, "No está conectado a ninguna red de datos...", Toast.LENGTH_LONG).show();
+			Toast.makeText(contexto, "No esta conectado a ninguna red de datos...", Toast.LENGTH_LONG).show();
 
 		}
 	}

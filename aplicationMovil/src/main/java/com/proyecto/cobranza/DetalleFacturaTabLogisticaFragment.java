@@ -58,14 +58,20 @@ public class DetalleFacturaTabLogisticaFragment extends Fragment{
     	
 //    	MyDataBase cn = new MyDataBase(contexto, null, null, MyDataBase.DATABASE_VERSION);
 //		SQLiteDatabase db= cn.getWritableDatabase();
-		
-		
-		Cursor rs= db.rawQuery("select DireccionFiscal, DireccionEntrega," +
-								"C.NOMBRE, I.Nombre " +
-								"FROM TB_FACTURA F LEFT JOIN TB_CONDICION_PAGO C " +
-								"ON F.CondicionPago = C.CODIGO LEFT JOIN TB_INDICADOR I " +
-								"ON F.Indicador = I.Codigo " +
-								"WHERE Clave ='"+idFactura+"'", null);
+
+		String query = "SELECT IFNULL((SELECT IFNULL(X0.Calle, X0.Referencia) FROM TB_SOCIO_NEGOCIO_DIRECCION X0 " +
+				"                           WHERE X0.Codigo = T0.DireccionFiscal AND X0.CodigoSocioNegocio = T0.SocioNegocio),'') " +
+				"                           AS DireccionFiscalDescripcion , " +
+				"       IFNULL((SELECT IFNULL(X0.Calle, X0.Referencia) FROM TB_SOCIO_NEGOCIO_DIRECCION X0 " +
+				"                           WHERE X0.Codigo = T0.DireccionEntrega AND X0.CodigoSocioNegocio = T0.SocioNegocio),'') " +
+				"                           AS DireccionEntregaDescripcion," +
+				"  T1.NOMBRE AS CondicionPago," +
+				"  T2.Nombre AS Indicador " +
+				" FROM TB_FACTURA T0 LEFT JOIN TB_CONDICION_PAGO T1 " +
+					" ON T0.CondicionPago = T1.CODIGO LEFT JOIN TB_INDICADOR T2 " +
+					" ON T0.Indicador = T2.Codigo " +
+				" where T0.Clave = '"+idFactura+"'";
+		Cursor rs= db.rawQuery(query, null);
 		while (rs.moveToNext()) {		
 			
 			FormatCustomListView sr1 = new FormatCustomListView();

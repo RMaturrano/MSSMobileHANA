@@ -61,5 +61,18 @@
     <string name="menu_sincronizar_ini">Sincronización inicial</string>
     <string name="menu_cerrar_sesion">Cerrar Sesión</string>
     <string name="title_activity_socio_direccion">Map</string>
+    <string name="menu_incidencias">Incidencias</string>
+    <string name="menu_entregas">Entregas</string>
+    <string name="menu_puntos_visita">Puntos de visita</string>
+    <string name="menu_devoluciones">Devoluciones</string>
+    <string name="menu_nota_credito">Notas de crédito</string>
+
+    <string name="ttlAgregarIncidencia">Nueva Incidencia</string>
+    <string name="ttlAgregarDevolucion">Nueva Devolución</string>
+    <string name="ttlAgregarNotaCredito">Nueva Nota de crédito</string>
+    <string name="ttlBuscarFacturas">Buscar factura</string>
+    <string name="ttlBuscarCliente">Buscar cliente</string>
+    <string name="title_activity_maps">Seleccionar ubicación</string>
+    <string name="title_activity_show_maps">Ubicación en el mapa</string>
 
 </resources>

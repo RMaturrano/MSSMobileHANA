@@ -1,5 +1,10 @@
 package com.proyecto.bean;
 
+import android.util.Log;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 
 public class OrdenVentaBean {
@@ -7,7 +12,8 @@ public class OrdenVentaBean {
 	private String nroDocOrdV, estadoDoc, codSN, nomSN, contacto, moneda, fecContable, fecVen, fecDoc,
 			numRef, comentario, dirEntrega, destFactura, empVentas, tipoDoc, dirFiscal, condPago, indicador, nroDoc,
 			clave, numero, referencia, listaPrecio, subTotal, descuento, impuesto, total, saldo,
-			creadoMovil, claveMovil, estadoRegistroMovil, TransaccionMovil;
+			creadoMovil, claveMovil, estadoRegistroMovil, TransaccionMovil, modoOffLine, latitud, longitud,
+			horaCreacion, rangoDireccion;
 	
 	public String getCreadoMovil() {
 		return creadoMovil;
@@ -336,9 +342,97 @@ public class OrdenVentaBean {
 		TransaccionMovil = transaccionMovil;
 	}
 
-	
-	
-	
+	public String getModoOffLine() {
+		return modoOffLine;
+	}
+
+	public void setModoOffLine(String modoOffLine) {
+		this.modoOffLine = modoOffLine;
+	}
+
+	public String getLatitud() {
+		return latitud;
+	}
+
+	public void setLatitud(String latitud) {
+		this.latitud = latitud;
+	}
+
+	public String getLongitud() {
+		return longitud;
+	}
+
+	public void setLongitud(String longitud) {
+		this.longitud = longitud;
+	}
+
+	public String getHoraCreacion() {
+		return horaCreacion;
+	}
+
+	public void setHoraCreacion(String horaCreacion) {
+		this.horaCreacion = horaCreacion;
+	}
+
+	public String getRangoDireccion() {
+		return rangoDireccion;
+	}
+
+	public void setRangoDireccion(String rangoDireccion) {
+		this.rangoDireccion = rangoDireccion;
+	}
+
+	public static JSONObject transformOVToJSON(OrdenVentaBean ov, String sociedad){
+		try	{
+
+			JSONObject jsonObject = new JSONObject();
+			jsonObject.put("ClaveMovil", ov.getClaveMovil());
+			jsonObject.put("TransaccionMovil", ov.getTransaccionMovil());
+			jsonObject.put("SocioNegocio", ov.getCodSN());
+			jsonObject.put("ListaPrecio", ov.getListaPrecio());
+			jsonObject.put("CondicionPago", ov.getCondPago());
+			jsonObject.put("Indicador", ov.getIndicador());
+			jsonObject.put("Referencia", ov.getReferencia());
+			jsonObject.put("FechaContable", ov.getFecContable());
+			jsonObject.put("FechaVencimiento", ov.getFecVen());
+			jsonObject.put("Moneda", ov.getMoneda());
+			jsonObject.put("EmpleadoVenta", ov.getEmpVentas());
+			jsonObject.put("DireccionFiscal", ov.getDirFiscal());
+			jsonObject.put("DireccionEntrega", ov.getDirEntrega());
+			jsonObject.put("Comentario", ov.getComentario());
+			jsonObject.put("Empresa", Integer.parseInt(sociedad));
+			jsonObject.put("Rango", ov.getRangoDireccion());
+			jsonObject.put("Latitud", ov.getLatitud());
+			jsonObject.put("Longitud", ov.getLongitud());
+			jsonObject.put("Hora", ov.getHoraCreacion());
+			jsonObject.put("Conectado", ov.getModoOffLine());
+
+			JSONArray lines = new JSONArray();
+
+			for (OrdenVentaDetalleBean line: ov.getDetalles()) {
+
+				JSONObject jsonLine = new JSONObject();
+				jsonLine.put("Linea", line.getLinea());
+				jsonLine.put("Articulo", line.getCodArt());
+				jsonLine.put("UnidadMedida", line.getCodUM());
+				jsonLine.put("Almacen", line.getAlmacen());
+				jsonLine.put("Cantidad", String.valueOf(line.getCantidad()));
+				jsonLine.put("ListaPrecio", line.getListaPrecio());
+				jsonLine.put("PrecioUnitario", String.valueOf(line.getPrecio()));
+				jsonLine.put("PorcentajeDescuento", String.valueOf(line.getDescuento()));
+				jsonLine.put("Impuesto", String.valueOf(line.getCodImp()));
+
+				lines.put(jsonLine);
+			}
+
+			jsonObject.put("OrderLines", lines);
+
+			return jsonObject;
+
+		}catch (Exception e){
+			return  null;
+		}
+	}
 	
 	
 }

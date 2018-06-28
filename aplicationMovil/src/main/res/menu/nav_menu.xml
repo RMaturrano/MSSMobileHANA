@@ -46,6 +46,31 @@
             android:icon="@drawable/ic_event_24dp"
             android:title="@string/menu_actividades" />
 
+        <item
+            android:id="@+id/nav_incidencias"
+            android:icon="@drawable/ic_event_note_24dp"
+            android:title="@string/menu_incidencias" />
+
+        <item
+            android:id="@+id/nav_entregas"
+            android:icon="@drawable/ic_send_gray_24dp"
+            android:title="@string/menu_entregas" />
+
+        <item
+            android:id="@+id/nav_puntos_visita"
+            android:icon="@drawable/ic_beenhere_gray_24dp"
+            android:title="@string/menu_puntos_visita" />
+
+        <item
+            android:id="@+id/nav_devoluciones"
+            android:icon="@drawable/ic_assignment_return_gray_24dp"
+            android:title="@string/menu_devoluciones" />
+
+        <item
+            android:id="@+id/nav_notas_credito"
+            android:icon="@drawable/ic_assignment_returned_gray_24dp"
+            android:title="@string/menu_nota_credito" />
+
         <!-- Sección de configuración -->
         <item
             android:id="@+id/configuration_section"

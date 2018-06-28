@@ -42,6 +42,8 @@ import com.proyecto.utils.StringDateCast;
 import com.proyecto.utils.Utils;
 import com.proyecto.utils.Variables;
 
+import org.json.JSONObject;
+
 public class ListaVentasTabPendientesFragment extends Fragment 
 				implements OnItemClickListener, OnScrollListener, OnItemLongClickListener{
 	
@@ -66,6 +68,7 @@ public class ListaVentasTabPendientesFragment extends Fragment
 	private String movilEditar = "";
 	private String movilCrear = "";
 	private String movilRechazar = "";
+	private FloatingActionButton fabCrear;
     
  // RECIBE LOS PARÀMETROS DESDE EL FRAGMENT CORRESPONDIENTE
   	private BroadcastReceiver myLocalBroadcastReceiver = new BroadcastReceiver() {
@@ -115,15 +118,11 @@ public class ListaVentasTabPendientesFragment extends Fragment
 
 		pref = PreferenceManager
 				.getDefaultSharedPreferences(contexto);
-        movilAprobar = pref.getString(Variables.MOVIL_APROBAR, "");
-        movilEditar = pref.getString(Variables.MOVIL_EDITAR, "");
-        movilCrear = pref.getString(Variables.MOVIL_CREAR, "");
-        movilRechazar = pref.getString(Variables.MOVIL_RECHAZAR, "");
 
 		// FLOATING BUTTON
-		FloatingActionButton fab = (FloatingActionButton) v
+		fabCrear = (FloatingActionButton) v
 				.findViewById(R.id.fab);
-		fab.setOnClickListener(new View.OnClickListener() {
+		fabCrear.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				Intent registrarVenta = new Intent(v.getContext(),
@@ -131,6 +130,7 @@ public class ListaVentasTabPendientesFragment extends Fragment
 				startActivity(registrarVenta);
 			}
 		});
+		fabCrear.setVisibility(View.INVISIBLE);
 		// FLOATING BUTTON
 
 		adapter = new ListViewCustomAdapterFourRowAndImgORD(contexto);
@@ -146,6 +146,32 @@ public class ListaVentasTabPendientesFragment extends Fragment
 	public void onStart() {
 		super.onStart();
 		adapter.clearAndAddAll(builDataOrd());
+		comprobarPermisos();
+	}
+
+	private void comprobarPermisos(){
+
+		String permisosMenu = pref.getString(Variables.MENU_PEDIDOS, null);
+		if (permisosMenu != null) {
+			try {
+				JSONObject permisos = new JSONObject(permisosMenu);
+				movilCrear = permisos.getString(Variables.MOVIL_CREAR);
+				movilEditar = permisos.getString(Variables.MOVIL_EDITAR);
+				movilAprobar = permisos.getString(Variables.MOVIL_APROBAR);
+				movilRechazar = permisos.getString(Variables.MOVIL_RECHAZAR);
+
+				if(movilCrear != null && !movilCrear.trim().equals("")){
+					if (!movilCrear.equals("")) {
+						if (movilCrear.equalsIgnoreCase("Y")) {
+							fabCrear.setVisibility(FloatingActionButton.VISIBLE);
+						}
+					}
+				}
+
+			} catch (Exception e) {
+				Toast.makeText(contexto, "Ocurrió un error intentando obtener los permisos del menú", Toast.LENGTH_SHORT).show();
+			}
+		}
 	}
 
 	private ArrayList<OrdenVentaBean> builDataOrd(){

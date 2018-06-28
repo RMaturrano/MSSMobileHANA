@@ -1,8 +1,16 @@
 package com.proyecto.bean;
 
-public class PrecioBean {
+import android.os.Parcel;
+import android.os.Parcelable;
 
-	private String listaPrecio,articulo, moneda, precioVenta;
+public class PrecioBean implements Parcelable {
+
+	private String listaPrecio;
+	private String articulo;
+	private String moneda;
+	private String precioVenta;
+
+	public  PrecioBean(){};
 
 	public String getArticulo() {
 		return articulo;
@@ -36,4 +44,37 @@ public class PrecioBean {
 		this.listaPrecio = listaPrecio;
 	}
 
+
+	protected PrecioBean(Parcel in) {
+		listaPrecio = in.readString();
+		articulo = in.readString();
+		moneda = in.readString();
+		precioVenta = in.readString();
+	}
+
+	@Override
+	public int describeContents() {
+		return 0;
+	}
+
+	@Override
+	public void writeToParcel(Parcel dest, int flags) {
+		dest.writeString(listaPrecio);
+		dest.writeString(articulo);
+		dest.writeString(moneda);
+		dest.writeString(precioVenta);
+	}
+
+	@SuppressWarnings("unused")
+	public static final Parcelable.Creator<PrecioBean> CREATOR = new Parcelable.Creator<PrecioBean>() {
+		@Override
+		public PrecioBean createFromParcel(Parcel in) {
+			return new PrecioBean(in);
+		}
+
+		@Override
+		public PrecioBean[] newArray(int size) {
+			return new PrecioBean[size];
+		}
+	};
 }

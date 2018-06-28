@@ -42,6 +42,9 @@ import com.proyecto.utils.StringDateCast;
 import com.proyecto.utils.Utils;
 import com.proyecto.utils.Variables;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 public class ListaCobranzasTabPendientesFragment extends Fragment 
 				implements OnItemClickListener,OnItemLongClickListener, OnScrollListener{
 	
@@ -66,6 +69,7 @@ public class ListaCobranzasTabPendientesFragment extends Fragment
 	private String movilEditar = "";
 	private String movilCrear = "";
 	private String movilRechazar = "";
+	private FloatingActionButton fabCrear;
 	
 	
  // RECIBE LOS PAR�METROS DESDE EL FRAGMENT CORRESPONDIENTE
@@ -118,15 +122,11 @@ public class ListaCobranzasTabPendientesFragment extends Fragment
 
 		pref = PreferenceManager
 				.getDefaultSharedPreferences(contexto);
-        movilAprobar = pref.getString(Variables.MOVIL_APROBAR, "");
-        movilEditar = pref.getString(Variables.MOVIL_EDITAR, "");
-        movilCrear = pref.getString(Variables.MOVIL_CREAR, "");
-        movilRechazar = pref.getString(Variables.MOVIL_RECHAZAR, "");
 		
 		// FLOATING BUTTON
-		FloatingActionButton fab = (FloatingActionButton) v
+		fabCrear = (FloatingActionButton) v
 				.findViewById(R.id.fab);
-		fab.setOnClickListener(new View.OnClickListener() {
+		fabCrear.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				Intent registrarCobranza = new Intent(v.getContext(),
@@ -134,6 +134,7 @@ public class ListaCobranzasTabPendientesFragment extends Fragment
 				startActivity(registrarCobranza);
 			}
 		});
+		fabCrear.setVisibility(View.INVISIBLE);
 		// FLOATING BUTTON
  		
 		lvCobranzas.setOnScrollListener(this);
@@ -149,66 +150,96 @@ public class ListaCobranzasTabPendientesFragment extends Fragment
 	public void onStart() {
 		super.onStart();
 		adapter.clearAndAddAll(builDataCobranzas());
+		comprobarPermisos();
+	}
+
+	private void comprobarPermisos(){
+
+		String permisosMenu = pref.getString(Variables.MENU_COBRANZAS, null);
+		if (permisosMenu != null) {
+			try {
+				JSONObject permisos = new JSONObject(permisosMenu);
+				movilCrear = permisos.getString(Variables.MOVIL_CREAR);
+				movilEditar = permisos.getString(Variables.MOVIL_EDITAR);
+				movilAprobar = permisos.getString(Variables.MOVIL_APROBAR);
+				movilRechazar = permisos.getString(Variables.MOVIL_RECHAZAR);
+
+				if(movilCrear != null && !movilCrear.trim().equals("")){
+					if (!movilCrear.equals("")) {
+						if (movilCrear.equalsIgnoreCase("Y")) {
+							fabCrear.setVisibility(FloatingActionButton.VISIBLE);
+						}
+					}
+				}
+
+			} catch (Exception e) {
+				Toast.makeText(contexto, "Ocurrió un error intentando obtener los permisos del menú", Toast.LENGTH_SHORT).show();
+			}
+		}
 	}
 
 	private ArrayList<PagoBean> builDataCobranzas(){
 		
 		listaAdapter = new ArrayList<PagoBean>();
-		
-		//TRAER TODO DE SQLITE
-		DataBaseHelper helper = DataBaseHelper.getHelper(contexto);
-		SQLiteDatabase db = helper.getDataBase();
-//		
-		Cursor rs= db.rawQuery("select P.Clave, SN.NombreRazonSocial, P.TipoPago, P.Tipo, P.FechaContable," +
-								"P.Numero, P.EstadoMovil, P.ClaveMovil, P.TransaccionMovil  " +
-								"from TB_PAGO P left JOIN TB_SOCIO_NEGOCIO SN " +
-								"ON P.SocioNegocio = SN.Codigo " +
-								"where Tipo = 'P' " +
-								"ORDER BY P.Clave", null);
-		while (rs.moveToNext()) {		
-			
-			customListObjet = new PagoBean();
-			customListObjet.setUtilIcon(icon);
-			customListObjet.setClave(rs.getString(0));
-			customListObjet.setNombreSocioNegocio(rs.getString(1));
-			if(rs.getString(2).equals("F"))
-				customListObjet.setTipoPago("Efectivo");
-			else if(rs.getString(2).equals("T"))
-				customListObjet.setTipoPago("Transferencia");
-			else if(rs.getString(2).equals("C"))
-				customListObjet.setTipoPago("Cheque");
-			customListObjet.setTipo(rs.getString(3));
-			customListObjet.setFechaContable(StringDateCast.castStringtoDate(rs.getString(4)));
-			customListObjet.setNumero(rs.getString(5));
 
-			if (rs.getString(6).toString().equals("L")) {
-				customListObjet.setUtilIcon2(icon_local);
-			} else if (rs.getString(6).toString().equals("S")) {
-				customListObjet.setUtilIcon2(icon_cloud_down);
-			} else if(rs.getString(6).toString().equals("U") &&
-					rs.getString(8).equalsIgnoreCase("1")){
-				customListObjet.setUtilIcon2(icon_cloud_done);
-			} else if(rs.getString(6).toString().equals("U") &&
-					rs.getString(8).equalsIgnoreCase("2")){
-				customListObjet.setUtilIcon2(icon_cloud_done);
-			} else if(rs.getString(6).toString().equals("U") &&
-					rs.getString(8).equalsIgnoreCase("3")){
-				customListObjet.setUtilIcon2(icon_cloud_done_red);
-			} else if(rs.getString(6).toString().equals("U") &&
-					rs.getString(8).equalsIgnoreCase("4")){
-				customListObjet.setUtilIcon2(icon_cloud_done_green);
+		try{
+			//TRAER TODO DE SQLITE
+			DataBaseHelper helper = DataBaseHelper.getHelper(contexto);
+			SQLiteDatabase db = helper.getDataBase();
+//
+			Cursor rs= db.rawQuery("select P.Clave, SN.NombreRazonSocial, P.TipoPago, P.Tipo, P.FechaContable," +
+					"P.Numero, P.EstadoMovil, P.ClaveMovil, P.TransaccionMovil  " +
+					"from TB_PAGO P left JOIN TB_SOCIO_NEGOCIO SN " +
+					"ON P.SocioNegocio = SN.Codigo " +
+					"where Tipo = 'P' " +
+					"ORDER BY P.Clave", null);
+			while (rs.moveToNext()) {
+
+				customListObjet = new PagoBean();
+				customListObjet.setUtilIcon(icon);
+				customListObjet.setClave(rs.getString(0));
+				customListObjet.setNombreSocioNegocio(rs.getString(1));
+				if(rs.getString(2).equals("F"))
+					customListObjet.setTipoPago("Efectivo");
+				else if(rs.getString(2).equals("T"))
+					customListObjet.setTipoPago("Transferencia/Deposito");
+				else if(rs.getString(2).equals("C"))
+					customListObjet.setTipoPago("Cheque");
+				customListObjet.setTipo(rs.getString(3));
+				customListObjet.setFechaContable(StringDateCast.castStringtoDate(rs.getString(4)));
+				customListObjet.setNumero(rs.getString(5));
+
+				if (rs.getString(6).toString().equals("L")) {
+					customListObjet.setUtilIcon2(icon_local);
+				} else if (rs.getString(6).toString().equals("S")) {
+					customListObjet.setUtilIcon2(icon_cloud_down);
+				} else if(rs.getString(6).toString().equals("U") &&
+						rs.getString(8).equalsIgnoreCase("1")){
+					customListObjet.setUtilIcon2(icon_cloud_done);
+				} else if(rs.getString(6).toString().equals("U") &&
+						rs.getString(8).equalsIgnoreCase("2")){
+					customListObjet.setUtilIcon2(icon_cloud_done);
+				} else if(rs.getString(6).toString().equals("U") &&
+						rs.getString(8).equalsIgnoreCase("3")){
+					customListObjet.setUtilIcon2(icon_cloud_done_red);
+				} else if(rs.getString(6).toString().equals("U") &&
+						rs.getString(8).equalsIgnoreCase("4")){
+					customListObjet.setUtilIcon2(icon_cloud_done_green);
+				}
+
+				customListObjet.setEstadoRegistroMovil(rs.getString(6));
+				customListObjet.setClaveMovil(rs.getString(7));
+				customListObjet.setTransaccionMovil(rs.getString(8));
+
+				listaAdapter.add(customListObjet);
+
 			}
-			
-			customListObjet.setEstadoRegistroMovil(rs.getString(6));
-			customListObjet.setClaveMovil(rs.getString(7));
-			customListObjet.setTransaccionMovil(rs.getString(8));
-			
-			listaAdapter.add(customListObjet);
-			
+
+			rs.close();
+		}catch(Exception e){
+			Toast.makeText(contexto, e.getMessage(), Toast.LENGTH_LONG).show();
 		}
-		
-		rs.close();
-		
+
 		return listaAdapter;
 
 	}

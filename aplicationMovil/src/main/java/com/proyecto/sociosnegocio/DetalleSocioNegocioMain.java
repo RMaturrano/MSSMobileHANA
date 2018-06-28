@@ -17,6 +17,7 @@ import android.widget.ListView;
 
 import com.proyect.movil.R;
 import com.proyecto.database.DataBaseHelper;
+import com.proyecto.geolocalizacion.MapsActivity;
 import com.proyecto.utils.FormatCustomListView;
 import com.proyecto.utils.ListViewCustomAdapterTwoLinesAndImgToolbar;
 
@@ -80,13 +81,14 @@ public class DetalleSocioNegocioMain extends AppCompatActivity {
 
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		if(resultCode == RESULT_OK && requestCode == REQUEST_CHANGE_MAPS){
-			if(data.getExtras().containsKey("latitud") && data.getExtras().containsKey("longitud")){
+		if(resultCode == RESULT_OK && requestCode == MapsActivity.REQUEST_MAPAS){
+			if(data.getExtras().containsKey(MapsActivity.KEY_PARAM_LATITUD) &&
+					data.getExtras().containsKey(MapsActivity.KEY_PARAM_LONGITUD)){
 				DetalleSocioNegocioMainFTabs detailsFragment = (DetalleSocioNegocioMainFTabs) getSupportFragmentManager()
 						.findFragmentByTag(MAIN_FRAGMENT);
 				if(detailsFragment != null) {
-					detailsFragment.notificarCambioUbicacion(data.getExtras().getString("latitud"),
-							data.getExtras().getString("longitud"));
+					detailsFragment.notificarCambioUbicacion(String.valueOf(data.getExtras().getDouble(MapsActivity.KEY_PARAM_LATITUD)),
+							String.valueOf(data.getExtras().getDouble(MapsActivity.KEY_PARAM_LONGITUD)));
 				}
 			}
 		}

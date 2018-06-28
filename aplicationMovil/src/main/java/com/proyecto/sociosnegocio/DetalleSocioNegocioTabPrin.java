@@ -14,6 +14,7 @@ import android.widget.ListView;
 
 import com.proyect.movil.R;
 import com.proyecto.database.DataBaseHelper;
+import com.proyecto.utils.Constantes;
 import com.proyecto.utils.DynamicHeight;
 import com.proyecto.utils.FormatCustomListView;
 import com.proyecto.utils.ListViewCustomAdapterTwoLinesAndImg;
@@ -56,7 +57,7 @@ public class DetalleSocioNegocioTabPrin extends Fragment {
 		DataBaseHelper helper = DataBaseHelper.getHelper(contexto);
 		SQLiteDatabase db = helper.getDataBase();
 		
-//		MyDataBase cn = new MyDataBase(contexto, null, null,
+//		MyDataBase cn = new MyDataBase(contexto, null, null,r
 //				MyDataBase.DATABASE_VERSION);
 //		SQLiteDatabase db = cn.getWritableDatabase();
 
@@ -64,11 +65,16 @@ public class DetalleSocioNegocioTabPrin extends Fragment {
 				"select  TipoPersona, TP.DES_TIP, TD.DES_DOC, NumeroDocumento, "
 						+ "NombreComercial, ApellidoPaterno, ApellidoMaterno, " 
 						+ "PrimerNombre, SegundoNombre, "
-						+ "G.NOMBRE "
+						+ "G.NOMBRE, "
+						+ "IFNULL(BP.PoseeActivos,'N') as \"PoseeActivos\", "
+						+ "IFNULL(X0.DESCRIPCION, '') AS Proyecto,"
+						+ "IFNULL(BP.TipoRegistro,'01') AS TipoRegistro  "
 						+ "from TB_SOCIO_NEGOCIO BP left join TB_TIPO_PERSONA TP "
 						+ " ON BP.TipoPersona = TP.COD_TIP left join TB_TIPO_DOC TD "
 						+ " ON BP.TipoDocumento = TD.COD_DOC left join TB_GRUPO_SOCIO_NEGOCIO G "
-						+ " ON BP.GrupoSocio = G.Codigo " + "WHERE BP.Codigo ='"
+						+ " ON BP.GrupoSocio = G.Codigo left join TB_PROYECTO X0" +
+							" ON BP.Proyecto = X0.CODIGO "
+						+ "WHERE BP.Codigo ='"
 						+ idBP + "'", null);
 
 		while (rs.moveToNext()) {
@@ -127,6 +133,20 @@ public class DetalleSocioNegocioTabPrin extends Fragment {
 			sr1.setData("Monedas (todas)");
 			searchResults.add(sr1);
 
+			sr1 = new FormatCustomListView();
+			sr1.setTitulo("¿Posee Activos?");
+			sr1.setData(rs.getString(rs.getColumnIndex("PoseeActivos")).equals("N") ? "NO" : "SI");
+			searchResults.add(sr1);
+
+			sr1 = new FormatCustomListView();
+			sr1.setTitulo("Proyecto");
+			sr1.setData(rs.getString(rs.getColumnIndex("Proyecto")));
+			searchResults.add(sr1);
+
+			sr1 = new FormatCustomListView();
+			sr1.setTitulo("Tipo de registro");
+			sr1.setData(Constantes.obtenerTipoRegistro(rs.getString(rs.getColumnIndex("TipoRegistro"))));
+			searchResults.add(sr1);
 		}
 
 		rs.close();

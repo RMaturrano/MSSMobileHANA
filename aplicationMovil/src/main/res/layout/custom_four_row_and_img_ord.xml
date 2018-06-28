@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<LinearLayout
     android:id="@+id/relativeLayout1"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:padding="5dip">
-    
+    android:padding="5dip"
+    android:orientation="horizontal">
+
     <ImageView
         android:layout_width="50dip"
         android:layout_height="50dip"
@@ -15,33 +16,72 @@
         android:layout_centerInParent="true"
         android:scaleType="center">
     </ImageView>
- 
-    <TextView
-        android:textAppearance="?android:attr/textAppearanceLarge"
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_weight="1"
         android:layout_height="wrap_content"
-        android:textSize="16sp" 
-        android:text="TextView"
-        android:textColor="#2196f3" 
-        android:layout_width="wrap_content"
-        android:id="@+id/txtViewTitle"
-        android:layout_toRightOf="@+id/imgViewLogo1"
-        android:layout_marginLeft="12dip">
-    </TextView>
- 
-    <TextView
-        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:orientation="vertical">
+
+        <TextView
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:text="TextView"
+            android:textColor="#2196f3"
+            android:layout_width="wrap_content"
+            android:id="@+id/txtViewTitle"
+            android:ellipsize="end"
+            android:layout_toRightOf="@+id/imgViewLogo1"
+            android:layout_marginLeft="12dip">
+        </TextView>
+
+        <TextView
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:layout_height="wrap_content"
+            android:text="TextView"
+            android:textSize="15sp"
+            android:layout_width="wrap_content"
+            android:id="@+id/txtViewDescription"
+            android:layout_marginLeft="12dip">
+        </TextView>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_weight="1"
         android:layout_height="wrap_content"
-        android:text="TextView"
-        android:textSize="15sp"
-        android:layout_width="wrap_content"
-        android:id="@+id/txtViewDescription"
-        android:layout_toRightOf="@+id/imgViewLogo1"
-        android:layout_below="@+id/txtViewTitle"
-        android:layout_marginLeft="12dip">
-    </TextView>
-    
-    
-     <ImageView
+        android:orientation="vertical">
+
+        <TextView
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:text="TextView"
+            android:ellipsize="start"
+            android:textColor="#9e9e9e"
+            android:layout_width="wrap_content"
+            android:id="@+id/txtViewTitleRight"
+            android:layout_marginLeft="12dip"
+            android:singleLine="true"
+            android:layout_gravity="right">
+        </TextView>
+
+        <TextView
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:layout_height="wrap_content"
+            android:text="TextView"
+            android:textColor="#9e9e9e"
+            android:textSize="15sp"
+            android:layout_width="wrap_content"
+            android:layout_gravity="right"
+            android:id="@+id/txtViewDescriptionRight">
+        </TextView>
+
+    </LinearLayout>
+
+    <ImageView
         android:layout_width="50dip"
         android:layout_height="50dip"
         android:id="@+id/imgViewLogo"
@@ -51,32 +91,5 @@
         android:gravity="right"
         android:scaleType="center">
     </ImageView>
-    
-     
-     <TextView
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:layout_height="wrap_content"
-        android:textSize="15sp" 
-        android:text="TextView"
-        android:textColor="#9e9e9e" 
-        android:layout_width="wrap_content"
-        android:id="@+id/txtViewTitleRight"
-        android:layout_marginLeft="12dip"
-        android:layout_toLeftOf="@+id/imgViewLogo">
-    </TextView>
- 
-    <TextView
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:layout_height="wrap_content"
-        android:text="TextView"
-        android:textColor="#9e9e9e" 
-        android:textSize="15sp"
-        android:layout_width="wrap_content"
-        android:id="@+id/txtViewDescriptionRight"
-        android:layout_below="@+id/txtViewTitleRight"
-        android:layout_marginLeft="12dip"
-        android:layout_toLeftOf="@+id/imgViewLogo">
-    </TextView>
-     
- 
-</RelativeLayout>
+
+</LinearLayout>

@@ -65,10 +65,11 @@ public class DetalleArticuloTabPreciosFragment extends Fragment{
 									"L.Nombre, " +
 									"PrecioVenta, " +
 									"IFNULL(M.NOMBRE,'#') " +
-								"FROM TB_PRECIO P LEFT JOIN TB_LISTA_PRECIO L " +
+								"FROM TB_PRECIO P JOIN TB_LISTA_PRECIO L " +
 								"ON P.CodigoLista = L.Codigo LEFT JOIN TB_MONEDA M " +
 								"ON P.Moneda = M.CODIGO " +
-								"WHERE Articulo ='"+idArticulo+"'", null);
+								"WHERE Articulo ='"+idArticulo+"' " +
+								" AND P.CodigoLista IN(SELECT X0.ListaPrecio from TB_SOCIO_NEGOCIO X0)", null);
 		while (rs.moveToNext()) {		
 			
 			FormatCustomListView sr1 = new FormatCustomListView();

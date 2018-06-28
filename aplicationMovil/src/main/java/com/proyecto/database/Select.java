@@ -1,6 +1,7 @@
 package com.proyecto.database;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -14,6 +15,7 @@ import com.proyecto.bean.ArticuloBean;
 import com.proyecto.bean.BancoBean;
 import com.proyecto.bean.BeanChartProducto;
 import com.proyecto.bean.CalleBean;
+import com.proyecto.bean.CanalBean;
 import com.proyecto.bean.CantidadBean;
 import com.proyecto.bean.CondicionPagoBean;
 import com.proyecto.bean.ContactoBean;
@@ -24,6 +26,7 @@ import com.proyecto.bean.DistritoBean;
 import com.proyecto.bean.FabricanteBean;
 import com.proyecto.bean.FacturaBean;
 import com.proyecto.bean.FacturaDetalleBean;
+import com.proyecto.bean.GiroBean;
 import com.proyecto.bean.GrupoArticuloBean;
 import com.proyecto.bean.GrupoSocioNegocioBean;
 import com.proyecto.bean.GrupoUnidadMedidaBean;
@@ -37,6 +40,7 @@ import com.proyecto.bean.PagoBean;
 import com.proyecto.bean.PagoDetalleBean;
 import com.proyecto.bean.PaisBean;
 import com.proyecto.bean.ProvinciaBean;
+import com.proyecto.bean.ProyectoBean;
 import com.proyecto.bean.SocioNegocioBean;
 import com.proyecto.bean.UnidadMedidaBean;
 import com.proyecto.bean.ZonaBean;
@@ -133,6 +137,7 @@ public class Select {
 								 " A.ClaveMovil, " +
 								 " A.DireccionFiscal, " +
 								 " A.EstadoMovil, " +
+								 " A.PoseeActivos, " +
 								 " A.TransaccionMovil "+
 								 " FROM TB_SOCIO_NEGOCIO A " +
 								 " WHERE A.EstadoMovil = 'L'", null);
@@ -167,6 +172,7 @@ public class Select {
 				socio.setEstadoRegistroMovil(data.getString(23));
 				socio.setTransaccionMovil(data.getString(24));
 				socio.setEmpleadoVentas(codigoEmpleado);
+				socio.setPoseeActivos(data.getString(data.getColumnIndex("PoseeActivos")));
 				socio.setMoneda("#");
 				
 				Cursor dataContacts = db.rawQuery(" SELECT " +
@@ -214,7 +220,9 @@ public class Select {
 						 " Distrito, " +
 						 " Calle, " +
 						 " Referencia, " +
-						 " Tipo " +
+						 " Tipo, " +
+						" Latitud, " +
+						" Longitud " +
 						 " FROM TB_SOCIO_NEGOCIO_DIRECCION " +
 						 " WHERE CodigoSocioNegocio = '"+socio.getCodigo()+"'", null); 
 				
@@ -231,6 +239,8 @@ public class Select {
 						direccion.setCalle(dataDirections.getString(5));
 						direccion.setReferencia(dataDirections.getString(6));
 						direccion.setTipoDireccion(dataDirections.getString(7));
+						direccion.setLatitud(dataDirections.getString(8));
+						direccion.setLongitud(dataDirections.getString(9));
 						direcciones.add(direccion);
 					}
 					dataDirections.close();
@@ -875,7 +885,7 @@ public class Select {
 						+ clave + "' " 
 						+ "and FechaContable <= '"+castDate+"' " 
 						+ "and CAST(IFNULL(Saldo,'0') as NUMERIC) > 0 " 
-						+ "and (select count(*) from TB_PAGO_DETALLE where FacturaCliente = F.Clave and ClavePago <> '"+clavePago+"') <= 0" 
+						//+ "and (select count(*) from TB_PAGO_DETALLE where FacturaCliente = F.Clave and ClavePago <> '"+clavePago+"') <= 0"
 						, null);
 		FacturaBean bean = null;
 		
@@ -1154,7 +1164,69 @@ public class Select {
 		return listaIndicador;
 		
 	}
-	
+
+	public List<ProyectoBean> listaProyectos(){
+
+		List lst = new ArrayList<ProyectoBean>();
+		ProyectoBean objeto;
+
+		Cursor data= db.rawQuery("select CODIGO, DESCRIPCION from TB_PROYECTO" , null);
+		if(data.getCount()>0)
+		{
+			while (data.moveToNext()) {
+			objeto = new ProyectoBean();
+			objeto.setCodigo(data.getString(data.getColumnIndex("CODIGO")));
+			objeto.setDescripcion(data.getString(data.getColumnIndex("DESCRIPCION")));
+			lst.add(objeto);
+		}
+
+			data.close();
+		}
+
+		return lst;
+	}
+
+	public List<CanalBean> listaCanales(){
+
+		List lst = new ArrayList<CanalBean>();
+		CanalBean objeto;
+
+		Cursor data= db.rawQuery("select CODIGO, DESCRIPCION from TB_CANAL" , null);
+		if(data.getCount()>0)
+		{
+			while (data.moveToNext()) {
+				objeto = new CanalBean();
+				objeto.setCodigo(data.getString(data.getColumnIndex("CODIGO")));
+				objeto.setDescripcion(data.getString(data.getColumnIndex("DESCRIPCION")));
+				lst.add(objeto);
+			}
+
+			data.close();
+		}
+
+		return lst;
+	}
+
+	public List<GiroBean> listaGiro(){
+
+		List lst = new ArrayList<GiroBean>();
+		GiroBean objeto;
+
+		Cursor data= db.rawQuery("select CODIGO, DESCRIPCION from TB_GIRO" , null);
+		if(data.getCount()>0)
+		{
+			while (data.moveToNext()) {
+				objeto = new GiroBean();
+				objeto.setCodigo(data.getString(data.getColumnIndex("CODIGO")));
+				objeto.setDescripcion(data.getString(data.getColumnIndex("DESCRIPCION")));
+				lst.add(objeto);
+			}
+
+			data.close();
+		}
+
+		return lst;
+	}
 	
 	public ArrayList<GrupoSocioNegocioBean> listaGrupoSocioNegocio(){
 		
@@ -1739,13 +1811,19 @@ public class Select {
 //					null);
 
 			rs = db.rawQuery(
-					"select SN.Tipo,SN.Codigo, IFNULL(P.NOMBRE,''), " +
+					"select SN.Tipo as \"Tipo\",SN.Codigo, IFNULL(P.NOMBRE,''), " +
 							"IFNULL(D.NOMBRE,''), IFNULL(SN.Provincia,'')," +
 							"IFNULL(SN.Distrito,''), IFNULL(SN.Calle,'null'), IFNULL(SN.Referencia,'null'),"
-							+ " IFNULL(SN.Latitud,'') as \"Latitud\", IFNULL(SN.Longitud,'') as \"Longitud\""
+							+ " IFNULL(SN.Latitud,'') as \"Latitud\", IFNULL(SN.Longitud,'') as \"Longitud\", "
+							+ " IFNULL(SN.Zona, '') AS Zona, "
+							+ " IFNULL(SN.Ruta, '') AS Ruta, "
+							+ " IFNULL(X0.DESCRIPCION, '') AS Canal, "
+							+ " IFNULL(X1.DESCRIPCION, '') AS Giro "
 							+ " from TB_SOCIO_NEGOCIO_DIRECCION SN  left join TB_PAIS P "
-							+ " ON SN.Pais = P.CODIGO left join TB_DEPARTAMENTO D"
-							+ " ON SN.Departamento = D.CODIGO "
+							+ " ON SN.Pais = P.CODIGO left join TB_DEPARTAMENTO D "
+							+ " ON SN.Departamento = D.CODIGO left join TB_CANAL X0 "
+							+ " ON SN.Canal = X0.CODIGO LEFT JOIN TB_GIRO X1 "
+							+ " ON SN.Giro = X1.CODIGO "
 							+ " WHERE SN.CodigoSocioNegocio ='" + param + "'",
 					null);
 			
@@ -1753,6 +1831,7 @@ public class Select {
 
 				objeto = new FormatCustomListView();
 
+				objeto.setTipo(rs.getString(rs.getColumnIndex("Tipo")));
 				objeto.setLatitud(rs.getString((rs.getColumnIndex("Latitud"))));
 				objeto.setLongitud(rs.getString((rs.getColumnIndex("Longitud"))));
 				objeto.setTitulo(rs.getString(1));

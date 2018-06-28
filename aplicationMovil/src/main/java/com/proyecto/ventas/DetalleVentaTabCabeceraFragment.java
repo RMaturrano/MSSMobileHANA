@@ -18,6 +18,7 @@ import android.widget.ListView;
 import com.proyect.movil.R;
 import com.proyecto.database.DataBaseHelper;
 import com.proyecto.sociosnegocio.DetalleSocioNegocioMain;
+import com.proyecto.utils.Constantes;
 import com.proyecto.utils.DynamicHeight;
 import com.proyecto.utils.FormatCustomListView;
 import com.proyecto.utils.ListViewCustomAdapterTwoLinesAndImg;
@@ -81,7 +82,11 @@ public class DetalleVentaTabCabeceraFragment extends Fragment implements OnItemC
 								"AND CodigoSocioNegocio = SN.Codigo) ," +
 								"M.NOMBRE," +
 								"FechaContable,FechaVencimiento,Comentario, " +
-								"SubTotal, Impuesto,Total, OV.SocioNegocio " +
+								"SubTotal, Impuesto,Total, OV.SocioNegocio, " +
+								" IFNULL(OV.HoraCreacion,''), IFNULL(OV.ModoOffline,'N'), "+
+								"IFNULL(OV.Latitud,'') AS Latitud ,"+
+								"IFNULL(OV.Longitud, '') AS Longitud,"+
+								"IFNULL(OV.RangoCliente, '03') AS RangoCliente "+
 								"from TB_ORDEN_VENTA OV left join TB_SOCIO_NEGOCIO_CONTACTO SNC  " +
 								"on OV.Contacto = SNC.Codigo left join TB_SOCIO_NEGOCIO SN " +
 								"on OV.SocioNegocio = SN.Codigo left join TB_MONEDA M " +
@@ -139,6 +144,34 @@ public class DetalleVentaTabCabeceraFragment extends Fragment implements OnItemC
 		  	sr1.setTitulo("Total");
 		  	sr1.setData(rs.getString(9));
 		  	searchResults_2.add(sr1);
+
+			sr1 = new FormatCustomListView();
+			sr1.setTitulo("Hora Creación");
+			sr1.setData(rs.getString(11));
+			searchResults_2.add(sr1);
+
+			sr1 = new FormatCustomListView();
+			sr1.setTitulo("¿Modo OffLine?");
+			sr1.setData(rs.getString(12).equals("N") ? "NO":"SI");
+			searchResults_2.add(sr1);
+
+			sr1 = new FormatCustomListView();
+			sr1.setTitulo("Rango dirección");
+			sr1.setData(rs.getString(rs.getColumnIndex("RangoCliente"))
+					.equals(Constantes.RANGO_NO_DISPONIBLE) ? "No disponible":
+					(rs.getString(rs.getColumnIndex("RangoCliente"))
+							.equals(Constantes.DENTRO_DE_RANGO) ? "Dentro de rango" : "Fuera de rango"));
+			searchResults_2.add(sr1);
+
+			sr1 = new FormatCustomListView();
+			sr1.setTitulo("Latitud");
+			sr1.setData(rs.getString(rs.getColumnIndex("Latitud")));
+			searchResults_2.add(sr1);
+
+			sr1 = new FormatCustomListView();
+			sr1.setTitulo("Longitud");
+			sr1.setData(rs.getString(rs.getColumnIndex("Longitud")));
+			searchResults_2.add(sr1);
 		  	
 		  	DetalleVentaMain.idSocioNegocio = rs.getString(10);
 		  	

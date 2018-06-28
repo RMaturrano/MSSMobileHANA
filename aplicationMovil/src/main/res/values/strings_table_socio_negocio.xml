@@ -29,7 +29,15 @@
     <string name="C_SN_DIRECCION_FISCAL">DireccionFiscal</string>
     <string name="C_SN_TRANSACCION_MOVIL">TransaccionMovil</string>
     <string name="C_SN_VALIDO_EN_PEDIDO">ValidoenPedido</string>
-    
+    <string name="C_SN_POSEE_ACTIVOS">PoseeActivos</string>
+    <string name="C_SN_CODIGO_EMPLEADO">CodigoEmpleado</string>
+    <string name="C_SN_PROYECTO">Proyecto</string>
+    <string name="C_SN_TIPO_REGISTRO">TipoRegistro</string>
+    <string name="C_SN_NUM_ULT_COMPRA">NumUltimaCompra</string>
+    <string name="C_SN_FEC_ULT_COMPRA">FechaUltimaCompra</string>
+    <string name="C_SN_MON_ULT_COMPRA">MontoUltimaCompra</string>
+    <string name="C_SN_PERSONA_CONTACTO">PersonaContacto</string>
+
     <!-- CONTACTOS -->
     <string name="TD_CONTACTO_SOCIO_NEGOCIO">TB_SOCIO_NEGOCIO_CONTACTO</string>
     
@@ -62,5 +70,18 @@
     <string name="C_SN2_IS_PRINCIPAL">Principal</string>
     <string name="C_SN2_LATITUD">Latitud</string>
     <string name="C_SN2_LONGITUD">Longitud</string>
-    
+    <string name="C_SN2_V_LUNES">VisitaLunes</string>
+    <string name="C_SN2_V_MARTES">VisitaMartes</string>
+    <string name="C_SN2_V_MIERCOLES">VisitaMiercoles</string>
+    <string name="C_SN2_V_JUEVES">VisitaJueves</string>
+    <string name="C_SN2_V_VIERNES">VisitaViernes</string>
+    <string name="C_SN2_V_SABADO">VisitaSabado</string>
+    <string name="C_SN2_V_DOMINGO">VisitaDomingo</string>
+    <string name="C_SN2_V_FRECUENCIA">Frecuencia</string>
+    <string name="C_SN2_RUTA">Ruta</string>
+    <string name="C_SN2_ZONA">Zona</string>
+    <string name="C_SN2_CANAL">Canal</string>
+    <string name="C_SN2_GIRO">Giro</string>
+    <string name="C_SN2_FECHA_INICIO">InicioVisitas</string>
+
 </resources>

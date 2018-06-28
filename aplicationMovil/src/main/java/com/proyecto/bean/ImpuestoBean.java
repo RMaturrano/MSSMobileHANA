@@ -3,6 +3,7 @@ package com.proyecto.bean;
 public class ImpuestoBean {
 
 	private String codigo, nombre;
+	private Double tasa;
 	
 	@Override
 	public String toString() {
@@ -25,4 +26,11 @@ public class ImpuestoBean {
 		this.nombre = nombre;
 	}
 
+	public Double getTasa() {
+		return tasa;
+	}
+
+	public void setTasa(Double tasa) {
+		this.tasa = tasa;
+	}
 }

@@ -4,7 +4,9 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -36,6 +38,11 @@ import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.proyect.movil.R;
 import com.proyecto.bean.FacturaBean;
 import com.proyecto.bean.MonedaBean;
@@ -46,6 +53,7 @@ import com.proyecto.conectividad.Connectivity;
 import com.proyecto.database.Insert;
 import com.proyecto.database.Select;
 import com.proyecto.database.Update;
+import com.proyecto.utils.Constantes;
 import com.proyecto.utils.ConstruirAlert;
 import com.proyecto.utils.DynamicHeight;
 import com.proyecto.utils.FormatCustomListView;
@@ -53,6 +61,9 @@ import com.proyecto.utils.ListViewCustomAdapterTwoLinesAndImg;
 import com.proyecto.utils.StringDateCast;
 import com.proyecto.utils.Variables;
 import com.proyecto.ws.InvocaWS;
+import com.proyecto.ws.VolleySingleton;
+
+import org.json.JSONObject;
 
 public class CobranzaFragment extends Fragment{
 
@@ -427,7 +438,7 @@ public class CobranzaFragment extends Fragment{
 		searchResults1 = new ArrayList<FormatCustomListView>();
 
 		FormatCustomListView sr = new FormatCustomListView();
-		sr.setTitulo("N° Facturas");
+		sr.setTitulo("Nro Facturas");
 		sr.setIcon(iconId);
 		searchResults1.add(sr);
 		
@@ -586,9 +597,16 @@ public class CobranzaFragment extends Fragment{
 				pago.setMoneda(monSel.getCodigo());
 				
 				
-				if(tipoPago.getTipoPago().equalsIgnoreCase("Transferencia")){
+				if(tipoPago.getTipoPago().equalsIgnoreCase("Transferencia/Deposito")){
 					pago.setTipoPago("T");
 					pago.setTransferenciaCuenta(tipoPago.getTransferenciaCuenta());
+
+					if(tipoPago.getTransferenciaReferencia() == null ||
+							tipoPago.getTransferenciaReferencia().equals("")){
+						Toast.makeText(contexto,"Debe ingresar el nro referencia en la ventana de pago.",Toast.LENGTH_SHORT).show();
+						return true;
+					}
+
 					pago.setTransferenciaReferencia(tipoPago.getTransferenciaReferencia());
 
 					if(Double.parseDouble(tipoPago.getTransferenciaImporte().trim()) <= 0){
@@ -679,7 +697,8 @@ public class CobranzaFragment extends Fragment{
 
 								if (wifi || movil && isConnectionFast) {
 
-									new TareaRegistroPago().execute();
+									sendIncomingPaymentToServer();
+									//new TareaRegistroPago().execute();
 
 								} else {
 									listaFacturasSN.clear();
@@ -741,8 +760,11 @@ public class CobranzaFragment extends Fragment{
 						     boolean isConnectionFast = Connectivity.isConnectedFast(contexto);
 						     
 						     if(wifi || movil && isConnectionFast){
-						        	
-						    	 new TareaRegistroPago().execute();	
+
+						     	showMessage("Enviando al servidor...");
+								 sendIncomingPaymentToServer();
+
+						     	//new TareaRegistroPago().execute();
 						    	 
 						     }else{
 						    	 listaFacturasSN.clear();
@@ -788,79 +810,152 @@ public class CobranzaFragment extends Fragment{
      ***********************************************************/
     // SI SE QUIERE EDITAR CARGAR LOS DATOS INICIALES
     private void construirDataEditar() {
-		
-    	//Obtener la venta
-    	Select select = new Select(contexto);
-    	PagoBean bean = new PagoBean();
-    	bean = select.obtenerPagoRecibido(clavePago);
-    	
-    	
-    	//Exponer los datos
-		searchResults.get(0).setData(bean.getNumero());
-		searchResults.get(2).setData(StringDateCast.castStringtoDate(bean.getFechaContable()));
-		searchResults.get(3).setData(bean.getSocioNegocio());
-		
-		listaFacturasSN = select.listaFacturasPorSocio(bean.getSocioNegocio(), bean.getClave());
-		
-		searchResults.get(4).setData(select.obtenerNombreSocioNegocio(bean.getSocioNegocio()));
-	
-		for (MonedaBean moneda : listaMonedas) {
-			if(moneda.getCodigo().equals(bean.getMoneda())){
-				monSel = moneda;
-				searchResults.get(5).setData(monSel.getDescripcion());
-			}
-		}
-		
-		searchResults.get(6).setData(bean.getGlosa());
-		
-		
-		if(bean.getTipoPago().equalsIgnoreCase("T")){
-			tipoPago.setTipoPago("Transferencia");
-			tipoPago.setTransferenciaCuenta(bean.getTransferenciaCuenta());
-			tipoPago.setTransferenciaReferencia(bean.getTransferenciaReferencia());
-			tipoPago.setTransferenciaImporte(bean.getTransferenciaImporte());
-		}else if(bean.getTipoPago().equalsIgnoreCase("F")){
-			tipoPago.setTipoPago("Efectivo");
-			tipoPago.setEfectivoCuenta(bean.getEfectivoCuenta());
-			tipoPago.setEfectivoImporte(bean.getEfectivoImporte());
-		}else if(bean.getTipoPago().equalsIgnoreCase("C")){
-			tipoPago.setTipoPago("Cheque");
-			tipoPago.setChequeCuenta(bean.getChequeCuenta());
-			tipoPago.setChequeBanco(bean.getChequeBanco());
-			tipoPago.setChequeVencimiento(StringDateCast.castStringtoDate(bean.getChequeVencimiento()));
-			tipoPago.setChequeImporte(bean.getChequeImporte());
-			tipoPago.setChequeNumero(bean.getChequeNumero());
-		}
-		searchResults.get(7).setData(tipoPago.getTipoPago());
-		searchResults.get(8).setData(bean.getComentario());
-		
-		/***/
-		
-		FacturaBean fact = null;
-		for (PagoDetalleBean detalle : bean.getLineas()) {
-			 
-			 for (FacturaBean factura : listaFacturasSN) {
-				fact = new FacturaBean();
-				if(detalle.getFacturaCliente().equals(factura.getClave())){
-					fact = factura;
-					fact.setUtilPagoTotal(detalle.getImporte());
-					listaFacturasPagar.add(fact);
-//					factura.setSaldo(String.valueOf(Double.parseDouble(factura.getSaldo())+Double.parseDouble(detalle.getImporte())));
+
+    	try{
+			//Obtener la venta
+			Select select = new Select(contexto);
+			PagoBean bean = new PagoBean();
+			bean = select.obtenerPagoRecibido(clavePago);
+
+
+			//Exponer los datos
+			searchResults.get(0).setData(bean.getNumero());
+			searchResults.get(2).setData(StringDateCast.castStringtoDate(bean.getFechaContable()));
+			searchResults.get(3).setData(bean.getSocioNegocio());
+
+			listaFacturasSN = select.listaFacturasPorSocio(bean.getSocioNegocio(), bean.getClave());
+
+			searchResults.get(4).setData(select.obtenerNombreSocioNegocio(bean.getSocioNegocio()));
+
+			for (MonedaBean moneda : listaMonedas) {
+				if(moneda.getCodigo().equals(bean.getMoneda())){
+					monSel = moneda;
+					searchResults.get(5).setData(monSel.getDescripcion());
 				}
 			}
-			 
+
+			searchResults.get(6).setData(bean.getGlosa());
+
+
+			if(bean.getTipoPago().equalsIgnoreCase("T")){
+				tipoPago.setTipoPago("Transferencia/Deposito");
+				tipoPago.setTransferenciaCuenta(bean.getTransferenciaCuenta());
+				tipoPago.setTransferenciaReferencia(bean.getTransferenciaReferencia());
+				tipoPago.setTransferenciaImporte(bean.getTransferenciaImporte());
+			}else if(bean.getTipoPago().equalsIgnoreCase("F")){
+				tipoPago.setTipoPago("Efectivo");
+				tipoPago.setEfectivoCuenta(bean.getEfectivoCuenta());
+				tipoPago.setEfectivoImporte(bean.getEfectivoImporte());
+			}else if(bean.getTipoPago().equalsIgnoreCase("C")){
+				tipoPago.setTipoPago("Cheque");
+				tipoPago.setChequeCuenta(bean.getChequeCuenta());
+				tipoPago.setChequeBanco(bean.getChequeBanco());
+				tipoPago.setChequeVencimiento(StringDateCast.castStringtoDate(bean.getChequeVencimiento()));
+				tipoPago.setChequeImporte(bean.getChequeImporte());
+				tipoPago.setChequeNumero(bean.getChequeNumero());
+			}
+			searchResults.get(7).setData(tipoPago.getTipoPago());
+			searchResults.get(8).setData(bean.getComentario());
+
+			/***/
+
+			FacturaBean fact = null;
+			for (PagoDetalleBean detalle : bean.getLineas()) {
+
+				for (FacturaBean factura : listaFacturasSN) {
+					fact = new FacturaBean();
+					if(detalle.getFacturaCliente().equals(factura.getClave())){
+						fact = factura;
+						fact.setUtilPagoTotal(detalle.getImporte());
+						listaFacturasPagar.add(fact);
+//					factura.setSaldo(String.valueOf(Double.parseDouble(factura.getSaldo())+Double.parseDouble(detalle.getImporte())));
+					}
+				}
+
+			}
+			/***/
+
+			estadoRegistroMovil = bean.getEstadoRegistroMovil();
+			claveMovil = bean.getClaveMovil();
+
+			llenarListaContenido();
+			mostrarTotal();
+			select.close();
+		}catch (Exception e){
+    		showMessage("construirDataEditar() > " + e.getMessage());
 		}
-		/***/
-		
-		estadoRegistroMovil = bean.getEstadoRegistroMovil();
-		claveMovil = bean.getClaveMovil();
-		
-		llenarListaContenido();
-		mostrarTotal();
-		select.close();
-		
 	}
 	
+
+	private void showMessage(String message){
+    	try{
+			if(message != null)
+				Toast.makeText(getActivity().getBaseContext(), message, Toast.LENGTH_LONG).show();
+		}catch(Exception e){
+
+		}
+	}
+
+	private void sendIncomingPaymentToServer(){
+
+		SharedPreferences mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(contexto);
+		String ip = mSharedPreferences.getString("ipServidor", Constantes.DEFAULT_IP);
+		String port = mSharedPreferences.getString("puertoServidor", Constantes.DEFAULT_PORT);
+		String sociedad = mSharedPreferences.getString("sociedades", "-1");
+		String ruta = "http://" + ip + ":" + port + "/MSS_MOBILE/service/";
+		JSONObject jsonObject = PagoBean.transformPRToJSON(pago, sociedad);
+
+		//request to server
+		JsonObjectRequest jsonObjectRequest =
+				new JsonObjectRequest(Request.Method.POST, ruta + "incomingpayment/addIncomingPayment.xsjs", jsonObject,
+						new Response.Listener<JSONObject>() {
+							@Override
+							public void onResponse(JSONObject response) {
+								try
+								{
+									if(response.getString("ResponseStatus").equals("Success")){
+
+										Insert insert = new Insert(contexto);
+										insert.updateEstadoPago(pago.getClaveMovil());
+										insert.close();
+
+										Toast.makeText(contexto,
+												"Enviado al servidor",
+												Toast.LENGTH_LONG).show();
+										listaFacturasSN.clear();
+										tipoPago.clear();
+										clearVariables();
+
+									}else{
+										Toast.makeText(contexto, res, Toast.LENGTH_LONG).show();
+										listaFacturasSN.clear();
+										tipoPago.clear();
+										clearVariables();
+
+										showMessage(response.getJSONObject("Response")
+												.getJSONObject("message")
+												.getString("value"));
+									}
+
+								}catch (Exception e){showMessage("Response - " + e.getMessage());}
+							}
+						},
+						new Response.ErrorListener() {
+							@Override
+							public void onErrorResponse(VolleyError error) {
+								showMessage("VolleyError - " + error.getMessage());
+							}
+						}){
+					@Override
+					public Map<String, String> getHeaders() throws AuthFailureError {
+						HashMap<String, String> headers = new HashMap<String, String>();
+						headers.put("Content-Type", "application/json; charset=utf-8");
+						return headers;
+					}
+				};
+		VolleySingleton.getInstance(getActivity().getApplicationContext()).addToRequestQueue(jsonObjectRequest);
+
+	}
 
 	;
 

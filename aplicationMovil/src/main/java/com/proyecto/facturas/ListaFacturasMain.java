@@ -13,7 +13,6 @@ import com.proyecto.utils.PagerAdapterListFactura;
 
 public class ListaFacturasMain extends Fragment {
 
-
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup viewGroup,
 			Bundle savedInstanceState) {

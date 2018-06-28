@@ -126,7 +126,7 @@ public class BuscarArtFragment extends Fragment implements OnItemClickListener {
 
 			for (FormatCustomListView item : listaAdapter) {
 
-				String firstLetter = item.getData().substring(0, 1);
+				String firstLetter = item.getGrupo().substring(0, 1);
 
 				// Group numbers together in the scroller
 				if (numberPattern.matcher(firstLetter).matches()) {
@@ -203,12 +203,17 @@ public class BuscarArtFragment extends Fragment implements OnItemClickListener {
 
 		Cursor rs = db
 				.rawQuery(
-						"select A.Codigo,A.Nombre,A.Fabricante,A.GrupoArticulo," +
+						"select DISTINCT A.Codigo,A.Nombre,A.Fabricante,A.GrupoArticulo, " +
 								"A.GrupoUnidadMedida,A.UnidadMedidaVenta," +
-								"GUM.Nombre " +
+								"GUM.Nombre,GA.NOMBRE as Grupo " +
 								"from TB_ARTICULO A JOIN TB_GRUPO_UNIDAD_MEDIDA GUM " +
 								"ON A.GrupoUnidadMedida = GUM.Codigo " +
-								"ORDER BY A.Nombre",
+								" JOIN TB_GRUPO_ARTICULO GA ON A.GrupoArticulo = GA.CODIGO " +
+								" left join TB_PRECIO P ON P.Articulo = A.Codigo " +
+								"AND P.CodigoLista IN(SELECT X0.ListaPrecio from TB_SOCIO_NEGOCIO X0)" +
+								" GROUP BY A.Codigo, A.Nombre " +
+								" having SUM(P.PrecioVenta) > 0 " +
+								"ORDER BY GA.NOMBRE, A.Nombre",
 						null);
 //				.rawQuery(
 //						"select A.Codigo,A.Nombre,A.Fabricante,A.GrupoArticulo," +
@@ -228,6 +233,7 @@ public class BuscarArtFragment extends Fragment implements OnItemClickListener {
 
 				customListObjet = new FormatCustomListView();
 				customListObjet.setIcon(icon);
+				customListObjet.setGrupo(rs.getString(rs.getColumnIndex("Grupo")));
 				if(!rs.getString(0).equals(""))
 					customListObjet.setTitulo(rs.getString(0));
 				else
@@ -239,10 +245,8 @@ public class BuscarArtFragment extends Fragment implements OnItemClickListener {
 				
 				customListObjet.setExtra(rs.getString(2)+"#"+rs.getString(3)+"#"+rs.getString(4)+"#"+rs.getString(5)+"#"+rs.getString(6));
 //				customListObjet.setExtra2(rs.getString(7)+"¡"+rs.getString(8)+"¡"+rs.getString(9)+"¡"+rs.getString(10));
-			
-				
-				listaAdapter.add(customListObjet);
 
+				listaAdapter.add(customListObjet);
 			}
 		}
 

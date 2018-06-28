@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    
+    <string name="T_NOTA_CREDITO">TB_NOTA_CREDITO</string>
+    
+    <string name="C_NOT_TIPO">Tipo</string>
+    <string name="C_NOT_CLAVE">Clave</string>
+    <string name="C_NOT_CLAVE_MOVIL">ClaveMovil</string>
+    <string name="C_NOT_NUMERO">Numero</string>
+    <string name="C_NOT_REFERENCIA">Referencia</string>
+    <string name="C_NOT_SOCIO_NEGOCIO">SocioNegocio</string>
+    <string name="C_NOT_LISTA_PRECIO">ListaPrecio</string>
+    <string name="C_NOT_CONTACTO">Contacto</string>
+    <string name="C_NOT_MONEDA">Moneda</string>
+    <string name="C_NOT_EMP_VENTA">EmpleadoVenta</string>
+    <string name="C_NOT_COMENT">Comentario</string>
+    <string name="C_NOT_FEC_CONT">FechaContable</string>
+    <string name="C_NOT_FEC_VEN">FechaVencimiento</string>
+    <string name="C_NOT_DIR_FISCAL">DireccionFiscal</string>
+    <string name="C_NOT_DIR_ENTREGA">DireccionEntrega</string>
+    <string name="C_NOT_COND_PAGO">CondicionPago</string>
+    <string name="C_NOT_INDICADOR">Indicador</string>
+    <string name="C_NOT_SUB_TOTAL">SubTotal</string>
+    <string name="C_NOT_DESCUENTO">Descuento</string>
+    <string name="C_NOT_IMPUESTO">Impuesto</string>
+    <string name="C_NOT_TOTAL">Total</string>
+    <string name="C_NOT_SALDO">Saldo</string>
+    <string name="C_NOT_ESTADO_MOVIL">EstadoMovil</string>
+    <string name="C_NOT_CLAVE_BASE">ClaveBase</string>
+    
+    <!-- LINEAS -->
+    <string name="TD_NOTA_CREDITO1">TB_NOTA_CREDITO_DETALLE</string>
+    
+    <string name="C_NOT1_CLAVE">ClaveNotaCredito</string>
+    <string name="C_NOT1_LINEA">Linea</string>
+    <string name="C_NOT1_LINEA_BASE">LineaBase</string>
+    <string name="C_NOT1_ART">Articulo</string>
+    <string name="C_NOT1_UM">UnidadMedida</string>
+    <string name="C_NOT1_ALMACEN">Almacen</string>
+    <string name="C_NOT1_CANT">Cantidad</string>
+    <string name="C_NOT1_LST_PRE">ListaPrecio</string>
+    <string name="C_NOT1_PRE_UNI">PrecioUnitario</string>
+    <string name="C_NOT1_PORC_DESCUENTO">PorcentajeDescuento</string>
+    <string name="C_NOT1_IMPUESTO">Impuesto</string>
+
+    <!-- LOTES -->
+    <string name="TD_NOTA_CREDITO2">TB_NOTA_CREDITO_DETALLE_LOTE</string>
+
+    <string name="C_NOT2_CLAVE">ClaveNotaCredito</string>
+    <string name="C_NOT2_LOTE">Lote</string>
+    <string name="C_NOT2_CANT">Cantidad</string>
+    <string name="C_NOT2_LINEA">LineaBase</string>
+    
+</resources>

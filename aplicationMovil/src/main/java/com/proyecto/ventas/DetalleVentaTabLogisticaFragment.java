@@ -49,7 +49,7 @@ public class DetalleVentaTabLogisticaFragment extends Fragment{
     
     
     private void builDataOrd(){
-		
+
     	searchResults_0 = new ArrayList<FormatCustomListView>();
     	lv_0 = (ListView) v.findViewById(R.id.lvLstLogDetVenta);
 		
@@ -60,9 +60,14 @@ public class DetalleVentaTabLogisticaFragment extends Fragment{
 //    	MyDataBase cn = new MyDataBase(contexto, null, null, MyDataBase.DATABASE_VERSION);
 //		SQLiteDatabase db= cn.getWritableDatabase();
 		
-		
-		Cursor rs= db.rawQuery("select DireccionFiscal,DireccionEntrega " +
-				"from TB_ORDEN_VENTA WHERE Clave ='"+idOrdVen+"'", null);
+		String query = "SELECT IFNULL((SELECT IFNULL(X0.Calle, X0.Referencia) FROM TB_SOCIO_NEGOCIO_DIRECCION X0 " +
+				"                           WHERE X0.Codigo = T0.DireccionFiscal AND X0.CodigoSocioNegocio = T0.SocioNegocio),'') " +
+				"                           AS DireccionFiscalDescripcion , " +
+				"       IFNULL((SELECT IFNULL(X0.Calle, X0.Referencia) FROM TB_SOCIO_NEGOCIO_DIRECCION X0 " +
+				"                           WHERE X0.Codigo = T0.DireccionEntrega AND X0.CodigoSocioNegocio = T0.SocioNegocio),'') " +
+				"                           AS DireccionEntregaDescripcion " +
+				" FROM TB_ORDEN_VENTA T0 where T0.Clave = '"+idOrdVen+"'";
+		Cursor rs= db.rawQuery(query, null);
 		while (rs.moveToNext()) {		
 			
 			FormatCustomListView sr1 = new FormatCustomListView();

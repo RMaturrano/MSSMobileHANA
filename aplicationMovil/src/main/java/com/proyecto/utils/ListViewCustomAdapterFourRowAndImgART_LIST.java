@@ -1,6 +1,7 @@
 package com.proyecto.utils;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -19,8 +20,8 @@ import com.proyecto.bean.ArticuloBean;
 public class ListViewCustomAdapterFourRowAndImgART_LIST extends BaseAdapter implements Filterable{
 	
 	
-	private ArrayList<ArticuloBean> lista;
-	private ArrayList<ArticuloBean> listaFiltrada;
+	private List<ArticuloBean> lista;
+	private List<ArticuloBean> listaFiltrada;
 	private Context context;
 	private LayoutInflater inflater;
     private String mSearchTerm;
@@ -34,7 +35,7 @@ public class ListViewCustomAdapterFourRowAndImgART_LIST extends BaseAdapter impl
         this.inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
-	public void clearAndAddAll(ArrayList<ArticuloBean> lista){
+	public void clearAndAddAll(List<ArticuloBean> lista){
 		this.lista.clear();
 		this.lista.addAll(lista);
 		listaFiltrada.clear();
@@ -92,7 +93,7 @@ public class ListViewCustomAdapterFourRowAndImgART_LIST extends BaseAdapter impl
         								
         holder.txtViewTitle.setText(lista.get(position).getCod());
         holder.txtViewDescription.setText(String.valueOf(lista.get(position).getDesc()));
-        holder.imgViewLogo.setImageResource(lista.get(position).getUtilIcon());
+        holder.imgViewLogo.setImageResource(R.drawable.ic_keyboard_arrow_right_blue_36dp);
         holder.txtViewDescriptionRight.setText(String.valueOf(lista.get(position).getStock()));
         holder.txtViewTitleRight.setText(String.valueOf(lista.get(position).getGrupoArticulo()));
  

@@ -1,0 +1,282 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#E0ECF8" >
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/tlbDetalleVisita"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark"
+        android:elevation="@dimen/toolbarElevation"/>
+
+    <ScrollView android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <android.support.v7.widget.CardView
+                android:id="@+id/cvDatosIncidencia"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                card_view:cardCornerRadius="4dp"
+                card_view:cardElevation="4dp"
+                card_view:cardUseCompatPadding="true"
+                card_view:contentPadding="15dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:textSize="20sp"
+                    android:text="Dirección a visitar"
+                    android:textStyle="bold"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="35dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:text="Código cliente"
+                        android:textColor="@color/list_item_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:id="@+id/tvDetVisitaCodCliente"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="15sp"/>
+
+
+                    <TextView
+                        android:text="Nombre cliente"
+                        android:textColor="@color/list_item_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:id="@+id/tvDetVisitaNomCliente"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="15sp"/>
+
+                    <TextView
+                        android:text="Persona de contacto"
+                        android:textColor="@color/list_item_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:id="@+id/tvDetVisitaNombreContacto"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="15sp"/>
+
+                    <TextView
+                        android:text="Teléfono de contacto"
+                        android:textColor="@color/list_item_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:id="@+id/tvDetVisitaTelefonoContacto"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="15sp"/>
+
+                    <TextView
+                        android:text="Nro última compra"
+                        android:textColor="@color/list_item_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:id="@+id/tvDetVisitaNumUltimaCompra"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="15sp"/>
+
+
+                    <TextView
+                        android:text="Fecha de última compra"
+                        android:textColor="@color/list_item_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:id="@+id/tvDetVisitaFecUltimaCompra"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="15sp"/>
+
+                    <TextView
+                        android:text="Monto de última compra"
+                        android:textColor="@color/list_item_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:id="@+id/tvDetVisitaMonUltimaCompra"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="15sp"/>
+
+                    <TextView
+                        android:text="Código dirección"
+                        android:textColor="@color/list_item_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:id="@+id/tvDetVisitaCodDir"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="15sp"/>
+
+
+                    <TextView
+                        android:text="Departamento/Provinvia/Distrito"
+                        android:textColor="@color/list_item_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:id="@+id/tvDetVisitaDetDireccion"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="15sp"/>
+
+
+                    <TextView
+                        android:text="Calle"
+                        android:textColor="@color/list_item_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:id="@+id/tvDetVisitaCalle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="15sp"/>
+
+                    <TextView
+                        android:text="Coordenadas de ubicación"
+                        android:textColor="@color/list_item_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:id="@+id/tvDetVisitaCoordenadas"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="15sp"/>
+
+
+                    <TextView
+                        android:text="Días de visita"
+                        android:textColor="@color/list_item_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:textSize="12sp" />
+
+                    <TableLayout
+                        android:layout_marginTop="10dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/backgrnd_layout_color">
+
+                        <TableRow android:background="@color/color_primary">
+                            <TextView android:textColor="@color/white" android:layout_weight="5" android:textStyle="bold" android:layout_margin="10dp" android:text="LU"/>
+                            <TextView android:textColor="@color/white" android:layout_weight="5" android:textStyle="bold" android:layout_margin="10dp" android:text="MA"/>
+                            <TextView android:textColor="@color/white" android:layout_weight="5" android:textStyle="bold" android:layout_margin="10dp" android:text="MI"/>
+                            <TextView android:textColor="@color/white" android:layout_weight="5" android:textStyle="bold" android:layout_margin="10dp" android:text="JU"/>
+                            <TextView android:textColor="@color/white" android:layout_weight="5" android:textStyle="bold" android:layout_margin="10dp" android:text="VI"/>
+                            <TextView android:textColor="@color/white" android:layout_weight="5" android:textStyle="bold" android:layout_margin="10dp" android:text="SA"/>
+                            <TextView android:textColor="@color/white" android:layout_weight="5" android:textStyle="bold" android:layout_margin="10dp" android:text="DO"/>
+                        </TableRow>
+
+                        <TableRow android:padding="5dp">
+                            <CheckBox android:enabled="false" android:id="@+id/cbxVisitaLun" android:layout_weight="5" android:layout_marginLeft="2dp" />
+                            <CheckBox android:enabled="false" android:id="@+id/cbxVisitaMar" android:layout_weight="5" android:layout_marginLeft="2dp"/>
+                            <CheckBox android:enabled="false" android:id="@+id/cbxVisitaMie" android:layout_weight="5" android:layout_marginLeft="2dp"/>
+                            <CheckBox android:enabled="false" android:id="@+id/cbxVisitaJue" android:layout_weight="5" android:layout_marginLeft="2dp"/>
+                            <CheckBox android:enabled="false" android:id="@+id/cbxVisitaVie" android:layout_weight="5" android:layout_marginLeft="2dp"/>
+                            <CheckBox android:enabled="false" android:id="@+id/cbxVisitaSab" android:layout_weight="5" android:layout_marginLeft="2dp"/>
+                            <CheckBox android:enabled="false" android:id="@+id/cbxVisitaDom" android:layout_weight="5" android:layout_marginLeft="2dp"/>
+                        </TableRow>
+
+                    </TableLayout>
+
+                    <TextView
+                        android:text="Frecuencia"
+                        android:textColor="@color/list_item_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:id="@+id/tvDetVisitaFrecuencia"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="15sp"/>
+
+                    <TextView
+                        android:text="Fecha de inicio de visitas"
+                        android:textColor="@color/list_item_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:id="@+id/tvDetVisitaFecInicio"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="15sp"/>
+
+                </LinearLayout>
+
+            </android.support.v7.widget.CardView>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>
+

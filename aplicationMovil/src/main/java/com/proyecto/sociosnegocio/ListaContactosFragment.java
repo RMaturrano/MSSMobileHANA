@@ -34,7 +34,9 @@ import com.proyecto.utils.ListViewCustomAdapterTwoLinesAndImg;
 import com.proyecto.utils.Variables;
 
 public class ListaContactosFragment extends Fragment{
-	
+
+	public static String TAG_LISTA_CONTACTOS = "frgm_lst_contacts";
+
 	private View v = null;
 	private Context contexto;
 	private int iconId = Variables.idIconRightBlue36dp;
@@ -55,7 +57,7 @@ public class ListaContactosFragment extends Fragment{
 	private String idContPrincipal = "";
 	
 	
-	//RECEPCIÓN DE MENSAJES
+	//region RECEPCIÓN DE MENSAJES
 	private BroadcastReceiver myLocalBroadcastReceiver = new BroadcastReceiver() {
 			  @Override
 			  public void onReceive(Context context, Intent intent) {
@@ -63,8 +65,6 @@ public class ListaContactosFragment extends Fragment{
 			    Bundle bundle = intent.getExtras();
 
 		        if (bundle != null) {
-		        	
-		        	
 		        	if(intent.getAction().equals("event-send-contact-to-list")){
 			        
 				        	if(searchResults_cont.size() == 0){
@@ -98,24 +98,16 @@ public class ListaContactosFragment extends Fragment{
 					    					lvContactoPrincipal.invalidateViews();
 							    			
 							    		}
-							    		
-				        				
 									}
 				        			
 				        			SocioNegocioFragment.utilId ++;
-				        			
 				        		}
-				        		
-				        		
 				        	}else{
-				        		
-				        		listaDetalle = SocioNegocioFragment.listaDetalleContactos;     
+				        		listaDetalle = SocioNegocioFragment.listaDetalleContactos;
 					        	dysplayListContacts();
-				        		
 				        	}
 
 		        	}else if(intent.getAction().equals("event-get-contact-from-directory")){
-
 
 		        		String name = bundle.getString("name");
 			        	String phone = bundle.getString("phone");
@@ -142,7 +134,7 @@ public class ListaContactosFragment extends Fragment{
 		        }
 			 }
 		};
-	
+	//endregion
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup viewGroup,
@@ -211,8 +203,6 @@ public class ListaContactosFragment extends Fragment{
 		return view;
 	}
 	
-	
-	
 	private void construirAlertContPrincipal(int position){
 		
 		if(position==0){
@@ -224,31 +214,25 @@ public class ListaContactosFragment extends Fragment{
     		fullObject = new FormatCustomListView();
         	fullObject = (FormatCustomListView)o;
         	//
-			
-        	
         	rg = new RadioGroup(contexto);
         	
         	if(searchResults_cont.size()>0){
 
         		RadioButton rbt = null;
         		for (int j = 0; j < searchResults_cont.size(); j++) {
-				
         			rbt = new RadioButton(contexto);
         			rbt.setId(searchResults_cont.get(j).getId());
             		rbt.setText(searchResults_cont.get(j).getData());
             		rbt.setGravity(Gravity.CENTER_VERTICAL);
             		rg.addView(rbt);
-        			
 				}
-        		
         	}
         	
         	LayoutParams lp = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT, Gravity.CENTER);        	
         	rg.setPadding(15, 0, 0, 0);
         	rg.setLayoutParams(lp);
         	rg.setGravity(Gravity.LEFT);
-        	
-        	
+
 			AlertDialog.Builder alert = new AlertDialog.Builder(contexto);
     		alert.setTitle("Contacto principal");
     		
@@ -288,8 +272,7 @@ public class ListaContactosFragment extends Fragment{
 		}
 		
 	}
-	
-	
+
 	private void llenarListaContactoPrincipal() {
 		
 		searchResults_prin = new ArrayList<FormatCustomListView>();
@@ -306,8 +289,7 @@ public class ListaContactosFragment extends Fragment{
 	    lvContactoPrincipal.setAdapter(adapter);
   	
 	}
-	
-	
+
 	//LLENAR LA LISTA DE CONTACTOS SI ES QUE YA EXISTEN
 	private void dysplayListContacts(){
 			
@@ -360,13 +342,9 @@ public class ListaContactosFragment extends Fragment{
 	
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-		
 		inflater.inflate(R.menu.menu_lst_dir, menu);
 		super.onCreateOptionsMenu(menu, inflater);
-		
 	}
-	
-	
 	
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
@@ -449,13 +427,14 @@ public class ListaContactosFragment extends Fragment{
         	
         	AlertDialog.Builder myAlertDialog = new AlertDialog.Builder(contexto);
             myAlertDialog.setTitle("Opciones de contacto de socio de negocio");
-            myAlertDialog.setMessage("¿De dónde desea agregarlo?");
-            myAlertDialog.setPositiveButton("Agenda del teléfono",
+            myAlertDialog.setMessage("¿De donde desea agregarlo?");
+            myAlertDialog.setPositiveButton("Agenda del telefono",
                     new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface arg0, int arg1) {
                             
                         	Intent listContacts = new Intent(contexto, PhoneContactsListActivity.class);
-                        	startActivity(listContacts);
+                        	//startActivity(listContacts);
+                        	getActivity().startActivityForResult(listContacts, PhoneContactsListActivity.REQUEST_CONTACT_TLF);
                         	
                         }
                     });
@@ -528,6 +507,28 @@ public class ListaContactosFragment extends Fragment{
 		
 	}
 
-	
+	public void agregarNuevoContacto(String nombre, String telefono){
+		try{
+			ContactoBean bean = new ContactoBean();
+			bean.setIdCon(nombre);
+			bean.setNomCon(nombre);
+			bean.setTelMovCon(telefono);
+			bean.setUtilId(SocioNegocioFragment.utilId);
+
+			if(SocioNegocioFragment.listaDetalleContactos.size()== 0){
+				bean.setPrincipal(true);
+			}else
+				bean.setPrincipal(false);
+
+			SocioNegocioFragment.listaDetalleContactos.add(bean);
+			SocioNegocioFragment.contactId++;
+			SocioNegocioFragment.utilId++;
+
+			listaDetalle = SocioNegocioFragment.listaDetalleContactos;
+			dysplayListContacts();
+		}catch (Exception e){
+			Toast.makeText(getActivity(), "agregarNuevoContacto > " + e.getMessage(), Toast.LENGTH_LONG).show();
+		}
+	}
 
 }

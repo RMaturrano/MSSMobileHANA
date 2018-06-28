@@ -3,9 +3,15 @@ package com.proyecto.ventas;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.Dictionary;
+import java.util.Enumeration;
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -18,14 +24,22 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.provider.Settings;
 import android.provider.Settings.Secure;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.widget.DrawerLayout.LayoutParams;
+import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -42,6 +56,11 @@ import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.proyect.movil.R;
 import com.proyecto.bean.ArticuloBean;
 import com.proyecto.bean.CondicionPagoBean;
@@ -58,6 +77,11 @@ import com.proyecto.database.DataBaseHelper;
 import com.proyecto.database.Insert;
 import com.proyecto.database.Select;
 import com.proyecto.database.Update;
+import com.proyecto.sociosnegocio.ClienteBuscarActivity;
+import com.proyecto.sociosnegocio.util.ClienteBuscarBean;
+import com.proyecto.sociosnegocio.util.ContactoBuscarBean;
+import com.proyecto.sociosnegocio.util.DireccionBuscarBean;
+import com.proyecto.utils.Constantes;
 import com.proyecto.utils.ConstruirAlert;
 import com.proyecto.utils.DynamicHeight;
 import com.proyecto.utils.FormatCustomListView;
@@ -65,21 +89,28 @@ import com.proyecto.utils.ListViewCustomAdapterTwoLinesAndImg;
 import com.proyecto.utils.StringDateCast;
 import com.proyecto.utils.Variables;
 import com.proyecto.ws.InvocaWS;
+import com.proyecto.ws.VolleySingleton;
 
-public class OrdenVentaFragment extends Fragment{
+import org.json.JSONObject;
+
+import static android.content.Context.LOCATION_SERVICE;
+import static android.location.LocationManager.GPS_PROVIDER;
+
+public class OrdenVentaFragment extends Fragment {
 	
 	public static boolean shouldThreadContinueoV = false;
 
 	private String res = "";
 	private String action = "";
 	private String claveVenta = "";
-	
+
 	//PARA EL REGISTRO LOCAL
 	private OrdenVentaBean ordBean = null;
 	private OrdenVentaDetalleBean ordDetBean = null;
 	private ArrayList<OrdenVentaDetalleBean> listaOrdDet = null;
 	//PARA EL REGISTRO LOCAL
-	
+
+	private Location mCurrentLocation = null;
 	private View v = null;
 	private Context contexto;
 	private int iconId = Variables.idIconRightBlue36dp;
@@ -104,11 +135,12 @@ public class OrdenVentaFragment extends Fragment{
 	private ListView lvDirecciones = null;
 	private RadioGroup rg = null;
 	private MonedaBean monSel = null;
-	private DireccionBean direccionEntregaSel = null;
-	private DireccionBean direccionFiscalSel = null;
-	private ContactoBean contactoSel = null;
-	
-	//Nro de artículos PARA EL DETALLE
+
+	boolean wifi = false;
+	boolean movil = false;
+	boolean isConnectionFast = false;
+
+	//Nro de artï¿½culos PARA EL DETALLE
 	public static ArrayList<ArticuloBean> listaDetalleArticulos = new ArrayList<ArticuloBean>();
 	
 	//CONTACTOS DEL SOCIO DE NEGOCIO ACTUAL
@@ -133,14 +165,14 @@ public class OrdenVentaFragment extends Fragment{
 	public static double totalImpuesto = 0;
 	public static double totalGeneral = 0;
 	
-	//LISTAS PERSONALIZABLES (ITEM fDEL LISTVIEW) (Utilizando el formato de socio de negocio para acortar código)
+	//LISTAS PERSONALIZABLES (ITEM fDEL LISTVIEW) (Utilizando el formato de socio de negocio para acortar cï¿½digo)
 	private ArrayList<FormatCustomListView> searchResults = null;
 	private ArrayList<FormatCustomListView> searchResults1 = null;
 	private ArrayList<FormatCustomListView> searchResults2 = null;
 	private ArrayList<FormatCustomListView> searchResults3 = null;
 	private ArrayList<FormatCustomListView> searchResults4 = null;
 			
-	//Objeto que tomarà al ser seleccionado (Ayuda al update del select item con popup
+	//Objeto que tomarï¿½ al ser seleccionado (Ayuda al update del select item con popup
 	private FormatCustomListView fullObject = null;
 	private int posicion = 0;
 	private String claveMovil = "";
@@ -157,9 +189,18 @@ public class OrdenVentaFragment extends Fragment{
 	private CondicionPagoBean condPagoInicial = null;
 	private IndicadorBean indicadorSel = null;
 	public static ListaPrecioBean listaPrecioSel = null;
+	private ClienteBuscarBean mClienteSeleccionado = null;
+	private ContactoBuscarBean mContactoSeleccionado = null;
+	private ContactoBuscarBean mContactoTempSeleccionado = null;
+
+	private DireccionBuscarBean mDireccionFiscalSeleccionada = null;
+	private DireccionBuscarBean mDireccionFiscalTempSeleccionada = null;
+
+	private DireccionBuscarBean mDireccionEntregaSeleccionada = null;
+	private DireccionBuscarBean mDireccionEntregaTempSeleccionada = null;
 	
-	
-	//RECIBE LOS PARÀMETROS DESDE EL FRAGMENT CORRESPONDIENTE
+	//region BROADCASTRECEIVER
+	//RECIBE LOS PARï¿½METROS DESDE EL FRAGMENT CORRESPONDIENTE
 	private BroadcastReceiver myLocalBroadcastReceiver = new BroadcastReceiver() {
 		  @Override
 		  public void onReceive(Context context, Intent intent) {
@@ -255,25 +296,7 @@ public class OrdenVentaFragment extends Fragment{
 					  if(extras.length >3) {
 						  if (!extras[3].equals("") && !extras[3].equalsIgnoreCase("anytype{}")) {
 
-							  direccionFiscalSel = new DireccionBean();
-							  for (DireccionBean bean : listaDireccionSN) {
-								  if (bean.getTipoDireccion().equals("B")
-										  && bean.getIDDireccion().equals(extras[3])) {
 
-									  direccionFiscalSel = bean;
-									  break;
-								  }
-							  }
-							  Object o = lvDirecciones.getItemAtPosition(0);
-							  fullObject = new FormatCustomListView();
-							  fullObject = (FormatCustomListView) o;
-							  if (direccionFiscalSel.getCalle() != null
-									  && !direccionFiscalSel.getCalle().equalsIgnoreCase("anytype{}"))
-								  fullObject.setData(direccionFiscalSel.getCalle());
-							  else
-								  fullObject.setData(direccionFiscalSel.getIDDireccion());
-							  searchResults2.set(0, fullObject);
-							  lvDirecciones.invalidateViews();
 
 						  } else {
 							  Object o = lvDirecciones.getItemAtPosition(0);
@@ -285,7 +308,7 @@ public class OrdenVentaFragment extends Fragment{
 						  }
 					  }
 				        	
-				        	//Capturar el objeto (que refleja la selección estado doc)
+				        	//Capturar el objeto (que refleja la selecciï¿½n estado doc)
 							Object o = lvPrincipal.getItemAtPosition(1);
 			        		fullObject = new FormatCustomListView();
 			            	fullObject = (FormatCustomListView)o;
@@ -309,7 +332,7 @@ public class OrdenVentaFragment extends Fragment{
 						Object o = lvContenido.getItemAtPosition(0);
 						FormatCustomListView fullObject1 = new FormatCustomListView();
 						fullObject1 = (FormatCustomListView)o;
-						fullObject1.setData(listaDetalleArticulos.size() + " artículos");
+						fullObject1.setData(listaDetalleArticulos.size() + " articulos");
 						searchResults1.set(0, fullObject1);
 						
 						lvContenido.invalidateViews();
@@ -321,7 +344,7 @@ public class OrdenVentaFragment extends Fragment{
 		  
 		  
 	};
-
+	//endregion
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater,ViewGroup viewGroup, Bundle savedInstanceState) {
@@ -417,9 +440,93 @@ public class OrdenVentaFragment extends Fragment{
         setHasOptionsMenu(true);
 
         return view;
-		
 	}
-	 
+
+	@Override
+	public void onStart() {
+		super.onStart();
+
+		//COMPROBAR EL ESTADO DE LA RED MOVIL DE DATOS
+		wifi = Connectivity.isConnectedWifi(contexto);
+		movil = Connectivity.isConnectedMobile(contexto);
+		isConnectionFast = Connectivity.isConnectedFast(contexto);
+
+		mCurrentLocation = getCurrentLocation();
+	}
+
+	public void onClientSelected(ClienteBuscarBean cliente){
+
+		try{
+			mClienteSeleccionado = cliente;
+			updateRowListPrincipal(1,mClienteSeleccionado.getCodigo());
+			updateRowListPrincipal(2, mClienteSeleccionado.getNombre());
+
+			if(mClienteSeleccionado.getListaPrecio() != null){
+				listaPrecioSel = mClienteSeleccionado.getListaPrecio();
+			}else
+				listaPrecioSel = null;
+
+			if(mClienteSeleccionado.getCondicionPago() != null){
+				condPagoSel = mClienteSeleccionado.getCondicionPago();
+				condPagoInicial = condPagoSel;
+				updateRowListFinanzas(0, condPagoSel.getDescripcionCondicion());
+			}else{
+				condPagoSel = null;
+				updateRowListFinanzas(0, "");
+			}
+
+			if(mClienteSeleccionado.getIndicador() != null){
+				indicadorSel = mClienteSeleccionado.getIndicador();
+				updateRowListFinanzas(1, indicadorSel.getNombre());
+			}else{
+				indicadorSel = null;
+				updateRowListFinanzas(1,"");
+			}
+
+			if(mClienteSeleccionado.getDireccionFiscalCodigo() != null) {
+				mDireccionFiscalSeleccionada = new DireccionBuscarBean();
+				mDireccionFiscalSeleccionada.setCalle(mClienteSeleccionado.getDireccionFiscalNombre());
+				mDireccionFiscalSeleccionada.setTipo(Constantes.TIPO_DIRECCION_FISCAL);
+				mDireccionFiscalSeleccionada.setCodigo(mClienteSeleccionado.getDireccionFiscalCodigo());
+				updateRowListDirecciones(0, mDireccionFiscalSeleccionada.getCalle());
+			}
+
+			autoSeleccionarDireccionMasCercana();
+			llenarListaContenido();
+
+		}catch (Exception e){
+			mClienteSeleccionado = null;
+			showToast("Seleccion de cliente fallida - " + e.getMessage());
+		}finally{
+			lvFinanzas.invalidateViews();
+			lvPrincipal.invalidateViews();
+			lvDirecciones.invalidateViews();
+        }
+	}
+
+	private void updateRowListPrincipal(int position, String dataVal){
+		Object o2 = lvPrincipal.getItemAtPosition(position);
+		fullObject = new FormatCustomListView();
+		fullObject = (FormatCustomListView)o2;
+		fullObject.setData(dataVal);
+		searchResults.set(position, fullObject);
+	}
+
+	private void updateRowListDirecciones(int position, String dataVal){
+		Object o2 = lvDirecciones.getItemAtPosition(position);
+		fullObject = new FormatCustomListView();
+		fullObject = (FormatCustomListView)o2;
+		fullObject.setData(dataVal);
+		searchResults2.set(position, fullObject);
+	}
+
+	private void updateRowListFinanzas(int position, String dataVal){
+		Object o2 = lvFinanzas.getItemAtPosition(position);
+		fullObject = new FormatCustomListView();
+		fullObject = (FormatCustomListView)o2;
+		fullObject.setData(dataVal);
+		searchResults4.set(position, fullObject);
+	}
 
 	private boolean cargarListas(){
 		
@@ -459,6 +566,16 @@ public class OrdenVentaFragment extends Fragment{
 		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
     	Date date = new Date();
     	String currentDate = dateFormat.format(date);
+
+		Calendar c = Calendar.getInstance();
+		c.setTime(date);
+		c.add(Calendar.DATE, 1);
+		if (c.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY) {
+			c.add(Calendar.DATE, 1);
+		}
+		date = c.getTime();
+
+		String dispatcherDay = dateFormat.format(date);
     	//FECHA ACTUAL
     	
     	
@@ -485,12 +602,12 @@ public class OrdenVentaFragment extends Fragment{
 		lvPrincipal = (ListView) v.findViewById(R.id.lvPrinPedido);
 
 		FormatCustomListView sr = new FormatCustomListView();
-    	sr.setTitulo("Número de documento");
+    	sr.setTitulo("Numero de documento");
     	sr.setData(nroDoc);
     	searchResults.add(sr);
 		
 		sr = new FormatCustomListView();
-    	sr.setTitulo("Código de SN");
+    	sr.setTitulo("Codigo de SN");
     	if(action.equals("")){
     		sr.setIcon(iconId);
     	}
@@ -526,14 +643,15 @@ public class OrdenVentaFragment extends Fragment{
     	searchResults.add(sr);
     	
     	sr = new FormatCustomListView();
-    	sr.setTitulo("Fecha de vencimiento");
-    	sr.setData(currentDate);
+    	sr.setTitulo("Fecha de entrega");
+    	sr.setData(dispatcherDay);
+		sr.setIcon(iconId);
     	searchResults.add(sr);
     	
-    	sr = new FormatCustomListView();
+    	/*sr = new FormatCustomListView();
     	sr.setTitulo("Referencia");
     	sr.setIcon(iconId);
-    	searchResults.add(sr);
+    	searchResults.add(sr);	*/
     	
     	adapter = new ListViewCustomAdapterTwoLinesAndImg( contexto, searchResults);
     	lvPrincipal.setAdapter(adapter);
@@ -549,7 +667,8 @@ public class OrdenVentaFragment extends Fragment{
 	    lvFinanzas = (ListView) v.findViewById(R.id.lvFinPedido);
 		
 		FormatCustomListView sr = new FormatCustomListView();
-		sr.setTitulo("Condición pago");
+		sr.setTitulo("Condicion pago");
+		sr.setIcon(iconId);
 		searchResults4.add(sr);
     	
     	sr = new FormatCustomListView();
@@ -574,12 +693,12 @@ public class OrdenVentaFragment extends Fragment{
 	    lvDirecciones = (ListView) v.findViewById(R.id.lvLogPedido);
 
 	    FormatCustomListView sr = new FormatCustomListView();
-    	sr.setTitulo("Dirección fiscal");
+    	sr.setTitulo("Direccion fiscal");
     	sr.setIcon(iconId);
     	searchResults2.add(sr);
     	
     	sr = new FormatCustomListView();
-    	sr.setTitulo("Dirección de entrega");
+    	sr.setTitulo("Direccion de entrega");
     	sr.setIcon(iconId);
     	searchResults2.add(sr);
     	
@@ -632,8 +751,8 @@ public class OrdenVentaFragment extends Fragment{
 		searchResults1 = new ArrayList<FormatCustomListView>();
 		
 		FormatCustomListView sr = new FormatCustomListView();
-		sr.setTitulo("Artículos");
-		sr.setData(listaDetalleArticulos.size() + " artículos");
+		sr.setTitulo("Articulos");
+		sr.setData(listaDetalleArticulos.size() + " articulos");
 		sr.setIcon(iconId);
 		searchResults1.add(sr);
     	
@@ -643,9 +762,14 @@ public class OrdenVentaFragment extends Fragment{
 		
 	}
 
+	private String obtenerFecha(String format){
+		DateFormat dateFormat = new SimpleDateFormat(format);
+		String currentDate = dateFormat.format(new Date());
+		return currentDate;
+	}
 	
 	//CONSTRUIR ALERTS
-	private void construirAlert(String bloque,int position){
+	private void construirAlert(String bloque, final int position){
 		
 		
 		//Alerts del bloque principal
@@ -654,6 +778,8 @@ public class OrdenVentaFragment extends Fragment{
 			if(position == 1){
 				
 				if(action.equals("")){
+
+					/*
 					BuscarSNFragment fragment = new BuscarSNFragment();
 					
 	                FragmentManager manager = getFragmentManager();
@@ -665,89 +791,57 @@ public class OrdenVentaFragment extends Fragment{
 	                transaction.commit();
 	                
 	                getActivity().setTitle("Buscar Socio de Negocio");
+	                */
+
+					getActivity().startActivityForResult(new Intent(v.getContext(), ClienteBuscarActivity.class),
+							ClienteBuscarActivity.REQUEST_CODE_BUSCAR_CLIENTE);
 				}
 				
 			}else if(position == 3){
 				
-				//Contaacto
-				//PARA EL REGRESO DE LA INFO HACIA lA PANTALLA PRINCIPAL
-				posicion = position;
-				//Capturar el objeto (row - fila) 
-				Object o = lvPrincipal.getItemAtPosition(position);
-	    		fullObject = new FormatCustomListView();
-	        	fullObject = (FormatCustomListView)o;
-	        	//
-				
-	        	
-	        	rg = new RadioGroup(contexto);
-	        	
-	        	if(listaContactoSN.size()>0){
+				if(mClienteSeleccionado != null){
+					if(mClienteSeleccionado.getContactos().size() > 0) {
 
-	        		int id = 1;
-	        		RadioButton rbt = null;
-	        		for (ContactoBean bean : listaContactoSN) {
-	        			
-	        				rbt = new RadioButton(contexto);
-		        			rbt.setId(id);
-		        			
-		        			rbt.setText(bean.toString());
-		        			
-		        			rbt.setGravity(Gravity.CENTER_VERTICAL);
-		            		rg.addView(rbt);
-		            		
-		            		bean.setUtilId(id);
-		            		id++;
-		            		
+						ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(
+								v.getContext(), android.R.layout.select_dialog_singlechoice
+						);
+
+						for (ContactoBuscarBean bean: mClienteSeleccionado.getContactos()) {
+							arrayAdapter.add(bean.getCodigo() + " - " + bean.getNombre());
 						}
-					
-	        		
-	        	}
-	        	
-	        	LayoutParams lp = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT, Gravity.CENTER);        	
-	        	rg.setPadding(15, 0, 0, 0);
-	        	rg.setLayoutParams(lp);
-	        	rg.setGravity(Gravity.LEFT);
-	        	
-	        	
-				AlertDialog.Builder alert = new AlertDialog.Builder(contexto);
-	    		alert.setTitle("Contacto");
-	    		
-	    		//AGREGAR EL VIEW AL POP UP
-	    		alert.setView(rg);
-	    		
-	    		alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-	    		public void onClick(DialogInterface dialog, int whichButton) {
 
-	    			for (ContactoBean bean : listaContactoSN) {
-	    				
-	    				if(bean.getUtilId() == rg.getCheckedRadioButtonId()){
-	    					
-	    					contactoSel = bean;
-	    					if(bean.getPrimerNombre() != null && !bean.getPrimerNombre().equalsIgnoreCase("anytype{}") && 
-		        					bean.getApeCon() != null && !bean.getApeCon().equalsIgnoreCase("anytype{}") )
-	    						fullObject.setData(bean.getPrimerNombre()+" "+bean.getApeCon());
-		        			else
-		        				fullObject.setData(bean.getNomCon());
-	    					
-	    					
-	    					searchResults.set(posicion, fullObject);
-	    					lvPrincipal.invalidateViews();
-	    					
-	    				}
-	    				
-						
-					}
-	    			
-	    		  }
-	    		});
+						final AlertDialog.Builder alertDialog = new AlertDialog.Builder(v.getContext());
+						alertDialog.setTitle("Contactos del cliente");
+						alertDialog.setCancelable(false);
+						alertDialog.setSingleChoiceItems(arrayAdapter, -1, new DialogInterface.OnClickListener() {
+							@Override
+							public void onClick(DialogInterface dialog, int which) {
+								mContactoTempSeleccionado = mClienteSeleccionado.getContactos().get(which);
+							}
+						});
+						alertDialog.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+							@Override
+							public void onClick(DialogInterface dialog, int which) {
+								if(mContactoTempSeleccionado != null) {
+									mContactoSeleccionado = mContactoTempSeleccionado;
+									updateRowListPrincipal(position, mContactoSeleccionado.getNombre());
+									lvPrincipal.invalidateViews();
+								}
+								mContactoTempSeleccionado = null;
+							}
+						});
+						alertDialog.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+							@Override
+							public void onClick(DialogInterface dialog, int which) {
+								mContactoTempSeleccionado = null;
+							}
+						});
+						alertDialog.show();
 
-	    		alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-	    		  public void onClick(DialogInterface dialog, int whichButton) {
-	    		    // Canceled.
-	    		  }
-	    		});
-
-	    		alert.show();
+					}else
+						showToast("El cliente no tiene contactos registrados.");
+				}else
+					showToast("Primero, debe seleccionar a un cliente.");
 				
 			}else if(position == 4){
 				
@@ -821,7 +915,7 @@ public class OrdenVentaFragment extends Fragment{
 				
 			}else if(position == 8){
 				
-			//	alert.construirAlertDatePicker(contexto, position, "Fecha de vencimiento", searchResults, lvPrincipal);
+				alert.construirAlertDatePicker(contexto, position, "Fecha de entrega", searchResults, lvPrincipal);
 			
 			}else if(position == 9){
 				
@@ -852,195 +946,107 @@ public class OrdenVentaFragment extends Fragment{
 	//FIN CONSTRUIR ALERTS
 	
 	////Alert direcciones 
-	private void construirAlertDirecciones(int position){
+	private void construirAlertDirecciones(final int position){
 		
 		if(position == 0){
-			
-			//PARA EL REGRESO DE LA INFO HACIA lA PANTALLA PRINCIPAL
-			posicion = position;
-			//Capturar el objeto (row - fila) 
-			Object o = lvDirecciones.getItemAtPosition(position);
-    		fullObject = new FormatCustomListView();
-        	fullObject = (FormatCustomListView)o;
-        	//
-			
-        	
-        	rg = new RadioGroup(contexto);
-        	
-        	if(listaDireccionSN.size()>0){
 
-        		int id = 1;
-        		RadioButton rbt = null;
-        		for (DireccionBean bean : listaDireccionSN) {
-        			
-        			if(bean.getTipoDireccion().equals("B")){
-        				rbt = new RadioButton(contexto);
-	        			rbt.setId(id);
-	        			if(bean.getCalle() != null && !bean.getCalle().equalsIgnoreCase("anytype{}"))
-	        				rbt.setText(bean.getCalle());
-	        			else if(bean.getReferencia()!= null && !bean.getReferencia().equalsIgnoreCase("anytype{}"))
-	        				rbt.setText(bean.getReferencia());
-	        			else
-	        				rbt.setText(bean.getIDDireccion());
-	            		rbt.setGravity(Gravity.CENTER_VERTICAL);
-	            		rg.addView(rbt);
-	            		bean.setUtilId(id);
-	            		id++;
-        			}
-        			
-				}
-				
-        		
-        	}
-        	
-        	LayoutParams lp = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT, Gravity.CENTER);        	
-        	rg.setPadding(15, 0, 0, 0);
-        	rg.setLayoutParams(lp);
-        	rg.setGravity(Gravity.LEFT);
-        	
-        	
-			AlertDialog.Builder alert = new AlertDialog.Builder(contexto);
-    		alert.setTitle("Dirección fiscal");
-    		
-    		//AGREGAR EL VIEW AL POP UP
-    		alert.setView(rg);
-    		
-    		alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-    		public void onClick(DialogInterface dialog, int whichButton) {
+			try{
+				if(mClienteSeleccionado != null){
+					if(mClienteSeleccionado.getDirecciones().size() > 0) {
 
-    			for (DireccionBean bean : listaDireccionSN) {
-    				
-    				if(bean.getUtilId() == rg.getCheckedRadioButtonId()){
-    					
-    					direccionFiscalSel = new DireccionBean();
-    					direccionFiscalSel = bean;
-    					
-    					if(bean.getCalle() != null && !bean.getCalle().equalsIgnoreCase("anytype{}"))
-    						fullObject.setData(bean.getCalle());
-	        			else if(bean.getReferencia() != null && !bean.getReferencia().equalsIgnoreCase("anytype{}"))
-	        				fullObject.setData(bean.getReferencia());
-	        			else
-	        				fullObject.setData(bean.getIDDireccion());
-    					
-    					searchResults2.set(posicion, fullObject);
-    					lvDirecciones.invalidateViews();
-    					
-    				}
-    				
-				}
-    			
-    		  }
-    		});
+						ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(v.getContext(),
+								android.R.layout.select_dialog_singlechoice);
+						for (DireccionBuscarBean d: mClienteSeleccionado.getDirecciones()) {
+							if(d.getTipo() != null && d.getTipo().equals(Constantes.TIPO_DIRECCION_FISCAL))
+								arrayAdapter.add(d.getCalle());
+						}
 
-    		alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-    		  public void onClick(DialogInterface dialog, int whichButton) {
-    		    // Canceled.
-    		  }
-    		});
+						final AlertDialog.Builder alertDialog = new AlertDialog.Builder(v.getContext());
+						alertDialog.setTitle("Direcciones del cliente");
+						alertDialog.setCancelable(false);
+						alertDialog.setSingleChoiceItems(arrayAdapter, -1, new DialogInterface.OnClickListener() {
+							@Override
+							public void onClick(DialogInterface dialog, int which) {
+								mDireccionFiscalTempSeleccionada = mClienteSeleccionado.getDirecciones().get(which);
+							}
+						});
+						alertDialog.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+							@Override
+							public void onClick(DialogInterface dialog, int which) {
+								if (mDireccionFiscalTempSeleccionada != null) {
+									mDireccionFiscalSeleccionada = mDireccionFiscalTempSeleccionada;
+									updateRowListDirecciones(0, mDireccionFiscalSeleccionada.getCalle());
+									lvDirecciones.invalidateViews();
+								}
+								mDireccionFiscalTempSeleccionada = null;
+							}
+						});
+						alertDialog.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+							@Override
+							public void onClick(DialogInterface dialog, int which) {
+								mDireccionFiscalTempSeleccionada = null;
+							}
+						});
+						alertDialog.show();
 
-    		alert.show();
-			
-			
+					}else
+						showToast("El cliente no tiene direcciones registradas.");
+				}else
+					showToast("Primero, debe seleccionar a un cliente.");
+			}catch(Exception e){
+				showToast("Ocurrio un error obteniendo las direcciones del cliente " + e.getMessage());
+			}
 		}else if(position == 1){
-			
-			boolean res = false;
-			
-        	final RadioGroup rg = new RadioGroup(contexto);
-        	
-        	if(listaDireccionSN.size()>0){
 
-        		int id = 1;
-        		RadioButton rbt = null;
-        		for (DireccionBean bean : listaDireccionSN) {
-        			
-        			if(bean.getTipoDireccion().equals("S")){
-        				if(!res)
-        					res = true;
-        				rbt = new RadioButton(contexto);
-	        			rbt.setId(id);
-	        			if(bean.getCalle() != null && !bean.getCalle().equalsIgnoreCase("anytype{}"))
-	        				rbt.setText(bean.getCalle());
-	        			else if(bean.getReferencia()!= null && !bean.getReferencia().equalsIgnoreCase("anytype{}"))
-	        				rbt.setText(bean.getReferencia());
-	        			else
-	        				rbt.setText(bean.getIDDireccion());
-	            		rbt.setGravity(Gravity.CENTER_VERTICAL);
-	            		rg.addView(rbt);
-	            		bean.setUtilId(id);
-	            		id++;
-        			}
-        			
-				}
-				
-        		
-        	}
-        	
-        	LayoutParams lp = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT, Gravity.CENTER);        	
-        	rg.setPadding(15, 0, 0, 0);
-        	rg.setLayoutParams(lp);
-        	rg.setGravity(Gravity.LEFT);
-        	
-        	
-        	if(res){
-        		//PARA EL REGRESO DE LA INFO HACIA lA PANTALLA PRINCIPAL
-				posicion = position;
-				//Capturar el objeto (row - fila) 
-				Object o = lvDirecciones.getItemAtPosition(position);
-	    		fullObject = new FormatCustomListView();
-	        	fullObject = (FormatCustomListView)o;
-	        	//
-	        	
-				AlertDialog.Builder alert = new AlertDialog.Builder(contexto);
-	    		alert.setTitle("Dirección de entrega");
-	    		
-	    		//AGREGAR EL VIEW AL POP UP
-	    		alert.setView(rg);
-	    		
-	    		alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-	    		public void onClick(DialogInterface dialog, int whichButton) {
+			//alert.construirAlert(contexto, position, "Direcciï¿½n de entrega", searchResults2, lvDirecciones, "text",250);
+			try{
+				if(mClienteSeleccionado != null){
+					if(mClienteSeleccionado.getDirecciones().size() > 0) {
 
-	    			for (DireccionBean bean : listaDireccionSN) {
-	    				
-	    				if(bean.getTipoDireccion().equals("S")){
-	    					if(bean.getUtilId() == rg.getCheckedRadioButtonId()){
-		    					
-		    					direccionEntregaSel = new DireccionBean();
-		    					direccionEntregaSel = bean;
-		    					
-		    					if(bean.getCalle() != null && !bean.getCalle().equalsIgnoreCase("anytype{}"))
-		    						fullObject.setData(bean.getCalle());
-			        			else if(bean.getReferencia() != null && !bean.getReferencia().equalsIgnoreCase("anytype{}"))
-			        				fullObject.setData(bean.getReferencia());
-			        			else
-			        				fullObject.setData(bean.getIDDireccion());
-		    					
-		    					searchResults2.set(posicion, fullObject);
-		    					lvDirecciones.invalidateViews();
-		    					
-		    				}
-	    				}
-	    				
-	    				
-					}
-	    			
-	    		  }
-	    		});
+						ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(v.getContext(),
+								android.R.layout.select_dialog_singlechoice);
+						for (DireccionBuscarBean d: mClienteSeleccionado.getDirecciones()) {
+							if(d.getTipo() != null && d.getTipo().equals(Constantes.TIPO_DIRECCION_ENTREGA))
+								arrayAdapter.add(d.getCalle());
+						}
 
-	    		alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-	    		  public void onClick(DialogInterface dialog, int whichButton) {
-	    		    // Canceled.
-	    		  }
-	    		});
+						final AlertDialog.Builder alertDialog = new AlertDialog.Builder(v.getContext());
+						alertDialog.setTitle("Direcciones del cliente");
+						alertDialog.setCancelable(false);
+						alertDialog.setSingleChoiceItems(arrayAdapter, -1, new DialogInterface.OnClickListener() {
+							@Override
+							public void onClick(DialogInterface dialog, int which) {
+								mDireccionEntregaTempSeleccionada = mClienteSeleccionado.getDirecciones().get(which);
+							}
+						});
+						alertDialog.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+							@Override
+							public void onClick(DialogInterface dialog, int which) {
+								if (mDireccionEntregaTempSeleccionada != null) {
+									mDireccionEntregaSeleccionada = mDireccionEntregaTempSeleccionada;
+									updateRowListDirecciones(1, mDireccionEntregaSeleccionada.getCalle());
+									lvDirecciones.invalidateViews();
+								}
+								mDireccionEntregaTempSeleccionada = null;
+							}
+						});
+						alertDialog.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+							@Override
+							public void onClick(DialogInterface dialog, int which) {
+								mDireccionEntregaTempSeleccionada = null;
+							}
+						});
+						alertDialog.show();
 
-	    		alert.show();
-				
-        	}else
-        		alert.construirAlert(contexto, position, "Dirección de entrega", searchResults2, lvDirecciones, "text",250);
-        	
-        	
-			
+					}else
+						showToast("El cliente no tiene direcciones registradas.");
+				}else
+					showToast("Primero, debe seleccionar a un cliente.");
+			}catch(Exception e){
+				showToast("Ocurrio un error obteniendo las direcciones del cliente " + e.getMessage());
+			}
+
 		}
-		
 	}
 	
 	
@@ -1056,34 +1062,30 @@ public class OrdenVentaFragment extends Fragment{
                 transaction.add(R.id.box, fragment);
                 transaction.addToBackStack(null);
                 transaction.commit();
-            
-			
 		}
-		
 	}
 
-	
 	private void construirAlertLogistica(int position){
 		
 		if(position == 0){
 			
-			alert.construirAlert(contexto, position, "Código de entrega", searchResults2, lvLogistica, "text",200);
+			alert.construirAlert(contexto, position, "Codigo de entrega", searchResults2, lvLogistica, "text",200);
 			
 		}else if(position == 1){
 			
-			alert.construirAlert(contexto, position, "Dirección de despacho", searchResults2, lvLogistica, "text",200);
+			alert.construirAlert(contexto, position, "Direccion de despacho", searchResults2, lvLogistica, "text",200);
 			
 		}else if(position == 2){
 			
-			alert.construirAlert(contexto, position, "Código de factura", searchResults2, lvLogistica, "text",200);
+			alert.construirAlert(contexto, position, "Codigo de factura", searchResults2, lvLogistica, "text",200);
 			
 		}else if(position == 3){
 			
-			alert.construirAlert(contexto, position, "Dirección de factura", searchResults2, lvLogistica, "text",200);
+			alert.construirAlert(contexto, position, "Direccion de factura", searchResults2, lvLogistica, "text",200);
 			
 		}else if(position == 4){
 			
-			alert.construirAlert(contexto, position, "Situación entre.", searchResults2, lvLogistica, "text",200);
+			alert.construirAlert(contexto, position, "Situacion entre.", searchResults2, lvLogistica, "text",200);
 			
 		}
 		
@@ -1138,7 +1140,7 @@ public class OrdenVentaFragment extends Fragment{
 	        	
 				
 				AlertDialog.Builder alert = new AlertDialog.Builder(contexto);
-	    		alert.setTitle("Condición de Pago");
+	    		alert.setTitle("Condicion de Pago");
 
 	    		// Set an EditText view to get user input 
 	    		alert.setView(spnCondPago);
@@ -1153,7 +1155,7 @@ public class OrdenVentaFragment extends Fragment{
 	    				searchResults4.set(posicion, fullObject);
 	    				lvFinanzas.invalidateViews();
 	    			}else{
-	    				Toast.makeText(contexto, "No puede seleccionar esa condición de pago", Toast.LENGTH_SHORT).show();
+	    				Toast.makeText(contexto, "No puede seleccionar esa condicion de pago", Toast.LENGTH_SHORT).show();
 	    			}
 					
 	    		  }
@@ -1305,221 +1307,229 @@ public class OrdenVentaFragment extends Fragment{
     
     public boolean onOptionsItemSelected(MenuItem item) {
     	
-    	FragmentManager manager = getFragmentManager();
+    	FragmentManager manager = getActivity().getFragmentManager();
     	FragmentTransaction transaction = manager.beginTransaction();
     	
 		switch (item.getItemId()) {
-        case R.id.action_registrar:
-        	
-        if(searchResults.get(1).getData() == null || searchResults.get(1).getData().equals("")){
-        	
-        	Toast.makeText(contexto, "Seleccione el socio de negocio", Toast.LENGTH_LONG);
-        	return false;
-        	
-        }else if(listaDetalleArticulos.size() == 0){
-        	
-        	Toast.makeText(contexto, "Añada artículos a la orden", Toast.LENGTH_LONG);
-        	return false;
-        	
-        }
-       
-  
-		ordBean = new OrdenVentaBean();
-		if(tipoDocumento.equals(""))
-			ordBean.setTipoDoc("P");
-		else
-			ordBean.setTipoDoc(tipoDocumento);
-		ordBean.setNumero(searchResults.get(0).getData());
-		ordBean.setCodSN(searchResults.get(1).getData());
-		ordBean.setNomSN(searchResults.get(2).getData());
-		if(contactoSel != null)
-			ordBean.setContacto(contactoSel.getIdCon());
-		if(monSel != null)
-			ordBean.setMoneda(monSel.getCodigo());	
-		else 
-			ordBean.setMoneda(listaMonedas.get(0).getCodigo());
-		ordBean.setEmpVentas(codigoEmpleado);
-		ordBean.setComentario(searchResults.get(6).getData());
-		ordBean.setFecContable(StringDateCast.castDatetoDateWithoutSlash(searchResults.get(7).getData()));
-		ordBean.setFecVen(StringDateCast.castDatetoDateWithoutSlash(searchResults.get(8).getData()));
-		ordBean.setReferencia(searchResults.get(9).getData());
-		
-		//Bloque direcciones
-		if(direccionFiscalSel != null)
-		ordBean.setDirFiscal(direccionFiscalSel.getIDDireccion());
-		
-		if(direccionEntregaSel != null)
-		ordBean.setDirEntrega(direccionEntregaSel.getIDDireccion());
-		
-		
-		//Bloque finanzas
-		if(condPagoSel != null)
-			ordBean.setCondPago(condPagoSel.getNumeroCondicion());
-		if(indicadorSel != null)
-			ordBean.setIndicador(indicadorSel.getCodigo());
-		if(listaPrecioSel != null)
-			ordBean.setListaPrecio(listaPrecioSel.getCodigo());
-		
-		
-		//Bloque calculos
-			if(searchResults3 != null)
-				ordBean.setSubTotal(searchResults3.get(0).getData());
-			else {
-				Toast.makeText(contexto, "Confirme los artículos en el detalle para generar los totales del pedido.", Toast.LENGTH_SHORT).show();
-				return true;
-			}
-			if(searchResults3.get(1) != null)
-				ordBean.setPorcDesc(Double.parseDouble(searchResults3.get(1).getData()));
-			else {
-				Toast.makeText(contexto, "Confirme los artículos en el detalle para generar los totales del pedido.", Toast.LENGTH_SHORT).show();
-				return true;
-			}
-			if(searchResults3.get(3) !=null)
-				ordBean.setTotDesc(Double.parseDouble(searchResults3.get(2).getData()));
-			else {
-				Toast.makeText(contexto, "Confirme los artículos en el detalle para generar los totales del pedido.", Toast.LENGTH_SHORT).show();
-				return true;
-			}
-			ordBean.setImpuesto(searchResults3.get(3).getData());
-		ordBean.setTotal(searchResults3.get(4).getData());
-		ordBean.setCreadoMovil("Y");
-		
-		Date date = new Date();
-		String fullDate = new SimpleDateFormat("yyyyMMddHHmmss",Locale.ENGLISH).format(date);
-		if(action.equals(""))
-			claveMovil = idDispositivo +"-"+fullDate+"-" + nroOrd;
-		
-		ordBean.setClaveMovil(claveMovil);
-		ordBean.setClave(claveMovil);
-		ordBean.setEstadoRegistroMovil(getResources().getString(R.string.LOCAL));
-		
-		listaOrdDet = new ArrayList<OrdenVentaDetalleBean>();
-		//DETALLES
-		for (ArticuloBean art : listaDetalleArticulos) {
-			
-			ordDetBean = new OrdenVentaDetalleBean();
-			ordDetBean.setNroDocOrdV(ordBean.getClave());
-			ordDetBean.setCodArt(art.getCod());
-			ordDetBean.setDescripcion(art.getDesc());
-			ordDetBean.setCodUM(art.getCodUM());
-			ordDetBean.setAlmacen(art.getAlmacen());
-			ordDetBean.setCantidad(art.getCant());
-			ordDetBean.setListaPrecio(art.getCodigoListaPrecio());
-			ordDetBean.setPrecio(art.getPre());
-			ordDetBean.setDescuento(art.getDescuento());
-			ordDetBean.setCodImp(art.getCodigoImpuesto());
-			ordDetBean.setLinea(art.getUtilLinea());
-			listaOrdDet.add(ordDetBean);
-			
-		}
-		
-		ordBean.setDetalles(listaOrdDet);
-		
-		if(action.equals("")){
-			
-			ordBean.setTransaccionMovil(getResources().getString(R.string.CREAR_BORRADOR));
-			
-			Insert insert = new Insert(contexto);
-			boolean res = insert.insertOrdenVenta(ordBean);
-			
-			if(res){
-				
-				//Actualizar el correlativo para la clave movil
-				insert.updateCorrelativo("ORD");
-				insert.close();
-				
-				Toast.makeText(contexto, "Orden de venta registrada", Toast.LENGTH_LONG).show();
-				
-				Activity activity = getActivity();
-				
-				if(activity != null){
-					
-					//ENVIAR UN MENSAJE DE AVISO DE REGISTRO NUEVO A LA LISTA DE ORDENES DE VENTA
-		       	 	Intent localBroadcastIntent = new Intent("event-send-register-ov-ok");
-		            LocalBroadcastManager myLocalBroadcastManager = LocalBroadcastManager.getInstance(activity);
-		            myLocalBroadcastManager.sendBroadcast(localBroadcastIntent);
-		            
-		          //COMPROBAR EL ESTADO DE LA RED MOVIL DE DATOS
-					 boolean wifi = Connectivity.isConnectedWifi(contexto);
-				     boolean movil = Connectivity.isConnectedMobile(contexto);
-				     boolean isConnectionFast = Connectivity.isConnectedFast(contexto);
-				     
-				     if(wifi || movil && isConnectionFast){
-				        	
-				    	 new TareaRegistroOrd().execute();	
-				    	 
-				     }else{
-				    	 clearLists();
-				     }
-				     
-				     transaction.remove(this);
-					 transaction.commit();
-				     activity.finish();
-		            
+			case R.id.action_registrar:
+
+				try{
+
+				if (mClienteSeleccionado == null) {
+					Toast.makeText(contexto, "Seleccione el socio de negocio", Toast.LENGTH_LONG).show();
+					return false;
+				} else if (searchResults.get(1).getData() == null || searchResults.get(1).getData().equals("")) {
+					Toast.makeText(contexto, "Seleccione el socio de negocio", Toast.LENGTH_LONG).show();
+					return false;
+				} else if (listaDetalleArticulos.size() == 0) {
+					Toast.makeText(contexto, "Agregue articulos a la orden", Toast.LENGTH_LONG).show();
+					return false;
+				} else if(mDireccionEntregaSeleccionada == null){
+					Toast.makeText(contexto, "Seleccione una direccion de entrega", Toast.LENGTH_LONG).show();
+					return false;
 				}
-				
-				
-			}else{
-				insert.close();
-				Toast.makeText(contexto, "No se registró la orden de venta, compruebe los datos", 
-						Toast.LENGTH_LONG).show();
-			}
-		}else{
-			
-			if(!estadoRegistroMovil.equals(getResources().getString(R.string.LOCAL))){
-				ordBean.setClave(claveVenta);
-				ordBean.setTransaccionMovil(getResources().getString(R.string.ACTUALIZAR_BORRADOR));
-			}else{
-				ordBean.setTransaccionMovil(getResources().getString(R.string.CREAR_BORRADOR));
-			}
-			
-			
-			//Actualización
-			Update update = new Update(contexto);
-			boolean res = update.updateOrdenVenta(ordBean);
-			
-			if(res){
-				update.close();
-				Toast.makeText(contexto, "Orden de venta actualizada", Toast.LENGTH_LONG).show();
-				
-				
-				Activity actividad = getActivity();
-				
-				if(actividad != null){
-					
-					//ENVIAR UN MENSAJE DE AVISO DE REGISTRO NUEVO A LA LISTA DE ORDENES DE VENTA
-		       	 	Intent localBroadcastIntent = new Intent("event-send-register-ov-ok");
-		            LocalBroadcastManager myLocalBroadcastManager = LocalBroadcastManager.getInstance(getActivity());
-		            myLocalBroadcastManager.sendBroadcast(localBroadcastIntent);
-		            
-		          //COMPROBAR EL ESTADO DE LA RED MOVIL DE DATOS
-					 boolean wifi = Connectivity.isConnectedWifi(contexto);
-				     boolean movil = Connectivity.isConnectedMobile(contexto);
-				     boolean isConnectionFast = Connectivity.isConnectedFast(contexto);
-				     
-				     if(wifi || movil && isConnectionFast){
-				        	
-				    	 new TareaActualizarOrd().execute();	
-				    	 
-				     }else{
-				    	 clearLists();
-				     }
-				     
-				     getActivity().finish();
-					
-				}else{
-					Toast.makeText(contexto, "No attach activity.", Toast.LENGTH_SHORT).show();
+
+				ordBean = new OrdenVentaBean();
+				if (tipoDocumento.equals(""))
+					ordBean.setTipoDoc("P");
+				else
+					ordBean.setTipoDoc(tipoDocumento);
+				ordBean.setNumero(searchResults.get(0).getData());
+				ordBean.setCodSN(searchResults.get(1).getData());
+				ordBean.setNomSN(searchResults.get(2).getData());
+				if (mContactoSeleccionado != null)
+					ordBean.setContacto(String.valueOf(mContactoSeleccionado.getCodigo()));
+				if (monSel != null)
+					ordBean.setMoneda(monSel.getCodigo());
+				else
+					ordBean.setMoneda(listaMonedas.get(0).getCodigo());
+				ordBean.setEmpVentas(codigoEmpleado);
+				ordBean.setComentario(searchResults.get(6).getData());
+				ordBean.setFecContable(StringDateCast.castDatetoDateWithoutSlash(searchResults.get(7).getData()));
+				ordBean.setFecVen(StringDateCast.castDatetoDateWithoutSlash(searchResults.get(8).getData()));
+				//ordBean.setReferencia(searchResults.get(9).getData());
+				ordBean.setHoraCreacion(obtenerFecha("HH:mm"));
+				ordBean.setModoOffLine((wifi || movil) ? "N" : "Y");
+
+				mCurrentLocation = getCurrentLocation();
+
+				if(mCurrentLocation != null){
+					ordBean.setLatitud(String.valueOf(mCurrentLocation.getLatitude()));
+					ordBean.setLongitud(String.valueOf(mCurrentLocation.getLongitude()));
+					ordBean.setRangoDireccion(rangoDireccion(mCurrentLocation));
 				}
-				
-			}else{
-				update.close();
-				Toast.makeText(contexto, "No se actualizó la orden de venta, compruebe los datos", 
-						Toast.LENGTH_LONG).show();
+
+				//Bloque direcciones
+				if (mDireccionFiscalSeleccionada != null)
+					ordBean.setDirFiscal(mDireccionFiscalSeleccionada.getCodigo());
+
+				if (mDireccionEntregaSeleccionada != null)
+					ordBean.setDirEntrega(mDireccionEntregaSeleccionada.getCodigo());
+
+
+				//Bloque finanzas
+				if (condPagoSel != null)
+					ordBean.setCondPago(condPagoSel.getNumeroCondicion());
+				if (indicadorSel != null)
+					ordBean.setIndicador(indicadorSel.getCodigo());
+				if (listaPrecioSel != null)
+					ordBean.setListaPrecio(listaPrecioSel.getCodigo());
+
+
+				//Bloque calculos
+				if (searchResults3 != null)
+					ordBean.setSubTotal(searchResults3.get(0).getData());
+				else {
+					Toast.makeText(contexto, "Confirme los articulos en el detalle para generar los totales del pedido.", Toast.LENGTH_SHORT).show();
+					return true;
+				}
+				if (searchResults3.get(1) != null)
+					ordBean.setPorcDesc(Double.parseDouble(searchResults3.get(1).getData()));
+				else {
+					Toast.makeText(contexto, "Confirme los articulos en el detalle para generar los totales del pedido.", Toast.LENGTH_SHORT).show();
+					return true;
+				}
+				if (searchResults3.get(3) != null)
+					ordBean.setTotDesc(Double.parseDouble(searchResults3.get(2).getData()));
+				else {
+					Toast.makeText(contexto, "Confirme los articulos en el detalle para generar los totales del pedido.", Toast.LENGTH_SHORT).show();
+					return true;
+				}
+				ordBean.setImpuesto(searchResults3.get(3).getData());
+				ordBean.setTotal(searchResults3.get(4).getData());
+				ordBean.setCreadoMovil("Y");
+
+				Date date = new Date();
+				String fullDate = new SimpleDateFormat("yyyyMMddHHmmss", Locale.ENGLISH).format(date);
+				if (action.equals(""))
+					claveMovil = idDispositivo + "-" + fullDate + "-" + nroOrd;
+
+				ordBean.setClaveMovil(claveMovil);
+				ordBean.setClave(claveMovil);
+				ordBean.setEstadoRegistroMovil(getResources().getString(R.string.LOCAL));
+
+				listaOrdDet = new ArrayList<OrdenVentaDetalleBean>();
+				//DETALLES
+				for (ArticuloBean art : listaDetalleArticulos) {
+
+					ordDetBean = new OrdenVentaDetalleBean();
+					ordDetBean.setNroDocOrdV(ordBean.getClave());
+					ordDetBean.setCodArt(art.getCod());
+					ordDetBean.setDescripcion(art.getDesc());
+					ordDetBean.setCodUM(art.getCodUM());
+					ordDetBean.setAlmacen(art.getAlmacen());
+					ordDetBean.setCantidad(art.getCant());
+					ordDetBean.setListaPrecio(art.getCodigoListaPrecio());
+					ordDetBean.setPrecio(art.getPre());
+					ordDetBean.setDescuento(art.getDescuento());
+					ordDetBean.setCodImp(art.getCodigoImpuesto());
+					ordDetBean.setLinea(art.getUtilLinea());
+					listaOrdDet.add(ordDetBean);
+
+				}
+
+				ordBean.setDetalles(listaOrdDet);
+
+				if (action.equals("")) {
+
+					ordBean.setTransaccionMovil(getResources().getString(R.string.CREAR_BORRADOR));
+
+					Insert insert = new Insert(contexto);
+					boolean res = insert.insertOrdenVenta(ordBean);
+
+					if (res) {
+
+						//Actualizar el correlativo para la clave movil
+						insert.updateCorrelativo("ORD");
+						insert.close();
+
+						Toast.makeText(contexto, "Orden de venta registrada", Toast.LENGTH_LONG).show();
+
+						Activity activity = getActivity();
+
+						if (activity != null) {
+
+							//ENVIAR UN MENSAJE DE AVISO DE REGISTRO NUEVO A LA LISTA DE ORDENES DE VENTA
+							Intent localBroadcastIntent = new Intent("event-send-register-ov-ok");
+							LocalBroadcastManager myLocalBroadcastManager = LocalBroadcastManager.getInstance(activity);
+							myLocalBroadcastManager.sendBroadcast(localBroadcastIntent);
+
+
+							if (wifi || movil && isConnectionFast) {
+
+								//new TareaRegistroOrd().execute();
+								showToast("Enviando al servidor...");
+								addDocument();
+
+							} else {
+								clearLists();
+							}
+
+							transaction.remove(this);
+							transaction.commit();
+							activity.finish();
+
+						}
+
+
+					} else {
+						insert.close();
+						Toast.makeText(contexto, "No se registro la orden de venta, compruebe los datos",
+								Toast.LENGTH_LONG).show();
+					}
+				} else {
+
+					if (!estadoRegistroMovil.equals(getResources().getString(R.string.LOCAL))) {
+						ordBean.setClave(claveVenta);
+						ordBean.setTransaccionMovil(getResources().getString(R.string.ACTUALIZAR_BORRADOR));
+					} else {
+						ordBean.setTransaccionMovil(getResources().getString(R.string.CREAR_BORRADOR));
+					}
+
+
+					//Actualizaciï¿½n
+					Update update = new Update(contexto);
+					boolean res = update.updateOrdenVenta(ordBean);
+
+					if (res) {
+						update.close();
+						Toast.makeText(contexto, "Orden de venta actualizada", Toast.LENGTH_LONG).show();
+
+
+						Activity actividad = getActivity();
+
+						if (actividad != null) {
+
+							//ENVIAR UN MENSAJE DE AVISO DE REGISTRO NUEVO A LA LISTA DE ORDENES DE VENTA
+							Intent localBroadcastIntent = new Intent("event-send-register-ov-ok");
+							LocalBroadcastManager myLocalBroadcastManager = LocalBroadcastManager.getInstance(getActivity());
+							myLocalBroadcastManager.sendBroadcast(localBroadcastIntent);
+
+							if (wifi || movil && isConnectionFast) {
+
+								new TareaActualizarOrd().execute();
+
+							} else {
+								clearLists();
+							}
+
+							getActivity().finish();
+
+						} else {
+							Toast.makeText(contexto, "No attach activity.", Toast.LENGTH_SHORT).show();
+						}
+
+					} else {
+						update.close();
+						Toast.makeText(contexto, "No se actualizo la orden de venta, compruebe los datos",
+								Toast.LENGTH_LONG).show();
+					}
+
+				}
 			}
-			
-		}
-		
-		
+			catch(Exception e){
+				showToast("Error intentando registrar la orden de venta - " + e.getMessage());
+			}
 		
             return true;
         case 16908332:
@@ -1617,8 +1627,8 @@ public class OrdenVentaFragment extends Fragment{
 		
 		/***/
 		
-		//Dirección fiscal
-		direccionFiscalSel = new DireccionBean();
+		//Direcciï¿½n fiscal
+	/*	direccionFiscalSel = new DireccionBean();
 		direccionFiscalSel.setIDDireccion(bean.getDirFiscal());
 		String[] descripcion = select.obtenerDescripcionDireccion(bean.getCodSN(), bean.getDirFiscal());
 		if(descripcion != null){
@@ -1633,7 +1643,7 @@ public class OrdenVentaFragment extends Fragment{
 			}
 		}
 		
-		//Dirección entrega
+		//Direcciï¿½n entrega
 		direccionEntregaSel = new DireccionBean();
 		direccionEntregaSel.setIDDireccion(bean.getDirEntrega());
 		String[] descripcionE = select.obtenerDescripcionDireccion(bean.getCodSN(), bean.getDirEntrega());
@@ -1649,7 +1659,7 @@ public class OrdenVentaFragment extends Fragment{
 				searchResults2.get(1).setData(direccionEntregaSel.getReferencia());
 			}
 		}
-		
+		*/
 
 		
 		listaDireccionSN = select.listaDireccionesOV(bean.getCodSN());
@@ -1696,8 +1706,249 @@ public class OrdenVentaFragment extends Fragment{
 		select.close();
 		
 	}
-    
-    
+
+
+
+	//VOLLEY SENDING DOCUMENT
+	private void addDocument(){
+
+		final Insert insert = new Insert(contexto);
+		SharedPreferences mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(contexto);
+		String ip = mSharedPreferences.getString("ipServidor", Constantes.DEFAULT_IP);
+		String port = mSharedPreferences.getString("puertoServidor", Constantes.DEFAULT_PORT);
+		String sociedad = mSharedPreferences.getString("sociedades", "-1");
+		String ruta = "http://" + ip + ":" + port + "/MSS_MOBILE/service/";
+
+		ordBean.setDetalles(listaOrdDet);
+		JSONObject jsonObject = OrdenVentaBean.transformOVToJSON(ordBean, sociedad);
+
+		if(jsonObject != null){
+			JsonObjectRequest jsonObjectRequest =
+					new JsonObjectRequest(Request.Method.POST, ruta + "salesorder/addSalesOrder.xsjs", jsonObject,
+							new Response.Listener<JSONObject>() {
+								@Override
+								public void onResponse(JSONObject response) {
+									try
+									{
+										if(response.getString("ResponseStatus").equals("Success")){
+											insert.updateEstadoOrdenVenta(ordBean.getClaveMovil());
+											showToast("Enviado al servidor con exito.");
+
+										}else{
+											String messageError = response.getJSONObject("Response")
+													.getJSONObject("message")
+													.getString("value");
+											showToast(messageError);
+										}
+
+									}catch (Exception e){showToast("Response - " + e.getMessage());}finally {
+										clearLists();
+									}
+								}
+							},
+							new Response.ErrorListener() {
+								@Override
+								public void onErrorResponse(VolleyError error) {showToast("VolleyError - " + error.getMessage());}
+							}){
+						@Override
+						public Map<String, String> getHeaders() throws AuthFailureError {
+							HashMap<String, String> headers = new HashMap<String, String>();
+							headers.put("Content-Type", "application/json; charset=utf-8");
+							return headers;
+						}
+					};
+			VolleySingleton.getInstance(contexto).addToRequestQueue(jsonObjectRequest);
+		}else{
+			showToast("Error convirtiendo a JSON los datos del documento.");
+		}
+	}
+
+	private  void showToast(String message){
+		Toast.makeText(contexto, message, Toast.LENGTH_SHORT).show();
+	}
+
+	//region MAPS FUNCTIONS
+
+	private Location getCurrentLocation(){
+		try{
+			LocationManager mLocationManager = (LocationManager) getActivity().getSystemService(LOCATION_SERVICE);
+
+			ActivityCompat.requestPermissions(getActivity(),
+					new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+					1);
+
+			ActivityCompat.requestPermissions(getActivity(),
+					new String[]{Manifest.permission.ACCESS_COARSE_LOCATION},
+					1);
+
+			if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION)
+					!= PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getActivity(),
+					Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+				return null;
+			}
+
+			mLocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 300000, 0, mLocationListener);
+			if (!this.checkGPSIsEnabled()) {
+				showInfoAlert();
+			} else {
+				Location location = mLocationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+				if (location == null) {
+					location = mLocationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+				}
+				return location;
+			}
+
+		/*if (location == null) {
+			location = mLocationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+		} */
+		}catch (Exception e){
+			showToast("getCurrentLocation() > " + e.getMessage());
+			return null;
+		}
+
+		return null;
+	}
+
+	private String rangoDireccion(Location currentLocation){
+		String rangoResult = Constantes.RANGO_NO_DISPONIBLE;
+
+		try{
+
+			if(mDireccionEntregaSeleccionada != null){
+				if(mDireccionEntregaSeleccionada.getLatitud() != null && mDireccionEntregaSeleccionada.getLongitud() != null &&
+						!TextUtils.isEmpty(mDireccionEntregaSeleccionada.getLatitud()) &&
+						!TextUtils.isEmpty(mDireccionEntregaSeleccionada.getLongitud())){
+
+					Location locationTo = new Location(GPS_PROVIDER);
+					locationTo.setLatitude(Double.parseDouble(mDireccionEntregaSeleccionada.getLatitud()));
+					locationTo.setLongitude(Double.parseDouble(mDireccionEntregaSeleccionada.getLongitud()));
+
+					float distance = mCurrentLocation.distanceTo(locationTo);
+
+					if(distance > Constantes.DEFAULT_RANGE)
+						rangoResult = Constantes.FUERA_DE_RANGO;
+					else
+						rangoResult = Constantes.DENTRO_DE_RANGO;
+				}
+			}
+
+		}catch(Exception e){
+			showToast("rangoDireccion() > " + e.getMessage());
+			return rangoResult;
+		}
+
+		return rangoResult;
+	}
+
+	private void autoSeleccionarDireccionMasCercana(){
+
+		try{
+			mCurrentLocation = getCurrentLocation();
+
+			float bestDistance = -1;
+
+			if(mClienteSeleccionado.getDirecciones() != null && mCurrentLocation != null){
+				for (DireccionBuscarBean direccion: mClienteSeleccionado.getDirecciones()) {
+					if(direccion.getTipo().equals(Constantes.TIPO_DIRECCION_ENTREGA) &&
+							direccion.getLatitud() != null && direccion.getLongitud() != null &&
+							!TextUtils.isEmpty(direccion.getLatitud()) && !TextUtils.isEmpty(direccion.getLongitud())){
+
+						Location locationTo = new Location(GPS_PROVIDER);
+						locationTo.setLatitude(Double.parseDouble(direccion.getLatitud()));
+						locationTo.setLongitude(Double.parseDouble(direccion.getLongitud()));
+
+						float distance = mCurrentLocation.distanceTo(locationTo);
+						if(bestDistance == -1) {
+							bestDistance = distance;
+							mDireccionEntregaTempSeleccionada = direccion;
+						}else{
+							if(distance < bestDistance){
+								bestDistance = distance;
+								mDireccionEntregaTempSeleccionada = direccion;
+							}
+						}
+					}
+				}
+
+				if(mDireccionEntregaTempSeleccionada != null){
+					mDireccionEntregaSeleccionada = mDireccionEntregaTempSeleccionada;
+					mDireccionEntregaTempSeleccionada = null;
+					updateRowListDirecciones(1, mDireccionEntregaSeleccionada.getCalle());
+					showToast("Autoseleccion de direccion mas cercana...");
+				}
+			}
+		}catch (Exception e){
+			showToast("autoSeleccionarDireccionMasCercana > " + e.getMessage());
+		}
+	}
+
+	private final LocationListener mLocationListener = new LocationListener() {
+		@Override
+		public void onLocationChanged(final Location location) {
+			//createOrUpdateMarkerByLocation(location);
+		}
+
+		@Override
+		public void onStatusChanged(String provider, int status, Bundle extras) {
+
+		}
+
+		@Override
+		public void onProviderEnabled(String provider) {
+
+		}
+
+		@Override
+		public void onProviderDisabled(String provider) {
+
+		}
+	};
+
+	private boolean checkGPSIsEnabled() {
+		try {
+			int locationMode = 0;
+			String locationProviders;
+			if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT){
+				try {
+					locationMode = Settings.Secure.getInt(getActivity().getContentResolver(), Settings.Secure.LOCATION_MODE);
+
+				} catch (Settings.SettingNotFoundException e) {
+					showToast("checkGPSIsEnabled() SDKV>19 > " + e.getMessage());
+					return false;
+				}
+
+				return locationMode != Settings.Secure.LOCATION_MODE_OFF;
+
+			}else{
+				locationProviders = Settings.Secure.getString(getActivity().getContentResolver(), Settings.Secure.LOCATION_PROVIDERS_ALLOWED);
+				return !TextUtils.isEmpty(locationProviders);
+			}
+
+
+		} catch (Exception e) {
+			showToast("checkGPSIsEnabled() > " + e.getMessage());
+			return false;
+		}
+	}
+
+	private void showInfoAlert() {
+		new android.support.v7.app.AlertDialog.Builder(getActivity())
+				.setTitle("SeÃ±al GPS")
+				.setMessage("No tienes seÃ±al GPS. Quieres habilitarla?")
+				.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialogInterface, int i) {
+						//El GPS no estÃ¡ activado
+						Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+						startActivity(intent);
+					}
+				})
+				.setNegativeButton("CANCEL", null)
+				.show();
+	}
+
+	//endregion
+
 ;
 	
 	private class TareaRegistroOrd extends AsyncTask<String, Void, Object>{

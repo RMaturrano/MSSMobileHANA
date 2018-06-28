@@ -35,6 +35,69 @@
         android:layout_width="match_parent"
         android:layout_height="fill_parent"
         android:layout_below="@id/tab_layout"/>
+
+	<LinearLayout
+		android:id="@+id/lytFabAddIncidenciaFacturaDetalle"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_alignBottom="@+id/pager"
+		android:layout_marginBottom="@dimen/itemFab1MarginBottom"
+		android:layout_marginRight="@dimen/itemFabMarginRight"
+		android:layout_alignParentRight="true"
+		android:orientation="horizontal">
+
+		<android.support.v7.widget.CardView
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			app:cardBackgroundColor="@color/white"
+			app:cardCornerRadius="@dimen/itemFabCardCornerRadius"
+			app:cardElevation="@dimen/itemFabCardElevation"
+			app:cardUseCompatPadding="true" >
+			<TextView
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:text="Incidencia"
+				android:textAppearance="?android:attr/textAppearanceSmall"
+				android:textStyle="bold"
+				android:textColor="@color/colorSilver"
+				android:padding = "@dimen/itemFabTextPadding" />
+		</android.support.v7.widget.CardView>
+
+		<android.support.design.widget.FloatingActionButton
+			android:id="@+id/fabAddIncidenciaFacturaDetalle"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			app:elevation="@dimen/itemFabButtonElevation"
+			android:src="@drawable/ic_content_paste_24dp"
+			app:backgroundTint="@color/floattingButtonColor"
+			app:fabSize="mini"
+			app:pressedTranslationZ="12dp"
+			app:rippleColor="@color/floattingButtonColorPressed"/>
+
+	</LinearLayout>
+
+	<LinearLayout
+		android:id="@+id/lytFabAddActionEntregaDetalle"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_alignBottom="@+id/pager"
+		android:layout_marginBottom="8dp"
+		android:layout_marginRight="8dp"
+		android:layout_alignParentRight="true"
+		android:orientation="horizontal">
+
+		<android.support.design.widget.FloatingActionButton
+			android:id="@+id/fabAddActionFacturaDetalle"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			app:elevation="0dp"
+			app:srcCompat="@drawable/ic_add_white_36dp"
+			app:backgroundTint="@color/floattingButtonColor"
+			app:fabSize="normal"
+			app:pressedTranslationZ="12dp"
+			app:rippleColor="@color/floattingButtonColorPressed"/>
+
+	</LinearLayout>
  
  
 </RelativeLayout>

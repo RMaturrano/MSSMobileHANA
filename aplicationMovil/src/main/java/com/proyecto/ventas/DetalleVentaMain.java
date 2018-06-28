@@ -20,6 +20,8 @@ import com.proyect.movil.R;
 import com.proyecto.utils.PagerAdapterDetOrd;
 import com.proyecto.utils.Variables;
 
+import org.json.JSONObject;
+
 public class DetalleVentaMain extends AppCompatActivity{
 	
 	public static String idNroVenta = null;
@@ -29,6 +31,7 @@ public class DetalleVentaMain extends AppCompatActivity{
 	private String movilEditar = "";
 	private String estado = "";
 	private String estadoTransaccion = "";
+	private FloatingActionButton fabEditar;
 	
 	@Override
 	protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -93,12 +96,10 @@ public class DetalleVentaMain extends AppCompatActivity{
         
         pref = PreferenceManager
 				.getDefaultSharedPreferences(contexto);
-        movilEditar = pref.getString(Variables.MOVIL_EDITAR, "");
- 
-        
+
       //FLOATING BUTTON EDITAR
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
+		fabEditar = (FloatingActionButton) findViewById(R.id.fab);
+		fabEditar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
             	
@@ -115,22 +116,33 @@ public class DetalleVentaMain extends AppCompatActivity{
                 
             }
         });
-        
-        if(!estadoTransaccion.equals("") && !movilEditar.equals("")){
-        	 if(movilEditar.equalsIgnoreCase("Y")
-             		&& Integer.parseInt(estadoTransaccion) <= 2){
-             	fab.setVisibility(FloatingActionButton.VISIBLE);
-             }else{
-             	fab.setVisibility(FloatingActionButton.INVISIBLE);
-             }
-        }else{
-        	fab.setVisibility(FloatingActionButton.INVISIBLE);  //CMBIAR A INVISIBLE
-        }
-       
-        	
+		fabEditar.setVisibility(View.INVISIBLE);
 	}
-	
-	
+
+	@Override
+	protected void onStart() {
+		super.onStart();
+		pref = PreferenceManager
+				.getDefaultSharedPreferences(contexto);
+
+		String permisosMenu = pref.getString(Variables.MENU_PEDIDOS, null);
+		if (permisosMenu != null) {
+			try {
+				JSONObject permisos = new JSONObject(permisosMenu);
+				movilEditar = permisos.getString(Variables.MOVIL_EDITAR);
+
+				if(!estadoTransaccion.equals("") && !movilEditar.equals("")){
+					if(movilEditar.equalsIgnoreCase("Y")
+							&& Integer.parseInt(estadoTransaccion) <= 2){
+						fabEditar.setVisibility(FloatingActionButton.VISIBLE);
+					}
+				}
+			} catch (Exception e) {
+				Toast.makeText(this, "Ocurrió un error intentando obtener los permisos del menú", Toast.LENGTH_SHORT).show();
+			}
+		}
+	}
+
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		

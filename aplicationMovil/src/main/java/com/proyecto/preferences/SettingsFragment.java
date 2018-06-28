@@ -118,28 +118,32 @@ public class SettingsFragment extends PreferenceFragment implements
 					@Override
 					public void onResponse(String response) {
 						try {
-							JSONArray jsonArray = new JSONArray(response);
-							int size = jsonArray.length();
+							JSONObject jsonObject = new JSONObject(response);
+							if(jsonObject.getString("ResponseStatus").equals("Success")){
+								JSONArray jsonArray = jsonObject.getJSONObject("Response")
+																			.getJSONObject("message")
+																			.getJSONArray("value");
+								int size = jsonArray.length();
 
-							if(size > 0) {
-								for (int i = 0; i < size; i++) {
-									JSONObject jsonObj = jsonArray.getJSONObject(i);
+								if(size > 0) {
+									for (int i = 0; i < size; i++) {
+										JSONObject jsonObj = jsonArray.getJSONObject(i);
 
-									listEntries.add(jsonObj.getString("descripcion"));
-									listValues.add(jsonObj.getString("id"));
+										listEntries.add(jsonObj.getString("descripcion"));
+										listValues.add(jsonObj.getString("id"));
+									}
+								}else{
+									listEntries.add("No se obtuvieron resultados");
+									listValues.add("-1");
 								}
-							}else{
-								listEntries.add("NO DATA FOUND");
-								listValues.add("-1");
+
+								mListPref.setEntries(listEntries.toArray(new CharSequence[listEntries.size()]));
+								mListPref.setDefaultValue(1);
+								mListPref.setEntryValues(listValues.toArray(new CharSequence[listValues.size()]));
 							}
-
-							mListPref.setEntries(listEntries.toArray(new CharSequence[listEntries.size()]));
-							mListPref.setDefaultValue(1);
-							mListPref.setEntryValues(listValues.toArray(new CharSequence[listValues.size()]));
-
 						} catch (Exception e){
 
-							listEntries.add("NO DATA FOUND");
+							listEntries.add("No se obtuvieron resultados");
 							listValues.add("-1");
 
 							mListPref.setEntries(listEntries.toArray(new CharSequence[listEntries.size()]));

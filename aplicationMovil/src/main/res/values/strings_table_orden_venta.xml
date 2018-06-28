@@ -26,7 +26,11 @@
     <string name="C_OV_CLAVE_MOVIL">ClaveMovil</string>
     <string name="C_OV_ESTADO_REGISTRO_MOVIL">EstadoMovil</string>
     <string name="C_OV_TRANSACCION_MOVIL">TransaccionMovil</string>
-    
+    <string name="C_OV_MODO_OFFLINE">ModoOffline</string>
+    <string name="C_OV_LATITUD">Latitud</string>
+    <string name="C_OV_LONGITUD">Longitud</string>
+    <string name="C_OV_HORA_CREACION">HoraCreacion</string>
+    <string name="C_OV_RANGO_CLIENTE">RangoCliente</string>
     
     <!-- DETALLES -->
     <string name="TD_ORDEN_VENTA_DETALLE">TB_ORDEN_VENTA_DETALLE</string>

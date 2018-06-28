@@ -1,6 +1,7 @@
 package com.proyecto.sociosnegocio;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
@@ -26,15 +27,19 @@ import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.google.android.gms.maps.model.LatLng;
 import com.proyect.movil.R;
 import com.proyecto.bean.CalleBean;
+import com.proyecto.bean.CanalBean;
 import com.proyecto.bean.DepartamentoBean;
 import com.proyecto.bean.DireccionBean;
 import com.proyecto.bean.DistritoBean;
+import com.proyecto.bean.GiroBean;
 import com.proyecto.bean.PaisBean;
 import com.proyecto.bean.ProvinciaBean;
 import com.proyecto.bean.TipoDireccionBean;
 import com.proyecto.database.Select;
+import com.proyecto.geolocalizacion.MapsActivity;
 import com.proyecto.utils.ConstruirAlert;
 import com.proyecto.utils.DynamicHeight;
 import com.proyecto.utils.FormatCustomListView;
@@ -42,7 +47,9 @@ import com.proyecto.utils.ListViewCustomAdapterTwoLinesAndImg;
 import com.proyecto.utils.Variables;
 
 public class DireccionSocioNegocio extends Fragment{
-	
+
+	public static final String TAG_AGREGAR_DIRECCION = "frgmnt_agregar_direccion";
+
 	private View v;
 	private Context contexto;
 	private int iconId = Variables.idIconRightBlue36dp;
@@ -63,6 +70,8 @@ public class DireccionSocioNegocio extends Fragment{
 	private ArrayList<ProvinciaBean> listaProvincias = null;
 	private ArrayList<DistritoBean> listaDistritos = null;
 	private ArrayList<CalleBean> listaCalles = null;
+	private List<CanalBean> listaCanales = null;
+	private List<GiroBean> listaGiros = null;
 	
 	private PaisBean paisSel = null;
 	private DepartamentoBean departamentoSel = null;
@@ -70,11 +79,14 @@ public class DireccionSocioNegocio extends Fragment{
 	private DistritoBean distritoSel = null;
 	private CalleBean calleSel = null;
 	private String tipoRegistro = "Nuevo";
+	private LatLng mUbicacion = null;
+	private CanalBean canalSel = null;
+	private GiroBean giroSel = null;
 	
 	//Si es una direccion a actualizar:
 	private int utilId;
 	
-	//Método de recepción de mensaje
+	//region Método de recepción de mensaje
 		private BroadcastReceiver myLocalBroadcastReceiver = new BroadcastReceiver() {
 			@Override
 			public void onReceive(Context context, Intent intent) {
@@ -95,7 +107,8 @@ public class DireccionSocioNegocio extends Fragment{
 				}
 			}
 		};
-	
+	//endregion
+
 	@Override
     public View onCreateView(LayoutInflater inflater,ViewGroup viewGroup, Bundle savedInstanceState) {
 	    View view = inflater.inflate(R.layout.socio_negocio_direccion, viewGroup, false);
@@ -156,6 +169,9 @@ public class DireccionSocioNegocio extends Fragment{
 		if(departamentoSel == null){
 			departamentoSel = listaDepartamentos.get(0);
 		}
+
+		listaCanales = select.listaCanales();
+		listaGiros = select.listaGiro();
 		
 		select.close();
 		
@@ -170,8 +186,7 @@ public class DireccionSocioNegocio extends Fragment{
 		select.close();
 		
 	}
-	
-	
+
 	private void llenarListaDireccion() {
 		
 		searchResults = new ArrayList<FormatCustomListView>();
@@ -278,7 +293,7 @@ public class DireccionSocioNegocio extends Fragment{
 	  	sr = new FormatCustomListView();
 	  	sr.setTitulo("Calle");
 	  	if(direccion != null && direccion.getCalle() != null){
-	  		Select select = new Select(contexto);
+	  		/*Select select = new Select(contexto);
     		listaCalles = select.listaCalles(distritoSel.getCodigo());
     		select.close();
     		for (CalleBean calle : listaCalles) {
@@ -287,7 +302,8 @@ public class DireccionSocioNegocio extends Fragment{
 					sr.setData(calleSel.getNombre());
 					break;
 				}
-			}
+			} */
+	  		sr.setData(direccion.getCalle());
 	  	}
 	  	sr.setIcon(iconId);
 	  	searchResults.add(sr);
@@ -298,14 +314,68 @@ public class DireccionSocioNegocio extends Fragment{
 			sr.setData(direccion.getReferencia());
 	  	sr.setIcon(iconId);
 	  	searchResults.add(sr);
-	
-	  	adapter = new ListViewCustomAdapterTwoLinesAndImg( contexto, searchResults);
+
+		sr = new FormatCustomListView();
+		sr.setTitulo("Latitud");
+		if(direccion != null && direccion.getLatitud() != null)
+			sr.setData(direccion.getLatitud());
+		searchResults.add(sr);
+
+		sr = new FormatCustomListView();
+		sr.setTitulo("Longitud");
+		if(direccion != null && direccion.getLongitud() != null)
+			sr.setData(direccion.getLongitud());
+		searchResults.add(sr);
+
+		sr = new FormatCustomListView();
+		sr.setTitulo("Ruta");
+		if(direccion != null && direccion.getRuta() != null)
+			sr.setData(direccion.getRuta());
+		sr.setIcon(iconId);
+		searchResults.add(sr);
+
+		sr = new FormatCustomListView();
+		sr.setTitulo("Zona");
+		if(direccion != null && direccion.getZona() != null)
+			sr.setData(direccion.getZona());
+		sr.setIcon(iconId);
+		searchResults.add(sr);
+
+		sr = new FormatCustomListView();
+		sr.setTitulo("Canal");
+		if(direccion != null && direccion.getCanal() != null &&
+				!direccion.getCanal().equals("")) {
+			for (CanalBean c: listaCanales) {
+				if(c.getCodigo().equals(direccion.getCanal())){
+					canalSel = c;
+					sr.setData(canalSel.getDescripcion());
+					break;
+				}
+			}
+		}
+		sr.setIcon(iconId);
+		searchResults.add(sr);
+
+		sr = new FormatCustomListView();
+		sr.setTitulo("Giro");
+		if(direccion != null && direccion.getGiro() != null &&
+				!direccion.getGiro().equals("")) {
+			for (GiroBean g: listaGiros) {
+				if(g.getCodigo().equals(direccion.getGiro())){
+					giroSel = g;
+					sr.setData(giroSel.getDescripcion());
+					break;
+				}
+			}
+		}
+		sr.setIcon(iconId);
+		searchResults.add(sr);
+
+	  	adapter = new ListViewCustomAdapterTwoLinesAndImg(contexto, searchResults);
       	lvPrincipal.setAdapter(adapter);
   		DynamicHeight.setListViewHeightBasedOnChildren(lvPrincipal);
-		
 	}
 
-	
 	private void buildFirstAlert(int position){
 		
 		posicion = position;
@@ -707,7 +777,7 @@ public class DireccionSocioNegocio extends Fragment{
 				
 			}else if(position== 6){
 				
-				if(distritoSel != null){
+			/*	if(distritoSel != null){
 					FragmentManager manager = getFragmentManager();
 			    	FragmentTransaction transaction = manager.beginTransaction();
 					Fragment fragment = new BuscarCalleFragment();
@@ -716,25 +786,90 @@ public class DireccionSocioNegocio extends Fragment{
 		            transaction.add(R.id.box, fragment);
 		            transaction.addToBackStack(null);
 		            transaction.commit();
-				}
+				}  */
+
+				ConstruirAlert alert = new ConstruirAlert();
+				alert.construirAlert(contexto, position, "Calle", searchResults, lvPrincipal, "text",100);
 				
 			}else if(position == 7){
 				
 				ConstruirAlert alert = new ConstruirAlert();
 				alert.construirAlert(contexto, position, "Referencia", searchResults, lvPrincipal, "text",100);
-				
+			}else if(position == 10){
+
+				ConstruirAlert alert = new ConstruirAlert();
+				alert.construirAlert(contexto, position, "Ruta", searchResults, lvPrincipal, "text",100);
+			}else if(position == 11){
+
+				ConstruirAlert alert = new ConstruirAlert();
+				alert.construirAlert(contexto, position, "Zona", searchResults, lvPrincipal, "text",100);
+			}else if(position == 12){
+				//Canales
+				posicion = position;
+				Object o = lvPrincipal.getItemAtPosition(position);
+				fullObject = new FormatCustomListView();
+				fullObject = (FormatCustomListView) o;
+
+				ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(getActivity(),
+						android.R.layout.select_dialog_singlechoice);
+
+				for (CanalBean p: listaCanales) {
+					arrayAdapter.add(p.getCodigo() + " - " + p.getDescripcion());
+				}
+
+				final AlertDialog dialog;
+				final AlertDialog.Builder alert = new AlertDialog.Builder(
+						contexto);
+				alert.setTitle("Canal");
+				alert.setSingleChoiceItems(arrayAdapter, -1, new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						canalSel = listaCanales.get(which);
+						fullObject.setData(canalSel.getDescripcion());
+						searchResults.set(posicion, fullObject);
+						lvPrincipal.invalidateViews();
+						dialog.dismiss();
+					}
+				});
+				dialog = alert.show();
+			}else if(position == 13){
+				//Giros
+				posicion = position;
+				Object o = lvPrincipal.getItemAtPosition(position);
+				fullObject = new FormatCustomListView();
+				fullObject = (FormatCustomListView) o;
+
+				ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(getActivity(),
+						android.R.layout.select_dialog_singlechoice);
+
+				for (GiroBean p: listaGiros) {
+					arrayAdapter.add(p.getCodigo() + " - " + p.getDescripcion());
+				}
+
+				final AlertDialog dialog;
+				final AlertDialog.Builder alert = new AlertDialog.Builder(
+						contexto);
+				alert.setTitle("Giro");
+				alert.setSingleChoiceItems(arrayAdapter, -1, new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						giroSel = listaGiros.get(which);
+						fullObject.setData(giroSel.getDescripcion());
+						searchResults.set(posicion, fullObject);
+						lvPrincipal.invalidateViews();
+						dialog.dismiss();
+					}
+				});
+				dialog = alert.show();
 			}
-			
 		}
-	
 	
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-	    	inflater.inflate(R.menu.menu_art_ordventa, menu);
+	    	inflater.inflate(R.menu.menu_socio_agregar_direccion, menu);
 	    	super.onCreateOptionsMenu(menu, inflater);
 	}
-	
-	
+
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 			
@@ -786,12 +921,28 @@ public class DireccionSocioNegocio extends Fragment{
 			    	    	bean.setProvincia(provinciaSel.getCodigo());
 			    	    if(distritoSel != null)
 			    	    	bean.setDistrito(distritoSel.getCodigo());
-			    	    if(calleSel != null){
+			    	    /*if(calleSel != null){
 			    	    	bean.setCalle(calleSel.getCodigo());
 			    	    	bean.setNombreCalle(calleSel.getNombre());
-			    	    }
+			    	    } */
+						if(mUbicacion != null){
+			    	    	bean.setLatitud(String.valueOf(mUbicacion.latitude));
+			    	    	bean.setLongitud(String.valueOf(mUbicacion.longitude));
+						}
+
+						bean.setCalle(searchResults.get(6).getData());
 			    	    bean.setReferencia(searchResults.get(7).getData());
-			    	    
+					bean.setLatitud(searchResults.get(8).getData());
+					bean.setLongitud(searchResults.get(9).getData());
+					bean.setRuta(searchResults.get(10).getData());
+					bean.setZona(searchResults.get(11).getData());
+
+					if(canalSel != null)
+						bean.setCanal(canalSel.getCodigo());
+
+					if(giroSel != null)
+						bean.setGiro(giroSel.getCodigo());
+
 			    	    if(SocioNegocioFragment.listaDirecciones.size()== 0){
 			    	    	bean.setPrincipal(true);
 			    	    }else
@@ -851,9 +1002,15 @@ public class DireccionSocioNegocio extends Fragment{
 	        		Toast.makeText(contexto, "Seleccione el tipo de dirección", Toast.LENGTH_LONG).show();
 	        		
 	        	}
-	        	
-	        	
 	        	return true;
+			case R.id.action_addlocation:
+				Intent location = new Intent(getActivity().getBaseContext(), MapsActivity.class);
+				if(mUbicacion != null){
+					location.putExtra(MapsActivity.KEY_PARAM_LATITUD, mUbicacion.latitude);
+					location.putExtra(MapsActivity.KEY_PARAM_LONGITUD, mUbicacion.longitude);
+				}
+				getActivity().startActivityForResult(location, MapsActivity.REQUEST_MAPAS);
+				return true;
 	        default:
 	            return super.onOptionsItemSelected(item);
 	      
@@ -861,4 +1018,29 @@ public class DireccionSocioNegocio extends Fragment{
 			
 	}
 
+	public void actualizarUbicacion(double latitud, double longitud){
+		try{
+			mUbicacion = new LatLng(latitud, longitud);
+
+			fullObject = new FormatCustomListView();
+			fullObject = (FormatCustomListView) lvPrincipal.getItemAtPosition(8);
+			fullObject.setData(String.valueOf(latitud));
+			searchResults.set(8, fullObject);
+
+			fullObject = new FormatCustomListView();
+			fullObject = (FormatCustomListView) lvPrincipal.getItemAtPosition(9);
+			fullObject.setData(String.valueOf(longitud));
+			searchResults.set(9, fullObject);
+			lvPrincipal.invalidateViews();
+
+			showMessage("Ubicación actualizada...");
+		}catch(Exception e){
+			showMessage("actualizarUbicacion() > " + e.getMessage());
+		}
+	}
+
+	private void showMessage(String message){
+		if(message != null)
+			Toast.makeText(getActivity().getApplicationContext(), message, Toast.LENGTH_LONG).show();
+	}
 }

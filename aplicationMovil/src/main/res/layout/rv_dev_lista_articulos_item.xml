@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/cvListarArticulos"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        card_view:cardCornerRadius="4dp"
+        card_view:cardElevation="4dp"
+        card_view:cardUseCompatPadding="true"
+        card_view:contentPadding="10dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Seleccionado"
+                    android:gravity="center"
+                    android:textColor="@color/colorSilver"
+                    android:textSize="8sp"/>
+                <CheckBox
+                    android:id="@+id/cbxDevArtSeleccionado"
+                    android:layout_width="40dp"
+                    android:layout_height="30dp"
+                    android:layout_gravity="center"/>
+
+                <android.support.design.widget.FloatingActionButton
+                    android:id="@+id/fabDevVerLote"
+                    xmlns:app="http://schemas.android.com/apk/res-auto"
+                    android:layout_width="35dp"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_details_white_36dp"
+                    app:backgroundTint="@color/floattingButtonColor"
+                    app:fabSize="mini"
+                    app:rippleColor="@color/floattingButtonColorPressed"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="#FAFAFA">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Código de artículo"
+                        android:maxLines="1"
+                        android:ellipsize="end"
+                        android:textColor="@color/list_item_title"
+                        android:textSize="@dimen/cardviewHintTextSize" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:text="Descripción"
+                        android:maxLines="1"
+                        android:ellipsize="end"
+                        android:gravity="right"
+                        android:textColor="@color/list_item_title"
+                        android:textSize="@dimen/cardviewHintTextSize" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="4dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/tvDevArtCodigo"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        android:textSize="@dimen/cardviewTitleTextSize" />
+
+                    <TextView
+                        android:id="@+id/tvDevArtDescripcion"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="start"
+                        android:singleLine="true"
+                        android:textSize="@dimen/cardviewTitleTextSize" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Precio unitario"
+                        android:textColor="@color/list_item_title"
+                        android:textSize="@dimen/cardviewHintTextSize" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Cantidad"
+                        android:textColor="@color/list_item_title"
+                        android:textSize="@dimen/cardviewHintTextSize" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/tvDevArtPrecioUnitario"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        android:textSize="@dimen/cardviewTitleTextSize" />
+
+                    <Button
+                        android:id="@+id/btnDevArtMenos"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:text="-"
+                        android:textColor="@color/white"
+                        android:textStyle="bold"
+                        android:background="@color/list_item_title"/>
+
+                    <EditText
+                        android:id="@+id/tvDevArtCantidad"
+                        android:layout_width="50dp"
+                        android:layout_height="40dp"
+                        android:gravity="right"
+                        android:inputType="numberDecimal"
+                        android:maxLength="10"
+                        android:enabled="false"
+                        android:textStyle="bold"
+                        android:maxLines="1"
+                        android:textSize="14sp" />
+
+                    <Button
+                        android:id="@+id/btnDevArtMas"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:text="+"
+                        android:textColor="@color/white"
+                        android:textStyle="bold"
+                        android:background="@color/list_item_title"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </android.support.v7.widget.CardView>
+
+</LinearLayout>

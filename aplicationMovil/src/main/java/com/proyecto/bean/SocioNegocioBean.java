@@ -1,5 +1,8 @@
 package com.proyecto.bean;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 
 public class SocioNegocioBean {
@@ -7,9 +10,15 @@ public class SocioNegocioBean {
 	
 	private String tipoPersona, tipoDoc, codigo, nroDoc, nombRazSoc, apePat, apeMat,
 			priNom, segNom, nomCom, grupo, moneda, tlf1, tlf2, tlfMov, correo, 
-			condPago, comentario,
+			condPago, comentario, personaContacto,
 			tipoCliente, empleadoVentas, limCre, prioridad, listaPrecio, indicador, zona,
-			creadoMovil, claveMovil, estadoRegistroMovil, direccionFiscal, TransaccionMovil,ValidoenPedido;
+			creadoMovil, claveMovil, estadoRegistroMovil, direccionFiscal, TransaccionMovil,ValidoenPedido,
+			poseeActivos, codProyecto, tipoRegistro, numUltimaCompra, fecUtimaCompra, montoUltCompra;
+
+	public SocioNegocioBean(){
+		this.contactos = new ArrayList<>();
+		this.direcciones = new ArrayList<>();
+	}
 	
 	public String getCreadoMovil() {
 		return creadoMovil;
@@ -280,9 +289,140 @@ public class SocioNegocioBean {
 	public void setValidoenPedido(String validoenPedido) {
 		ValidoenPedido = validoenPedido;
 	}
-			
-	
-	
+
+	public String getPoseeActivos() {
+		return poseeActivos;
+	}
+
+	public void setPoseeActivos(String poseeActivos) {
+		this.poseeActivos = poseeActivos;
+	}
+
+	public String getCodProyecto() {
+		return codProyecto;
+	}
+
+	public void setCodProyecto(String codProyecto) {
+		this.codProyecto = codProyecto;
+	}
+
+	public String getTipoRegistro() {
+		return tipoRegistro;
+	}
+
+	public void setTipoRegistro(String tipoRegistro) {
+		this.tipoRegistro = tipoRegistro;
+	}
+
+	public String getNumUltimaCompra() {
+		return numUltimaCompra;
+	}
+
+	public void setNumUltimaCompra(String numUltimaCompra) {
+		this.numUltimaCompra = numUltimaCompra;
+	}
+
+	public String getFecUtimaCompra() {
+		return fecUtimaCompra;
+	}
+
+	public void setFecUtimaCompra(String fecUtimaCompra) {
+		this.fecUtimaCompra = fecUtimaCompra;
+	}
+
+	public String getMontoUltCompra() {
+		return montoUltCompra;
+	}
+
+	public void setMontoUltCompra(String montoUltCompra) {
+		this.montoUltCompra = montoUltCompra;
+	}
+
+	public String getPersonaContacto() {
+		return personaContacto;
+	}
+
+	public void setPersonaContacto(String personaContacto) {
+		this.personaContacto = personaContacto;
+	}
+
+	public static JSONObject transformBPToJSON(SocioNegocioBean ov, String sociedad){
+		try	{
+
+			JSONObject jsonObject = new JSONObject();
+			jsonObject.put("ClaveMovil", ov.getClaveMovil());
+			jsonObject.put("TransaccionMovil", ov.getTransaccionMovil());
+			jsonObject.put("TipoPersona", ov.getTipoPersona());
+			jsonObject.put("TipoDocumento", ov.getTipoDoc());
+			jsonObject.put("NumeroDocumento", ov.getNroDoc());
+			jsonObject.put("NombreRazonSocial", ov.getNombRazSoc());
+			jsonObject.put("NombreComercial", ov.getNomCom());
+			jsonObject.put("ApellidoPaterno", ov.getApePat());
+			jsonObject.put("ApellidoMaterno", ov.getApeMat());
+			jsonObject.put("PrimerNombre", ov.getPriNom());
+			jsonObject.put("SegundoNombre", ov.getSegNom());
+			jsonObject.put("Telefono1", ov.getTlf1());
+			jsonObject.put("Telefono2", ov.getTlf2());
+			jsonObject.put("TelefonoMovil", ov.getTlfMov());
+			jsonObject.put("CorreoElectronico", ov.getCorreo());
+			jsonObject.put("GrupoSocio", Integer.parseInt(ov.getGrupo()));
+			jsonObject.put("ListaPrecio", Integer.parseInt(ov.getListaPrecio()));
+			jsonObject.put("CondicionPago", Integer.parseInt(ov.getCondPago()));
+			jsonObject.put("Indicador", ov.getIndicador());
+			jsonObject.put("Zona", ov.getZona());
+			jsonObject.put("Empresa", Integer.parseInt(sociedad));
+			jsonObject.put("PoseeActivo", ov.getPoseeActivos());
+			jsonObject.put("Vendedor", ov.getEmpleadoVentas());
+			jsonObject.put("Proyecto", ov.getCodProyecto());
+			jsonObject.put("TipoRegistro", ov.getTipoRegistro());
+
+			JSONArray contactos = new JSONArray();
+			for (ContactoBean line: ov.getContactos()) {
+
+				JSONObject jsonLine = new JSONObject();
+				jsonLine.put("IdContacto", line.getIdCon());
+				jsonLine.put("PrimerNombre", line.getPrimerNombre());
+				jsonLine.put("SegundoNombre", line.getSegNomCon());
+				jsonLine.put("Apellidos", line.getApeCon());
+				jsonLine.put("Posicion", line.getPosicion());
+				jsonLine.put("Direccion", line.getDireccion());
+				jsonLine.put("CorreoElectronico", line.getEmailCon());
+				jsonLine.put("Telefono1", line.getTel1Con());
+				jsonLine.put("Telefono2", line.getTel2Con());
+				jsonLine.put("TelefonoMovil", line.getTelMovCon());
+
+				contactos.put(jsonLine);
+			}
+			jsonObject.put("Contacts", contactos);
+
+			JSONArray direcciones = new JSONArray();
+			for (DireccionBean line: ov.getDirecciones()) {
+
+				JSONObject jsonLine = new JSONObject();
+				jsonLine.put("Tipo", line.getTipoDireccion());
+				jsonLine.put("Codigo", line.getIDDireccion());
+				jsonLine.put("Pais", line.getPais());
+				jsonLine.put("Departamento", line.getDepartamento());
+				jsonLine.put("Provincia", line.getProvincia());
+				jsonLine.put("Distrito", line.getDistrito());
+				jsonLine.put("Calle", line.getCalle());
+				jsonLine.put("Referencia", line.getReferencia());
+				jsonLine.put("Latitud", line.getLatitud());
+				jsonLine.put("Longitud", line.getLongitud());
+				jsonLine.put("Ruta", line.getRuta());
+				jsonLine.put("Zona", line.getZona());
+				jsonLine.put("Canal", line.getCanal());
+				jsonLine.put("Giro", line.getGiro());
+				direcciones.put(jsonLine);
+			}
+			jsonObject.put("Directions", direcciones);
+
+			return jsonObject;
+
+		}catch (Exception e){
+			return  null;
+		}
+	}
 
 
 }

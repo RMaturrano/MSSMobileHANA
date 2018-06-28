@@ -13,7 +13,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class MyDataBase extends SQLiteOpenHelper {
 
 	// VERSION DE BD
-	public static int DATABASE_VERSION = 63;
+	public static int DATABASE_VERSION = 93;
 
 	// DATABASE NAME
 	private static final String DATABASE_NAME = "BD_PRAGSA_SQLITE";
@@ -23,21 +23,15 @@ public class MyDataBase extends SQLiteOpenHelper {
 	/*****************************************************/
 	/**************** NOMBRES DE TABLAS ******************/
 	/*****************************************************/
-
-
 	private static final String TABLE_CORRELATIVO = "TB_COR";
 	private static final String TABLE_TIPO_PERSONA = "TB_TIPO_PERSONA";
 	private static final String TABLE_TIPO_DOCUMENTO = "TB_TIPO_DOC";
-	
-	
 
 	public MyDataBase(Context context, String name, CursorFactory factory,
 			int version) {
 		super(context, DATABASE_NAME, factory, DATABASE_VERSION);
 		this.contexto = context;
 	}
-
-
 	
 	@Override
 	public void onCreate(SQLiteDatabase db) {
@@ -75,6 +69,14 @@ public class MyDataBase extends SQLiteOpenHelper {
 				+ contexto.getResources().getString(R.string.C_SN_ESTADO_REGISTRO_MOVIL) +" TEXT, "
 				+ contexto.getResources().getString(R.string.C_SN_DIRECCION_FISCAL) +" TEXT, "
 				+ contexto.getResources().getString(R.string.C_SN_TRANSACCION_MOVIL) +" TEXT, "
+				+ contexto.getResources().getString(R.string.C_SN_POSEE_ACTIVOS) +" TEXT, "
+				+ contexto.getResources().getString(R.string.C_SN_PROYECTO) +" TEXT, "
+				+ contexto.getResources().getString(R.string.C_SN_TIPO_REGISTRO) +" TEXT, "
+				+ contexto.getResources().getString(R.string.C_SN_NUM_ULT_COMPRA) +" TEXT, "
+				+ contexto.getResources().getString(R.string.C_SN_FEC_ULT_COMPRA) +" TEXT, "
+				+ contexto.getResources().getString(R.string.C_SN_MON_ULT_COMPRA) +" TEXT, "
+				+ contexto.getResources().getString(R.string.C_SN_PERSONA_CONTACTO) +" TEXT, "
+				+ contexto.getResources().getString(R.string.C_SN_CODIGO_EMPLEADO) +" TEXT, "
 				+ contexto.getResources().getString(R.string.C_SN_VALIDO_EN_PEDIDO) +" TEXT)");
 		db.execSQL(QUERY_CREATE_BP);
 
@@ -114,7 +116,21 @@ public class MyDataBase extends SQLiteOpenHelper {
 				+ contexto.getResources().getString(R.string.C_SN2_TIPO) +" TEXT, " 
 				+ contexto.getResources().getString(R.string.C_SN2_IS_PRINCIPAL) +" TEXT, "
 				+ contexto.getResources().getString(R.string.C_SN2_LATITUD) +" TEXT, "
-				+ contexto.getResources().getString(R.string.C_SN2_LONGITUD) +" TEXT)");
+				+ contexto.getResources().getString(R.string.C_SN2_LONGITUD) +" TEXT, "
+				+ contexto.getResources().getString(R.string.C_SN2_V_LUNES) +" TEXT, "
+				+ contexto.getResources().getString(R.string.C_SN2_V_MARTES) +" TEXT, "
+				+ contexto.getResources().getString(R.string.C_SN2_V_MIERCOLES) +" TEXT, "
+				+ contexto.getResources().getString(R.string.C_SN2_V_JUEVES) +" TEXT, "
+				+ contexto.getResources().getString(R.string.C_SN2_V_VIERNES) +" TEXT, "
+				+ contexto.getResources().getString(R.string.C_SN2_V_SABADO) +" TEXT, "
+				+ contexto.getResources().getString(R.string.C_SN2_V_DOMINGO) +" TEXT, "
+				+ contexto.getResources().getString(R.string.C_SN2_V_FRECUENCIA) +" TEXT, "
+				+ contexto.getResources().getString(R.string.C_SN2_RUTA) +" TEXT, "
+				+ contexto.getResources().getString(R.string.C_SN2_ZONA) +" TEXT, "
+				+ contexto.getResources().getString(R.string.C_SN2_CANAL) +" TEXT, "
+				+ contexto.getResources().getString(R.string.C_SN2_GIRO) +" TEXT, "
+				+ contexto.getResources().getString(R.string.C_SN2_FECHA_INICIO) +" TEXT "
+				+ ")");
 		db.execSQL(QUERY_CREATE_BP_DIRECC);
 		
 		
@@ -149,7 +165,12 @@ public class MyDataBase extends SQLiteOpenHelper {
 				+ contexto.getResources().getString(R.string.C_OV_CREAD_MOVIL) +" TEXT, " 
 				+ contexto.getResources().getString(R.string.C_OV_CLAVE_MOVIL) +" TEXT, " 
 				+ contexto.getResources().getString(R.string.C_OV_ESTADO_REGISTRO_MOVIL) +" TEXT, "
-				+ contexto.getResources().getString(R.string.C_OV_TRANSACCION_MOVIL) +" TEXT )");
+				+ contexto.getResources().getString(R.string.C_OV_TRANSACCION_MOVIL) +" TEXT, "
+				+ contexto.getResources().getString(R.string.C_OV_LATITUD) +" TEXT, "
+				+ contexto.getResources().getString(R.string.C_OV_LONGITUD) +" TEXT, "
+				+ contexto.getResources().getString(R.string.C_OV_RANGO_CLIENTE) +" TEXT, "
+				+ contexto.getResources().getString(R.string.C_OV_HORA_CREACION) +" TEXT, "
+				+ contexto.getResources().getString(R.string.C_OV_MODO_OFFLINE) +" TEXT )");
 		db.execSQL(QUERY_CREATE_ORD_VEN);
 
 		// TABLA ORDEN DE VENTA DETALLE
@@ -210,19 +231,227 @@ public class MyDataBase extends SQLiteOpenHelper {
 		QUERY_CREATE_FACTURA_DETALLE = ("CREATE TABLE " 
 				+ contexto.getResources().getString(R.string.TD_FACTURA1)
 				+ "("
-				+ contexto.getResources().getString(R.string.C_FACT1_CLAVE) +" TEXT, " 
-				+ contexto.getResources().getString(R.string.C_FACT1_ART) +" TEXT, " 
+				+ contexto.getResources().getString(R.string.C_FACT1_CLAVE) +" TEXT, "
+				+ contexto.getResources().getString(R.string.C_FACT1_CODIGO) +" TEXT, "
+				+ contexto.getResources().getString(R.string.C_FACT1_ART) +" TEXT, "
 				+ contexto.getResources().getString(R.string.C_FACT1_UM) +" TEXT, " 
 				+ contexto.getResources().getString(R.string.C_FACT1_ALMACEN) +" TEXT, " 
-				+ contexto.getResources().getString(R.string.C_FACT1_CANT) +" TEXT, " 
+				+ contexto.getResources().getString(R.string.C_FACT1_CANT) +" TEXT, "
+				+ contexto.getResources().getString(R.string.C_FACT1_DISP) +" TEXT, "
 				+ contexto.getResources().getString(R.string.C_FACT1_LST_PRE) +" TEXT, " 
 				+ contexto.getResources().getString(R.string.C_FACT1_PRE_UNI) +" TEXT, " 
 				+ contexto.getResources().getString(R.string.C_FACT1_PORC_DESCUENTO) +" TEXT, " 
 				+ contexto.getResources().getString(R.string.C_FACT1_IMPUESTO) +" TEXT)");
 		db.execSQL(QUERY_CREATE_FACTURA_DETALLE);
-		
-		
-		
+
+		// TABLA FACTURA DETALLE - LOTES
+		String QUERY_CREATE_FACTURA_DETALLE_LOTES;
+		QUERY_CREATE_FACTURA_DETALLE_LOTES = ("CREATE TABLE "
+				+ contexto.getResources().getString(R.string.TD_FACTURA2)
+				+ "("
+				+ contexto.getResources().getString(R.string.C_FACT2_CLAVE) +" TEXT, "
+				+ contexto.getResources().getString(R.string.C_FACT2_LOTE) +" TEXT, "
+				+ contexto.getResources().getString(R.string.C_FACT2_CANT) +" NUMERIC, "
+				+ contexto.getResources().getString(R.string.C_FACT2_LINEA) +" INTEGER)");
+		db.execSQL(QUERY_CREATE_FACTURA_DETALLE_LOTES);
+
+
+		/***********************************************************/
+		/************************ ENTREGAS ************************/
+		/*****************************+*****************************/
+
+		// TABLA ENTREGA
+		String QUERY_CREATE_ENTREGA;
+		QUERY_CREATE_ENTREGA = ("CREATE TABLE "
+				+ contexto.getResources().getString(R.string.T_ENTREGA)
+				+ "("
+				+ contexto.getResources().getString(R.string.C_ENTR_TIPO) +" TEXT, "
+				+ contexto.getResources().getString(R.string.C_ENTR_CLAVE) +" INTEGER, "
+				+ contexto.getResources().getString(R.string.C_ENTR_NUMERO) +" INTEGER, "
+				+ contexto.getResources().getString(R.string.C_ENTR_REFERENCIA) +" TEXT, "
+				+ contexto.getResources().getString(R.string.C_ENTR_SOCIO_NEGOCIO) +" TEXT, "
+				+ contexto.getResources().getString(R.string.C_ENTR_LISTA_PRECIO) +" INTEGER, "
+				+ contexto.getResources().getString(R.string.C_ENTR_CONTACTO) +" INTEGER, "
+				+ contexto.getResources().getString(R.string.C_ENTR_MONEDA) +" TEXT, "
+				+ contexto.getResources().getString(R.string.C_ENTR_EMP_VENTA) +" TEXT, "
+				+ contexto.getResources().getString(R.string.C_ENTR_COMENT) +" TEXT, "
+				+ contexto.getResources().getString(R.string.C_ENTR_FEC_CONT) +" TEXT, "
+				+ contexto.getResources().getString(R.string.C_ENTR_FEC_VEN) +" TEXT, "
+				+ contexto.getResources().getString(R.string.C_ENTR_DIR_FISCAL) +" TEXT, "
+				+ contexto.getResources().getString(R.string.C_ENTR_DIR_ENTREGA) +" TEXT, "
+				+ contexto.getResources().getString(R.string.C_ENTR_COND_PAGO) +" TEXT, "
+				+ contexto.getResources().getString(R.string.C_ENTR_INDICADOR) +" TEXT, "
+				+ contexto.getResources().getString(R.string.C_ENTR_SUB_TOTAL) +" TEXT, "
+				+ contexto.getResources().getString(R.string.C_ENTR_DESCUENTO) +" TEXT, "
+				+ contexto.getResources().getString(R.string.C_ENTR_IMPUESTO) +" TEXT, "
+				+ contexto.getResources().getString(R.string.C_ENTR_TOTAL) +" TEXT, "
+				+ contexto.getResources().getString(R.string.C_ENTR_SALDO) +" TEXT, "
+				+ "UNIQUE("+ contexto.getResources().getString(R.string.C_ENTR_CLAVE) +"))");
+		db.execSQL(QUERY_CREATE_ENTREGA);
+
+
+		// TABLA ENTREGA DETALLE
+		String QUERY_CREATE_ENTREGA_DETALLE;
+		QUERY_CREATE_ENTREGA_DETALLE = ("CREATE TABLE "
+				+ contexto.getResources().getString(R.string.TD_ENTREGA1)
+				+ "("
+				+ contexto.getResources().getString(R.string.C_ENTR1_CLAVE) +" INTEGER, "
+				+ contexto.getResources().getString(R.string.C_ENTR1_CODIGO) +" INTEGER, "
+				+ contexto.getResources().getString(R.string.C_ENTR1_ART) +" TEXT, "
+				+ contexto.getResources().getString(R.string.C_ENTR1_UM) +" TEXT, "
+				+ contexto.getResources().getString(R.string.C_ENTR1_ALMACEN) +" TEXT, "
+				+ contexto.getResources().getString(R.string.C_ENTR1_CANT) +" TEXT, "
+				+ contexto.getResources().getString(R.string.C_ENTR1_DISP) +" TEXT, "
+				+ contexto.getResources().getString(R.string.C_ENTR1_LST_PRE) +" INTEGER, "
+				+ contexto.getResources().getString(R.string.C_ENTR1_PRE_UNI) +" TEXT, "
+				+ contexto.getResources().getString(R.string.C_ENTR1_PORC_DESCUENTO) +" TEXT, "
+				+ contexto.getResources().getString(R.string.C_ENTR1_IMPUESTO) +" TEXT)");
+		db.execSQL(QUERY_CREATE_ENTREGA_DETALLE);
+
+		// TABLA ENTREGA DETALLE - LOTES
+		String QUERY_CREATE_ENTREGA_DETALLE_LOTES;
+		QUERY_CREATE_ENTREGA_DETALLE_LOTES = ("CREATE TABLE "
+				+ contexto.getResources().getString(R.string.TD_ENTREGA2)
+				+ "("
+				+ contexto.getResources().getString(R.string.C_ENTR2_CLAVE) +" TEXT, "
+				+ contexto.getResources().getString(R.string.C_ENTR2_LOTE) +" TEXT, "
+				+ contexto.getResources().getString(R.string.C_ENTR2_CANT) +" NUMERIC, "
+				+ contexto.getResources().getString(R.string.C_ENTR2_LINEA) +" INTEGER)");
+		db.execSQL(QUERY_CREATE_ENTREGA_DETALLE_LOTES);
+
+
+		/***********************************************************/
+		/************************ DEVOLUCIONES ************************/
+		/*****************************+*****************************/
+
+		// TABLA DEVOLUCION
+		String QUERY_CREATE_DEVOLUCION;
+		QUERY_CREATE_DEVOLUCION = ("CREATE TABLE "
+				+ contexto.getResources().getString(R.string.T_DEVOLUCION)
+				+ "("
+				+ contexto.getResources().getString(R.string.C_DEV_TIPO) +" TEXT, "
+				+ contexto.getResources().getString(R.string.C_DEV_CLAVE) +" TEXT, "
+				+ contexto.getResources().getString(R.string.C_DEV_CLAVE_MOVIL) +" TEXT, "
+				+ contexto.getResources().getString(R.string.C_DEV_NUMERO) +" INTEGER, "
+				+ contexto.getResources().getString(R.string.C_DEV_REFERENCIA) +" TEXT, "
+				+ contexto.getResources().getString(R.string.C_DEV_SOCIO_NEGOCIO) +" TEXT, "
+				+ contexto.getResources().getString(R.string.C_DEV_LISTA_PRECIO) +" INTEGER, "
+				+ contexto.getResources().getString(R.string.C_DEV_CONTACTO) +" INTEGER, "
+				+ contexto.getResources().getString(R.string.C_DEV_MONEDA) +" TEXT, "
+				+ contexto.getResources().getString(R.string.C_DEV_EMP_VENTA) +" TEXT, "
+				+ contexto.getResources().getString(R.string.C_DEV_COMENT) +" TEXT, "
+				+ contexto.getResources().getString(R.string.C_DEV_FEC_CONT) +" TEXT, "
+				+ contexto.getResources().getString(R.string.C_DEV_FEC_VEN) +" TEXT, "
+				+ contexto.getResources().getString(R.string.C_DEV_DIR_FISCAL) +" TEXT, "
+				+ contexto.getResources().getString(R.string.C_DEV_DIR_ENTREGA) +" TEXT, "
+				+ contexto.getResources().getString(R.string.C_DEV_COND_PAGO) +" TEXT, "
+				+ contexto.getResources().getString(R.string.C_DEV_INDICADOR) +" TEXT, "
+				+ contexto.getResources().getString(R.string.C_DEV_SUB_TOTAL) +" TEXT, "
+				+ contexto.getResources().getString(R.string.C_DEV_DESCUENTO) +" TEXT, "
+				+ contexto.getResources().getString(R.string.C_DEV_IMPUESTO) +" TEXT, "
+				+ contexto.getResources().getString(R.string.C_DEV_TOTAL) +" TEXT, "
+				+ contexto.getResources().getString(R.string.C_DEV_SALDO) +" TEXT, "
+				+ contexto.getResources().getString(R.string.C_DEV_ESTADO_MOVIL) +" TEXT, "
+				+ contexto.getResources().getString(R.string.C_DEV_CLAVE_BASE) +" TEXT " +
+				")");
+		db.execSQL(QUERY_CREATE_DEVOLUCION);
+
+		// TABLA DEVOLUCION DETALLE
+		String QUERY_CREATE_DEVOLUCION_DETALLE;
+		QUERY_CREATE_DEVOLUCION_DETALLE = ("CREATE TABLE "
+				+ contexto.getResources().getString(R.string.TD_DEVOLUCION1)
+				+ "("
+				+ contexto.getResources().getString(R.string.C_DEV1_CLAVE) +" TEXT, "
+				+ contexto.getResources().getString(R.string.C_DEV1_LINEA) +" TEXT, "
+				+ contexto.getResources().getString(R.string.C_DEV1_LINEA_BASE) +" TEXT, "
+				+ contexto.getResources().getString(R.string.C_DEV1_ART) +" TEXT, "
+				+ contexto.getResources().getString(R.string.C_DEV1_UM) +" TEXT, "
+				+ contexto.getResources().getString(R.string.C_DEV1_ALMACEN) +" TEXT, "
+				+ contexto.getResources().getString(R.string.C_DEV1_CANT) +" TEXT, "
+				+ contexto.getResources().getString(R.string.C_DEV1_LST_PRE) +" INTEGER, "
+				+ contexto.getResources().getString(R.string.C_DEV1_PRE_UNI) +" TEXT, "
+				+ contexto.getResources().getString(R.string.C_DEV1_PORC_DESCUENTO) +" TEXT, "
+				+ contexto.getResources().getString(R.string.C_DEV1_IMPUESTO) +" TEXT)");
+		db.execSQL(QUERY_CREATE_DEVOLUCION_DETALLE);
+
+		// TABLA DEVOLUCION DETALLE - LOTES
+		String QUERY_CREATE_DEVOLUCION_DETALLE_LOTES;
+		QUERY_CREATE_DEVOLUCION_DETALLE_LOTES = ("CREATE TABLE "
+				+ contexto.getResources().getString(R.string.TD_DEVOLUCION2)
+				+ "("
+				+ contexto.getResources().getString(R.string.C_DEV2_CLAVE) +" TEXT, "
+				+ contexto.getResources().getString(R.string.C_DEV2_LOTE) +" TEXT, "
+				+ contexto.getResources().getString(R.string.C_DEV2_CANT) +" NUMERIC, "
+				+ contexto.getResources().getString(R.string.C_DEV2_LINEA) +" INTEGER)");
+		db.execSQL(QUERY_CREATE_DEVOLUCION_DETALLE_LOTES);
+
+		/***********************************************************/
+		/************************ NOTAS CREDITO ********************/
+		/*****************************+*****************************/
+
+		// TABLA NOTA CREDITO
+		String QUERY_CREATE_NOTA_CREDITO;
+		QUERY_CREATE_NOTA_CREDITO = ("CREATE TABLE "
+				+ contexto.getResources().getString(R.string.T_NOTA_CREDITO)
+				+ "("
+				+ contexto.getResources().getString(R.string.C_NOT_TIPO) +" TEXT, "
+				+ contexto.getResources().getString(R.string.C_NOT_CLAVE) +" TEXT, "
+				+ contexto.getResources().getString(R.string.C_NOT_CLAVE_MOVIL) +" TEXT, "
+				+ contexto.getResources().getString(R.string.C_NOT_NUMERO) +" INTEGER, "
+				+ contexto.getResources().getString(R.string.C_NOT_REFERENCIA) +" TEXT, "
+				+ contexto.getResources().getString(R.string.C_NOT_SOCIO_NEGOCIO) +" TEXT, "
+				+ contexto.getResources().getString(R.string.C_NOT_LISTA_PRECIO) +" INTEGER, "
+				+ contexto.getResources().getString(R.string.C_NOT_CONTACTO) +" INTEGER, "
+				+ contexto.getResources().getString(R.string.C_NOT_MONEDA) +" TEXT, "
+				+ contexto.getResources().getString(R.string.C_NOT_EMP_VENTA) +" TEXT, "
+				+ contexto.getResources().getString(R.string.C_NOT_COMENT) +" TEXT, "
+				+ contexto.getResources().getString(R.string.C_NOT_FEC_CONT) +" TEXT, "
+				+ contexto.getResources().getString(R.string.C_NOT_FEC_VEN) +" TEXT, "
+				+ contexto.getResources().getString(R.string.C_NOT_DIR_FISCAL) +" TEXT, "
+				+ contexto.getResources().getString(R.string.C_NOT_DIR_ENTREGA) +" TEXT, "
+				+ contexto.getResources().getString(R.string.C_NOT_COND_PAGO) +" TEXT, "
+				+ contexto.getResources().getString(R.string.C_NOT_INDICADOR) +" TEXT, "
+				+ contexto.getResources().getString(R.string.C_NOT_SUB_TOTAL) +" TEXT, "
+				+ contexto.getResources().getString(R.string.C_NOT_DESCUENTO) +" TEXT, "
+				+ contexto.getResources().getString(R.string.C_NOT_IMPUESTO) +" TEXT, "
+				+ contexto.getResources().getString(R.string.C_NOT_TOTAL) +" TEXT, "
+				+ contexto.getResources().getString(R.string.C_NOT_SALDO) +" TEXT, "
+				+ contexto.getResources().getString(R.string.C_NOT_ESTADO_MOVIL) +" TEXT, "
+				+ contexto.getResources().getString(R.string.C_NOT_CLAVE_BASE) +" TEXT " +
+				")");
+		db.execSQL(QUERY_CREATE_NOTA_CREDITO);
+
+		// TABLA NOTA CREDITO DETALLE
+		String QUERY_CREATE_NOTA_CREDITO_DETALLE;
+		QUERY_CREATE_NOTA_CREDITO_DETALLE = ("CREATE TABLE "
+				+ contexto.getResources().getString(R.string.TD_NOTA_CREDITO1)
+				+ "("
+				+ contexto.getResources().getString(R.string.C_NOT1_CLAVE) +" TEXT, "
+				+ contexto.getResources().getString(R.string.C_NOT1_LINEA) +" TEXT, "
+				+ contexto.getResources().getString(R.string.C_NOT1_LINEA_BASE) +" TEXT, "
+				+ contexto.getResources().getString(R.string.C_NOT1_ART) +" TEXT, "
+				+ contexto.getResources().getString(R.string.C_NOT1_UM) +" TEXT, "
+				+ contexto.getResources().getString(R.string.C_NOT1_ALMACEN) +" TEXT, "
+				+ contexto.getResources().getString(R.string.C_NOT1_CANT) +" TEXT, "
+				+ contexto.getResources().getString(R.string.C_NOT1_LST_PRE) +" INTEGER, "
+				+ contexto.getResources().getString(R.string.C_NOT1_PRE_UNI) +" TEXT, "
+				+ contexto.getResources().getString(R.string.C_NOT1_PORC_DESCUENTO) +" TEXT, "
+				+ contexto.getResources().getString(R.string.C_NOT1_IMPUESTO) +" TEXT)");
+		db.execSQL(QUERY_CREATE_NOTA_CREDITO_DETALLE);
+
+		// TABLA DEVOLUCION DETALLE - LOTES
+		String QUERY_CREATE_NOTA_CREDITO_DETALLE_LOTES;
+		QUERY_CREATE_NOTA_CREDITO_DETALLE_LOTES = ("CREATE TABLE "
+				+ contexto.getResources().getString(R.string.TD_NOTA_CREDITO2)
+				+ "("
+				+ contexto.getResources().getString(R.string.C_NOT2_CLAVE) +" TEXT, "
+				+ contexto.getResources().getString(R.string.C_NOT2_LOTE) +" TEXT, "
+				+ contexto.getResources().getString(R.string.C_NOT2_CANT) +" NUMERIC, "
+				+ contexto.getResources().getString(R.string.C_NOT2_LINEA) +" INTEGER)");
+		db.execSQL(QUERY_CREATE_NOTA_CREDITO_DETALLE_LOTES);
+
+
+
 		/***********************************************************/
 		/************************ ARTICULOS ************************/
 		/*****************************+*****************************/
@@ -457,8 +686,9 @@ public class MyDataBase extends SQLiteOpenHelper {
 					+ contexto.getResources().getString(R.string.T_IMPUESTO) 
 					+ "(" 
 					+ contexto.getResources().getString(R.string.C_IMPUESTO_COD) +" TEXT, " 
-			       	+ contexto.getResources().getString(R.string.C_IMPUESTO_NOM) +" TEXT, " 
-					+ "UNIQUE("+ contexto.getResources().getString(R.string.C_IMPUESTO_COD) +"))");
+			       	+ contexto.getResources().getString(R.string.C_IMPUESTO_NOM) +" TEXT, "
+				+ contexto.getResources().getString(R.string.C_IMPUESTO_TAS) +" NUMERIC, "
+				+ "UNIQUE("+ contexto.getResources().getString(R.string.C_IMPUESTO_COD) +"))");
 		db.execSQL(Q_CREATE_TB_IMPUESTO);
 				
 				
@@ -593,6 +823,17 @@ public class MyDataBase extends SQLiteOpenHelper {
 		Q_CREATE_TB_CORRELATIVO = ("CREATE TABLE " + TABLE_CORRELATIVO + "(COD_COR TEXT, NUM_COR INTEGER)");
 		db.execSQL(Q_CREATE_TB_CORRELATIVO);
 
+		// TABLA PROYECTO
+		String Q_CREATE_TB = ("CREATE TABLE TB_PROYECTO(CODIGO TEXT, DESCRIPCION TEXT, UNIQUE(CODIGO))");
+		db.execSQL(Q_CREATE_TB);
+
+		// TABLA CANAL
+		Q_CREATE_TB = ("CREATE TABLE TB_CANAL(CODIGO TEXT, DESCRIPCION TEXT, UNIQUE(CODIGO))");
+		db.execSQL(Q_CREATE_TB);
+
+		// TABLA GIRO
+		Q_CREATE_TB = ("CREATE TABLE TB_GIRO(CODIGO TEXT, DESCRIPCION TEXT, UNIQUE(CODIGO))");
+		db.execSQL(Q_CREATE_TB);
 
 		// TABLA REPORTE NC
 		String Q_CREATE_TB_REPORTE_MODEL;
@@ -628,6 +869,45 @@ public class MyDataBase extends SQLiteOpenHelper {
 				"Observacion TEXT) ");
 		db.execSQL(Q_CREATE_TB_EMPRESAS);
 
+		//tabla motivos incidencia
+		String Q_CREATE_TB_MOTIVOS;
+		Q_CREATE_TB_MOTIVOS = ("CREATE TABLE TB_MOTIVO (Id INTEGER PRIMARY KEY NOT NULL, " +
+				"Descripcion TEXT, " +
+				"ValOrden TEXT, " +
+				"ValEntrega TEXT, " +
+				"ValFactura TEXT) ");
+		db.execSQL(Q_CREATE_TB_MOTIVOS);
+
+		//tabla INCIDENCIAS
+		String Q_CREATE_TB_INCIDENCIA;
+		Q_CREATE_TB_INCIDENCIA = ("CREATE TABLE TB_INCIDENCIA " +
+				"(Id INTEGER PRIMARY KEY AUTOINCREMENT  NOT NULL, " +
+				"ClaveMovil TEXT NOT NULL, " +
+				"Origen TEXT NOT NULL, " +
+				"IdCliente TEXT NULL, " +
+				"NombreCliente TEXT NULL, " +
+				"CodigoContacto INTEGER, " +
+				"NombreContacto TEXT NULL, " +
+				"CodigoDireccion TEXT NULL,  " +
+				"DetalleDireccion TEXT NULL,  " +
+				"Motivo TEXT NULL,  " +
+				"DescripcionMotivo TEXT NULL,  " +
+				"Comentarios TEXT NULL,  " +
+				"CodigoVendedor INTEGER NOT NULL,  " +
+				"Latitud TEXT NULL,  " +
+				"Longitud TEXT NULL,  " +
+				"FechaCreacion TEXT NOT NULL,  " +
+				"HoraCreacion TEXT NOT NULL,  " +
+				"ModoOffline TEXT NULL,  " +
+				"ClaveFactura TEXT NULL,  " +
+				"SerieFactura TEXT NULL,  " +
+				"CorrelativoFactura INTEGER,  " +
+				"TipoIncidencia TEXT NULL,  " +
+				"FechaPago TEXT NULL,  " +
+				"Foto BLOB NULL, " +
+				"Sincronizado TEXT NOT NULL) ");
+		db.execSQL(Q_CREATE_TB_INCIDENCIA);
+
 		/************************************************************/
 		/************************** INSERTS *************************/
 		/*****************************+******************************/
@@ -640,6 +920,12 @@ public class MyDataBase extends SQLiteOpenHelper {
 			db.execSQL(Q_INS_COR1);
 		Q_INS_COR1 = ("INSERT INTO TB_COR(COD_COR,NUM_COR) VALUES('PAG',1)");
 			db.execSQL(Q_INS_COR1);
+		Q_INS_COR1 = ("INSERT INTO TB_COR(COD_COR,NUM_COR) VALUES('INC',1)");
+		db.execSQL(Q_INS_COR1);
+		Q_INS_COR1 = ("INSERT INTO TB_COR(COD_COR,NUM_COR) VALUES('DEV',1)");
+		db.execSQL(Q_INS_COR1);
+		db.execSQL("INSERT INTO TB_COR(COD_COR,NUM_COR) VALUES('NOT',1)");
+
 
 	   // INSERTS MANUALES (TEMPORAL ART�CULO)
 //		String Q_INS_PROD;
@@ -722,6 +1008,23 @@ public class MyDataBase extends SQLiteOpenHelper {
 		db.execSQL("DROP TABLE IF EXISTS TB_AUDITORIA");
 		db.execSQL("DROP TABLE IF EXISTS TB_REPORTE_MODEL");
 		db.execSQL("DROP TABLE IF EXISTS TB_EMPRESA");
+		db.execSQL("DROP TABLE IF EXISTS TB_MOTIVO");
+		db.execSQL("DROP TABLE IF EXISTS TB_INCIDENCIA");
+		db.execSQL("DROP TABLE IF EXISTS "+contexto.getResources().getString(R.string.T_FACTURA));
+		db.execSQL("DROP TABLE IF EXISTS "+contexto.getResources().getString(R.string.TD_FACTURA1));
+		db.execSQL("DROP TABLE IF EXISTS "+contexto.getResources().getString(R.string.TD_FACTURA2));
+		db.execSQL("DROP TABLE IF EXISTS "+contexto.getResources().getString(R.string.T_ENTREGA));
+		db.execSQL("DROP TABLE IF EXISTS "+contexto.getResources().getString(R.string.TD_ENTREGA1));
+		db.execSQL("DROP TABLE IF EXISTS "+contexto.getResources().getString(R.string.TD_ENTREGA2));
+		db.execSQL("DROP TABLE IF EXISTS "+contexto.getResources().getString(R.string.T_DEVOLUCION));
+		db.execSQL("DROP TABLE IF EXISTS "+contexto.getResources().getString(R.string.TD_DEVOLUCION1));
+		db.execSQL("DROP TABLE IF EXISTS "+contexto.getResources().getString(R.string.TD_DEVOLUCION2));
+		db.execSQL("DROP TABLE IF EXISTS "+contexto.getResources().getString(R.string.T_NOTA_CREDITO));
+		db.execSQL("DROP TABLE IF EXISTS "+contexto.getResources().getString(R.string.TD_NOTA_CREDITO1));
+		db.execSQL("DROP TABLE IF EXISTS "+contexto.getResources().getString(R.string.TD_NOTA_CREDITO2));
+		db.execSQL("DROP TABLE IF EXISTS TB_PROYECTO");
+		db.execSQL("DROP TABLE IF EXISTS TB_CANAL");
+		db.execSQL("DROP TABLE IF EXISTS TB_GIRO");
 
 		onCreate(db);
 

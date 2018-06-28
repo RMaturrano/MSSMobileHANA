@@ -97,9 +97,15 @@ public class ListaFacturasTabPendientesFragment extends Fragment
 		
 		
 		Cursor rs= db.rawQuery(
-				"select Clave, Referencia," +
-				"FechaContable,Total, Saldo "
-						+ "from TB_FACTURA" , null);
+				"select T0.Clave, " +
+						" T0.Referencia," +
+						" T0.FechaContable," +
+						" T0.Total, " +
+						" T0.Saldo, " +
+						" T0.SocioNegocio," +
+						" T1.NombreRazonSocial "
+						+ "from TB_FACTURA T0 JOIN TB_SOCIO_NEGOCIO T1 " +
+						" ON T0.SocioNegocio = T1.Codigo " , null);
 		while (rs.moveToNext()) {		
 			
 			customListObjet = new FacturaBean();
@@ -109,6 +115,8 @@ public class ListaFacturasTabPendientesFragment extends Fragment
 			customListObjet.setFechaContable(StringDateCast.castStringtoDate(rs.getString(2)));
 			customListObjet.setTotal(rs.getString(3));
 			customListObjet.setSaldo(rs.getString(4));
+			customListObjet.setSocioNegocio(rs.getString(rs.getColumnIndex("SocioNegocio")));
+			customListObjet.setNombreSocio(rs.getString(rs.getColumnIndex("NombreRazonSocial")));
 			listaAdapter.add(customListObjet);
 
 		}

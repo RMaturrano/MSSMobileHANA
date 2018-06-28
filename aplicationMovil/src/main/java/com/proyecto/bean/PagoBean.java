@@ -1,5 +1,8 @@
 package com.proyecto.bean;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 
 public class PagoBean {
@@ -237,6 +240,54 @@ public class PagoBean {
 
 	public void setTransaccionMovil(String transaccionMovil) {
 		TransaccionMovil = transaccionMovil;
+	}
+
+	public static JSONObject transformPRToJSON(PagoBean ov, String sociedad){
+		try	{
+
+			JSONObject jsonObject = new JSONObject();
+			jsonObject.put("ClaveMovil", ov.getClaveMovil());
+			jsonObject.put("TransaccionMovil", ov.getTransaccionMovil());
+			jsonObject.put("SocioNegocio", ov.getSocioNegocio());
+			jsonObject.put("EmpleadoVenta", ov.getEmpleadoVenta());
+			jsonObject.put("Comentario", ov.getComentario() != null ? ov.getComentario() : "");
+			jsonObject.put("Glosa", ov.getGlosa() != null ? ov.getGlosa(): "");
+			jsonObject.put("FechaContable", ov.getFechaContable());
+			jsonObject.put("TipoPago", ov.getTipoPago() != null ? ov.getTipoPago() : "");
+			jsonObject.put("Moneda", ov.getMoneda());
+			jsonObject.put("ChequeCuenta", ov.getChequeCuenta() != null ? ov.getChequeCuenta() : "");
+			jsonObject.put("ChequeBanco", ov.getChequeBanco() != null ? ov.getChequeBanco() : "");
+			jsonObject.put("ChequeVencimiento", ov.getChequeVencimiento() != null ? ov.getChequeVencimiento() : "");
+			jsonObject.put("ChequeImporte", ov.getChequeImporte() != null ? Double.parseDouble(ov.getChequeImporte()) : 0);
+			jsonObject.put("ChequeNumero", ov.getChequeNumero() != null ? Integer.parseInt(ov.getChequeNumero()) : 0);
+			jsonObject.put("TransferenciaCuenta", ov.getTransferenciaCuenta() != null ? ov.getTransferenciaCuenta() : "");
+			jsonObject.put("TransferenciaReferencia", ov.getTransferenciaReferencia() != null ? ov.getTransferenciaReferencia() : "");
+			jsonObject.put("TransferenciaImporte", ov.getTransferenciaImporte() != null ?
+					Double.parseDouble(ov.getTransferenciaImporte()) : 0);
+			jsonObject.put("EfectivoCuenta", ov.getEfectivoCuenta() != null ? ov.getEfectivoCuenta() : "");
+			jsonObject.put("EfectivoImporte", ov.getEfectivoImporte() != null ?
+					Double.parseDouble(ov.getEfectivoImporte()) : 0);
+			jsonObject.put("Empresa", Integer.parseInt(sociedad));
+
+			JSONArray lines = new JSONArray();
+
+			for (PagoDetalleBean line: ov.getLineas()) {
+
+				if(line.getFacturaCliente() != null){
+					JSONObject jsonLine = new JSONObject();
+					jsonLine.put("FacturaCliente", Integer.parseInt(line.getFacturaCliente()));
+					jsonLine.put("Importe", Double.parseDouble(line.getImporte()));
+					lines.put(jsonLine);
+				}
+			}
+
+			jsonObject.put("Lines", lines);
+
+			return jsonObject;
+
+		}catch (Exception e){
+			return  null;
+		}
 	}
 
 }

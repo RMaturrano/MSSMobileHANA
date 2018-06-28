@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/backgrnd_layout_color">
+
+    <!-- Toolbar que va a reemplazar al actionbar -->
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/tlbAddIncidencia"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark"
+        android:elevation="@dimen/toolbarElevation"/>
+
+    <!-- RecyclerView que tiene los datos -->
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rvAddIncidencia"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"/>
+
+    <Button
+        android:id="@+id/btnTomarFoto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="REGISTRAR FOTO"
+        android:background="@color/color_primary"
+        android:textColor="@color/white"
+        android:layout_gravity="bottom"
+        android:textStyle="bold"
+        android:layout_margin="2dp"/>
+
+</LinearLayout>

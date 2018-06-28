@@ -1,15 +1,20 @@
 package com.proyecto.sociosnegocio;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -21,14 +26,28 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.google.android.gms.maps.model.LatLng;
 import com.proyect.movil.R;
 import com.proyecto.bean.DireccionBean;
+import com.proyecto.conectividad.Connectivity;
+import com.proyecto.dao.ClienteDAO;
 import com.proyecto.dao.DireccionDAO;
 import com.proyecto.database.Select;
+import com.proyecto.geolocalizacion.MapsActivity;
+import com.proyecto.utils.Constantes;
 import com.proyecto.utils.DynamicHeight;
 import com.proyecto.utils.FormatCustomListView;
 import com.proyecto.utils.ListViewCustomAdapterTwoLinesAndImg;
 import com.proyecto.utils.ListViewCustomAdapterTwoLinesAndImgToolbarDialog;
+import com.proyecto.utils.Variables;
+import com.proyecto.ws.VolleySingleton;
+
+import org.json.JSONObject;
 
 public class DetalleSocioNegocioTabDirecciones extends Fragment implements OnItemClickListener{
 
@@ -44,6 +63,9 @@ public class DetalleSocioNegocioTabDirecciones extends Fragment implements OnIte
 	private ListViewCustomAdapterTwoLinesAndImg adapter;
 	private Dialog mBottomSheetDialog = null;
 	private FormatCustomListView fullObject = new FormatCustomListView();
+	boolean wifi;
+	boolean movil;
+	boolean isConnectionFast;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -53,7 +75,11 @@ public class DetalleSocioNegocioTabDirecciones extends Fragment implements OnIte
 
 		contexto = v.getContext();
 		mDireccionDAO = new DireccionDAO();
-		
+
+		wifi = Connectivity.isConnectedWifi(contexto);
+		movil = Connectivity.isConnectedMobile(contexto);
+		isConnectionFast = Connectivity.isConnectedFast(contexto);
+
 		if (DetalleSocioNegocioMain.idBusinessPartner != null) {
 
 			idBP = DetalleSocioNegocioMain.idBusinessPartner;
@@ -100,7 +126,7 @@ public class DetalleSocioNegocioTabDirecciones extends Fragment implements OnIte
 	public void openBottomSheet(View v, FormatCustomListView object) {
 
 		View view = getActivity().getLayoutInflater().inflate(
-				R.layout.bottom_sheet_contact_bp, null);
+				R.layout.bottom_sheet_direction_bp, null);
 
 		mBottomSheetDialog = new Dialog(contexto,
 				R.style.MaterialDialogSheet);
@@ -127,7 +153,7 @@ public class DetalleSocioNegocioTabDirecciones extends Fragment implements OnIte
 
 		searchResultsBottomSheet = new ArrayList<FormatCustomListView>();
 		FormatCustomListView sr1 = new FormatCustomListView();
-		sr1.setTitulo("País");
+		sr1.setTitulo("Pais");
 		sr1.setData(extras[0]);
 		searchResultsBottomSheet.add(sr1);
 
@@ -172,6 +198,26 @@ public class DetalleSocioNegocioTabDirecciones extends Fragment implements OnIte
 			sr1.setTitulo("Longitud");
 			sr1.setData(object.getLongitud());
 			searchResultsBottomSheet.add(sr1);
+
+			sr1 = new FormatCustomListView();
+			sr1.setTitulo("Zona");
+			sr1.setData(object.getZona());
+			searchResultsBottomSheet.add(sr1);
+
+			sr1 = new FormatCustomListView();
+			sr1.setTitulo("Ruta");
+			sr1.setData(object.getRuta());
+			searchResultsBottomSheet.add(sr1);
+
+			sr1 = new FormatCustomListView();
+			sr1.setTitulo("Canal");
+			sr1.setData(object.getCanal());
+			searchResultsBottomSheet.add(sr1);
+
+			sr1 = new FormatCustomListView();
+			sr1.setTitulo("Giro");
+			sr1.setData(object.getGiro());
+			searchResultsBottomSheet.add(sr1);
 		}
 
 		ListViewCustomAdapterTwoLinesAndImg adapter;
@@ -183,6 +229,14 @@ public class DetalleSocioNegocioTabDirecciones extends Fragment implements OnIte
 		FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.fab);
 		fab.setOnClickListener(floattingButtonSheetClick);
 		//FLOATING BUTTON
+
+		SharedPreferences pref = PreferenceManager
+				.getDefaultSharedPreferences(contexto);
+		String supervisor = pref.getString(Variables.SUPERVISOR, "N");
+
+		if (supervisor.equals("Y")) {
+			fab.setVisibility(View.VISIBLE);
+		}
 
 		mBottomSheetDialog.setContentView(view);
 		mBottomSheetDialog.setCancelable(true);
@@ -214,11 +268,29 @@ public class DetalleSocioNegocioTabDirecciones extends Fragment implements OnIte
 		@Override
 		public void onClick(View v) {
 
-			getActivity().startActivityForResult(new Intent(contexto, SocioDireccionActivity.class)
-										.putExtra("titulo", fullObject.getData())
-										.putExtra("latitud", fullObject.getLatitud())
-										.putExtra("longitud", fullObject.getLongitud()),
-					DetalleSocioNegocioMain.REQUEST_CHANGE_MAPS);
+			try{
+				if(wifi || movil && isConnectionFast){
+					LatLng ubicacion = null;
+
+					if(fullObject.getLatitud() != null && !TextUtils.isEmpty(fullObject.getLatitud()) &&
+							fullObject.getLongitud() != null && !TextUtils.isEmpty(fullObject.getLongitud())) {
+						ubicacion = new LatLng(Double.parseDouble(fullObject.getLatitud()),
+								Double.parseDouble(fullObject.getLongitud()));
+					}
+
+					Intent location = new Intent(getActivity().getBaseContext(), MapsActivity.class);
+					if(ubicacion != null){
+						location.putExtra(MapsActivity.KEY_PARAM_LATITUD, ubicacion.latitude);
+						location.putExtra(MapsActivity.KEY_PARAM_LONGITUD, ubicacion.longitude);
+					}
+					getActivity().startActivityForResult(location, MapsActivity.REQUEST_MAPAS);
+				}else{
+					showMessage("Para utilizar esta funcionalidad, primero, debe conectarse a una red de datos...");
+				}
+
+			}catch (Exception e){
+				showMessage(e.getMessage());
+			}
 		}
 	};
 
@@ -229,28 +301,86 @@ public class DetalleSocioNegocioTabDirecciones extends Fragment implements OnIte
 		direccionBean.setIDDireccion(fullObject.getTitulo());
 		direccionBean.setLongitud(lon);
 		direccionBean.setLatitud(lat);
+		direccionBean.setTipoDireccion(fullObject.getTipo());
 
-		if(mDireccionDAO.update(direccionBean)){
-
-			Toast.makeText(contexto, "Se actualizó la información de ubicación con éxito.", Toast.LENGTH_LONG).show();
-
-			FormatCustomListView myObj = (FormatCustomListView) lvBotomSheet.getItemAtPosition(5);
-			myObj.setData(lat);
-			searchResultsBottomSheet.set(5, myObj);
-
-			myObj = (FormatCustomListView) lvBotomSheet.getItemAtPosition(6);
-			myObj.setData(lon);
-			searchResultsBottomSheet.set(6, myObj);
-
-			fullObject.setLatitud(lat);
-			fullObject.setLongitud(lon);
-
-			lvBotomSheet.invalidateViews();
+		if(wifi || movil && isConnectionFast){
+			mBottomSheetDialog.dismiss();
+			showMessage("Enviando al servidor...");
+			sendGeoToServer(direccionBean);
 		}else{
-			Toast.makeText(contexto, "Ocurrió un problema actualizando la información de la ubicación.", Toast.LENGTH_LONG).show();
+			showMessage("No se pudo actualizar la ubicacion, se ha perdido la conexion de red.");
 		}
+	}
 
+	private void showMessage(String message){
+		if(message != null)
+			Toast.makeText(contexto, message, Toast.LENGTH_LONG).show();
+	}
 
+	private void sendGeoToServer(final DireccionBean direccion){
+		try{
+
+			SharedPreferences pref = PreferenceManager
+					.getDefaultSharedPreferences(contexto);
+			String codigoEmpleado = pref.getString(Variables.CODIGO_EMPLEADO, "-1");
+			String sociedad = pref.getString("sociedades", "-1");
+			String ip = pref.getString("ipServidor", Constantes.DEFAULT_IP);
+			String port = pref.getString("puertoServidor", Constantes.DEFAULT_PORT);
+			String ruta = "http://" + ip + ":" + port + "/MSS_MOBILE/service/";
+
+			JSONObject jsonObject = DireccionBean.transformToJSON(direccion);
+
+			if(jsonObject != null) {
+
+				jsonObject.put("Empresa", Integer.parseInt(sociedad));
+
+				JsonObjectRequest jsonObjectRequest =
+						new JsonObjectRequest(Request.Method.POST, ruta + "businesspartner/updateCoordinates.xsjs", jsonObject,
+								new Response.Listener<JSONObject>() {
+									@Override
+									public void onResponse(JSONObject response) {
+										try
+										{
+											if(response.getString("ResponseStatus").equals("Success")){
+
+												if(mDireccionDAO.update(direccion)){
+													fullObject.setLatitud(direccion.getLatitud());
+													fullObject.setLongitud(direccion.getLongitud());
+													showMessage("Ubicacion enviada al servidor con exito.");
+												}else{
+													showMessage("Ocurrio un problema actualizando la informacion de la ubicacion.");
+												}
+
+											}else{
+												showMessage(response.getJSONObject("Response")
+														.getJSONObject("message")
+														.getString("value"));
+											}
+
+										}catch (Exception e){showMessage("Response - " + e.getMessage());}
+									}
+								},
+								new Response.ErrorListener() {
+									@Override
+									public void onErrorResponse(VolleyError error) {
+										showMessage("VolleyError - " + error.getMessage());
+									}
+								}){
+							@Override
+							public Map<String, String> getHeaders() throws AuthFailureError {
+								HashMap<String, String> headers = new HashMap<String, String>();
+								headers.put("Content-Type", "application/json; charset=utf-8");
+								return headers;
+							}
+						};
+				VolleySingleton.getInstance(contexto).addToRequestQueue(jsonObjectRequest);
+
+			}else
+				showMessage("Error convirtiendo el archivo para el envio...");
+
+		}catch (Exception e){
+			showMessage("sendGeoToServer() > " + e.getMessage());
+		}
 	}
 
 }

@@ -4,6 +4,8 @@
     <file url="file://$PROJECT_DIR$/aplicationMovil/build.gradle" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/aplicationMovil/src/main/java/com/proyecto/database/MyDataBase.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/aplicationMovil/src/main/java/com/proyecto/database/Select.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/aplicationMovil/src/main/java/com/proyecto/devoluciones/DevolucionActivity.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/aplicationMovil/src/main/java/com/proyecto/incidencias/IncidenciaActivity.java" charset="UTF-8" />
     <file url="PROJECT" charset="ISO-8859-1" />
   </component>
 </project>

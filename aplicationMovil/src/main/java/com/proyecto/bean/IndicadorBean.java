@@ -1,15 +1,19 @@
 package com.proyecto.bean;
 
-public class IndicadorBean {
+import android.os.Parcel;
+import android.os.Parcelable;
 
-	private String codigo, nombre;
+public class IndicadorBean implements Parcelable {
 
+	private String codigo;
+	private String nombre;
+
+	public IndicadorBean(){};
 
 	@Override
 	public String toString() {
 		return this.nombre;
 	}
-	
 
 	public String getCodigo() {
 		return codigo;
@@ -27,4 +31,32 @@ public class IndicadorBean {
 		this.nombre = nombre;
 	}
 
+	protected IndicadorBean(Parcel in) {
+		codigo = in.readString();
+		nombre = in.readString();
+	}
+
+	@Override
+	public int describeContents() {
+		return 0;
+	}
+
+	@Override
+	public void writeToParcel(Parcel dest, int flags) {
+		dest.writeString(codigo);
+		dest.writeString(nombre);
+	}
+
+	@SuppressWarnings("unused")
+	public static final Parcelable.Creator<IndicadorBean> CREATOR = new Parcelable.Creator<IndicadorBean>() {
+		@Override
+		public IndicadorBean createFromParcel(Parcel in) {
+			return new IndicadorBean(in);
+		}
+
+		@Override
+		public IndicadorBean[] newArray(int size) {
+			return new IndicadorBean[size];
+		}
+	};
 }

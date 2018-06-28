@@ -11,6 +11,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
 import com.proyect.movil.R;
+import com.proyecto.sociosnegocio.ClienteBuscarActivity;
+import com.proyecto.sociosnegocio.util.ClienteBuscarBean;
 
 public class MainVentas extends AppCompatActivity{
 	
@@ -18,6 +20,7 @@ public class MainVentas extends AppCompatActivity{
 	public static String action = "";
 	public static String claveVenta = "";
 	public static String codigoArticulo = "";
+	public static String MAIN_FRAGMENT = "OrdenVentaFrg";
 	
 	@Override
 	protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -46,31 +49,31 @@ public class MainVentas extends AppCompatActivity{
             if (savedInstanceState != null) {
                 
             	fragment = getFragmentManager().getFragment(
-                        savedInstanceState, "OrdenVentaFrg");
+                        savedInstanceState, MAIN_FRAGMENT);
             	
             }
             
             FragmentManager manager = getFragmentManager();
             FragmentTransaction transaction = manager.beginTransaction();
-            transaction.replace(R.id.box, fragment,"OrdenVentaFrg");
+            transaction.replace(R.id.box, fragment,MAIN_FRAGMENT);
             transaction.commit();
 
         }
 		
 	}
-	
-	
-//	 private void attachFragment(Bundle savedInstanceState) {
-//        if (savedInstanceState == null){
-//           testFragment = TestFragment.newInstance();
-//           getSupportFragmentManager().beginTransaction()
-//           .replace(R.id.fragment_container, testFragment,"testFragment").commit();
-//	    } else {
-//	      testFragment =  (TestFragment)getSupportFragmentManager().findFragmentByTag("testFragment");
-//	    }
-//	 }
-	
-	
+
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		if(resultCode == RESULT_OK && requestCode == ClienteBuscarActivity.REQUEST_CODE_BUSCAR_CLIENTE){
+			ClienteBuscarBean mClienteSeleccionado = data.getParcelableExtra(ClienteBuscarActivity.KEY_PARAM_CLIENTE);
+			OrdenVentaFragment ovFragment = (OrdenVentaFragment) getFragmentManager()
+					.findFragmentByTag(MAIN_FRAGMENT);
+			if(ovFragment != null) {
+				ovFragment.onClientSelected(mClienteSeleccionado);
+			}
+		}
+	}
+
 	@Override
 	protected void onSaveInstanceState(Bundle outState) {
 		super.onSaveInstanceState(outState);

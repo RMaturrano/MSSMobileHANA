@@ -21,7 +21,9 @@ public class PhoneContactsListActivity extends AppCompatActivity implements
 	
 	Context contexto;
 	String nameG = "";
-	
+	public static int REQUEST_CONTACT_TLF = 71;
+	public static String KEY_PARAM_NAME = "kpName";
+	public static String KEY_PARAM_PHONE = "kpPhone";
 
    // private ContactDetailFragment mContactDetailFragment;
 
@@ -151,7 +153,7 @@ public class PhoneContactsListActivity extends AppCompatActivity implements
 		nameG = name; 
 		
 		//Preparar argumentos de envio de mensaje
-		Bundle arguments = new Bundle();
+	/*	Bundle arguments = new Bundle();
 		arguments.putString("name", name);
 		arguments.putString("phone", phone);
 		
@@ -159,15 +161,12 @@ public class PhoneContactsListActivity extends AppCompatActivity implements
    	 	Intent localBroadcastIntent = new Intent("event-get-contact-from-directory");
         localBroadcastIntent.putExtras(arguments);
         LocalBroadcastManager myLocalBroadcastManager = LocalBroadcastManager.getInstance(contexto);
-        myLocalBroadcastManager.sendBroadcast(localBroadcastIntent);
-		
+        myLocalBroadcastManager.sendBroadcast(localBroadcastIntent);	*/
+
+        Intent intent = new Intent();
+        intent.putExtra(KEY_PARAM_NAME, name);
+        intent.putExtra(KEY_PARAM_PHONE, phone);
+        setResult(RESULT_OK, intent);
 		finish();
-		
-		
 	}
-	
-
-
-    
-
 }

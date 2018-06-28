@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/swpListaNotaCredito"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="@color/backgrnd_layout_color">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rvListaNotaCredito"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="2dp"/>
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fabAddNotaCredito"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignRight="@+id/rvListaNotaCredito"
+            android:layout_alignBottom="@+id/rvListaNotaCredito"
+            android:layout_margin="5dp"
+            app:elevation="0dp"
+            app:srcCompat="@drawable/ic_add_white_36dp"
+            app:backgroundTint="#f44336"
+            app:fabSize="normal"
+            app:pressedTranslationZ="12dp"
+            app:rippleColor="#ef5350"/>
+
+    </RelativeLayout>
+
+</android.support.v4.widget.SwipeRefreshLayout>

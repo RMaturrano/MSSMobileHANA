@@ -34,7 +34,7 @@ import com.proyecto.utils.ListViewCustomAdapterTwoLinesAndImg;
 import com.proyecto.utils.Variables;
 
 public class ListaDireccionesFragment extends Fragment{
-	
+
 	private View v = null;
 	private Context contexto;
 	private int iconId = Variables.idIconRightBlue36dp;
@@ -452,9 +452,7 @@ public class ListaDireccionesFragment extends Fragment{
     		    // Canceled.
     		  }
     		});
-
     		alert.show();
-    	    
         	return true;
 		
         case R.id.action_agregar:
@@ -462,11 +460,10 @@ public class ListaDireccionesFragment extends Fragment{
         	Fragment fragment = new DireccionSocioNegocio();
 			
             transaction.hide(this);
-            transaction.add(R.id.box, fragment);
+            transaction.add(R.id.box, fragment, DireccionSocioNegocio.TAG_AGREGAR_DIRECCION);
             transaction.addToBackStack(null);
             transaction.commit();
-    	    
-    	    
+
         	return true;
         case R.id.action_aceptar:
         	
