@@ -73,6 +73,7 @@ import com.proyecto.bean.MonedaBean;
 import com.proyecto.bean.OrdenVentaBean;
 import com.proyecto.bean.OrdenVentaDetalleBean;
 import com.proyecto.conectividad.Connectivity;
+import com.proyecto.dao.ClienteDAO;
 import com.proyecto.database.DataBaseHelper;
 import com.proyecto.database.Insert;
 import com.proyecto.database.Select;
@@ -99,6 +100,7 @@ import static android.location.LocationManager.GPS_PROVIDER;
 public class OrdenVentaFragment extends Fragment {
 	
 	public static boolean shouldThreadContinueoV = false;
+	public static String KEY_PAR_CLIENTE = "cliente";
 
 	private String res = "";
 	private String action = "";
@@ -446,12 +448,23 @@ public class OrdenVentaFragment extends Fragment {
 	public void onStart() {
 		super.onStart();
 
-		//COMPROBAR EL ESTADO DE LA RED MOVIL DE DATOS
-		wifi = Connectivity.isConnectedWifi(contexto);
-		movil = Connectivity.isConnectedMobile(contexto);
-		isConnectionFast = Connectivity.isConnectedFast(contexto);
+		try{
+			wifi = Connectivity.isConnectedWifi(contexto);
+			movil = Connectivity.isConnectedMobile(contexto);
+			isConnectionFast = Connectivity.isConnectedFast(contexto);
+			mCurrentLocation = getCurrentLocation();
 
-		mCurrentLocation = getCurrentLocation();
+			if(getActivity().getIntent().getExtras() != null){
+				if(getActivity().getIntent().getExtras().containsKey(KEY_PAR_CLIENTE) &&
+						getActivity().getIntent().getStringExtra(KEY_PAR_CLIENTE) != null){
+					String codigoCliente = getActivity().getIntent().getStringExtra(KEY_PAR_CLIENTE);
+					onClientSelected(new ClienteDAO().buscarPorCodigo(codigoCliente));
+				}
+			}
+
+		}catch (Exception e){
+			showToast("onStart() > " + e.getMessage());
+		}
 	}
 
 	public void onClientSelected(ClienteBuscarBean cliente){

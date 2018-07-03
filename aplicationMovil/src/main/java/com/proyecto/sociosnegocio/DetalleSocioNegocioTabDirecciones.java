@@ -218,6 +218,11 @@ public class DetalleSocioNegocioTabDirecciones extends Fragment implements OnIte
 			sr1.setTitulo("Giro");
 			sr1.setData(object.getGiro());
 			searchResultsBottomSheet.add(sr1);
+
+			sr1 = new FormatCustomListView();
+			sr1.setTitulo("Vendedor");
+			sr1.setData(object.getVendedor());
+			searchResultsBottomSheet.add(sr1);
 		}
 
 		ListViewCustomAdapterTwoLinesAndImg adapter;

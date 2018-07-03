@@ -29,6 +29,7 @@ public class DireccionBean {
 	private String canal;
 	private String giro;
 	private String fechaInicioVisitas;
+	private String vendedor;
 	private int utilId;
 	private boolean principal;
 
@@ -246,6 +247,14 @@ public class DireccionBean {
 
 	public void setGiro(String giro) {
 		this.giro = giro;
+	}
+
+	public String getVendedor() {
+		return vendedor;
+	}
+
+	public void setVendedor(String vendedor) {
+		this.vendedor = vendedor;
 	}
 
 	public static JSONObject transformToJSON(DireccionBean direccionBean){

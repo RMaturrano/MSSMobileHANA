@@ -78,6 +78,70 @@ public class FacturaDAO {
         return  list;
     }
 
+    public FacturaBean buscar(String clave){
+
+        FacturaBean list = new FacturaBean();
+
+        Cursor cursor = DataBaseHelper
+                .getHelper(null)
+                .getDataBase()
+                .rawQuery("select T0.Clave, " +
+                        "T0.Numero, " +
+                        "T0.Referencia, " +
+                        "T0.SocioNegocio, " +
+                        "T1.NombreRazonSocial," +
+                        "T0.ListaPrecio," +
+                        "IFNULL(T5.Nombre,'') AS ListaPrecioNombre," +
+                        "T0.Contacto," +
+                        "IFNULL(T2.Nombre,'') AS ContactoNombre," +
+                        "T0.Moneda," +
+                        "T0.EmpleadoVenta," +
+                        "T0.Comentario," +
+                        "T0.FechaContable," +
+                        "T0.FechaVencimiento," +
+                        "T0.DireccionFiscal," +
+                        "IFNULL((SELECT IFNULL(X0.Calle, X0.Referencia) FROM TB_SOCIO_NEGOCIO_DIRECCION X0" +
+                        "   WHERE X0.Codigo = T0.DireccionFiscal AND X0.CodigoSocioNegocio = T0.SocioNegocio),'') " +
+                        "   AS DireccionFiscalDescripcion ," +
+                        "T0.DireccionEntrega," +
+                        "IFNULL((SELECT IFNULL(X0.Calle, X0.Referencia) FROM TB_SOCIO_NEGOCIO_DIRECCION X0" +
+                        "   WHERE X0.Codigo = T0.DireccionEntrega AND X0.CodigoSocioNegocio = T0.SocioNegocio),'') " +
+                        "   AS DireccionEntregaDescripcion ," +
+                        "IFNULL((SELECT X0.Latitud FROM TB_SOCIO_NEGOCIO_DIRECCION X0" +
+                        "   WHERE X0.Codigo = T0.DireccionEntrega AND X0.CodigoSocioNegocio = T0.SocioNegocio),'') " +
+                        "   AS DireccionEntregaLatitud ," +
+                        "IFNULL((SELECT X0.Longitud FROM TB_SOCIO_NEGOCIO_DIRECCION X0" +
+                        "   WHERE X0.Codigo = T0.DireccionEntrega AND X0.CodigoSocioNegocio = T0.SocioNegocio),'') " +
+                        "   AS DireccionEntregaLongitud ," +
+                        "T0.CondicionPago," +
+                        "IFNULL(T3.NOMBRE,'') AS CondicionPagoNombre," +
+                        "T0.Indicador," +
+                        "IFNULL(T4.Nombre,'') AS IndicadorNombre," +
+                        "T0.SubTotal," +
+                        "T0.Descuento," +
+                        "T0.Impuesto," +
+                        "T0.Total," +
+                        "T0.Saldo from TB_FACTURA T0 LEFT JOIN " +
+                        " TB_SOCIO_NEGOCIO T1 ON T0.SocioNegocio = T1.Codigo LEFT JOIN " +
+                        " TB_SOCIO_NEGOCIO_CONTACTO T2 ON T0.Contacto = T2.Codigo " +
+                        " AND T2.CodigoSocioNegocio = T1.Codigo LEFT JOIN " +
+                        " TB_CONDICION_PAGO T3 ON T3.CODIGO = T0.CondicionPago LEFT JOIN " +
+                        " TB_INDICADOR T4 ON T4.Codigo = T0.Indicador LEFT JOIN " +
+                        " TB_LISTA_PRECIO T5 ON T0.ListaPrecio = T5.Codigo " +
+                        " WHERE T0.Clave = " + clave, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                list = transformCursorToFactura(cursor);
+            } while (cursor.moveToNext());
+        }
+
+        if (cursor != null && !cursor.isClosed())
+            cursor.close();
+
+        return  list;
+    }
+
     public List<FacturaDetalleBean> listarDetalle(String claveFactura){
         List<FacturaDetalleBean> list = new ArrayList<>();
 

@@ -13,9 +13,13 @@ import android.widget.LinearLayout;
 
 import com.proyect.movil.R;
 import com.proyecto.bean.EntregaBean;
+import com.proyecto.bean.FacturaBean;
+import com.proyecto.dao.EntregaDAO;
+import com.proyecto.dao.FacturaDAO;
 import com.proyecto.devoluciones.DevolucionActivity;
 import com.proyecto.entregas.adapter.tablayout.TBAdapterEntregaDetalle;
 import com.proyecto.incidencias.IncidenciaActivity;
+import com.proyecto.notacredito.NotaCreditoActivity;
 
 public class EntregaDetalleActivity extends AppCompatActivity {
 
@@ -24,8 +28,10 @@ public class EntregaDetalleActivity extends AppCompatActivity {
     private FloatingActionButton fabAddActions;
     private FloatingActionButton fabAddDevolucion;
     private FloatingActionButton fabAddIncidencia;
-    private LinearLayout lytFabAddNotaCredito;
+    private FloatingActionButton fabAddNotaCredito;
+    private LinearLayout lytFabAddDevolucion;
     private LinearLayout lytFabAddIncidencia;
+    private LinearLayout lytFabAddNotaCredito;
     private boolean mFabExpanded;
     private EntregaBean mEntrega;
 
@@ -48,12 +54,15 @@ public class EntregaDetalleActivity extends AppCompatActivity {
         fabAddActions = (FloatingActionButton) findViewById(R.id.fabAddActionEntregaDetalle);
         fabAddDevolucion = (FloatingActionButton) findViewById(R.id.fabAddNotaCreditoEntregaDetalle);
         fabAddIncidencia = (FloatingActionButton) findViewById(R.id.fabAddIncidenciaEntregaDetalle);
-        lytFabAddNotaCredito = (LinearLayout) findViewById(R.id.lytFabActionAddNotaCreditoEntregaDetalle);
+        fabAddNotaCredito = (FloatingActionButton) findViewById(R.id.fabAddNotaCreditoEntrega);
+        lytFabAddDevolucion = (LinearLayout) findViewById(R.id.lytFabActionAddNotaCreditoEntregaDetalle);
         lytFabAddIncidencia = (LinearLayout) findViewById(R.id.lytFabAddIncidenciaEntregaDetalle);
+        lytFabAddNotaCredito = (LinearLayout) findViewById(R.id.lytFabAddNotaCreditoEntrega);
 
         fabAddActions.setOnClickListener(onClickListenerFabActions);
-        fabAddDevolucion.setOnClickListener(onClickListenerFabAddNotaCredito);
+        fabAddDevolucion.setOnClickListener(onClickListenerFabAddDevolucion);
         fabAddIncidencia.setOnClickListener(onClickListenerFabAddIncidencia);
+        fabAddNotaCredito.setOnClickListener(onClickListenerFabAddNotaCredito);
         closeSubMenusFab();
 
         if(getIntent().getExtras() != null){
@@ -113,12 +122,25 @@ public class EntregaDetalleActivity extends AppCompatActivity {
         }
     }
 
-    private View.OnClickListener onClickListenerFabAddNotaCredito = new View.OnClickListener() {
+    private View.OnClickListener onClickListenerFabAddDevolucion = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             Intent intent = new Intent(EntregaDetalleActivity.this, DevolucionActivity.class);
             intent.putExtra(DevolucionActivity.KEY_PARAM_ENTREGA, mEntrega);
             startActivity(intent);
+        }
+    };
+
+    private View.OnClickListener onClickListenerFabAddNotaCredito = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+
+            FacturaBean factura = new FacturaDAO().buscar(String.valueOf(mEntrega.getClave()));
+            if(factura != null){
+                Intent intent = new Intent(EntregaDetalleActivity.this, NotaCreditoActivity.class);
+                intent.putExtra(NotaCreditoActivity.KEY_PARAM_FACTURA, new EntregaDAO().transformEntregaToFactura(mEntrega));
+                startActivity(intent);
+            }
         }
     };
 
@@ -133,16 +155,18 @@ public class EntregaDetalleActivity extends AppCompatActivity {
     };
 
     private void closeSubMenusFab(){
-        lytFabAddNotaCredito.setVisibility(View.INVISIBLE);
+        lytFabAddDevolucion.setVisibility(View.INVISIBLE);
         lytFabAddIncidencia.setVisibility(View.INVISIBLE);
+        lytFabAddNotaCredito.setVisibility(View.INVISIBLE);
 
         fabAddActions.setImageResource(R.drawable.ic_add_white_36dp);
         mFabExpanded = false;
     }
 
     private void openSubMenusFab(){
-        lytFabAddNotaCredito.setVisibility(View.VISIBLE);
+        lytFabAddDevolucion.setVisibility(View.VISIBLE);
         lytFabAddIncidencia.setVisibility(View.VISIBLE);
+        lytFabAddNotaCredito.setVisibility(View.VISIBLE);
 
         fabAddActions.setImageResource(R.drawable.ic_close_24dp);
         mFabExpanded = true;

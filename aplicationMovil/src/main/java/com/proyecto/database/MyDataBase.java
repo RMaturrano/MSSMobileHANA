@@ -13,7 +13,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class MyDataBase extends SQLiteOpenHelper {
 
 	// VERSION DE BD
-	public static int DATABASE_VERSION = 93;
+	public static int DATABASE_VERSION = 95;
 
 	// DATABASE NAME
 	private static final String DATABASE_NAME = "BD_PRAGSA_SQLITE";
@@ -75,6 +75,7 @@ public class MyDataBase extends SQLiteOpenHelper {
 				+ contexto.getResources().getString(R.string.C_SN_NUM_ULT_COMPRA) +" TEXT, "
 				+ contexto.getResources().getString(R.string.C_SN_FEC_ULT_COMPRA) +" TEXT, "
 				+ contexto.getResources().getString(R.string.C_SN_MON_ULT_COMPRA) +" TEXT, "
+				+ contexto.getResources().getString(R.string.C_SN_SALDO_CUENTA) +" TEXT, "
 				+ contexto.getResources().getString(R.string.C_SN_PERSONA_CONTACTO) +" TEXT, "
 				+ contexto.getResources().getString(R.string.C_SN_CODIGO_EMPLEADO) +" TEXT, "
 				+ contexto.getResources().getString(R.string.C_SN_VALIDO_EN_PEDIDO) +" TEXT)");
@@ -129,7 +130,8 @@ public class MyDataBase extends SQLiteOpenHelper {
 				+ contexto.getResources().getString(R.string.C_SN2_ZONA) +" TEXT, "
 				+ contexto.getResources().getString(R.string.C_SN2_CANAL) +" TEXT, "
 				+ contexto.getResources().getString(R.string.C_SN2_GIRO) +" TEXT, "
-				+ contexto.getResources().getString(R.string.C_SN2_FECHA_INICIO) +" TEXT "
+				+ contexto.getResources().getString(R.string.C_SN2_FECHA_INICIO) +" TEXT, "
+				+ contexto.getResources().getString(R.string.C_SN2_VENDEDOR) +" TEXT "
 				+ ")");
 		db.execSQL(QUERY_CREATE_BP_DIRECC);
 		

@@ -22,7 +22,7 @@ public class EntregaDetalleTabCabecera extends Fragment{
 
     private View mView;
     private TextView tvNumero, tvReferencia, tvSocio, tvListaPrecio, tvContacto, tvComentario,
-                     tvMoneda, tvFechaContable, tvFechaVencimiento;
+                     tvMoneda, tvFechaContable, tvFechaVencimiento, tvTotal;
     private CardView cvSocio;
     private EntregaBean entrega;
 
@@ -40,6 +40,7 @@ public class EntregaDetalleTabCabecera extends Fragment{
         tvMoneda = (TextView) mView.findViewById(R.id.tvEntregaDetalleCabMoneda);
         tvFechaVencimiento = (TextView) mView.findViewById(R.id.tvEntregaDetalleCabFechaVencimiento);
         tvFechaContable = (TextView) mView.findViewById(R.id.tvEntregaDetalleCabFechaContable);
+        tvTotal = (TextView) mView.findViewById(R.id.tvEntregaDetalleCabTotal);
         cvSocio = (CardView) mView.findViewById(R.id.cvDetalleEntregaSocio);
         cvSocio.setOnClickListener(socioClickListener);
 
@@ -76,6 +77,7 @@ public class EntregaDetalleTabCabecera extends Fragment{
                 tvMoneda.setText(entrega.getMoneda());
                 tvFechaVencimiento.setText(StringDateCast.castStringtoDate(entrega.getFechaVencimiento()));
                 tvFechaContable.setText(StringDateCast.castStringtoDate(entrega.getFechaContable()));
+                tvTotal.setText(entrega.getTotal());
             }
         }catch (Exception e){
             showMessage(e.getMessage());

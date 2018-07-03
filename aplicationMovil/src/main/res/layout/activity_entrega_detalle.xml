@@ -39,7 +39,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/pgrEntregaDetalle"
-        android:layout_marginBottom="@dimen/itemFab2MarginBottom"
+        android:layout_marginBottom="@dimen/itemFab3MarginBottom"
         android:layout_marginRight="@dimen/itemFabMarginRight"
         android:layout_alignParentRight="true"
         android:orientation="horizontal">
@@ -79,7 +79,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/pgrEntregaDetalle"
-        android:layout_marginBottom="@dimen/itemFab1MarginBottom"
+        android:layout_marginBottom="@dimen/itemFab2MarginBottom"
         android:layout_marginRight="@dimen/itemFabMarginRight"
         android:layout_alignParentRight="true"
         android:orientation="horizontal">
@@ -104,6 +104,46 @@
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/fabAddNotaCreditoEntregaDetalle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:elevation="@dimen/itemFabButtonElevation"
+            android:src="@drawable/ic_assignment_return_white_24dp"
+            app:backgroundTint="@color/floattingButtonColor"
+            app:fabSize="mini"
+            app:pressedTranslationZ="12dp"
+            app:rippleColor="@color/floattingButtonColorPressed"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/lytFabAddNotaCreditoEntrega"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/pgrEntregaDetalle"
+        android:layout_marginBottom="@dimen/itemFab1MarginBottom"
+        android:layout_marginRight="@dimen/itemFabMarginRight"
+        android:layout_alignParentRight="true"
+        android:orientation="horizontal">
+
+        <android.support.v7.widget.CardView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:cardBackgroundColor="@color/white"
+            app:cardCornerRadius="@dimen/itemFabCardCornerRadius"
+            app:cardElevation="@dimen/itemFabCardElevation"
+            app:cardUseCompatPadding="true" >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Nota de crédito"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textStyle="bold"
+                android:textColor="@color/colorSilver"
+                android:padding = "@dimen/itemFabTextPadding" />
+        </android.support.v7.widget.CardView>
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fabAddNotaCreditoEntrega"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:elevation="@dimen/itemFabButtonElevation"

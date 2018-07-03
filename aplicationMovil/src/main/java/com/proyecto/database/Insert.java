@@ -122,6 +122,7 @@ public class Insert {
 					objetForInsert.put(contexto.getResources().getString(R.string.C_SN_FEC_ULT_COMPRA), socioNegocio.getFecUtimaCompra());
 					objetForInsert.put(contexto.getResources().getString(R.string.C_SN_MON_ULT_COMPRA), socioNegocio.getMontoUltCompra());
 					objetForInsert.put(contexto.getResources().getString(R.string.C_SN_PERSONA_CONTACTO), socioNegocio.getPersonaContacto());
+					objetForInsert.put(contexto.getResources().getString(R.string.C_SN_SALDO_CUENTA), socioNegocio.getSaldoCuenta());
 
 					long respuestaInsert = db.insert(contexto.getResources().getString(R.string.T_SOCIO_NEGOCIO), 
 														null, objetForInsert);
@@ -171,7 +172,7 @@ public class Insert {
 									db.execSQL(
 											"insert into "
 													+contexto.getResources().getString(R.string.TD_DIRECCION_SOCIO_NEGOCIO)+
-											" values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
+											" values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
 											new Object[] {
 													socioNegocio.getCodigo(),
 													direccion.getIDDireccion(),
@@ -197,7 +198,8 @@ public class Insert {
 											direccion.getZona(),
 													direccion.getCanal(),
 													direccion.getGiro(),
-											direccion.getFechaInicioVisitas()});
+											direccion.getFechaInicioVisitas(),
+											direccion.getVendedor()});
 
 								}
 
@@ -334,7 +336,7 @@ public class Insert {
 										+contexto.getResources().getString(R.string.TD_DIRECCION_SOCIO_NEGOCIO)+
 								" values(?,?,?,?,?,?,?,?,?,?,?,?, " +
 										"'N','N','N','N','N','N','N', " +
-										"'101',?,?,?,?,'')",
+										"'101',?,?,?,?,'', -1)",
 								new Object[] {
 										socioNegocio.getCodigo(),
 										direccion.getIDDireccion(),

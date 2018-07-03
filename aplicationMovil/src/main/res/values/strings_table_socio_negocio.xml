@@ -37,6 +37,7 @@
     <string name="C_SN_FEC_ULT_COMPRA">FechaUltimaCompra</string>
     <string name="C_SN_MON_ULT_COMPRA">MontoUltimaCompra</string>
     <string name="C_SN_PERSONA_CONTACTO">PersonaContacto</string>
+    <string name="C_SN_SALDO_CUENTA">SaldoCuenta</string>
 
     <!-- CONTACTOS -->
     <string name="TD_CONTACTO_SOCIO_NEGOCIO">TB_SOCIO_NEGOCIO_CONTACTO</string>
@@ -83,5 +84,6 @@
     <string name="C_SN2_CANAL">Canal</string>
     <string name="C_SN2_GIRO">Giro</string>
     <string name="C_SN2_FECHA_INICIO">InicioVisitas</string>
+    <string name="C_SN2_VENDEDOR">Vendedor</string>
 
 </resources>

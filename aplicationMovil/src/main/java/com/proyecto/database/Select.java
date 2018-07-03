@@ -1818,7 +1818,8 @@ public class Select {
 							+ " IFNULL(SN.Zona, '') AS Zona, "
 							+ " IFNULL(SN.Ruta, '') AS Ruta, "
 							+ " IFNULL(X0.DESCRIPCION, '') AS Canal, "
-							+ " IFNULL(X1.DESCRIPCION, '') AS Giro "
+							+ " IFNULL(X1.DESCRIPCION, '') AS Giro, "
+							+ " IFNULL(SN.Vendedor, '') AS Vendedor "
 							+ " from TB_SOCIO_NEGOCIO_DIRECCION SN  left join TB_PAIS P "
 							+ " ON SN.Pais = P.CODIGO left join TB_DEPARTAMENTO D "
 							+ " ON SN.Departamento = D.CODIGO left join TB_CANAL X0 "
@@ -1834,6 +1835,11 @@ public class Select {
 				objeto.setTipo(rs.getString(rs.getColumnIndex("Tipo")));
 				objeto.setLatitud(rs.getString((rs.getColumnIndex("Latitud"))));
 				objeto.setLongitud(rs.getString((rs.getColumnIndex("Longitud"))));
+				objeto.setVendedor(rs.getString(rs.getColumnIndex("Vendedor")));
+				objeto.setZona(rs.getString(rs.getColumnIndex("Zona")));
+				objeto.setRuta(rs.getString(rs.getColumnIndex("Ruta")));
+				objeto.setCanal(rs.getString(rs.getColumnIndex("Canal")));
+				objeto.setGiro(rs.getString(rs.getColumnIndex("Giro")));
 				objeto.setTitulo(rs.getString(1));
 				if(rs.getString(6) != null)
 					objeto.setData(rs.getString(6));

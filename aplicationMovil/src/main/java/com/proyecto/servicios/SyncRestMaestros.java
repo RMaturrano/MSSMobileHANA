@@ -239,6 +239,7 @@ public class SyncRestMaestros {
                         bean.setFecUtimaCompra(jsonObj.getString("FechaUltimaCompra"));
                         bean.setMontoUltCompra(jsonObj.getString("MontoUltimaCompra"));
                         bean.setPersonaContacto(jsonObj.getString("PersonaContacto"));
+                        bean.setSaldoCuenta(jsonObj.getString("SaldoCuenta"));
 
                         JSONArray contacts = jsonObj.getJSONArray("Contactos");
                         ContactoBean detalle;
@@ -293,6 +294,7 @@ public class SyncRestMaestros {
                             direccionBean.setCanal(detail.getString("Canal"));
                             direccionBean.setGiro(detail.getString("Giro"));
                             direccionBean.setFechaInicioVisitas(detail.getString("InicioVisitas"));
+                            direccionBean.setVendedor(detail.getString("Vendedor"));
                             listDet2.add(direccionBean);
                         }
 

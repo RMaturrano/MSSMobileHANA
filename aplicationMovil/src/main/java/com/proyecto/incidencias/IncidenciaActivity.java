@@ -100,8 +100,8 @@ public class IncidenciaActivity extends AppCompatActivity implements IRVAdapterA
     public static final int REQUEST_IMAGE_CAPTURE = 1;
 
     public final static String KEY_PAR_ORIGEN = "origen";
-    public final static String KEY_PAR_CLIENTE = "";
-    public final static String KEY_PAR_FACTURA = "";
+    public final static String KEY_PAR_CLIENTE = "cliente";
+    public final static String KEY_PAR_FACTURA = "factura";
 
     public final static String ORDEN = "Orden venta";
     public final static String ENTREGA = "Entrega mercancia";
@@ -228,6 +228,10 @@ public class IncidenciaActivity extends AppCompatActivity implements IRVAdapterA
                             mFacturaSeleccionada = new FacturaDAO().obtenerPorClave(getIntent().getExtras().getString(KEY_PAR_FACTURA));
                             mClienteSeleccionado = new ClienteDAO().buscarPorCodigo(mFacturaSeleccionada.getCodigoCliente());
                         }
+                        break;
+                    case ORDEN:
+                        if(getIntent().getExtras().containsKey(KEY_PAR_CLIENTE))
+                            mClienteSeleccionado = new ClienteDAO().buscarPorCodigo(getIntent().getExtras().getString(KEY_PAR_CLIENTE));
                         break;
                     default:
                         break;

@@ -1,17 +1,23 @@
 package com.proyecto.visitas;
 
+import android.content.Intent;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.CheckBox;
-import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.proyect.movil.R;
+import com.proyecto.incidencias.IncidenciaActivity;
 import com.proyecto.sociosnegocio.util.DireccionBuscarBean;
 import com.proyecto.utils.Constantes;
 import com.proyecto.utils.StringDateCast;
+import com.proyecto.ventas.MainVentas;
+import com.proyecto.ventas.OrdenVentaFragment;
 
 public class DetalleVisitaActivity extends AppCompatActivity {
 
@@ -20,6 +26,14 @@ public class DetalleVisitaActivity extends AppCompatActivity {
                     edtCoordenadas, edtFrecuencia, edtFechaInicio, edtNumUltimaCompra, edtFecUltimaCompra,
                     edtMonUltimaCompra, edtNombreContacto, edtTelefonoContacto;
     private CheckBox cbxLunes, cbxMartes, cbxMiercoles, cbxJueves, cbxViernes, cbxSabado, cbxDomingo;
+    private DireccionBuscarBean direccion;
+
+    private FloatingActionButton fabAddActions;
+    private FloatingActionButton fabAddPedido;
+    private FloatingActionButton fabAddIncidencia;
+    private LinearLayout lytFabAddPedido;
+    private LinearLayout lytFabAddIncidencia;
+    private boolean mFabExpanded;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +67,16 @@ public class DetalleVisitaActivity extends AppCompatActivity {
         cbxSabado = (CheckBox) findViewById(R.id.cbxVisitaSab);
         cbxDomingo = (CheckBox) findViewById(R.id.cbxVisitaDom);
 
+        fabAddActions = (FloatingActionButton) findViewById(R.id.fabAddActionVisita);
+        fabAddPedido = (FloatingActionButton) findViewById(R.id.fabAddPedidoVisita);
+        fabAddIncidencia = (FloatingActionButton) findViewById(R.id.fabAddIncidenciaVisita);
+        lytFabAddPedido = (LinearLayout) findViewById(R.id.lytFabActionAddPedidoVisita);
+        lytFabAddIncidencia = (LinearLayout) findViewById(R.id.lytFabAddIncidenciaVisita);
+
+        fabAddActions.setOnClickListener(onClickListenerFabActions);
+        fabAddPedido.setOnClickListener(onClickListenerFabAddPedido);
+        fabAddIncidencia.setOnClickListener(onClickListenerFabAddIncidencia);
+        closeSubMenusFab();
     }
 
 
@@ -74,7 +98,7 @@ public class DetalleVisitaActivity extends AppCompatActivity {
 
         if(getIntent() != null && getIntent().getExtras() != null){
             if(getIntent().getExtras().containsKey(KEY_PARAM_DIRECCION)){
-                DireccionBuscarBean direccion = getIntent().getParcelableExtra(KEY_PARAM_DIRECCION);
+                direccion = getIntent().getParcelableExtra(KEY_PARAM_DIRECCION);
 
                 edtCodCliente.setText(direccion.getCodigoCliente());
                 edtNomCliente.setText(direccion.getNombreCliente());
@@ -100,5 +124,51 @@ public class DetalleVisitaActivity extends AppCompatActivity {
                 cbxDomingo.setChecked(direccion.getVisitaDomingo().equals("Y") ? true: false);
             }
         }
+    }
+
+    private View.OnClickListener onClickListenerFabActions = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            if (mFabExpanded == true){
+                closeSubMenusFab();
+            } else {
+                openSubMenusFab();
+            }
+        }
+    };
+
+    private View.OnClickListener onClickListenerFabAddPedido = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            Intent intent = new Intent(DetalleVisitaActivity.this, MainVentas.class);
+            intent.putExtra(OrdenVentaFragment.KEY_PAR_CLIENTE, direccion.getCodigoCliente());
+            startActivity(intent);
+        }
+    };
+
+    private View.OnClickListener onClickListenerFabAddIncidencia = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            Intent intent = new Intent(DetalleVisitaActivity.this, IncidenciaActivity.class);
+            intent.putExtra(IncidenciaActivity.KEY_PAR_ORIGEN, IncidenciaActivity.ORDEN);
+            intent.putExtra(IncidenciaActivity.KEY_PAR_CLIENTE, direccion.getCodigoCliente());
+            startActivity(intent);
+        }
+    };
+
+    private void closeSubMenusFab(){
+        lytFabAddPedido.setVisibility(View.INVISIBLE);
+        lytFabAddIncidencia.setVisibility(View.INVISIBLE);
+
+        fabAddActions.setImageResource(R.drawable.ic_add_white_36dp);
+        mFabExpanded = false;
+    }
+
+    private void openSubMenusFab(){
+        lytFabAddPedido.setVisibility(View.VISIBLE);
+        lytFabAddIncidencia.setVisibility(View.VISIBLE);
+
+        fabAddActions.setImageResource(R.drawable.ic_close_24dp);
+        mFabExpanded = true;
     }
 }

@@ -14,6 +14,7 @@ public class FormatCustomListView {
 	private String ruta;
 	private String canal;
 	private String giro;
+	private String vendedor;
 	private int icon, id;
 	private boolean chck;
 
@@ -122,5 +123,13 @@ public class FormatCustomListView {
 
 	public void setGiro(String giro) {
 		this.giro = giro;
+	}
+
+	public String getVendedor() {
+		return vendedor;
+	}
+
+	public void setVendedor(String vendedor) {
+		this.vendedor = vendedor;
 	}
 }

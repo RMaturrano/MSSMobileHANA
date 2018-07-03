@@ -18,13 +18,16 @@ import com.proyecto.dao.FacturaDAO;
 import com.proyecto.entregas.EntregaDetalleActivity;
 import com.proyecto.facturas.util.FacturaBuscarBean;
 import com.proyecto.incidencias.IncidenciaActivity;
+import com.proyecto.notacredito.NotaCreditoActivity;
 import com.proyecto.utils.PagerAdapterDetFactura;
 
 public class DetalleFacturaMain extends AppCompatActivity{
 
     private FloatingActionButton fabAddActions;
     private FloatingActionButton fabAddIncidencia;
+    private FloatingActionButton fabAddNotaCredito;
     private LinearLayout lytFabAddIncidencia;
+    private LinearLayout lytFabAddNotaCredito;
 	public static String idNroFactura = null;
 	public static String idSocioNegocio = null;
     private boolean mFabExpanded;
@@ -53,10 +56,13 @@ public class DetalleFacturaMain extends AppCompatActivity{
 
         fabAddActions = (FloatingActionButton) findViewById(R.id.fabAddActionFacturaDetalle);
         fabAddIncidencia = (FloatingActionButton) findViewById(R.id.fabAddIncidenciaFacturaDetalle);
+        fabAddNotaCredito = (FloatingActionButton) findViewById(R.id.fabAddNotaCreditoFacturaDetalle);
         lytFabAddIncidencia = (LinearLayout) findViewById(R.id.lytFabAddIncidenciaFacturaDetalle);
+        lytFabAddNotaCredito = (LinearLayout) findViewById(R.id.lytFabActionAddNotaCreditoFacturaDetalle);
 
         fabAddActions.setOnClickListener(onClickListenerFabActions);
         fabAddIncidencia.setOnClickListener(onClickListenerFabAddIncidencia);
+        fabAddNotaCredito.setOnClickListener(onClickListenerFabAddNotaCredito);
         closeSubMenusFab();
 	    
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
@@ -126,8 +132,18 @@ public class DetalleFacturaMain extends AppCompatActivity{
         }
     };
 
+    private View.OnClickListener onClickListenerFabAddNotaCredito = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            Intent intent = new Intent(DetalleFacturaMain.this, NotaCreditoActivity.class);
+            intent.putExtra(NotaCreditoActivity.KEY_PARAM_FACTURA, new FacturaDAO().buscar(idNroFactura));
+            startActivity(intent);
+        }
+    };
+
     private void closeSubMenusFab(){
         lytFabAddIncidencia.setVisibility(View.INVISIBLE);
+        lytFabAddNotaCredito.setVisibility(View.INVISIBLE);
 
         fabAddActions.setImageResource(R.drawable.ic_add_white_36dp);
         mFabExpanded = false;
@@ -135,6 +151,7 @@ public class DetalleFacturaMain extends AppCompatActivity{
 
     private void openSubMenusFab(){
         lytFabAddIncidencia.setVisibility(View.VISIBLE);
+        lytFabAddNotaCredito.setVisibility(View.VISIBLE);
 
         fabAddActions.setImageResource(R.drawable.ic_close_24dp);
         mFabExpanded = true;

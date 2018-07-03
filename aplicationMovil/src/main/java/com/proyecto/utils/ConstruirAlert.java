@@ -44,6 +44,7 @@ public class ConstruirAlert {
 		fArray[0] = new InputFilter.LengthFilter(maxLength);
 		edt.setFilters(fArray);
 		edt.setMaxLines(1);
+		edt.setSingleLine(true);
 		edt.setFocusableInTouchMode(true);
 		edt.requestFocus();
 		

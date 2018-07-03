@@ -6,6 +6,9 @@ import android.database.Cursor;
 import com.proyecto.bean.EntregaBean;
 import com.proyecto.bean.EntregaDetalleBean;
 import com.proyecto.bean.EntregaDetalleLoteBean;
+import com.proyecto.bean.FacturaBean;
+import com.proyecto.bean.FacturaDetalleBean;
+import com.proyecto.bean.FacturaDetalleLoteBean;
 import com.proyecto.database.DataBaseHelper;
 
 import java.util.ArrayList;
@@ -296,5 +299,80 @@ public class EntregaDAO {
         detalle.setLote(cursor.getString(cursor.getColumnIndex("Lote")));
         detalle.setLineaBase(cursor.getInt(cursor.getColumnIndex("LineaBase")));
         return detalle;
+    }
+
+    public FacturaBean transformEntregaToFactura(EntregaBean entrega){
+        FacturaBean factura = new FacturaBean();
+        factura.setTipo(entrega.getTipo());
+        factura.setClave(String.valueOf(entrega.getClave()));
+        factura.setNumero(String.valueOf(entrega.getNumero()));
+        factura.setReferencia(entrega.getReferencia());
+        factura.setSocioNegocio(entrega.getSocioNegocio());
+        factura.setSocioNegocioNombre(entrega.getSocioNegocioNombre());
+        factura.setNombreSocio(entrega.getSocioNegocioNombre());
+        factura.setListaPrecio(String.valueOf(entrega.getListaPrecio()));
+        factura.setContacto(String.valueOf(entrega.getContacto()));
+        factura.setMoneda(entrega.getMoneda());
+        factura.setEmpleadoVenta(entrega.getEmpleadoVenta());
+        factura.setComentario(entrega.getComentario());
+        factura.setFechaContable(entrega.getFechaContable());
+        factura.setFechaDocumento(entrega.getFechaContable());
+        factura.setFechaVencimiento(entrega.getFechaVencimiento());
+        factura.setDireccionFiscal(entrega.getDireccionFiscal());
+        factura.setDireccionEntrega(entrega.getDireccionEntrega());
+        factura.setCondicionPago(entrega.getCondicionPago());
+        factura.setIndicador(entrega.getIndicador());
+        factura.setSubTotal(entrega.getSubTotal());
+        factura.setDescuento(entrega.getDescuento());
+        factura.setImpuesto(entrega.getImpuesto());
+        factura.setTotal(entrega.getTotal());
+        factura.setSaldo(entrega.getSaldo());
+        factura.setListaPrecioNombre(entrega.getListaPrecioNombre());
+        factura.setContactoNombre(entrega.getContactoNombre());
+        factura.setDireccionFiscalDescripcion(entrega.getDireccionFiscalDescripcion());
+        factura.setDireccionEntregaDescripcion(entrega.getDireccionEntregaDescripcion());
+        factura.setDireccionEntregaLatitud(entrega.getDireccionEntregaLatitud());
+        factura.setDireccionEntregaLongitud(entrega.getDireccionEntregaLongitud());
+        factura.setCondicionPagoNombre(entrega.getCondicionPagoNombre());
+        factura.setIndicadorNombre(entrega.getIndicadorNombre());
+        factura.setLineas( (ArrayList<FacturaDetalleBean>) transformEntregaDetalle(entrega.getLineas()));
+
+        return factura;
+    }
+
+    public List<FacturaDetalleBean> transformEntregaDetalle(List<EntregaDetalleBean> lineas){
+        List<FacturaDetalleBean> detalles = new ArrayList<>();
+
+        for (EntregaDetalleBean e : lineas) {
+            FacturaDetalleBean detalle = new FacturaDetalleBean();
+            detalle.setLinea(e.getLinea());
+            detalle.setArticulo(e.getArticulo());
+            detalle.setArticuloNombre(e.getArticuloNombre());
+            detalle.setUnidadMedida(e.getUnidadMedida());
+            detalle.setAlmacen(e.getAlmacen());
+            detalle.setAlmacenNombre(e.getAlmacenNombre());
+            detalle.setCantidad(e.getCantidad());
+            detalle.setDiponible(e.getDiponible());
+            detalle.setListaPrecio(String.valueOf(e.getListaPrecio()));
+            detalle.setPrecioUnitario(e.getPrecioUnitario());
+            detalle.setPorcentajeDescuento(e.getPorcentajeDescuento());
+            detalle.setImpuesto(e.getImpuesto());
+
+            List<FacturaDetalleLoteBean> lotes = new ArrayList<>();
+            for (EntregaDetalleLoteBean l : e.getLotes()) {
+                FacturaDetalleLoteBean lote = new FacturaDetalleLoteBean();
+                lote.setClaveBase(l.getClaveBase());
+                lote.setCantidad(l.getCantidad());
+                lote.setCantidadTemp(lote.getCantidad());
+                lote.setLote(l.getLote());
+                lote.setLineaBase(l.getLineaBase());
+                lotes.add(lote);
+            }
+            detalle.setLotes(lotes);
+
+            detalles.add(detalle);
+        }
+
+        return detalles;
     }
 }
