@@ -39,7 +39,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.proyect.movil.R;
+import com.proyecto.bean.ArticuloBean;
 import com.proyecto.database.DataBaseHelper;
+import com.proyecto.inventario.DetalleArticuloMain;
 import com.proyecto.utils.AlphabetListAdapterImgAndTwoLines;
 import com.proyecto.utils.AlphabetListAdapterImgAndTwoLines.Item;
 import com.proyecto.utils.AlphabetListAdapterImgAndTwoLines.Row;
@@ -244,7 +246,7 @@ public class BuscarArtFragment extends Fragment implements OnItemClickListener {
 					customListObjet.setData("# NO NAME, SINC AGAIN");
 				
 				customListObjet.setExtra(rs.getString(2)+"#"+rs.getString(3)+"#"+rs.getString(4)+"#"+rs.getString(5)+"#"+rs.getString(6));
-//				customListObjet.setExtra2(rs.getString(7)+"¡"+rs.getString(8)+"¡"+rs.getString(9)+"¡"+rs.getString(10));
+//				customListObjet.setExtra2(rs.getString(7)+"ï¿½"+rs.getString(8)+"ï¿½"+rs.getString(9)+"ï¿½"+rs.getString(10));
 
 				listaAdapter.add(customListObjet);
 			}
@@ -322,7 +324,7 @@ public class BuscarArtFragment extends Fragment implements OnItemClickListener {
 			transaction.remove(this);
 			transaction.commit();
 
-			getActivity().setTitle("Artículo");
+			getActivity().setTitle("Articulo");
 			getFragmentManager().popBackStack();
 
 			return true;
@@ -334,13 +336,17 @@ public class BuscarArtFragment extends Fragment implements OnItemClickListener {
 				if(alphabetAdapter.getItemViewType(arguments.getInt("position"))!= 1 ){
 					Object o = alphabetAdapter.getItem(arguments.getInt("position"));
 					AlphabetListAdapterImgAndTwoLines.Item item2 =  (AlphabetListAdapterImgAndTwoLines.Item) o;
-				    openBottomSheet(null, item2);
-					
+
+					//openBottomSheet(null, item2);
+
+					Intent myIntent = new Intent(v.getContext(), DetalleArticuloMain.class);
+					myIntent.putExtra("id", item2.element.getTitulo());
+					startActivity(myIntent);
 				}
 				
 			} else {
 
-				Toast.makeText(contexto, "Seleccione el artículo",
+				Toast.makeText(contexto, "Seleccione el articulo",
 						Toast.LENGTH_LONG).show();
 
 			}
@@ -351,7 +357,7 @@ public class BuscarArtFragment extends Fragment implements OnItemClickListener {
 
 			if (arguments != null) {
 
-				// MANDAR LOS PARÀMETROS EN LOCALBORADCAST INTENT
+				// MANDAR LOS PARï¿½METROS EN LOCALBORADCAST INTENT
 				Intent localBroadcastIntent = new Intent("buscar_art");
 				localBroadcastIntent.putExtras(arguments);
 				LocalBroadcastManager myLocalBroadcastManager = LocalBroadcastManager
@@ -362,12 +368,12 @@ public class BuscarArtFragment extends Fragment implements OnItemClickListener {
 				transaction.commit();
 
 				// LLAMAR EL POPBACKSTACK(VOLVER)
-				getActivity().setTitle("Artículo");
+				getActivity().setTitle("Articulo");
 				getActivity().getFragmentManager().popBackStack();
 
 			} else {
 
-				Toast.makeText(contexto, "Seleccione el artículo",
+				Toast.makeText(contexto, "Seleccione el articulo",
 						Toast.LENGTH_LONG).show();
 
 			}
@@ -414,13 +420,13 @@ public class BuscarArtFragment extends Fragment implements OnItemClickListener {
 		
 		ArrayList<FormatCustomListView> searchResults = new ArrayList<FormatCustomListView>();
 		FormatCustomListView sr1 = new FormatCustomListView();
-    	sr1.setTitulo("Código");
+    	sr1.setTitulo("Codigo");
     	sr1.setIcon(R.drawable.ic_vpn_key_blue_24dp);
     	sr1.setData(item.element.getTitulo());
     	searchResults.add(sr1);
     	
     	sr1 = new FormatCustomListView();
-    	sr1.setTitulo("Descripción");
+    	sr1.setTitulo("Descripcion");
     	sr1.setIcon(R.drawable.ic_feedback_blue_24dp);
     	sr1.setData(item.element.getData());
     	searchResults.add(sr1);
@@ -488,7 +494,7 @@ public class BuscarArtFragment extends Fragment implements OnItemClickListener {
             	FragmentManager manager = getFragmentManager();
         		FragmentTransaction transaction = manager.beginTransaction();
                 
-            	// MANDAR LOS PARÀMETROS EN LOCALBORADCAST INTENT
+            	// MANDAR LOS PARï¿½METROS EN LOCALBORADCAST INTENT
 				Intent localBroadcastIntent = new Intent("buscar_art");
 				localBroadcastIntent.putExtras(arguments);
 				LocalBroadcastManager myLocalBroadcastManager = LocalBroadcastManager
@@ -499,7 +505,7 @@ public class BuscarArtFragment extends Fragment implements OnItemClickListener {
 				transaction.commit();
 
 				// LLAMAR EL POPBACKSTACK(VOLVER)
-				getActivity().setTitle("Artículo");
+				getActivity().setTitle("Articulo");
 				getActivity().getFragmentManager().popBackStack();
             	
             }

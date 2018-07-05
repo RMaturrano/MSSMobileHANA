@@ -147,8 +147,8 @@ public class ListViewCustomAdapterFourRowAndImgART_LIST extends BaseAdapter impl
 	                   	
 	                	   ArticuloBean data = lista.get(i);
 	                   	
-	                       if (data.getCod().toLowerCase().startsWith(mSearchTerm.toString())
-	                    		   || data.getDesc().toLowerCase().startsWith(mSearchTerm.toString()))  {
+	                       if (data.getCod().toLowerCase().contains(mSearchTerm.toString())
+	                    		   || data.getDesc().toLowerCase().contains(mSearchTerm.toString()))  {
 	       
 	                       		FilteredArrayList.add(data);
 	                       }

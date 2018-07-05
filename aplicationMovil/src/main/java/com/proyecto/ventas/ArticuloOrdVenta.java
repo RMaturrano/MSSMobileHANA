@@ -12,6 +12,7 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.content.LocalBroadcastManager;
 import android.text.InputFilter;
 import android.text.InputType;
@@ -43,6 +44,8 @@ import com.proyecto.utils.DoubleRound;
 import com.proyecto.utils.FormatCustomListView;
 import com.proyecto.utils.ListViewCustomAdapterTwoLinesAndImg;
 import com.proyecto.utils.Variables;
+
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
@@ -207,7 +210,15 @@ public class ArticuloOrdVenta extends Fragment {
 
         pref = PreferenceManager
                 .getDefaultSharedPreferences(contexto);
-        permisoEscogerPrecio = pref.getString(Variables.MOVIL_ESCOGER_PRECIO, "");
+         String permisosMenu = pref.getString(Variables.MENU_PEDIDOS, "");
+        if (permisosMenu != null) {
+            try {
+                JSONObject permisos = new JSONObject(permisosMenu);
+                permisoEscogerPrecio = permisos.getString(Variables.MOVIL_ESCOGER_PRECIO);
+            } catch (Exception e) {
+                Toast.makeText(contexto, "Ocurrió un error intentando obtener los permisos del menú", Toast.LENGTH_SHORT).show();
+            }
+        }
 
         //LLENAR EL LISTADO DE DATOS QUE COMPONEN LA ORDEN DE VENTA
         cargarListas();
@@ -386,7 +397,7 @@ public class ArticuloOrdVenta extends Fragment {
         sr = new FormatCustomListView();
         sr.setTitulo("Porcentaje descuento");
         if (articuloActualizar != null)
-            sr.setData(String.valueOf(articuloActualizar.getDescuento()));
+            sr.setData(String.valueOf(articuloActualizar.getDescuento()* 100));
         searchResults.add(sr);
 
         sr = new FormatCustomListView();
@@ -764,49 +775,57 @@ public class ArticuloOrdVenta extends Fragment {
 
         } else if (position == 8) {
             //PORCENTAJE DE DESCUENTO
-//			
-//			posicion = position;
-//			//Capturar el objeto (row - fila) 
-//			Object o = lvPrincipal.getItemAtPosition(position);
-//			fullObject = new FormatCustomListView();
-//	    	fullObject = (FormatCustomListView)o;
-//
-//			//Spinner
-//			final EditText edtDescuento = new EditText(contexto);
-//			
-//			AlertDialog.Builder alert = new AlertDialog.Builder(contexto);
-//			alert.setTitle("Porcentaje de descuento");
-//			alert.setView(edtDescuento);
-//			edtDescuento.setFocusableInTouchMode(true);
-//			edtDescuento.requestFocus();
-//			
-//			alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-//			public void onClick(DialogInterface dialog, int whichButton) {
-//			
-//				InputMethodManager imm = (InputMethodManager) contexto.getSystemService(Context.INPUT_METHOD_SERVICE);
-//	            imm.hideSoftInputFromWindow(edtDescuento.getWindowToken(), 0);
-//				
-//				fullObject.setData(edtDescuento.getText().toString());
-//				searchResults.set(posicion, fullObject);
-//				lvPrincipal.invalidateViews();
-//
-//				doMaths();
-//				
-//				
-//			  }
-//			});
-//
-//			alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-//			  public void onClick(DialogInterface dialog, int whichButton) {
-//			    // Canceled.
-//			  }
-//			});
-//
-//			edtDescuento.requestFocus();
-//	        InputMethodManager imm = (InputMethodManager) contexto.getSystemService(Context.INPUT_METHOD_SERVICE);
-//	        imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
-//
-//			alert.show();
+
+			posicion = position;
+			//Capturar el objeto (row - fila)
+			Object o = lvPrincipal.getItemAtPosition(position);
+			fullObject = new FormatCustomListView();
+	    	fullObject = (FormatCustomListView)o;
+
+			//Spinner
+			final EditText edtDescuento = new EditText(contexto);
+
+			AlertDialog.Builder alert = new AlertDialog.Builder(contexto);
+			alert.setTitle("Porcentaje de descuento");
+			alert.setView(edtDescuento);
+			edtDescuento.setInputType(InputType.TYPE_CLASS_NUMBER);
+			edtDescuento.setSingleLine(true);
+			edtDescuento.setFocusableInTouchMode(true);
+			edtDescuento.requestFocus();
+
+			alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog, int whichButton) {
+
+				InputMethodManager imm = (InputMethodManager) contexto.getSystemService(Context.INPUT_METHOD_SERVICE);
+	            imm.hideSoftInputFromWindow(edtDescuento.getWindowToken(), 0);
+
+	            String dcto = edtDescuento.getText().toString();
+	            if(dcto != null && !dcto.trim().equals("")){
+	                if(Integer.parseInt(dcto) == 0 || Integer.parseInt(dcto) == 100){
+                        fullObject.setData(dcto + ".00");
+                        searchResults.set(posicion, fullObject);
+                        lvPrincipal.invalidateViews();
+                        doMaths();
+                    }else{
+	                    Toast.makeText(getActivity(), "Ingrese un descuento de cero o 100.", Toast.LENGTH_LONG).show();
+                    }
+                }else{
+                    Toast.makeText(getActivity(), "Ingrese un descuento valido", Toast.LENGTH_LONG).show();
+                }
+			  }
+			});
+
+			alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+			  public void onClick(DialogInterface dialog, int whichButton) {
+			    // Canceled.
+			  }
+			});
+
+			edtDescuento.requestFocus();
+	        InputMethodManager imm = (InputMethodManager) contexto.getSystemService(Context.INPUT_METHOD_SERVICE);
+	        imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
+
+			alert.show();
 
         } else if (position == 9) {
             //IMPUESTO

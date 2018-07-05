@@ -10,12 +10,17 @@ import java.util.List;
 
 public class ArticuloDAO {
 
-    public List<ArticuloBean> listar(String listaPrecio) {
+    public List<ArticuloBean> listar(String listaPrecio, String almacen) {
 
-        String filterPriceList = "";
+        String filterPriceList = "", filterAlmacen = "", columnStock = "";
 
-        if(listaPrecio != null  && !listaPrecio.equals(""))
+        if(listaPrecio != null  && !listaPrecio.equals("") && !listaPrecio.equals("-1"))
             filterPriceList = " AND P.CodigoLista = " + listaPrecio;
+
+        if(almacen != null  && !almacen.equals("") && !almacen.equals("-1")) {
+            filterAlmacen = " AND (SELECT COUNT(*) FROM TB_CANTIDAD WHERE ARTICULO = A.Codigo AND ALMACEN = '" + almacen + "') > 0 ";
+            columnStock = " AND ALMACEN = '" + almacen + "'";
+        }
 
         Cursor cursor = DataBaseHelper
                 .getHelper(null)
@@ -23,12 +28,12 @@ public class ArticuloDAO {
                 .rawQuery("select " +
                         "A.Codigo, " +
                         "A.Nombre," +
-                        "(select IFNULL(SUM(CAST(STOCK AS NUMERIC)),0) from TB_CANTIDAD where ARTICULO = A.Codigo), " +
+                        "(select IFNULL(SUM(CAST(STOCK AS NUMERIC)),0) from TB_CANTIDAD where ARTICULO = A.Codigo "+columnStock+"), " +
                         "G.NOMBRE "
                         + "from TB_ARTICULO A join TB_GRUPO_ARTICULO G " +
                         "ON A.GrupoArticulo = G.CODIGO left join TB_PRECIO P on " +
                         " P.Articulo = A.Codigo AND P.CodigoLista IN(SELECT X0.ListaPrecio from TB_SOCIO_NEGOCIO X0) "+
-                        filterPriceList +
+                        filterPriceList + filterAlmacen +
                         " GROUP BY A.Codigo, A.Nombre  " +
                         "  having SUM(P.PrecioVenta) > 0 " +
                         " order by G.NOMBRE,A.Nombre", null);

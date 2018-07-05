@@ -159,9 +159,9 @@ public class AlphabetListAdapterImgAndTwoLines extends BaseAdapter implements
 
 							if(item.element != null){
 								if (item.element.getData().toLowerCase()
-										.startsWith(mSearchTerm.toString())
+										.contains(mSearchTerm.toString())
 										|| item.element.getTitulo().toLowerCase()
-										.startsWith(mSearchTerm)) {
+										.contains(mSearchTerm)) {
 									rowsFilterFinal.add(item);
 								}
 							}

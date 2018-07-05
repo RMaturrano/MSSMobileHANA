@@ -31,13 +31,16 @@ import android.widget.ListView;
 import android.widget.Spinner;
 
 import com.proyect.movil.R;
+import com.proyecto.bean.AlmacenBean;
 import com.proyecto.bean.ArticuloBean;
 import com.proyecto.bean.GrupoArticuloBean;
 import com.proyecto.bean.ListaPrecioBean;
+import com.proyecto.dao.AlmacenDAO;
 import com.proyecto.dao.ArticuloDAO;
 import com.proyecto.dao.ListaPrecioDAO;
 import com.proyecto.database.DataBaseHelper;
 import com.proyecto.database.Select;
+import com.proyecto.inventario.adapter.spinner.SPAdapterAlmacen;
 import com.proyecto.inventario.adapter.spinner.SPAdapterListaPrecio;
 import com.proyecto.utils.ListViewCustomAdapterFourRowAndImgART_LIST;
 import com.proyecto.utils.Utils;
@@ -47,8 +50,10 @@ public class ListaArticulosTabTodosFragment extends Fragment
 	
 	private ListView lvArticulo;
 	private SPAdapterListaPrecio mAdapterListaPrecio;
-	private Spinner spListaPrecio;
+	private SPAdapterAlmacen mAdapterAlmacen;
+	private Spinner spListaPrecio, spAlmacen;
 	private ListaPrecioBean mListaPrecio;
+	private AlmacenBean mAlmacen;
 	private ListViewCustomAdapterFourRowAndImgART_LIST adapter;
 	private List<ArticuloBean> listaAdapter;
 	private ArticuloBean customListObjet = null;
@@ -71,10 +76,29 @@ public class ListaArticulosTabTodosFragment extends Fragment
 
 		spListaPrecio =(Spinner) v.findViewById(R.id.spListaPrecio);
 		mAdapterListaPrecio = new SPAdapterListaPrecio(v.getContext());
-		mAdapterListaPrecio.addAll(new ListaPrecioDAO().listar());
+		List<ListaPrecioBean> listasPrecio = new ArrayList<>();
+		ListaPrecioBean firstItem = new ListaPrecioBean();
+		firstItem.setCodigo("-1");
+		firstItem.setNombre("Lista de precio: Todos");
+		listasPrecio.add(firstItem);
+		listasPrecio.addAll(new ListaPrecioDAO().listar());
+		mAdapterListaPrecio.addAll(listasPrecio);
 		spListaPrecio.setAdapter(mAdapterListaPrecio);
 		spListaPrecio.setVisibility(View.VISIBLE);
 		spListaPrecio.setOnItemSelectedListener(spListaPrecioOnItemSelectedListener);
+
+		spAlmacen =(Spinner) v.findViewById(R.id.spAlmacen);
+		mAdapterAlmacen = new SPAdapterAlmacen(v.getContext());
+		List<AlmacenBean> almacenes = new ArrayList<>();
+		AlmacenBean frstItem = new AlmacenBean();
+		frstItem.setCodigo("-1");
+		frstItem.setDescripcion("Almacen: Todos");
+		almacenes.add(frstItem);
+		almacenes.addAll(new AlmacenDAO().listar());
+		mAdapterAlmacen.addAll(almacenes);
+		spAlmacen.setAdapter(mAdapterAlmacen);
+		spAlmacen.setVisibility(View.VISIBLE);
+		spAlmacen.setOnItemSelectedListener(spAlmacenOnItemSelectedListener);
 
 		refreshLayout = (SwipeRefreshLayout) v.findViewById(R.id.swipeRefresh);
 		refreshLayout.setColorSchemeResources(R.color.s1, R.color.s2,
@@ -100,6 +124,20 @@ public class ListaArticulosTabTodosFragment extends Fragment
 				@Override
 				public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 					mListaPrecio = (ListaPrecioBean) parent.getSelectedItem();
+					incializarListaArticulos();
+				}
+
+				@Override
+				public void onNothingSelected(AdapterView<?> parent) {
+
+				}
+			};
+
+	private AdapterView.OnItemSelectedListener spAlmacenOnItemSelectedListener = new
+			AdapterView.OnItemSelectedListener() {
+				@Override
+				public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+					mAlmacen = (AlmacenBean) parent.getSelectedItem();
 					incializarListaArticulos();
 				}
 
@@ -199,7 +237,8 @@ public class ListaArticulosTabTodosFragment extends Fragment
 
 		@Override
 		protected Object doInBackground(String... params) {
-			listaAdapter = new ArticuloDAO().listar(mListaPrecio != null ? mListaPrecio.getCodigo() : null);
+			listaAdapter = new ArticuloDAO().listar(mListaPrecio != null ? mListaPrecio.getCodigo() : null,
+					mAlmacen != null ? mAlmacen.getCodigo() : null);
 			return null;
 		}
 
