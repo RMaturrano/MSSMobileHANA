@@ -1051,6 +1051,8 @@ public class IncidenciaActivity extends AppCompatActivity implements IRVAdapterA
 
             JSONObject jsonObject = IncidenciaBean.transformIncidenciaToJSON(incidencia, sociedad);
 
+            String jsonString = jsonObject.toString();
+
             if(jsonObject != null){
                 JsonObjectRequest jsonObjectRequest =
                         new JsonObjectRequest(Request.Method.POST, ruta + "activity/addActivity.xsjs", jsonObject,

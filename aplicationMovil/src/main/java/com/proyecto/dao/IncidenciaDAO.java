@@ -44,6 +44,7 @@ public class IncidenciaDAO {
                         "T0.TipoIncidencia, " +
                         "T0.FechaPago, " +
                         "T0.Sincronizado, " +
+                        "T0.Rango, " +
                         "T0.Foto " +
                         " FROM TB_INCIDENCIA T0 " +
                         " where T0.Origen = '" + origen + "'", null);
@@ -142,6 +143,7 @@ public class IncidenciaDAO {
         cv.put("TipoIncidencia", incidencia.getTipoIncidencia());
         cv.put("FechaPago", incidencia.getFechaCompromisoPago());
         cv.put("Foto", incidencia.getFoto() != null ? getBitmapAsByteArray(incidencia.getFoto()) : null);
+        cv.put("Rango", incidencia.getRango());
         cv.put("Sincronizado", incidencia.getSincronizado());
 
         long inserto = DataBaseHelper
@@ -191,6 +193,7 @@ public class IncidenciaDAO {
         incidenciaBean.setTipoIncidencia(cursor.getString(cursor.getColumnIndex("TipoIncidencia")));
         incidenciaBean.setFechaCompromisoPago(cursor.getString(cursor.getColumnIndex("FechaPago")));
         incidenciaBean.setFoto(getImage(cursor.getBlob(cursor.getColumnIndex("Foto"))));
+        incidenciaBean.setRango(cursor.getString(cursor.getColumnIndex("Rango")));
         incidenciaBean.setSincronizado(cursor.getString(cursor.getColumnIndex("Sincronizado")));
         return incidenciaBean;
 

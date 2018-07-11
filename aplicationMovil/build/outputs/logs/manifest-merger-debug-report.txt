@@ -1,490 +1,490 @@
 -- Merging decision tree log ---
 manifest
-ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:2:1-224:12
-INJECTED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:2:1-224:12
-INJECTED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:2:1-224:12
-INJECTED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:2:1-224:12
-MERGED from [com.android.support:design:23.3.0] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\design-23.3.0.aar\809b713254331d37cde75dabb44c7926\AndroidManifest.xml:17:1-24:12
-MERGED from [com.android.support:appcompat-v7:23.4.0] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\appcompat-v7-23.4.0.aar\699b6d9e323b66362cf9e67c96bef4d8\AndroidManifest.xml:17:1-27:12
-MERGED from [com.android.support:recyclerview-v7:23.3.0] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\recyclerview-v7-23.3.0.aar\b2bc6f29b4c531350d21274b610f0a16\AndroidManifest.xml:17:1-22:12
-MERGED from [com.android.support:cardview-v7:23.0.1] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\cardview-v7-23.0.1.aar\189f6b2ca990ead60d2a4ee74e25f047\AndroidManifest.xml:17:1-24:12
-MERGED from [com.android.volley:volley:1.1.0] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\volley-1.1.0.aar\345ea0c5f832cf615e4a954ceb712551\AndroidManifest.xml:2:1-11:12
-MERGED from [com.google.maps.android:android-maps-utils:0.4.4] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\android-maps-utils-0.4.4.aar\51072db664ddf349b8bc61a9d7624537\AndroidManifest.xml:2:1-13:12
-MERGED from [com.google.android.gms:play-services-maps:11.8.0] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\play-services-maps-11.8.0.aar\0729734fc266b5e80ed8382a4a422739\AndroidManifest.xml:17:1-32:12
-MERGED from [com.android.support.constraint:constraint-layout:1.0.2] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\constraint-layout-1.0.2.aar\5d1e2779ba42d84667a2d1970330cfd5\AndroidManifest.xml:2:1-11:12
-MERGED from [com.android.support:animated-vector-drawable:23.4.0] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\animated-vector-drawable-23.4.0.aar\be1aaf68abd369c7f932f448acee159d\AndroidManifest.xml:2:1-9:12
-MERGED from [com.google.android.gms:play-services-base:11.8.0] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\play-services-base-11.8.0.aar\36bd668d01fd7ddabe8282c41976aef9\AndroidManifest.xml:17:1-29:12
-MERGED from [com.google.android.gms:play-services-tasks:11.8.0] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\play-services-tasks-11.8.0.aar\9f70b3425a6ce3da483cedb035394d02\AndroidManifest.xml:2:1-9:12
-MERGED from [com.google.android.gms:play-services-basement:11.8.0] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\play-services-basement-11.8.0.aar\0116f5bd8c43e2dc716f90693dfc29c3\AndroidManifest.xml:17:1-28:12
-MERGED from [com.android.support:support-vector-drawable:23.4.0] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\support-vector-drawable-23.4.0.aar\b211e383a4d2a8c01f3e32178234b591\AndroidManifest.xml:2:1-9:12
-MERGED from [com.android.support:support-v4:25.2.0] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\support-v4-25.2.0.aar\d6a1cee79b18476a32b4fc2c7f58da02\AndroidManifest.xml:17:1-27:12
-MERGED from [com.android.support:support-fragment:25.2.0] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\support-fragment-25.2.0.aar\8f73dc50a8b5bf935c90bd955b3602c5\AndroidManifest.xml:17:1-27:12
-MERGED from [com.android.support:support-media-compat:25.2.0] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\support-media-compat-25.2.0.aar\714ccf8de0579555048d24ad5f696be0\AndroidManifest.xml:17:1-27:12
-MERGED from [com.android.support:support-core-utils:25.2.0] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\support-core-utils-25.2.0.aar\67545f2855f5e29aa3442bc991e1ea88\AndroidManifest.xml:17:1-27:12
-MERGED from [com.android.support:support-core-ui:25.2.0] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\support-core-ui-25.2.0.aar\ba699876c89428e277fff6f177bf24d8\AndroidManifest.xml:17:1-27:12
-MERGED from [com.android.support:support-compat:25.2.0] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\support-compat-25.2.0.aar\34b2978ce0df7a72e51ffc1697b113ea\AndroidManifest.xml:17:1-27:12
-MERGED from [com.google.android.gms:play-services-maps-license:11.8.0] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\play-services-maps-license-11.8.0.aar\a4c0f6a86c055478c79925b32a500663\AndroidManifest.xml:2:1-6:12
-MERGED from [com.google.android.gms:play-services-base-license:11.8.0] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\play-services-base-license-11.8.0.aar\d6e25562fa9083982cb174f802f85a6a\AndroidManifest.xml:2:1-6:12
-MERGED from [com.google.android.gms:play-services-basement-license:11.8.0] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\play-services-basement-license-11.8.0.aar\fadba9797e6332e342109c4ec884697e\AndroidManifest.xml:2:1-6:12
-MERGED from [com.google.android.gms:play-services-tasks-license:11.8.0] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\play-services-tasks-license-11.8.0.aar\4209d8d07197dbefca092e6182c6d22d\AndroidManifest.xml:2:1-6:12
-INJECTED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:2:1-224:12
-INJECTED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:2:1-224:12
-INJECTED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:2:1-224:12
+ADDED from /Users/mark/Desktop/App Movil RM/MSSMobileHANA/aplicationMovil/src/main/AndroidManifest.xml:2:1-224:12
+INJECTED from /Users/mark/Desktop/App Movil RM/MSSMobileHANA/aplicationMovil/src/main/AndroidManifest.xml:2:1-224:12
+INJECTED from /Users/mark/Desktop/App Movil RM/MSSMobileHANA/aplicationMovil/src/main/AndroidManifest.xml:2:1-224:12
+INJECTED from /Users/mark/Desktop/App Movil RM/MSSMobileHANA/aplicationMovil/src/main/AndroidManifest.xml:2:1-224:12
+MERGED from [com.android.support:design:23.3.0] /Users/mark/.gradle/caches/transforms-1/files-1.1/design-23.3.0.aar/ed14154a7e3a54cd78ffbfa9dad659c0/AndroidManifest.xml:17:1-24:12
+MERGED from [com.android.support:appcompat-v7:23.4.0] /Users/mark/.gradle/caches/transforms-1/files-1.1/appcompat-v7-23.4.0.aar/5d337cdc5452ede48e03600c10198edd/AndroidManifest.xml:17:1-27:12
+MERGED from [com.android.support:recyclerview-v7:23.3.0] /Users/mark/.gradle/caches/transforms-1/files-1.1/recyclerview-v7-23.3.0.aar/aa32f529e176203ece85c8e870d8c74b/AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:cardview-v7:23.0.1] /Users/mark/.gradle/caches/transforms-1/files-1.1/cardview-v7-23.0.1.aar/8993c2b58bbc7b273f03ecdee8173f65/AndroidManifest.xml:17:1-24:12
+MERGED from [com.android.volley:volley:1.1.0] /Users/mark/.gradle/caches/transforms-1/files-1.1/volley-1.1.0.aar/6e5c1f122677982940e067ea60e99065/AndroidManifest.xml:2:1-11:12
+MERGED from [com.google.maps.android:android-maps-utils:0.4.4] /Users/mark/.gradle/caches/transforms-1/files-1.1/android-maps-utils-0.4.4.aar/05746e71c302db08fce2a946271ba4ea/AndroidManifest.xml:2:1-13:12
+MERGED from [com.google.android.gms:play-services-maps:11.8.0] /Users/mark/.gradle/caches/transforms-1/files-1.1/play-services-maps-11.8.0.aar/e5346897edb1ccde6d58603dacbfa2db/AndroidManifest.xml:17:1-32:12
+MERGED from [com.android.support.constraint:constraint-layout:1.0.2] /Users/mark/.gradle/caches/transforms-1/files-1.1/constraint-layout-1.0.2.aar/a0372b720fb18015d3e99693fff242f0/AndroidManifest.xml:2:1-11:12
+MERGED from [com.android.support:animated-vector-drawable:23.4.0] /Users/mark/.gradle/caches/transforms-1/files-1.1/animated-vector-drawable-23.4.0.aar/06b12fa2ee62d4108e763cdf5ba3cd0c/AndroidManifest.xml:2:1-9:12
+MERGED from [com.google.android.gms:play-services-base:11.8.0] /Users/mark/.gradle/caches/transforms-1/files-1.1/play-services-base-11.8.0.aar/e462fb3c7a2dec49824d8a2e12b41604/AndroidManifest.xml:17:1-29:12
+MERGED from [com.google.android.gms:play-services-tasks:11.8.0] /Users/mark/.gradle/caches/transforms-1/files-1.1/play-services-tasks-11.8.0.aar/c8d52d5199d81636bd2b61ae57f0436d/AndroidManifest.xml:2:1-9:12
+MERGED from [com.google.android.gms:play-services-basement:11.8.0] /Users/mark/.gradle/caches/transforms-1/files-1.1/play-services-basement-11.8.0.aar/6889f92858396dacf3bffdcd25a1dce8/AndroidManifest.xml:17:1-28:12
+MERGED from [com.android.support:support-vector-drawable:23.4.0] /Users/mark/.gradle/caches/transforms-1/files-1.1/support-vector-drawable-23.4.0.aar/f25de13577a4c9a4e825d00213c4f18d/AndroidManifest.xml:2:1-9:12
+MERGED from [com.android.support:support-v4:25.2.0] /Users/mark/.gradle/caches/transforms-1/files-1.1/support-v4-25.2.0.aar/9a176ac2c793a078cd346350808c2854/AndroidManifest.xml:17:1-27:12
+MERGED from [com.android.support:support-fragment:25.2.0] /Users/mark/.gradle/caches/transforms-1/files-1.1/support-fragment-25.2.0.aar/f50d57bb54381972a640e291468a712b/AndroidManifest.xml:17:1-27:12
+MERGED from [com.android.support:support-media-compat:25.2.0] /Users/mark/.gradle/caches/transforms-1/files-1.1/support-media-compat-25.2.0.aar/71d7cbd931aba5c71df11fec5f5a5df9/AndroidManifest.xml:17:1-27:12
+MERGED from [com.android.support:support-core-utils:25.2.0] /Users/mark/.gradle/caches/transforms-1/files-1.1/support-core-utils-25.2.0.aar/2cafd3094474e07d11596d1cf4dc2f53/AndroidManifest.xml:17:1-27:12
+MERGED from [com.android.support:support-core-ui:25.2.0] /Users/mark/.gradle/caches/transforms-1/files-1.1/support-core-ui-25.2.0.aar/1d6ea508e52fd792a87224a543092f67/AndroidManifest.xml:17:1-27:12
+MERGED from [com.android.support:support-compat:25.2.0] /Users/mark/.gradle/caches/transforms-1/files-1.1/support-compat-25.2.0.aar/cafd38524945258a01cb1ca9b728da83/AndroidManifest.xml:17:1-27:12
+MERGED from [com.google.android.gms:play-services-maps-license:11.8.0] /Users/mark/.gradle/caches/transforms-1/files-1.1/play-services-maps-license-11.8.0.aar/213d7251d7163059646973e09db04876/AndroidManifest.xml:2:1-6:12
+MERGED from [com.google.android.gms:play-services-base-license:11.8.0] /Users/mark/.gradle/caches/transforms-1/files-1.1/play-services-base-license-11.8.0.aar/5cdd935cda303414c51712cfbda9827d/AndroidManifest.xml:2:1-6:12
+MERGED from [com.google.android.gms:play-services-basement-license:11.8.0] /Users/mark/.gradle/caches/transforms-1/files-1.1/play-services-basement-license-11.8.0.aar/3116963e2746d311c5ddfab7b22cfb77/AndroidManifest.xml:2:1-6:12
+MERGED from [com.google.android.gms:play-services-tasks-license:11.8.0] /Users/mark/.gradle/caches/transforms-1/files-1.1/play-services-tasks-license-11.8.0.aar/5219cf084af78b161d578e22c996888c/AndroidManifest.xml:2:1-6:12
+INJECTED from /Users/mark/Desktop/App Movil RM/MSSMobileHANA/aplicationMovil/src/main/AndroidManifest.xml:2:1-224:12
+INJECTED from /Users/mark/Desktop/App Movil RM/MSSMobileHANA/aplicationMovil/src/main/AndroidManifest.xml:2:1-224:12
+INJECTED from /Users/mark/Desktop/App Movil RM/MSSMobileHANA/aplicationMovil/src/main/AndroidManifest.xml:2:1-224:12
 	package
-		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:3:5-32
-		INJECTED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml
-		INJECTED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml
+		ADDED from /Users/mark/Desktop/App Movil RM/MSSMobileHANA/aplicationMovil/src/main/AndroidManifest.xml:3:5-32
+		INJECTED from /Users/mark/Desktop/App Movil RM/MSSMobileHANA/aplicationMovil/src/main/AndroidManifest.xml
+		INJECTED from /Users/mark/Desktop/App Movil RM/MSSMobileHANA/aplicationMovil/src/main/AndroidManifest.xml
 	android:versionName
-		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:5:5-30
-		INJECTED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml
-		INJECTED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml
+		ADDED from /Users/mark/Desktop/App Movil RM/MSSMobileHANA/aplicationMovil/src/main/AndroidManifest.xml:5:5-30
+		INJECTED from /Users/mark/Desktop/App Movil RM/MSSMobileHANA/aplicationMovil/src/main/AndroidManifest.xml
+		INJECTED from /Users/mark/Desktop/App Movil RM/MSSMobileHANA/aplicationMovil/src/main/AndroidManifest.xml
 	xmlns:android
-		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:2:11-69
+		ADDED from /Users/mark/Desktop/App Movil RM/MSSMobileHANA/aplicationMovil/src/main/AndroidManifest.xml:2:11-69
 	android:versionCode
-		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:4:5-28
-		INJECTED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml
-		INJECTED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml
+		ADDED from /Users/mark/Desktop/App Movil RM/MSSMobileHANA/aplicationMovil/src/main/AndroidManifest.xml:4:5-28
+		INJECTED from /Users/mark/Desktop/App Movil RM/MSSMobileHANA/aplicationMovil/src/main/AndroidManifest.xml
+		INJECTED from /Users/mark/Desktop/App Movil RM/MSSMobileHANA/aplicationMovil/src/main/AndroidManifest.xml
 uses-sdk
-ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:7:5-9:41
-INJECTED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:7:5-9:41
-INJECTED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:7:5-9:41
-MERGED from [com.android.support:design:23.3.0] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\design-23.3.0.aar\809b713254331d37cde75dabb44c7926\AndroidManifest.xml:20:5-43
-MERGED from [com.android.support:design:23.3.0] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\design-23.3.0.aar\809b713254331d37cde75dabb44c7926\AndroidManifest.xml:20:5-43
-MERGED from [com.android.support:appcompat-v7:23.4.0] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\appcompat-v7-23.4.0.aar\699b6d9e323b66362cf9e67c96bef4d8\AndroidManifest.xml:21:5-23:78
-MERGED from [com.android.support:appcompat-v7:23.4.0] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\appcompat-v7-23.4.0.aar\699b6d9e323b66362cf9e67c96bef4d8\AndroidManifest.xml:21:5-23:78
-MERGED from [com.android.support:recyclerview-v7:23.3.0] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\recyclerview-v7-23.3.0.aar\b2bc6f29b4c531350d21274b610f0a16\AndroidManifest.xml:20:5-43
-MERGED from [com.android.support:recyclerview-v7:23.3.0] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\recyclerview-v7-23.3.0.aar\b2bc6f29b4c531350d21274b610f0a16\AndroidManifest.xml:20:5-43
-MERGED from [com.android.support:cardview-v7:23.0.1] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\cardview-v7-23.0.1.aar\189f6b2ca990ead60d2a4ee74e25f047\AndroidManifest.xml:20:5-43
-MERGED from [com.android.support:cardview-v7:23.0.1] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\cardview-v7-23.0.1.aar\189f6b2ca990ead60d2a4ee74e25f047\AndroidManifest.xml:20:5-43
-MERGED from [com.android.volley:volley:1.1.0] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\volley-1.1.0.aar\345ea0c5f832cf615e4a954ceb712551\AndroidManifest.xml:7:5-43
-MERGED from [com.android.volley:volley:1.1.0] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\volley-1.1.0.aar\345ea0c5f832cf615e4a954ceb712551\AndroidManifest.xml:7:5-43
-MERGED from [com.google.maps.android:android-maps-utils:0.4.4] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\android-maps-utils-0.4.4.aar\51072db664ddf349b8bc61a9d7624537\AndroidManifest.xml:5:5-43
-MERGED from [com.google.maps.android:android-maps-utils:0.4.4] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\android-maps-utils-0.4.4.aar\51072db664ddf349b8bc61a9d7624537\AndroidManifest.xml:5:5-43
-MERGED from [com.google.android.gms:play-services-maps:11.8.0] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\play-services-maps-11.8.0.aar\0729734fc266b5e80ed8382a4a422739\AndroidManifest.xml:20:5-44
-MERGED from [com.google.android.gms:play-services-maps:11.8.0] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\play-services-maps-11.8.0.aar\0729734fc266b5e80ed8382a4a422739\AndroidManifest.xml:20:5-44
-MERGED from [com.android.support.constraint:constraint-layout:1.0.2] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\constraint-layout-1.0.2.aar\5d1e2779ba42d84667a2d1970330cfd5\AndroidManifest.xml:5:5-7:41
-MERGED from [com.android.support.constraint:constraint-layout:1.0.2] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\constraint-layout-1.0.2.aar\5d1e2779ba42d84667a2d1970330cfd5\AndroidManifest.xml:5:5-7:41
-MERGED from [com.android.support:animated-vector-drawable:23.4.0] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\animated-vector-drawable-23.4.0.aar\be1aaf68abd369c7f932f448acee159d\AndroidManifest.xml:5:5-44
-MERGED from [com.android.support:animated-vector-drawable:23.4.0] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\animated-vector-drawable-23.4.0.aar\be1aaf68abd369c7f932f448acee159d\AndroidManifest.xml:5:5-44
-MERGED from [com.google.android.gms:play-services-base:11.8.0] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\play-services-base-11.8.0.aar\36bd668d01fd7ddabe8282c41976aef9\AndroidManifest.xml:20:5-44
-MERGED from [com.google.android.gms:play-services-base:11.8.0] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\play-services-base-11.8.0.aar\36bd668d01fd7ddabe8282c41976aef9\AndroidManifest.xml:20:5-44
-MERGED from [com.google.android.gms:play-services-tasks:11.8.0] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\play-services-tasks-11.8.0.aar\9f70b3425a6ce3da483cedb035394d02\AndroidManifest.xml:5:5-44
-MERGED from [com.google.android.gms:play-services-tasks:11.8.0] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\play-services-tasks-11.8.0.aar\9f70b3425a6ce3da483cedb035394d02\AndroidManifest.xml:5:5-44
-MERGED from [com.google.android.gms:play-services-basement:11.8.0] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\play-services-basement-11.8.0.aar\0116f5bd8c43e2dc716f90693dfc29c3\AndroidManifest.xml:20:5-44
-MERGED from [com.google.android.gms:play-services-basement:11.8.0] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\play-services-basement-11.8.0.aar\0116f5bd8c43e2dc716f90693dfc29c3\AndroidManifest.xml:20:5-44
-MERGED from [com.android.support:support-vector-drawable:23.4.0] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\support-vector-drawable-23.4.0.aar\b211e383a4d2a8c01f3e32178234b591\AndroidManifest.xml:5:5-43
-MERGED from [com.android.support:support-vector-drawable:23.4.0] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\support-vector-drawable-23.4.0.aar\b211e383a4d2a8c01f3e32178234b591\AndroidManifest.xml:5:5-43
-MERGED from [com.android.support:support-v4:25.2.0] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\support-v4-25.2.0.aar\d6a1cee79b18476a32b4fc2c7f58da02\AndroidManifest.xml:21:5-23:54
-MERGED from [com.android.support:support-v4:25.2.0] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\support-v4-25.2.0.aar\d6a1cee79b18476a32b4fc2c7f58da02\AndroidManifest.xml:21:5-23:54
-MERGED from [com.android.support:support-fragment:25.2.0] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\support-fragment-25.2.0.aar\8f73dc50a8b5bf935c90bd955b3602c5\AndroidManifest.xml:21:5-23:60
-MERGED from [com.android.support:support-fragment:25.2.0] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\support-fragment-25.2.0.aar\8f73dc50a8b5bf935c90bd955b3602c5\AndroidManifest.xml:21:5-23:60
-MERGED from [com.android.support:support-media-compat:25.2.0] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\support-media-compat-25.2.0.aar\714ccf8de0579555048d24ad5f696be0\AndroidManifest.xml:21:5-23:63
-MERGED from [com.android.support:support-media-compat:25.2.0] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\support-media-compat-25.2.0.aar\714ccf8de0579555048d24ad5f696be0\AndroidManifest.xml:21:5-23:63
-MERGED from [com.android.support:support-core-utils:25.2.0] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\support-core-utils-25.2.0.aar\67545f2855f5e29aa3442bc991e1ea88\AndroidManifest.xml:21:5-23:61
-MERGED from [com.android.support:support-core-utils:25.2.0] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\support-core-utils-25.2.0.aar\67545f2855f5e29aa3442bc991e1ea88\AndroidManifest.xml:21:5-23:61
-MERGED from [com.android.support:support-core-ui:25.2.0] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\support-core-ui-25.2.0.aar\ba699876c89428e277fff6f177bf24d8\AndroidManifest.xml:21:5-23:58
-MERGED from [com.android.support:support-core-ui:25.2.0] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\support-core-ui-25.2.0.aar\ba699876c89428e277fff6f177bf24d8\AndroidManifest.xml:21:5-23:58
-MERGED from [com.android.support:support-compat:25.2.0] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\support-compat-25.2.0.aar\34b2978ce0df7a72e51ffc1697b113ea\AndroidManifest.xml:21:5-23:58
-MERGED from [com.android.support:support-compat:25.2.0] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\support-compat-25.2.0.aar\34b2978ce0df7a72e51ffc1697b113ea\AndroidManifest.xml:21:5-23:58
-MERGED from [com.google.android.gms:play-services-maps-license:11.8.0] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\play-services-maps-license-11.8.0.aar\a4c0f6a86c055478c79925b32a500663\AndroidManifest.xml:4:5-43
-MERGED from [com.google.android.gms:play-services-maps-license:11.8.0] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\play-services-maps-license-11.8.0.aar\a4c0f6a86c055478c79925b32a500663\AndroidManifest.xml:4:5-43
-MERGED from [com.google.android.gms:play-services-base-license:11.8.0] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\play-services-base-license-11.8.0.aar\d6e25562fa9083982cb174f802f85a6a\AndroidManifest.xml:4:5-43
-MERGED from [com.google.android.gms:play-services-base-license:11.8.0] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\play-services-base-license-11.8.0.aar\d6e25562fa9083982cb174f802f85a6a\AndroidManifest.xml:4:5-43
-MERGED from [com.google.android.gms:play-services-basement-license:11.8.0] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\play-services-basement-license-11.8.0.aar\fadba9797e6332e342109c4ec884697e\AndroidManifest.xml:4:5-43
-MERGED from [com.google.android.gms:play-services-basement-license:11.8.0] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\play-services-basement-license-11.8.0.aar\fadba9797e6332e342109c4ec884697e\AndroidManifest.xml:4:5-43
-MERGED from [com.google.android.gms:play-services-tasks-license:11.8.0] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\play-services-tasks-license-11.8.0.aar\4209d8d07197dbefca092e6182c6d22d\AndroidManifest.xml:4:5-43
-MERGED from [com.google.android.gms:play-services-tasks-license:11.8.0] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\play-services-tasks-license-11.8.0.aar\4209d8d07197dbefca092e6182c6d22d\AndroidManifest.xml:4:5-43
-INJECTED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:7:5-9:41
-INJECTED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:7:5-9:41
+ADDED from /Users/mark/Desktop/App Movil RM/MSSMobileHANA/aplicationMovil/src/main/AndroidManifest.xml:7:5-9:41
+INJECTED from /Users/mark/Desktop/App Movil RM/MSSMobileHANA/aplicationMovil/src/main/AndroidManifest.xml:7:5-9:41
+INJECTED from /Users/mark/Desktop/App Movil RM/MSSMobileHANA/aplicationMovil/src/main/AndroidManifest.xml:7:5-9:41
+MERGED from [com.android.support:design:23.3.0] /Users/mark/.gradle/caches/transforms-1/files-1.1/design-23.3.0.aar/ed14154a7e3a54cd78ffbfa9dad659c0/AndroidManifest.xml:20:5-43
+MERGED from [com.android.support:design:23.3.0] /Users/mark/.gradle/caches/transforms-1/files-1.1/design-23.3.0.aar/ed14154a7e3a54cd78ffbfa9dad659c0/AndroidManifest.xml:20:5-43
+MERGED from [com.android.support:appcompat-v7:23.4.0] /Users/mark/.gradle/caches/transforms-1/files-1.1/appcompat-v7-23.4.0.aar/5d337cdc5452ede48e03600c10198edd/AndroidManifest.xml:21:5-23:78
+MERGED from [com.android.support:appcompat-v7:23.4.0] /Users/mark/.gradle/caches/transforms-1/files-1.1/appcompat-v7-23.4.0.aar/5d337cdc5452ede48e03600c10198edd/AndroidManifest.xml:21:5-23:78
+MERGED from [com.android.support:recyclerview-v7:23.3.0] /Users/mark/.gradle/caches/transforms-1/files-1.1/recyclerview-v7-23.3.0.aar/aa32f529e176203ece85c8e870d8c74b/AndroidManifest.xml:20:5-43
+MERGED from [com.android.support:recyclerview-v7:23.3.0] /Users/mark/.gradle/caches/transforms-1/files-1.1/recyclerview-v7-23.3.0.aar/aa32f529e176203ece85c8e870d8c74b/AndroidManifest.xml:20:5-43
+MERGED from [com.android.support:cardview-v7:23.0.1] /Users/mark/.gradle/caches/transforms-1/files-1.1/cardview-v7-23.0.1.aar/8993c2b58bbc7b273f03ecdee8173f65/AndroidManifest.xml:20:5-43
+MERGED from [com.android.support:cardview-v7:23.0.1] /Users/mark/.gradle/caches/transforms-1/files-1.1/cardview-v7-23.0.1.aar/8993c2b58bbc7b273f03ecdee8173f65/AndroidManifest.xml:20:5-43
+MERGED from [com.android.volley:volley:1.1.0] /Users/mark/.gradle/caches/transforms-1/files-1.1/volley-1.1.0.aar/6e5c1f122677982940e067ea60e99065/AndroidManifest.xml:7:5-43
+MERGED from [com.android.volley:volley:1.1.0] /Users/mark/.gradle/caches/transforms-1/files-1.1/volley-1.1.0.aar/6e5c1f122677982940e067ea60e99065/AndroidManifest.xml:7:5-43
+MERGED from [com.google.maps.android:android-maps-utils:0.4.4] /Users/mark/.gradle/caches/transforms-1/files-1.1/android-maps-utils-0.4.4.aar/05746e71c302db08fce2a946271ba4ea/AndroidManifest.xml:5:5-43
+MERGED from [com.google.maps.android:android-maps-utils:0.4.4] /Users/mark/.gradle/caches/transforms-1/files-1.1/android-maps-utils-0.4.4.aar/05746e71c302db08fce2a946271ba4ea/AndroidManifest.xml:5:5-43
+MERGED from [com.google.android.gms:play-services-maps:11.8.0] /Users/mark/.gradle/caches/transforms-1/files-1.1/play-services-maps-11.8.0.aar/e5346897edb1ccde6d58603dacbfa2db/AndroidManifest.xml:20:5-44
+MERGED from [com.google.android.gms:play-services-maps:11.8.0] /Users/mark/.gradle/caches/transforms-1/files-1.1/play-services-maps-11.8.0.aar/e5346897edb1ccde6d58603dacbfa2db/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support.constraint:constraint-layout:1.0.2] /Users/mark/.gradle/caches/transforms-1/files-1.1/constraint-layout-1.0.2.aar/a0372b720fb18015d3e99693fff242f0/AndroidManifest.xml:5:5-7:41
+MERGED from [com.android.support.constraint:constraint-layout:1.0.2] /Users/mark/.gradle/caches/transforms-1/files-1.1/constraint-layout-1.0.2.aar/a0372b720fb18015d3e99693fff242f0/AndroidManifest.xml:5:5-7:41
+MERGED from [com.android.support:animated-vector-drawable:23.4.0] /Users/mark/.gradle/caches/transforms-1/files-1.1/animated-vector-drawable-23.4.0.aar/06b12fa2ee62d4108e763cdf5ba3cd0c/AndroidManifest.xml:5:5-44
+MERGED from [com.android.support:animated-vector-drawable:23.4.0] /Users/mark/.gradle/caches/transforms-1/files-1.1/animated-vector-drawable-23.4.0.aar/06b12fa2ee62d4108e763cdf5ba3cd0c/AndroidManifest.xml:5:5-44
+MERGED from [com.google.android.gms:play-services-base:11.8.0] /Users/mark/.gradle/caches/transforms-1/files-1.1/play-services-base-11.8.0.aar/e462fb3c7a2dec49824d8a2e12b41604/AndroidManifest.xml:20:5-44
+MERGED from [com.google.android.gms:play-services-base:11.8.0] /Users/mark/.gradle/caches/transforms-1/files-1.1/play-services-base-11.8.0.aar/e462fb3c7a2dec49824d8a2e12b41604/AndroidManifest.xml:20:5-44
+MERGED from [com.google.android.gms:play-services-tasks:11.8.0] /Users/mark/.gradle/caches/transforms-1/files-1.1/play-services-tasks-11.8.0.aar/c8d52d5199d81636bd2b61ae57f0436d/AndroidManifest.xml:5:5-44
+MERGED from [com.google.android.gms:play-services-tasks:11.8.0] /Users/mark/.gradle/caches/transforms-1/files-1.1/play-services-tasks-11.8.0.aar/c8d52d5199d81636bd2b61ae57f0436d/AndroidManifest.xml:5:5-44
+MERGED from [com.google.android.gms:play-services-basement:11.8.0] /Users/mark/.gradle/caches/transforms-1/files-1.1/play-services-basement-11.8.0.aar/6889f92858396dacf3bffdcd25a1dce8/AndroidManifest.xml:20:5-44
+MERGED from [com.google.android.gms:play-services-basement:11.8.0] /Users/mark/.gradle/caches/transforms-1/files-1.1/play-services-basement-11.8.0.aar/6889f92858396dacf3bffdcd25a1dce8/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-vector-drawable:23.4.0] /Users/mark/.gradle/caches/transforms-1/files-1.1/support-vector-drawable-23.4.0.aar/f25de13577a4c9a4e825d00213c4f18d/AndroidManifest.xml:5:5-43
+MERGED from [com.android.support:support-vector-drawable:23.4.0] /Users/mark/.gradle/caches/transforms-1/files-1.1/support-vector-drawable-23.4.0.aar/f25de13577a4c9a4e825d00213c4f18d/AndroidManifest.xml:5:5-43
+MERGED from [com.android.support:support-v4:25.2.0] /Users/mark/.gradle/caches/transforms-1/files-1.1/support-v4-25.2.0.aar/9a176ac2c793a078cd346350808c2854/AndroidManifest.xml:21:5-23:54
+MERGED from [com.android.support:support-v4:25.2.0] /Users/mark/.gradle/caches/transforms-1/files-1.1/support-v4-25.2.0.aar/9a176ac2c793a078cd346350808c2854/AndroidManifest.xml:21:5-23:54
+MERGED from [com.android.support:support-fragment:25.2.0] /Users/mark/.gradle/caches/transforms-1/files-1.1/support-fragment-25.2.0.aar/f50d57bb54381972a640e291468a712b/AndroidManifest.xml:21:5-23:60
+MERGED from [com.android.support:support-fragment:25.2.0] /Users/mark/.gradle/caches/transforms-1/files-1.1/support-fragment-25.2.0.aar/f50d57bb54381972a640e291468a712b/AndroidManifest.xml:21:5-23:60
+MERGED from [com.android.support:support-media-compat:25.2.0] /Users/mark/.gradle/caches/transforms-1/files-1.1/support-media-compat-25.2.0.aar/71d7cbd931aba5c71df11fec5f5a5df9/AndroidManifest.xml:21:5-23:63
+MERGED from [com.android.support:support-media-compat:25.2.0] /Users/mark/.gradle/caches/transforms-1/files-1.1/support-media-compat-25.2.0.aar/71d7cbd931aba5c71df11fec5f5a5df9/AndroidManifest.xml:21:5-23:63
+MERGED from [com.android.support:support-core-utils:25.2.0] /Users/mark/.gradle/caches/transforms-1/files-1.1/support-core-utils-25.2.0.aar/2cafd3094474e07d11596d1cf4dc2f53/AndroidManifest.xml:21:5-23:61
+MERGED from [com.android.support:support-core-utils:25.2.0] /Users/mark/.gradle/caches/transforms-1/files-1.1/support-core-utils-25.2.0.aar/2cafd3094474e07d11596d1cf4dc2f53/AndroidManifest.xml:21:5-23:61
+MERGED from [com.android.support:support-core-ui:25.2.0] /Users/mark/.gradle/caches/transforms-1/files-1.1/support-core-ui-25.2.0.aar/1d6ea508e52fd792a87224a543092f67/AndroidManifest.xml:21:5-23:58
+MERGED from [com.android.support:support-core-ui:25.2.0] /Users/mark/.gradle/caches/transforms-1/files-1.1/support-core-ui-25.2.0.aar/1d6ea508e52fd792a87224a543092f67/AndroidManifest.xml:21:5-23:58
+MERGED from [com.android.support:support-compat:25.2.0] /Users/mark/.gradle/caches/transforms-1/files-1.1/support-compat-25.2.0.aar/cafd38524945258a01cb1ca9b728da83/AndroidManifest.xml:21:5-23:58
+MERGED from [com.android.support:support-compat:25.2.0] /Users/mark/.gradle/caches/transforms-1/files-1.1/support-compat-25.2.0.aar/cafd38524945258a01cb1ca9b728da83/AndroidManifest.xml:21:5-23:58
+MERGED from [com.google.android.gms:play-services-maps-license:11.8.0] /Users/mark/.gradle/caches/transforms-1/files-1.1/play-services-maps-license-11.8.0.aar/213d7251d7163059646973e09db04876/AndroidManifest.xml:4:5-43
+MERGED from [com.google.android.gms:play-services-maps-license:11.8.0] /Users/mark/.gradle/caches/transforms-1/files-1.1/play-services-maps-license-11.8.0.aar/213d7251d7163059646973e09db04876/AndroidManifest.xml:4:5-43
+MERGED from [com.google.android.gms:play-services-base-license:11.8.0] /Users/mark/.gradle/caches/transforms-1/files-1.1/play-services-base-license-11.8.0.aar/5cdd935cda303414c51712cfbda9827d/AndroidManifest.xml:4:5-43
+MERGED from [com.google.android.gms:play-services-base-license:11.8.0] /Users/mark/.gradle/caches/transforms-1/files-1.1/play-services-base-license-11.8.0.aar/5cdd935cda303414c51712cfbda9827d/AndroidManifest.xml:4:5-43
+MERGED from [com.google.android.gms:play-services-basement-license:11.8.0] /Users/mark/.gradle/caches/transforms-1/files-1.1/play-services-basement-license-11.8.0.aar/3116963e2746d311c5ddfab7b22cfb77/AndroidManifest.xml:4:5-43
+MERGED from [com.google.android.gms:play-services-basement-license:11.8.0] /Users/mark/.gradle/caches/transforms-1/files-1.1/play-services-basement-license-11.8.0.aar/3116963e2746d311c5ddfab7b22cfb77/AndroidManifest.xml:4:5-43
+MERGED from [com.google.android.gms:play-services-tasks-license:11.8.0] /Users/mark/.gradle/caches/transforms-1/files-1.1/play-services-tasks-license-11.8.0.aar/5219cf084af78b161d578e22c996888c/AndroidManifest.xml:4:5-43
+MERGED from [com.google.android.gms:play-services-tasks-license:11.8.0] /Users/mark/.gradle/caches/transforms-1/files-1.1/play-services-tasks-license-11.8.0.aar/5219cf084af78b161d578e22c996888c/AndroidManifest.xml:4:5-43
+INJECTED from /Users/mark/Desktop/App Movil RM/MSSMobileHANA/aplicationMovil/src/main/AndroidManifest.xml:7:5-9:41
+INJECTED from /Users/mark/Desktop/App Movil RM/MSSMobileHANA/aplicationMovil/src/main/AndroidManifest.xml:7:5-9:41
 	tools:overrideLibrary
-		ADDED from [com.android.support:appcompat-v7:23.4.0] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\appcompat-v7-23.4.0.aar\699b6d9e323b66362cf9e67c96bef4d8\AndroidManifest.xml:23:9-75
+		ADDED from [com.android.support:appcompat-v7:23.4.0] /Users/mark/.gradle/caches/transforms-1/files-1.1/appcompat-v7-23.4.0.aar/5d337cdc5452ede48e03600c10198edd/AndroidManifest.xml:23:9-75
 	android:targetSdkVersion
-		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:9:9-38
-		INJECTED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml
-		INJECTED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml
+		ADDED from /Users/mark/Desktop/App Movil RM/MSSMobileHANA/aplicationMovil/src/main/AndroidManifest.xml:9:9-38
+		INJECTED from /Users/mark/Desktop/App Movil RM/MSSMobileHANA/aplicationMovil/src/main/AndroidManifest.xml
+		INJECTED from /Users/mark/Desktop/App Movil RM/MSSMobileHANA/aplicationMovil/src/main/AndroidManifest.xml
 	android:minSdkVersion
-		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:8:9-35
-		INJECTED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml
-		INJECTED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml
+		ADDED from /Users/mark/Desktop/App Movil RM/MSSMobileHANA/aplicationMovil/src/main/AndroidManifest.xml:8:9-35
+		INJECTED from /Users/mark/Desktop/App Movil RM/MSSMobileHANA/aplicationMovil/src/main/AndroidManifest.xml
+		INJECTED from /Users/mark/Desktop/App Movil RM/MSSMobileHANA/aplicationMovil/src/main/AndroidManifest.xml
 uses-feature#0x00020000
-ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:11:5-13:35
-MERGED from [com.google.android.gms:play-services-maps:11.8.0] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\play-services-maps-11.8.0.aar\0729734fc266b5e80ed8382a4a422739\AndroidManifest.xml:26:5-28:35
-MERGED from [com.google.android.gms:play-services-maps:11.8.0] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\play-services-maps-11.8.0.aar\0729734fc266b5e80ed8382a4a422739\AndroidManifest.xml:26:5-28:35
+ADDED from /Users/mark/Desktop/App Movil RM/MSSMobileHANA/aplicationMovil/src/main/AndroidManifest.xml:11:5-13:35
+MERGED from [com.google.android.gms:play-services-maps:11.8.0] /Users/mark/.gradle/caches/transforms-1/files-1.1/play-services-maps-11.8.0.aar/e5346897edb1ccde6d58603dacbfa2db/AndroidManifest.xml:26:5-28:35
+MERGED from [com.google.android.gms:play-services-maps:11.8.0] /Users/mark/.gradle/caches/transforms-1/files-1.1/play-services-maps-11.8.0.aar/e5346897edb1ccde6d58603dacbfa2db/AndroidManifest.xml:26:5-28:35
 	android:glEsVersion
-		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:12:9-41
+		ADDED from /Users/mark/Desktop/App Movil RM/MSSMobileHANA/aplicationMovil/src/main/AndroidManifest.xml:12:9-41
 	android:required
-		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:13:9-32
+		ADDED from /Users/mark/Desktop/App Movil RM/MSSMobileHANA/aplicationMovil/src/main/AndroidManifest.xml:13:9-32
 meta-data#com.google.android.gms.version
-ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:15:5-17:65
-MERGED from [com.google.android.gms:play-services-basement:11.8.0] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\play-services-basement-11.8.0.aar\0116f5bd8c43e2dc716f90693dfc29c3\AndroidManifest.xml:23:9-25:69
-MERGED from [com.google.android.gms:play-services-basement:11.8.0] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\play-services-basement-11.8.0.aar\0116f5bd8c43e2dc716f90693dfc29c3\AndroidManifest.xml:23:9-25:69
+ADDED from /Users/mark/Desktop/App Movil RM/MSSMobileHANA/aplicationMovil/src/main/AndroidManifest.xml:15:5-17:65
+MERGED from [com.google.android.gms:play-services-basement:11.8.0] /Users/mark/.gradle/caches/transforms-1/files-1.1/play-services-basement-11.8.0.aar/6889f92858396dacf3bffdcd25a1dce8/AndroidManifest.xml:23:9-25:69
+MERGED from [com.google.android.gms:play-services-basement:11.8.0] /Users/mark/.gradle/caches/transforms-1/files-1.1/play-services-basement-11.8.0.aar/6889f92858396dacf3bffdcd25a1dce8/AndroidManifest.xml:23:9-25:69
 	android:value
-		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:17:9-62
+		ADDED from /Users/mark/Desktop/App Movil RM/MSSMobileHANA/aplicationMovil/src/main/AndroidManifest.xml:17:9-62
 	android:name
-		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:16:9-54
+		ADDED from /Users/mark/Desktop/App Movil RM/MSSMobileHANA/aplicationMovil/src/main/AndroidManifest.xml:16:9-54
 uses-feature#android.hardware.camera
-ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:19:5-21:35
+ADDED from /Users/mark/Desktop/App Movil RM/MSSMobileHANA/aplicationMovil/src/main/AndroidManifest.xml:19:5-21:35
 	android:required
-		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:21:9-32
+		ADDED from /Users/mark/Desktop/App Movil RM/MSSMobileHANA/aplicationMovil/src/main/AndroidManifest.xml:21:9-32
 	android:name
-		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:20:9-47
+		ADDED from /Users/mark/Desktop/App Movil RM/MSSMobileHANA/aplicationMovil/src/main/AndroidManifest.xml:20:9-47
 uses-permission#android.permission.INTERNET
-ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:24:5-67
-MERGED from [com.google.android.gms:play-services-maps:11.8.0] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\play-services-maps-11.8.0.aar\0729734fc266b5e80ed8382a4a422739\AndroidManifest.xml:24:5-67
-MERGED from [com.google.android.gms:play-services-maps:11.8.0] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\play-services-maps-11.8.0.aar\0729734fc266b5e80ed8382a4a422739\AndroidManifest.xml:24:5-67
+ADDED from /Users/mark/Desktop/App Movil RM/MSSMobileHANA/aplicationMovil/src/main/AndroidManifest.xml:24:5-67
+MERGED from [com.google.android.gms:play-services-maps:11.8.0] /Users/mark/.gradle/caches/transforms-1/files-1.1/play-services-maps-11.8.0.aar/e5346897edb1ccde6d58603dacbfa2db/AndroidManifest.xml:24:5-67
+MERGED from [com.google.android.gms:play-services-maps:11.8.0] /Users/mark/.gradle/caches/transforms-1/files-1.1/play-services-maps-11.8.0.aar/e5346897edb1ccde6d58603dacbfa2db/AndroidManifest.xml:24:5-67
 	android:name
-		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:24:22-64
+		ADDED from /Users/mark/Desktop/App Movil RM/MSSMobileHANA/aplicationMovil/src/main/AndroidManifest.xml:24:22-64
 uses-permission#android.permission.ACCESS_NETWORK_STATE
-ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:25:5-79
-MERGED from [com.google.android.gms:play-services-maps:11.8.0] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\play-services-maps-11.8.0.aar\0729734fc266b5e80ed8382a4a422739\AndroidManifest.xml:23:5-79
-MERGED from [com.google.android.gms:play-services-maps:11.8.0] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\play-services-maps-11.8.0.aar\0729734fc266b5e80ed8382a4a422739\AndroidManifest.xml:23:5-79
+ADDED from /Users/mark/Desktop/App Movil RM/MSSMobileHANA/aplicationMovil/src/main/AndroidManifest.xml:25:5-79
+MERGED from [com.google.android.gms:play-services-maps:11.8.0] /Users/mark/.gradle/caches/transforms-1/files-1.1/play-services-maps-11.8.0.aar/e5346897edb1ccde6d58603dacbfa2db/AndroidManifest.xml:23:5-79
+MERGED from [com.google.android.gms:play-services-maps:11.8.0] /Users/mark/.gradle/caches/transforms-1/files-1.1/play-services-maps-11.8.0.aar/e5346897edb1ccde6d58603dacbfa2db/AndroidManifest.xml:23:5-79
 	android:name
-		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:25:22-76
+		ADDED from /Users/mark/Desktop/App Movil RM/MSSMobileHANA/aplicationMovil/src/main/AndroidManifest.xml:25:22-76
 uses-permission#android.permission.READ_CONTACTS
-ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:26:5-72
+ADDED from /Users/mark/Desktop/App Movil RM/MSSMobileHANA/aplicationMovil/src/main/AndroidManifest.xml:26:5-72
 	android:name
-		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:26:22-69
+		ADDED from /Users/mark/Desktop/App Movil RM/MSSMobileHANA/aplicationMovil/src/main/AndroidManifest.xml:26:22-69
 uses-permission#android.permission.WRITE_CONTACTS
-ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:27:5-73
+ADDED from /Users/mark/Desktop/App Movil RM/MSSMobileHANA/aplicationMovil/src/main/AndroidManifest.xml:27:5-73
 	android:name
-		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:27:22-70
+		ADDED from /Users/mark/Desktop/App Movil RM/MSSMobileHANA/aplicationMovil/src/main/AndroidManifest.xml:27:22-70
 uses-permission#android.permission.WRITE_EXTERNAL_STORAGE
-ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:28:5-81
+ADDED from /Users/mark/Desktop/App Movil RM/MSSMobileHANA/aplicationMovil/src/main/AndroidManifest.xml:28:5-81
 	android:name
-		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:28:22-78
+		ADDED from /Users/mark/Desktop/App Movil RM/MSSMobileHANA/aplicationMovil/src/main/AndroidManifest.xml:28:22-78
 uses-permission#android.permission.READ_EXTERNAL_STORAGE
-ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:29:5-80
+ADDED from /Users/mark/Desktop/App Movil RM/MSSMobileHANA/aplicationMovil/src/main/AndroidManifest.xml:29:5-80
 	android:name
-		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:29:22-77
+		ADDED from /Users/mark/Desktop/App Movil RM/MSSMobileHANA/aplicationMovil/src/main/AndroidManifest.xml:29:22-77
 uses-permission#android.permission.WRITE_INTERNAL_STORAGE
-ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:30:5-81
+ADDED from /Users/mark/Desktop/App Movil RM/MSSMobileHANA/aplicationMovil/src/main/AndroidManifest.xml:30:5-81
 	android:name
-		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:30:22-78
+		ADDED from /Users/mark/Desktop/App Movil RM/MSSMobileHANA/aplicationMovil/src/main/AndroidManifest.xml:30:22-78
 uses-permission#android.permission.RECEIVE_BOOT_COMPLETED
-ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:31:5-81
+ADDED from /Users/mark/Desktop/App Movil RM/MSSMobileHANA/aplicationMovil/src/main/AndroidManifest.xml:31:5-81
 	android:name
-		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:31:22-78
+		ADDED from /Users/mark/Desktop/App Movil RM/MSSMobileHANA/aplicationMovil/src/main/AndroidManifest.xml:31:22-78
 uses-permission#android.permission.ACCESS_FINE_LOCATION
-ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:32:5-79
+ADDED from /Users/mark/Desktop/App Movil RM/MSSMobileHANA/aplicationMovil/src/main/AndroidManifest.xml:32:5-79
 	android:name
-		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:32:22-76
+		ADDED from /Users/mark/Desktop/App Movil RM/MSSMobileHANA/aplicationMovil/src/main/AndroidManifest.xml:32:22-76
 uses-permission#android.permission.READ_PHONE_STATE
-ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:33:5-75
+ADDED from /Users/mark/Desktop/App Movil RM/MSSMobileHANA/aplicationMovil/src/main/AndroidManifest.xml:33:5-75
 	android:name
-		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:33:22-72
+		ADDED from /Users/mark/Desktop/App Movil RM/MSSMobileHANA/aplicationMovil/src/main/AndroidManifest.xml:33:22-72
 application
-ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:36:5-222:19
-MERGED from [com.android.support:design:23.3.0] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\design-23.3.0.aar\809b713254331d37cde75dabb44c7926\AndroidManifest.xml:22:5-20
-MERGED from [com.android.support:design:23.3.0] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\design-23.3.0.aar\809b713254331d37cde75dabb44c7926\AndroidManifest.xml:22:5-20
-MERGED from [com.android.support:appcompat-v7:23.4.0] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\appcompat-v7-23.4.0.aar\699b6d9e323b66362cf9e67c96bef4d8\AndroidManifest.xml:25:5-20
-MERGED from [com.android.support:appcompat-v7:23.4.0] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\appcompat-v7-23.4.0.aar\699b6d9e323b66362cf9e67c96bef4d8\AndroidManifest.xml:25:5-20
-MERGED from [com.android.support:cardview-v7:23.0.1] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\cardview-v7-23.0.1.aar\189f6b2ca990ead60d2a4ee74e25f047\AndroidManifest.xml:22:5-20
-MERGED from [com.android.support:cardview-v7:23.0.1] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\cardview-v7-23.0.1.aar\189f6b2ca990ead60d2a4ee74e25f047\AndroidManifest.xml:22:5-20
-MERGED from [com.android.volley:volley:1.1.0] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\volley-1.1.0.aar\345ea0c5f832cf615e4a954ceb712551\AndroidManifest.xml:9:5-20
-MERGED from [com.android.volley:volley:1.1.0] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\volley-1.1.0.aar\345ea0c5f832cf615e4a954ceb712551\AndroidManifest.xml:9:5-20
-MERGED from [com.google.maps.android:android-maps-utils:0.4.4] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\android-maps-utils-0.4.4.aar\51072db664ddf349b8bc61a9d7624537\AndroidManifest.xml:7:5-11:19
-MERGED from [com.google.maps.android:android-maps-utils:0.4.4] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\android-maps-utils-0.4.4.aar\51072db664ddf349b8bc61a9d7624537\AndroidManifest.xml:7:5-11:19
-MERGED from [com.google.android.gms:play-services-maps:11.8.0] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\play-services-maps-11.8.0.aar\0729734fc266b5e80ed8382a4a422739\AndroidManifest.xml:30:5-20
-MERGED from [com.google.android.gms:play-services-maps:11.8.0] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\play-services-maps-11.8.0.aar\0729734fc266b5e80ed8382a4a422739\AndroidManifest.xml:30:5-20
-MERGED from [com.android.support.constraint:constraint-layout:1.0.2] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\constraint-layout-1.0.2.aar\5d1e2779ba42d84667a2d1970330cfd5\AndroidManifest.xml:9:5-20
-MERGED from [com.android.support.constraint:constraint-layout:1.0.2] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\constraint-layout-1.0.2.aar\5d1e2779ba42d84667a2d1970330cfd5\AndroidManifest.xml:9:5-20
-MERGED from [com.android.support:animated-vector-drawable:23.4.0] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\animated-vector-drawable-23.4.0.aar\be1aaf68abd369c7f932f448acee159d\AndroidManifest.xml:7:5-20
-MERGED from [com.android.support:animated-vector-drawable:23.4.0] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\animated-vector-drawable-23.4.0.aar\be1aaf68abd369c7f932f448acee159d\AndroidManifest.xml:7:5-20
-MERGED from [com.google.android.gms:play-services-base:11.8.0] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\play-services-base-11.8.0.aar\36bd668d01fd7ddabe8282c41976aef9\AndroidManifest.xml:22:5-27:19
-MERGED from [com.google.android.gms:play-services-base:11.8.0] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\play-services-base-11.8.0.aar\36bd668d01fd7ddabe8282c41976aef9\AndroidManifest.xml:22:5-27:19
-MERGED from [com.google.android.gms:play-services-tasks:11.8.0] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\play-services-tasks-11.8.0.aar\9f70b3425a6ce3da483cedb035394d02\AndroidManifest.xml:7:5-20
-MERGED from [com.google.android.gms:play-services-tasks:11.8.0] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\play-services-tasks-11.8.0.aar\9f70b3425a6ce3da483cedb035394d02\AndroidManifest.xml:7:5-20
-MERGED from [com.google.android.gms:play-services-basement:11.8.0] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\play-services-basement-11.8.0.aar\0116f5bd8c43e2dc716f90693dfc29c3\AndroidManifest.xml:22:5-26:19
-MERGED from [com.google.android.gms:play-services-basement:11.8.0] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\play-services-basement-11.8.0.aar\0116f5bd8c43e2dc716f90693dfc29c3\AndroidManifest.xml:22:5-26:19
-MERGED from [com.android.support:support-vector-drawable:23.4.0] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\support-vector-drawable-23.4.0.aar\b211e383a4d2a8c01f3e32178234b591\AndroidManifest.xml:7:5-20
-MERGED from [com.android.support:support-vector-drawable:23.4.0] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\support-vector-drawable-23.4.0.aar\b211e383a4d2a8c01f3e32178234b591\AndroidManifest.xml:7:5-20
-MERGED from [com.android.support:support-v4:25.2.0] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\support-v4-25.2.0.aar\d6a1cee79b18476a32b4fc2c7f58da02\AndroidManifest.xml:25:5-20
-MERGED from [com.android.support:support-v4:25.2.0] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\support-v4-25.2.0.aar\d6a1cee79b18476a32b4fc2c7f58da02\AndroidManifest.xml:25:5-20
-MERGED from [com.android.support:support-fragment:25.2.0] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\support-fragment-25.2.0.aar\8f73dc50a8b5bf935c90bd955b3602c5\AndroidManifest.xml:25:5-20
-MERGED from [com.android.support:support-fragment:25.2.0] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\support-fragment-25.2.0.aar\8f73dc50a8b5bf935c90bd955b3602c5\AndroidManifest.xml:25:5-20
-MERGED from [com.android.support:support-media-compat:25.2.0] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\support-media-compat-25.2.0.aar\714ccf8de0579555048d24ad5f696be0\AndroidManifest.xml:25:5-20
-MERGED from [com.android.support:support-media-compat:25.2.0] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\support-media-compat-25.2.0.aar\714ccf8de0579555048d24ad5f696be0\AndroidManifest.xml:25:5-20
-MERGED from [com.android.support:support-core-utils:25.2.0] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\support-core-utils-25.2.0.aar\67545f2855f5e29aa3442bc991e1ea88\AndroidManifest.xml:25:5-20
-MERGED from [com.android.support:support-core-utils:25.2.0] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\support-core-utils-25.2.0.aar\67545f2855f5e29aa3442bc991e1ea88\AndroidManifest.xml:25:5-20
-MERGED from [com.android.support:support-core-ui:25.2.0] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\support-core-ui-25.2.0.aar\ba699876c89428e277fff6f177bf24d8\AndroidManifest.xml:25:5-20
-MERGED from [com.android.support:support-core-ui:25.2.0] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\support-core-ui-25.2.0.aar\ba699876c89428e277fff6f177bf24d8\AndroidManifest.xml:25:5-20
-MERGED from [com.android.support:support-compat:25.2.0] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\support-compat-25.2.0.aar\34b2978ce0df7a72e51ffc1697b113ea\AndroidManifest.xml:25:5-20
-MERGED from [com.android.support:support-compat:25.2.0] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\support-compat-25.2.0.aar\34b2978ce0df7a72e51ffc1697b113ea\AndroidManifest.xml:25:5-20
-MERGED from [com.google.android.gms:play-services-maps-license:11.8.0] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\play-services-maps-license-11.8.0.aar\a4c0f6a86c055478c79925b32a500663\AndroidManifest.xml:5:5-20
-MERGED from [com.google.android.gms:play-services-maps-license:11.8.0] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\play-services-maps-license-11.8.0.aar\a4c0f6a86c055478c79925b32a500663\AndroidManifest.xml:5:5-20
-MERGED from [com.google.android.gms:play-services-base-license:11.8.0] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\play-services-base-license-11.8.0.aar\d6e25562fa9083982cb174f802f85a6a\AndroidManifest.xml:5:5-20
-MERGED from [com.google.android.gms:play-services-base-license:11.8.0] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\play-services-base-license-11.8.0.aar\d6e25562fa9083982cb174f802f85a6a\AndroidManifest.xml:5:5-20
-MERGED from [com.google.android.gms:play-services-basement-license:11.8.0] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\play-services-basement-license-11.8.0.aar\fadba9797e6332e342109c4ec884697e\AndroidManifest.xml:5:5-20
-MERGED from [com.google.android.gms:play-services-basement-license:11.8.0] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\play-services-basement-license-11.8.0.aar\fadba9797e6332e342109c4ec884697e\AndroidManifest.xml:5:5-20
-MERGED from [com.google.android.gms:play-services-tasks-license:11.8.0] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\play-services-tasks-license-11.8.0.aar\4209d8d07197dbefca092e6182c6d22d\AndroidManifest.xml:5:5-20
-MERGED from [com.google.android.gms:play-services-tasks-license:11.8.0] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\play-services-tasks-license-11.8.0.aar\4209d8d07197dbefca092e6182c6d22d\AndroidManifest.xml:5:5-20
+ADDED from /Users/mark/Desktop/App Movil RM/MSSMobileHANA/aplicationMovil/src/main/AndroidManifest.xml:36:5-222:19
+MERGED from [com.android.support:design:23.3.0] /Users/mark/.gradle/caches/transforms-1/files-1.1/design-23.3.0.aar/ed14154a7e3a54cd78ffbfa9dad659c0/AndroidManifest.xml:22:5-20
+MERGED from [com.android.support:design:23.3.0] /Users/mark/.gradle/caches/transforms-1/files-1.1/design-23.3.0.aar/ed14154a7e3a54cd78ffbfa9dad659c0/AndroidManifest.xml:22:5-20
+MERGED from [com.android.support:appcompat-v7:23.4.0] /Users/mark/.gradle/caches/transforms-1/files-1.1/appcompat-v7-23.4.0.aar/5d337cdc5452ede48e03600c10198edd/AndroidManifest.xml:25:5-20
+MERGED from [com.android.support:appcompat-v7:23.4.0] /Users/mark/.gradle/caches/transforms-1/files-1.1/appcompat-v7-23.4.0.aar/5d337cdc5452ede48e03600c10198edd/AndroidManifest.xml:25:5-20
+MERGED from [com.android.support:cardview-v7:23.0.1] /Users/mark/.gradle/caches/transforms-1/files-1.1/cardview-v7-23.0.1.aar/8993c2b58bbc7b273f03ecdee8173f65/AndroidManifest.xml:22:5-20
+MERGED from [com.android.support:cardview-v7:23.0.1] /Users/mark/.gradle/caches/transforms-1/files-1.1/cardview-v7-23.0.1.aar/8993c2b58bbc7b273f03ecdee8173f65/AndroidManifest.xml:22:5-20
+MERGED from [com.android.volley:volley:1.1.0] /Users/mark/.gradle/caches/transforms-1/files-1.1/volley-1.1.0.aar/6e5c1f122677982940e067ea60e99065/AndroidManifest.xml:9:5-20
+MERGED from [com.android.volley:volley:1.1.0] /Users/mark/.gradle/caches/transforms-1/files-1.1/volley-1.1.0.aar/6e5c1f122677982940e067ea60e99065/AndroidManifest.xml:9:5-20
+MERGED from [com.google.maps.android:android-maps-utils:0.4.4] /Users/mark/.gradle/caches/transforms-1/files-1.1/android-maps-utils-0.4.4.aar/05746e71c302db08fce2a946271ba4ea/AndroidManifest.xml:7:5-11:19
+MERGED from [com.google.maps.android:android-maps-utils:0.4.4] /Users/mark/.gradle/caches/transforms-1/files-1.1/android-maps-utils-0.4.4.aar/05746e71c302db08fce2a946271ba4ea/AndroidManifest.xml:7:5-11:19
+MERGED from [com.google.android.gms:play-services-maps:11.8.0] /Users/mark/.gradle/caches/transforms-1/files-1.1/play-services-maps-11.8.0.aar/e5346897edb1ccde6d58603dacbfa2db/AndroidManifest.xml:30:5-20
+MERGED from [com.google.android.gms:play-services-maps:11.8.0] /Users/mark/.gradle/caches/transforms-1/files-1.1/play-services-maps-11.8.0.aar/e5346897edb1ccde6d58603dacbfa2db/AndroidManifest.xml:30:5-20
+MERGED from [com.android.support.constraint:constraint-layout:1.0.2] /Users/mark/.gradle/caches/transforms-1/files-1.1/constraint-layout-1.0.2.aar/a0372b720fb18015d3e99693fff242f0/AndroidManifest.xml:9:5-20
+MERGED from [com.android.support.constraint:constraint-layout:1.0.2] /Users/mark/.gradle/caches/transforms-1/files-1.1/constraint-layout-1.0.2.aar/a0372b720fb18015d3e99693fff242f0/AndroidManifest.xml:9:5-20
+MERGED from [com.android.support:animated-vector-drawable:23.4.0] /Users/mark/.gradle/caches/transforms-1/files-1.1/animated-vector-drawable-23.4.0.aar/06b12fa2ee62d4108e763cdf5ba3cd0c/AndroidManifest.xml:7:5-20
+MERGED from [com.android.support:animated-vector-drawable:23.4.0] /Users/mark/.gradle/caches/transforms-1/files-1.1/animated-vector-drawable-23.4.0.aar/06b12fa2ee62d4108e763cdf5ba3cd0c/AndroidManifest.xml:7:5-20
+MERGED from [com.google.android.gms:play-services-base:11.8.0] /Users/mark/.gradle/caches/transforms-1/files-1.1/play-services-base-11.8.0.aar/e462fb3c7a2dec49824d8a2e12b41604/AndroidManifest.xml:22:5-27:19
+MERGED from [com.google.android.gms:play-services-base:11.8.0] /Users/mark/.gradle/caches/transforms-1/files-1.1/play-services-base-11.8.0.aar/e462fb3c7a2dec49824d8a2e12b41604/AndroidManifest.xml:22:5-27:19
+MERGED from [com.google.android.gms:play-services-tasks:11.8.0] /Users/mark/.gradle/caches/transforms-1/files-1.1/play-services-tasks-11.8.0.aar/c8d52d5199d81636bd2b61ae57f0436d/AndroidManifest.xml:7:5-20
+MERGED from [com.google.android.gms:play-services-tasks:11.8.0] /Users/mark/.gradle/caches/transforms-1/files-1.1/play-services-tasks-11.8.0.aar/c8d52d5199d81636bd2b61ae57f0436d/AndroidManifest.xml:7:5-20
+MERGED from [com.google.android.gms:play-services-basement:11.8.0] /Users/mark/.gradle/caches/transforms-1/files-1.1/play-services-basement-11.8.0.aar/6889f92858396dacf3bffdcd25a1dce8/AndroidManifest.xml:22:5-26:19
+MERGED from [com.google.android.gms:play-services-basement:11.8.0] /Users/mark/.gradle/caches/transforms-1/files-1.1/play-services-basement-11.8.0.aar/6889f92858396dacf3bffdcd25a1dce8/AndroidManifest.xml:22:5-26:19
+MERGED from [com.android.support:support-vector-drawable:23.4.0] /Users/mark/.gradle/caches/transforms-1/files-1.1/support-vector-drawable-23.4.0.aar/f25de13577a4c9a4e825d00213c4f18d/AndroidManifest.xml:7:5-20
+MERGED from [com.android.support:support-vector-drawable:23.4.0] /Users/mark/.gradle/caches/transforms-1/files-1.1/support-vector-drawable-23.4.0.aar/f25de13577a4c9a4e825d00213c4f18d/AndroidManifest.xml:7:5-20
+MERGED from [com.android.support:support-v4:25.2.0] /Users/mark/.gradle/caches/transforms-1/files-1.1/support-v4-25.2.0.aar/9a176ac2c793a078cd346350808c2854/AndroidManifest.xml:25:5-20
+MERGED from [com.android.support:support-v4:25.2.0] /Users/mark/.gradle/caches/transforms-1/files-1.1/support-v4-25.2.0.aar/9a176ac2c793a078cd346350808c2854/AndroidManifest.xml:25:5-20
+MERGED from [com.android.support:support-fragment:25.2.0] /Users/mark/.gradle/caches/transforms-1/files-1.1/support-fragment-25.2.0.aar/f50d57bb54381972a640e291468a712b/AndroidManifest.xml:25:5-20
+MERGED from [com.android.support:support-fragment:25.2.0] /Users/mark/.gradle/caches/transforms-1/files-1.1/support-fragment-25.2.0.aar/f50d57bb54381972a640e291468a712b/AndroidManifest.xml:25:5-20
+MERGED from [com.android.support:support-media-compat:25.2.0] /Users/mark/.gradle/caches/transforms-1/files-1.1/support-media-compat-25.2.0.aar/71d7cbd931aba5c71df11fec5f5a5df9/AndroidManifest.xml:25:5-20
+MERGED from [com.android.support:support-media-compat:25.2.0] /Users/mark/.gradle/caches/transforms-1/files-1.1/support-media-compat-25.2.0.aar/71d7cbd931aba5c71df11fec5f5a5df9/AndroidManifest.xml:25:5-20
+MERGED from [com.android.support:support-core-utils:25.2.0] /Users/mark/.gradle/caches/transforms-1/files-1.1/support-core-utils-25.2.0.aar/2cafd3094474e07d11596d1cf4dc2f53/AndroidManifest.xml:25:5-20
+MERGED from [com.android.support:support-core-utils:25.2.0] /Users/mark/.gradle/caches/transforms-1/files-1.1/support-core-utils-25.2.0.aar/2cafd3094474e07d11596d1cf4dc2f53/AndroidManifest.xml:25:5-20
+MERGED from [com.android.support:support-core-ui:25.2.0] /Users/mark/.gradle/caches/transforms-1/files-1.1/support-core-ui-25.2.0.aar/1d6ea508e52fd792a87224a543092f67/AndroidManifest.xml:25:5-20
+MERGED from [com.android.support:support-core-ui:25.2.0] /Users/mark/.gradle/caches/transforms-1/files-1.1/support-core-ui-25.2.0.aar/1d6ea508e52fd792a87224a543092f67/AndroidManifest.xml:25:5-20
+MERGED from [com.android.support:support-compat:25.2.0] /Users/mark/.gradle/caches/transforms-1/files-1.1/support-compat-25.2.0.aar/cafd38524945258a01cb1ca9b728da83/AndroidManifest.xml:25:5-20
+MERGED from [com.android.support:support-compat:25.2.0] /Users/mark/.gradle/caches/transforms-1/files-1.1/support-compat-25.2.0.aar/cafd38524945258a01cb1ca9b728da83/AndroidManifest.xml:25:5-20
+MERGED from [com.google.android.gms:play-services-maps-license:11.8.0] /Users/mark/.gradle/caches/transforms-1/files-1.1/play-services-maps-license-11.8.0.aar/213d7251d7163059646973e09db04876/AndroidManifest.xml:5:5-20
+MERGED from [com.google.android.gms:play-services-maps-license:11.8.0] /Users/mark/.gradle/caches/transforms-1/files-1.1/play-services-maps-license-11.8.0.aar/213d7251d7163059646973e09db04876/AndroidManifest.xml:5:5-20
+MERGED from [com.google.android.gms:play-services-base-license:11.8.0] /Users/mark/.gradle/caches/transforms-1/files-1.1/play-services-base-license-11.8.0.aar/5cdd935cda303414c51712cfbda9827d/AndroidManifest.xml:5:5-20
+MERGED from [com.google.android.gms:play-services-base-license:11.8.0] /Users/mark/.gradle/caches/transforms-1/files-1.1/play-services-base-license-11.8.0.aar/5cdd935cda303414c51712cfbda9827d/AndroidManifest.xml:5:5-20
+MERGED from [com.google.android.gms:play-services-basement-license:11.8.0] /Users/mark/.gradle/caches/transforms-1/files-1.1/play-services-basement-license-11.8.0.aar/3116963e2746d311c5ddfab7b22cfb77/AndroidManifest.xml:5:5-20
+MERGED from [com.google.android.gms:play-services-basement-license:11.8.0] /Users/mark/.gradle/caches/transforms-1/files-1.1/play-services-basement-license-11.8.0.aar/3116963e2746d311c5ddfab7b22cfb77/AndroidManifest.xml:5:5-20
+MERGED from [com.google.android.gms:play-services-tasks-license:11.8.0] /Users/mark/.gradle/caches/transforms-1/files-1.1/play-services-tasks-license-11.8.0.aar/5219cf084af78b161d578e22c996888c/AndroidManifest.xml:5:5-20
+MERGED from [com.google.android.gms:play-services-tasks-license:11.8.0] /Users/mark/.gradle/caches/transforms-1/files-1.1/play-services-tasks-license-11.8.0.aar/5219cf084af78b161d578e22c996888c/AndroidManifest.xml:5:5-20
 	android:label
-		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:39:9-41
+		ADDED from /Users/mark/Desktop/App Movil RM/MSSMobileHANA/aplicationMovil/src/main/AndroidManifest.xml:39:9-41
 	android:versionName
-		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:44:9-34
+		ADDED from /Users/mark/Desktop/App Movil RM/MSSMobileHANA/aplicationMovil/src/main/AndroidManifest.xml:44:9-34
 	android:versionCode
-		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:43:9-32
+		ADDED from /Users/mark/Desktop/App Movil RM/MSSMobileHANA/aplicationMovil/src/main/AndroidManifest.xml:43:9-32
 	android:largeHeap
-		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:40:9-33
+		ADDED from /Users/mark/Desktop/App Movil RM/MSSMobileHANA/aplicationMovil/src/main/AndroidManifest.xml:40:9-33
 	android:icon
-		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:38:9-50
+		ADDED from /Users/mark/Desktop/App Movil RM/MSSMobileHANA/aplicationMovil/src/main/AndroidManifest.xml:38:9-50
 	android:allowBackup
-		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:37:9-36
+		ADDED from /Users/mark/Desktop/App Movil RM/MSSMobileHANA/aplicationMovil/src/main/AndroidManifest.xml:37:9-36
 	android:theme
-		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:42:9-40
+		ADDED from /Users/mark/Desktop/App Movil RM/MSSMobileHANA/aplicationMovil/src/main/AndroidManifest.xml:42:9-40
 	android:logo
-		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:41:9-50
+		ADDED from /Users/mark/Desktop/App Movil RM/MSSMobileHANA/aplicationMovil/src/main/AndroidManifest.xml:41:9-50
 activity#com.proyecto.movil.SplashActivity
-ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:47:9-58:20
+ADDED from /Users/mark/Desktop/App Movil RM/MSSMobileHANA/aplicationMovil/src/main/AndroidManifest.xml:47:9-58:20
 	android:label
-		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:49:13-45
+		ADDED from /Users/mark/Desktop/App Movil RM/MSSMobileHANA/aplicationMovil/src/main/AndroidManifest.xml:49:13-45
 	android:theme
-		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:50:13-77
+		ADDED from /Users/mark/Desktop/App Movil RM/MSSMobileHANA/aplicationMovil/src/main/AndroidManifest.xml:50:13-77
 	android:name
-		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:48:13-61
+		ADDED from /Users/mark/Desktop/App Movil RM/MSSMobileHANA/aplicationMovil/src/main/AndroidManifest.xml:48:13-61
 intent-filter#android.intent.action.MAIN+android.intent.category.LAUNCHER
-ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:53:13-57:29
+ADDED from /Users/mark/Desktop/App Movil RM/MSSMobileHANA/aplicationMovil/src/main/AndroidManifest.xml:53:13-57:29
 action#android.intent.action.MAIN
-ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:54:17-69
+ADDED from /Users/mark/Desktop/App Movil RM/MSSMobileHANA/aplicationMovil/src/main/AndroidManifest.xml:54:17-69
 	android:name
-		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:54:25-66
+		ADDED from /Users/mark/Desktop/App Movil RM/MSSMobileHANA/aplicationMovil/src/main/AndroidManifest.xml:54:25-66
 category#android.intent.category.LAUNCHER
-ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:56:17-77
+ADDED from /Users/mark/Desktop/App Movil RM/MSSMobileHANA/aplicationMovil/src/main/AndroidManifest.xml:56:17-77
 	android:name
-		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:56:27-74
+		ADDED from /Users/mark/Desktop/App Movil RM/MSSMobileHANA/aplicationMovil/src/main/AndroidManifest.xml:56:27-74
 activity#com.proyecto.movil.MainActivityDrawer
-ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:59:9-61:56
+ADDED from /Users/mark/Desktop/App Movil RM/MSSMobileHANA/aplicationMovil/src/main/AndroidManifest.xml:59:9-61:56
 	android:label
-		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:61:13-53
+		ADDED from /Users/mark/Desktop/App Movil RM/MSSMobileHANA/aplicationMovil/src/main/AndroidManifest.xml:61:13-53
 	android:name
-		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:60:13-65
+		ADDED from /Users/mark/Desktop/App Movil RM/MSSMobileHANA/aplicationMovil/src/main/AndroidManifest.xml:60:13-65
 activity#com.proyecto.movil.MainActivity
-ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:62:9-64:56
+ADDED from /Users/mark/Desktop/App Movil RM/MSSMobileHANA/aplicationMovil/src/main/AndroidManifest.xml:62:9-64:56
 	android:label
-		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:64:13-53
+		ADDED from /Users/mark/Desktop/App Movil RM/MSSMobileHANA/aplicationMovil/src/main/AndroidManifest.xml:64:13-53
 	android:name
-		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:63:13-59
+		ADDED from /Users/mark/Desktop/App Movil RM/MSSMobileHANA/aplicationMovil/src/main/AndroidManifest.xml:63:13-59
 activity#com.proyecto.sociosnegocio.MainSocioNegocio
-ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:67:9-69:50
+ADDED from /Users/mark/Desktop/App Movil RM/MSSMobileHANA/aplicationMovil/src/main/AndroidManifest.xml:67:9-69:50
 	android:label
-		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:69:13-47
+		ADDED from /Users/mark/Desktop/App Movil RM/MSSMobileHANA/aplicationMovil/src/main/AndroidManifest.xml:69:13-47
 	android:name
-		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:68:13-71
+		ADDED from /Users/mark/Desktop/App Movil RM/MSSMobileHANA/aplicationMovil/src/main/AndroidManifest.xml:68:13-71
 activity#com.proyecto.preferences.SettingsMain
-ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:72:9-78:20
+ADDED from /Users/mark/Desktop/App Movil RM/MSSMobileHANA/aplicationMovil/src/main/AndroidManifest.xml:72:9-78:20
 	android:label
-		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:74:13-44
+		ADDED from /Users/mark/Desktop/App Movil RM/MSSMobileHANA/aplicationMovil/src/main/AndroidManifest.xml:74:13-44
 	android:name
-		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:73:13-65
+		ADDED from /Users/mark/Desktop/App Movil RM/MSSMobileHANA/aplicationMovil/src/main/AndroidManifest.xml:73:13-65
 meta-data#android.support.PARENT_ACTIVITY
-ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:75:13-77:67
+ADDED from /Users/mark/Desktop/App Movil RM/MSSMobileHANA/aplicationMovil/src/main/AndroidManifest.xml:75:13-77:67
 	android:value
-		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:77:17-64
+		ADDED from /Users/mark/Desktop/App Movil RM/MSSMobileHANA/aplicationMovil/src/main/AndroidManifest.xml:77:17-64
 	android:name
-		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:76:17-63
+		ADDED from /Users/mark/Desktop/App Movil RM/MSSMobileHANA/aplicationMovil/src/main/AndroidManifest.xml:76:17-63
 activity#com.proyecto.sociosnegocio.DetalleSocioNegocioMain
-ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:81:9-83:53
+ADDED from /Users/mark/Desktop/App Movil RM/MSSMobileHANA/aplicationMovil/src/main/AndroidManifest.xml:81:9-83:53
 	android:label
-		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:83:13-50
+		ADDED from /Users/mark/Desktop/App Movil RM/MSSMobileHANA/aplicationMovil/src/main/AndroidManifest.xml:83:13-50
 	android:name
-		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:82:13-78
+		ADDED from /Users/mark/Desktop/App Movil RM/MSSMobileHANA/aplicationMovil/src/main/AndroidManifest.xml:82:13-78
 activity#com.proyecto.sociosnegocio.PhoneContactsListActivity
-ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:86:9-100:20
+ADDED from /Users/mark/Desktop/App Movil RM/MSSMobileHANA/aplicationMovil/src/main/AndroidManifest.xml:86:9-100:20
 	android:label
-		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:88:13-53
+		ADDED from /Users/mark/Desktop/App Movil RM/MSSMobileHANA/aplicationMovil/src/main/AndroidManifest.xml:88:13-53
 	android:windowSoftInputMode
-		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:89:13-55
+		ADDED from /Users/mark/Desktop/App Movil RM/MSSMobileHANA/aplicationMovil/src/main/AndroidManifest.xml:89:13-55
 	android:name
-		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:87:13-80
+		ADDED from /Users/mark/Desktop/App Movil RM/MSSMobileHANA/aplicationMovil/src/main/AndroidManifest.xml:87:13-80
 intent-filter#android.intent.action.
-ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:90:13-92:29
+ADDED from /Users/mark/Desktop/App Movil RM/MSSMobileHANA/aplicationMovil/src/main/AndroidManifest.xml:90:13-92:29
 action#android.intent.action.
-ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:91:17-65
+ADDED from /Users/mark/Desktop/App Movil RM/MSSMobileHANA/aplicationMovil/src/main/AndroidManifest.xml:91:17-65
 	android:name
-		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:91:25-62
+		ADDED from /Users/mark/Desktop/App Movil RM/MSSMobileHANA/aplicationMovil/src/main/AndroidManifest.xml:91:25-62
 intent-filter#android.intent.action.SEARCH
-ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:93:13-95:29
+ADDED from /Users/mark/Desktop/App Movil RM/MSSMobileHANA/aplicationMovil/src/main/AndroidManifest.xml:93:13-95:29
 action#android.intent.action.SEARCH
-ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:94:17-71
+ADDED from /Users/mark/Desktop/App Movil RM/MSSMobileHANA/aplicationMovil/src/main/AndroidManifest.xml:94:17-71
 	android:name
-		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:94:25-68
+		ADDED from /Users/mark/Desktop/App Movil RM/MSSMobileHANA/aplicationMovil/src/main/AndroidManifest.xml:94:25-68
 meta-data#android.app.searchable
-ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:97:13-99:63
+ADDED from /Users/mark/Desktop/App Movil RM/MSSMobileHANA/aplicationMovil/src/main/AndroidManifest.xml:97:13-99:63
 	android:resource
-		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:99:17-60
+		ADDED from /Users/mark/Desktop/App Movil RM/MSSMobileHANA/aplicationMovil/src/main/AndroidManifest.xml:99:17-60
 	android:name
-		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:98:17-54
+		ADDED from /Users/mark/Desktop/App Movil RM/MSSMobileHANA/aplicationMovil/src/main/AndroidManifest.xml:98:17-54
 activity#com.proyecto.ventas.MainVentas
-ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:103:9-115:20
+ADDED from /Users/mark/Desktop/App Movil RM/MSSMobileHANA/aplicationMovil/src/main/AndroidManifest.xml:103:9-115:20
 	android:label
-		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:105:13-50
+		ADDED from /Users/mark/Desktop/App Movil RM/MSSMobileHANA/aplicationMovil/src/main/AndroidManifest.xml:105:13-50
 	android:name
-		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:104:13-58
+		ADDED from /Users/mark/Desktop/App Movil RM/MSSMobileHANA/aplicationMovil/src/main/AndroidManifest.xml:104:13-58
 activity#com.proyecto.ventas.DetalleVentaMain
-ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:116:9-118:49
+ADDED from /Users/mark/Desktop/App Movil RM/MSSMobileHANA/aplicationMovil/src/main/AndroidManifest.xml:116:9-118:49
 	android:label
-		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:118:13-46
+		ADDED from /Users/mark/Desktop/App Movil RM/MSSMobileHANA/aplicationMovil/src/main/AndroidManifest.xml:118:13-46
 	android:name
-		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:117:13-64
+		ADDED from /Users/mark/Desktop/App Movil RM/MSSMobileHANA/aplicationMovil/src/main/AndroidManifest.xml:117:13-64
 activity#com.proyecto.ventas.DetalleVentaLinea
-ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:119:9-125:20
+ADDED from /Users/mark/Desktop/App Movil RM/MSSMobileHANA/aplicationMovil/src/main/AndroidManifest.xml:119:9-125:20
 	android:label
-		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:121:13-46
+		ADDED from /Users/mark/Desktop/App Movil RM/MSSMobileHANA/aplicationMovil/src/main/AndroidManifest.xml:121:13-46
 	android:name
-		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:120:13-65
+		ADDED from /Users/mark/Desktop/App Movil RM/MSSMobileHANA/aplicationMovil/src/main/AndroidManifest.xml:120:13-65
 activity#com.proyecto.cobranza.MainCobranzas
-ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:131:9-137:20
+ADDED from /Users/mark/Desktop/App Movil RM/MSSMobileHANA/aplicationMovil/src/main/AndroidManifest.xml:131:9-137:20
 	android:label
-		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:133:13-49
+		ADDED from /Users/mark/Desktop/App Movil RM/MSSMobileHANA/aplicationMovil/src/main/AndroidManifest.xml:133:13-49
 	android:name
-		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:132:13-63
+		ADDED from /Users/mark/Desktop/App Movil RM/MSSMobileHANA/aplicationMovil/src/main/AndroidManifest.xml:132:13-63
 activity#com.proyecto.cobranza.DetalleCobranzaMain
-ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:138:9-140:49
+ADDED from /Users/mark/Desktop/App Movil RM/MSSMobileHANA/aplicationMovil/src/main/AndroidManifest.xml:138:9-140:49
 	android:label
-		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:140:13-46
+		ADDED from /Users/mark/Desktop/App Movil RM/MSSMobileHANA/aplicationMovil/src/main/AndroidManifest.xml:140:13-46
 	android:name
-		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:139:13-69
+		ADDED from /Users/mark/Desktop/App Movil RM/MSSMobileHANA/aplicationMovil/src/main/AndroidManifest.xml:139:13-69
 activity#com.proyecto.cobranza.DetalleFacturaMain
-ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:141:9-143:49
+ADDED from /Users/mark/Desktop/App Movil RM/MSSMobileHANA/aplicationMovil/src/main/AndroidManifest.xml:141:9-143:49
 	android:label
-		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:143:13-46
+		ADDED from /Users/mark/Desktop/App Movil RM/MSSMobileHANA/aplicationMovil/src/main/AndroidManifest.xml:143:13-46
 	android:name
-		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:142:13-68
+		ADDED from /Users/mark/Desktop/App Movil RM/MSSMobileHANA/aplicationMovil/src/main/AndroidManifest.xml:142:13-68
 activity#com.proyecto.informes.Informe
-ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:144:9-146:51
+ADDED from /Users/mark/Desktop/App Movil RM/MSSMobileHANA/aplicationMovil/src/main/AndroidManifest.xml:144:9-146:51
 	android:label
-		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:146:13-48
+		ADDED from /Users/mark/Desktop/App Movil RM/MSSMobileHANA/aplicationMovil/src/main/AndroidManifest.xml:146:13-48
 	android:name
-		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:145:13-57
+		ADDED from /Users/mark/Desktop/App Movil RM/MSSMobileHANA/aplicationMovil/src/main/AndroidManifest.xml:145:13-57
 activity#com.proyect.movil.LoginActivity
-ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:147:9-150:71
+ADDED from /Users/mark/Desktop/App Movil RM/MSSMobileHANA/aplicationMovil/src/main/AndroidManifest.xml:147:9-150:71
 	android:label
-		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:149:13-57
+		ADDED from /Users/mark/Desktop/App Movil RM/MSSMobileHANA/aplicationMovil/src/main/AndroidManifest.xml:149:13-57
 	android:windowSoftInputMode
-		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:150:13-68
+		ADDED from /Users/mark/Desktop/App Movil RM/MSSMobileHANA/aplicationMovil/src/main/AndroidManifest.xml:150:13-68
 	android:name
-		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:148:13-42
+		ADDED from /Users/mark/Desktop/App Movil RM/MSSMobileHANA/aplicationMovil/src/main/AndroidManifest.xml:148:13-42
 activity#com.proyecto.facturas.DetalleFacturaLinea
-ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:151:9-153:49
+ADDED from /Users/mark/Desktop/App Movil RM/MSSMobileHANA/aplicationMovil/src/main/AndroidManifest.xml:151:9-153:49
 	android:label
-		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:153:13-46
+		ADDED from /Users/mark/Desktop/App Movil RM/MSSMobileHANA/aplicationMovil/src/main/AndroidManifest.xml:153:13-46
 	android:name
-		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:152:13-69
+		ADDED from /Users/mark/Desktop/App Movil RM/MSSMobileHANA/aplicationMovil/src/main/AndroidManifest.xml:152:13-69
 activity#com.proyecto.inventario.DetalleArticuloMain
-ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:154:9-156:49
+ADDED from /Users/mark/Desktop/App Movil RM/MSSMobileHANA/aplicationMovil/src/main/AndroidManifest.xml:154:9-156:49
 	android:label
-		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:156:13-46
+		ADDED from /Users/mark/Desktop/App Movil RM/MSSMobileHANA/aplicationMovil/src/main/AndroidManifest.xml:156:13-46
 	android:name
-		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:155:13-71
+		ADDED from /Users/mark/Desktop/App Movil RM/MSSMobileHANA/aplicationMovil/src/main/AndroidManifest.xml:155:13-71
 receiver#com.proyecto.broadcast.MainReceiver
-ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:158:9-162:20
+ADDED from /Users/mark/Desktop/App Movil RM/MSSMobileHANA/aplicationMovil/src/main/AndroidManifest.xml:158:9-162:20
 	android:name
-		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:158:19-69
+		ADDED from /Users/mark/Desktop/App Movil RM/MSSMobileHANA/aplicationMovil/src/main/AndroidManifest.xml:158:19-69
 intent-filter#android.intent.action.BOOT_COMPLETED
-ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:159:13-161:29
+ADDED from /Users/mark/Desktop/App Movil RM/MSSMobileHANA/aplicationMovil/src/main/AndroidManifest.xml:159:13-161:29
 action#android.intent.action.BOOT_COMPLETED
-ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:160:17-79
+ADDED from /Users/mark/Desktop/App Movil RM/MSSMobileHANA/aplicationMovil/src/main/AndroidManifest.xml:160:17-79
 	android:name
-		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:160:25-76
+		ADDED from /Users/mark/Desktop/App Movil RM/MSSMobileHANA/aplicationMovil/src/main/AndroidManifest.xml:160:25-76
 service#com.proyecto.servicios.ServicioOvPr
-ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:172:9-175:40
+ADDED from /Users/mark/Desktop/App Movil RM/MSSMobileHANA/aplicationMovil/src/main/AndroidManifest.xml:172:9-175:40
 	android:enabled
-		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:174:13-35
+		ADDED from /Users/mark/Desktop/App Movil RM/MSSMobileHANA/aplicationMovil/src/main/AndroidManifest.xml:174:13-35
 	android:exported
-		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:175:13-37
+		ADDED from /Users/mark/Desktop/App Movil RM/MSSMobileHANA/aplicationMovil/src/main/AndroidManifest.xml:175:13-37
 	android:name
-		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:173:13-63
+		ADDED from /Users/mark/Desktop/App Movil RM/MSSMobileHANA/aplicationMovil/src/main/AndroidManifest.xml:173:13-63
 activity#com.proyecto.sociosnegocio.SocioDireccionActivity
-ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:194:9-196:70
+ADDED from /Users/mark/Desktop/App Movil RM/MSSMobileHANA/aplicationMovil/src/main/AndroidManifest.xml:194:9-196:70
 	android:label
-		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:196:13-67
+		ADDED from /Users/mark/Desktop/App Movil RM/MSSMobileHANA/aplicationMovil/src/main/AndroidManifest.xml:196:13-67
 	android:name
-		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:195:13-77
+		ADDED from /Users/mark/Desktop/App Movil RM/MSSMobileHANA/aplicationMovil/src/main/AndroidManifest.xml:195:13-77
 meta-data#com.google.android.geo.API_KEY
-ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:198:9-200:55
+ADDED from /Users/mark/Desktop/App Movil RM/MSSMobileHANA/aplicationMovil/src/main/AndroidManifest.xml:198:9-200:55
 	android:value
-		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:200:13-52
+		ADDED from /Users/mark/Desktop/App Movil RM/MSSMobileHANA/aplicationMovil/src/main/AndroidManifest.xml:200:13-52
 	android:name
-		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:199:13-58
+		ADDED from /Users/mark/Desktop/App Movil RM/MSSMobileHANA/aplicationMovil/src/main/AndroidManifest.xml:199:13-58
 activity#com.proyecto.movil.PinVerified
-ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:202:9-67
+ADDED from /Users/mark/Desktop/App Movil RM/MSSMobileHANA/aplicationMovil/src/main/AndroidManifest.xml:202:9-67
 	android:name
-		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:202:19-64
+		ADDED from /Users/mark/Desktop/App Movil RM/MSSMobileHANA/aplicationMovil/src/main/AndroidManifest.xml:202:19-64
 activity#com.proyecto.incidencias.IncidenciaActivity
-ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:203:9-80
+ADDED from /Users/mark/Desktop/App Movil RM/MSSMobileHANA/aplicationMovil/src/main/AndroidManifest.xml:203:9-80
 	android:name
-		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:203:19-77
+		ADDED from /Users/mark/Desktop/App Movil RM/MSSMobileHANA/aplicationMovil/src/main/AndroidManifest.xml:203:19-77
 activity#com.proyecto.facturas.BuscarFacturaActivity
-ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:204:9-80
+ADDED from /Users/mark/Desktop/App Movil RM/MSSMobileHANA/aplicationMovil/src/main/AndroidManifest.xml:204:9-80
 	android:name
-		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:204:19-77
+		ADDED from /Users/mark/Desktop/App Movil RM/MSSMobileHANA/aplicationMovil/src/main/AndroidManifest.xml:204:19-77
 activity#com.proyecto.sociosnegocio.ClienteBuscarActivity
-ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:205:9-85
+ADDED from /Users/mark/Desktop/App Movil RM/MSSMobileHANA/aplicationMovil/src/main/AndroidManifest.xml:205:9-85
 	android:name
-		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:205:19-82
+		ADDED from /Users/mark/Desktop/App Movil RM/MSSMobileHANA/aplicationMovil/src/main/AndroidManifest.xml:205:19-82
 activity#com.proyecto.incidencias.IncidenciaDetalleActivity
-ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:206:9-87
+ADDED from /Users/mark/Desktop/App Movil RM/MSSMobileHANA/aplicationMovil/src/main/AndroidManifest.xml:206:9-87
 	android:name
-		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:206:19-84
+		ADDED from /Users/mark/Desktop/App Movil RM/MSSMobileHANA/aplicationMovil/src/main/AndroidManifest.xml:206:19-84
 activity#com.proyecto.entregas.EntregaDetalleActivity
-ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:207:9-81
+ADDED from /Users/mark/Desktop/App Movil RM/MSSMobileHANA/aplicationMovil/src/main/AndroidManifest.xml:207:9-81
 	android:name
-		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:207:19-78
+		ADDED from /Users/mark/Desktop/App Movil RM/MSSMobileHANA/aplicationMovil/src/main/AndroidManifest.xml:207:19-78
 activity#com.proyecto.geolocalizacion.MapsActivity
-ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:208:9-210:59
+ADDED from /Users/mark/Desktop/App Movil RM/MSSMobileHANA/aplicationMovil/src/main/AndroidManifest.xml:208:9-210:59
 	android:label
-		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:210:13-56
+		ADDED from /Users/mark/Desktop/App Movil RM/MSSMobileHANA/aplicationMovil/src/main/AndroidManifest.xml:210:13-56
 	android:name
-		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:209:13-69
+		ADDED from /Users/mark/Desktop/App Movil RM/MSSMobileHANA/aplicationMovil/src/main/AndroidManifest.xml:209:13-69
 activity#com.proyecto.geolocalizacion.ShowMapActivity
-ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:211:9-81
+ADDED from /Users/mark/Desktop/App Movil RM/MSSMobileHANA/aplicationMovil/src/main/AndroidManifest.xml:211:9-81
 	android:name
-		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:211:19-78
+		ADDED from /Users/mark/Desktop/App Movil RM/MSSMobileHANA/aplicationMovil/src/main/AndroidManifest.xml:211:19-78
 activity#com.proyecto.visitas.DetalleVisitaActivity
-ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:212:9-79
+ADDED from /Users/mark/Desktop/App Movil RM/MSSMobileHANA/aplicationMovil/src/main/AndroidManifest.xml:212:9-79
 	android:name
-		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:212:19-76
+		ADDED from /Users/mark/Desktop/App Movil RM/MSSMobileHANA/aplicationMovil/src/main/AndroidManifest.xml:212:19-76
 activity#com.proyecto.devoluciones.DevolucionActivity
-ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:213:9-81
+ADDED from /Users/mark/Desktop/App Movil RM/MSSMobileHANA/aplicationMovil/src/main/AndroidManifest.xml:213:9-81
 	android:name
-		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:213:19-78
+		ADDED from /Users/mark/Desktop/App Movil RM/MSSMobileHANA/aplicationMovil/src/main/AndroidManifest.xml:213:19-78
 activity#com.proyecto.devoluciones.DevolucionListaEntregaActivity
-ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:214:9-93
+ADDED from /Users/mark/Desktop/App Movil RM/MSSMobileHANA/aplicationMovil/src/main/AndroidManifest.xml:214:9-93
 	android:name
-		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:214:19-90
+		ADDED from /Users/mark/Desktop/App Movil RM/MSSMobileHANA/aplicationMovil/src/main/AndroidManifest.xml:214:19-90
 activity#com.proyecto.devoluciones.DevolucionArticulosActivity
-ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:215:9-90
+ADDED from /Users/mark/Desktop/App Movil RM/MSSMobileHANA/aplicationMovil/src/main/AndroidManifest.xml:215:9-90
 	android:name
-		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:215:19-87
+		ADDED from /Users/mark/Desktop/App Movil RM/MSSMobileHANA/aplicationMovil/src/main/AndroidManifest.xml:215:19-87
 activity#com.proyecto.devoluciones.DevolucionDetalleActivity
-ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:216:9-88
+ADDED from /Users/mark/Desktop/App Movil RM/MSSMobileHANA/aplicationMovil/src/main/AndroidManifest.xml:216:9-88
 	android:name
-		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:216:19-85
+		ADDED from /Users/mark/Desktop/App Movil RM/MSSMobileHANA/aplicationMovil/src/main/AndroidManifest.xml:216:19-85
 activity#com.proyecto.notacredito.NotaCreditoActivity
-ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:217:9-81
+ADDED from /Users/mark/Desktop/App Movil RM/MSSMobileHANA/aplicationMovil/src/main/AndroidManifest.xml:217:9-81
 	android:name
-		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:217:19-78
+		ADDED from /Users/mark/Desktop/App Movil RM/MSSMobileHANA/aplicationMovil/src/main/AndroidManifest.xml:217:19-78
 activity#com.proyecto.notacredito.NotaCreditoListaFacturaActivity
-ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:218:9-93
+ADDED from /Users/mark/Desktop/App Movil RM/MSSMobileHANA/aplicationMovil/src/main/AndroidManifest.xml:218:9-93
 	android:name
-		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:218:19-90
+		ADDED from /Users/mark/Desktop/App Movil RM/MSSMobileHANA/aplicationMovil/src/main/AndroidManifest.xml:218:19-90
 activity#com.proyecto.notacredito.NotaCreditoArticulosActivity
-ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:219:9-90
+ADDED from /Users/mark/Desktop/App Movil RM/MSSMobileHANA/aplicationMovil/src/main/AndroidManifest.xml:219:9-90
 	android:name
-		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:219:19-87
+		ADDED from /Users/mark/Desktop/App Movil RM/MSSMobileHANA/aplicationMovil/src/main/AndroidManifest.xml:219:19-87
 activity#com.proyecto.notacredito.NotaCreditoDetalleActivity
-ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:220:9-88
+ADDED from /Users/mark/Desktop/App Movil RM/MSSMobileHANA/aplicationMovil/src/main/AndroidManifest.xml:220:9-88
 	android:name
-		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:220:19-85
+		ADDED from /Users/mark/Desktop/App Movil RM/MSSMobileHANA/aplicationMovil/src/main/AndroidManifest.xml:220:19-85
 activity#com.proyecto.inventario.ListaArticuloPrecioActivity
-ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:221:9-97
+ADDED from /Users/mark/Desktop/App Movil RM/MSSMobileHANA/aplicationMovil/src/main/AndroidManifest.xml:221:9-97
 	android:name
-		ADDED from C:\Users\PC\Desktop\App Mobile v2.0\MSS-Mobile\aplicationMovil\src\main\AndroidManifest.xml:221:19-85
+		ADDED from /Users/mark/Desktop/App Movil RM/MSSMobileHANA/aplicationMovil/src/main/AndroidManifest.xml:221:19-85
 activity#com.google.android.gms.common.api.GoogleApiActivity
-ADDED from [com.google.android.gms:play-services-base:11.8.0] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\play-services-base-11.8.0.aar\36bd668d01fd7ddabe8282c41976aef9\AndroidManifest.xml:23:9-26:75
+ADDED from [com.google.android.gms:play-services-base:11.8.0] /Users/mark/.gradle/caches/transforms-1/files-1.1/play-services-base-11.8.0.aar/e462fb3c7a2dec49824d8a2e12b41604/AndroidManifest.xml:23:9-26:75
 	android:exported
-		ADDED from [com.google.android.gms:play-services-base:11.8.0] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\play-services-base-11.8.0.aar\36bd668d01fd7ddabe8282c41976aef9\AndroidManifest.xml:25:13-37
+		ADDED from [com.google.android.gms:play-services-base:11.8.0] /Users/mark/.gradle/caches/transforms-1/files-1.1/play-services-base-11.8.0.aar/e462fb3c7a2dec49824d8a2e12b41604/AndroidManifest.xml:25:13-37
 	android:theme
-		ADDED from [com.google.android.gms:play-services-base:11.8.0] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\play-services-base-11.8.0.aar\36bd668d01fd7ddabe8282c41976aef9\AndroidManifest.xml:26:13-72
+		ADDED from [com.google.android.gms:play-services-base:11.8.0] /Users/mark/.gradle/caches/transforms-1/files-1.1/play-services-base-11.8.0.aar/e462fb3c7a2dec49824d8a2e12b41604/AndroidManifest.xml:26:13-72
 	android:name
-		ADDED from [com.google.android.gms:play-services-base:11.8.0] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\play-services-base-11.8.0.aar\36bd668d01fd7ddabe8282c41976aef9\AndroidManifest.xml:24:13-79
+		ADDED from [com.google.android.gms:play-services-base:11.8.0] /Users/mark/.gradle/caches/transforms-1/files-1.1/play-services-base-11.8.0.aar/e462fb3c7a2dec49824d8a2e12b41604/AndroidManifest.xml:24:13-79
