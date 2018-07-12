@@ -1,5 +1,5 @@
 #Internal package file, do not edit.
-#Wed Jul 11 02:43:09 PET 2018
+#Thu Jul 12 00:02:06 PET 2018
 1.base=/Users/mark/Desktop/App Movil RM/MSSMobileHANA/aplicationMovil/build/intermediates/transforms/dexMerger/debug/0
 0.baseType=DIRECTORY
 1.baseType=DIRECTORY

@@ -1018,7 +1018,9 @@ public class ArticuloOrdVenta extends Fragment {
                             Toast.makeText(contexto,"El articulo no tiene precio",Toast.LENGTH_SHORT).show();
                             return true;
                         }
+                        String datoMark = searchResults.get(8).getData();
                         art_bean.setDescuento(Double.parseDouble(searchResults.get(8).getData()));
+
                         if (!listaImpuestoSel.getCodigo().equals("IGV_EXO"))
                             art_bean.setImpuesto(18);
                         else
