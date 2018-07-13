@@ -339,7 +339,7 @@ public class SyncRestDocumentos {
 
             //region REQUEST ORDEN VENTA
             mProgressDialog.setMessage("Registrando órdenes de venta...");
-            String urlGETSO = esCobrador.equals("N") ? "getSalesOrder": "getSalesOrderDispatcher";
+            String urlGETSO = esCobrador.equals("N") ? " getSalesOrder": "getSalesOrderDispatcher";
             JsonObjectRequest mJSONRequest = new JsonObjectRequest(Request.Method.GET,
                     ruta + "salesorder/"+urlGETSO+".xsjs?empId=" + sociedad + "&usrId=" + codigoEmpleado, null,
                     listenerGetOrdenVenta, errorListenerGetOrdenVenta);

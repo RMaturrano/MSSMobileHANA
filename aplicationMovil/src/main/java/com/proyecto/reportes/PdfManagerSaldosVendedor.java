@@ -11,10 +11,12 @@ import java.util.Date;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Environment;
+import android.preference.PreferenceManager;
 import android.widget.Toast;
 
 import com.itextpdf.text.BaseColor;
@@ -31,6 +33,7 @@ import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 import com.proyect.movil.R;
+import com.proyecto.utils.Variables;
 
 public class PdfManagerSaldosVendedor {
 	
@@ -147,9 +150,12 @@ public class PdfManagerSaldosVendedor {
         DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
     	Date date = new Date();
     	String currentDate = dateFormat.format(date);
-        
-        preface.add(new Paragraph("Empresa: " + reportObject.getEmpresa(), subFont));
-        preface.add(new Paragraph("Direccion: " + reportObject.getDireccion(), subFont));
+
+        final SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(mContext);
+        final String empresa = pref.getString(Variables.DESCRIPCION_COMPANIA, "No Found");
+
+        preface.add(new Paragraph("Compañia: " + empresa , subFont));// reportObject.getEmpresa(), subFont));
+        //preface.add(new Paragraph("Direccion: " + reportObject.getDireccion(), subFont));
         preface.add(new Paragraph("Fecha de impresion: " + currentDate, subFont));
  
         addEmptyLine(preface, 1);
