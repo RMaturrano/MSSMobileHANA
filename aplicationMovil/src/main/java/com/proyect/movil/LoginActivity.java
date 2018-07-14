@@ -314,6 +314,8 @@ public class LoginActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(JSONObject response) {
                         showProgress(false);
+                        //int a = 0;
+                        //int b = 2/a;
                         try {
                             if (response.getString("ResponseStatus").equals("Error")) {
                                 String messageError = response.getJSONObject("Response")
@@ -356,6 +358,8 @@ public class LoginActivity extends AppCompatActivity {
                         } catch (Exception e) {
                             showToast("Exception > onResponse() > " + e.getMessage());
                         }
+
+
                     }
                 },
                 new Response.ErrorListener() {

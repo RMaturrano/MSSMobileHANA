@@ -188,7 +188,8 @@ public class ListaFacturasTabPendientesFragment extends Fragment
 	public void onItemClick(AdapterView<?> parent, View view, int position,
 			long id) {
 		Intent myIntent = new Intent(v.getContext(), DetalleFacturaMain.class);
-    	myIntent.putExtra("id", listaAdapter.get(position).getClave());
+    	//myIntent.putExtra("id", listaAdapter.get(position).getClave());
+		myIntent.putExtra("id", ((FacturaBean)adapter.getItem(position)).getClave());
     	startActivity(myIntent);
 	}
 	

@@ -76,7 +76,7 @@ public class DetalleFacturaLinea extends AppCompatActivity{
 								"PorcentajeDescuento,I.Nombre "
 								+ "from TB_FACTURA_DETALLE D JOIN TB_ARTICULO A " 
 								+ "ON D.Articulo = A.Codigo JOIN TB_UNIDAD_MEDIDA U " 
-								+ "ON D.UnidadMedida = U.Codigo JOIN TB_ALMACEN AL " 
+								+ "ON D.UnidadMedida = U.Nombre JOIN TB_ALMACEN AL "
 								+ "ON D.Almacen = AL.CODIGO LEFT JOIN TB_LISTA_PRECIO LP " 
 								+ "ON D.ListaPrecio = LP.Codigo JOIN TB_IMPUESTO I " 
 								+ "ON D.Impuesto = I.Codigo " 

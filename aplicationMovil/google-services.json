@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "85518766140",
+    "firebase_url": "https://mssmobile-42650.firebaseio.com",
+    "project_id": "mssmobile-42650",
+    "storage_bucket": "mssmobile-42650.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:85518766140:android:87edaab7c57d59fb",
+        "android_client_info": {
+          "package_name": "com.proyect.movil"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "85518766140-4sobkerrn1hs3f56o24i99nrna4f1iid.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyADwtAgxAB1tQFN_kzLrfO8-X_nqIZPejQ"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

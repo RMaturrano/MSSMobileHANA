@@ -4,6 +4,23 @@
             "outputFile": "/Users/mark/Desktop/App Movil RM/MSSMobileHANA/aplicationMovil/build/intermediates/incremental/mergeDebugResources/merged.dir/values-sw600dp-v13/values-sw600dp-v13.xml",
             "map": [
                 {
+                    "source": "/Users/mark/.gradle/caches/transforms-1/files-1.1/appcompat-v7-23.4.0.aar/641985e9edfeb1528f49d209b4b3e2bd/res/values-sw600dp-v13/values-sw600dp-v13.xml",
+                    "from": {
+                        "startLines": "2,3,4,5,6,7,8,9",
+                        "startColumns": "4,4,4,4,4,4,4,4",
+                        "startOffsets": "55,124,194,268,344,403,474,542",
+                        "endColumns": "68,69,73,75,58,70,67,54",
+                        "endOffsets": "119,189,263,339,398,469,537,592"
+                    },
+                    "to": {
+                        "startLines": "2,3,4,5,6,7,8,17",
+                        "startColumns": "4,4,4,4,4,4,4,4",
+                        "startOffsets": "55,124,194,268,344,403,474,1101",
+                        "endColumns": "68,69,73,75,58,70,67,54",
+                        "endOffsets": "119,189,263,339,398,469,537,1151"
+                    }
+                },
+                {
                     "source": "/Users/mark/Desktop/App Movil RM/MSSMobileHANA/aplicationMovil/src/main/res/values-sw600dp/integers.xml",
                     "from": {
                         "startLines": "21,20",
@@ -21,7 +38,7 @@
                     }
                 },
                 {
-                    "source": "/Users/mark/.gradle/caches/transforms-1/files-1.1/design-23.3.0.aar/ed14154a7e3a54cd78ffbfa9dad659c0/res/values-sw600dp-v13/values-sw600dp-v13.xml",
+                    "source": "/Users/mark/.gradle/caches/transforms-1/files-1.1/design-23.3.0.aar/16b450ee8bda63c8bb84855ceb9b7300/res/values-sw600dp-v13/values-sw600dp-v13.xml",
                     "from": {
                         "startLines": "2,3,4,5,6,7,8,9,10,11",
                         "startColumns": "4,4,4,4,4,4,4,4,4,4",
@@ -37,23 +54,6 @@
                         "endLines": "9,10,11,12,13,14,15,16,20,24",
                         "endColumns": "59,69,70,71,57,57,105,63,62,12",
                         "endOffsets": "597,667,738,810,868,926,1032,1096,1324,1506"
-                    }
-                },
-                {
-                    "source": "/Users/mark/.gradle/caches/transforms-1/files-1.1/appcompat-v7-23.4.0.aar/5d337cdc5452ede48e03600c10198edd/res/values-sw600dp-v13/values-sw600dp-v13.xml",
-                    "from": {
-                        "startLines": "2,3,4,5,6,7,8,9",
-                        "startColumns": "4,4,4,4,4,4,4,4",
-                        "startOffsets": "55,124,194,268,344,403,474,542",
-                        "endColumns": "68,69,73,75,58,70,67,54",
-                        "endOffsets": "119,189,263,339,398,469,537,592"
-                    },
-                    "to": {
-                        "startLines": "2,3,4,5,6,7,8,17",
-                        "startColumns": "4,4,4,4,4,4,4,4",
-                        "startOffsets": "55,124,194,268,344,403,474,1101",
-                        "endColumns": "68,69,73,75,58,70,67,54",
-                        "endOffsets": "119,189,263,339,398,469,537,1151"
                     }
                 }
             ]

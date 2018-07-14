@@ -1,4 +1,0 @@
-#Thu Jul 12 21:59:04 PET 2018
-base.0=/Users/mark/Desktop/App Movil RM/MSSMobileHANA/aplicationMovil/build/intermediates/transforms/dexMerger/debug/9
-path.0=classes.dex
-renamed.0=classes.dex
