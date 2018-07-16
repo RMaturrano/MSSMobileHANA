@@ -2,6 +2,7 @@ package com.proyecto.dao;
 
 import android.database.Cursor;
 
+import com.google.firebase.perf.metrics.AddTrace;
 import com.proyecto.bean.ArticuloBean;
 import com.proyecto.database.DataBaseHelper;
 
@@ -10,6 +11,7 @@ import java.util.List;
 
 public class ArticuloDAO {
 
+    @AddTrace(name = "listarArticuloDAOTrace", enabled = true)
     public List<ArticuloBean> listar(String listaPrecio, String almacen) {
 
         String filterPriceList = "", filterAlmacen = "", columnStock = "";
@@ -28,7 +30,9 @@ public class ArticuloDAO {
                 .rawQuery("select " +
                         "A.Codigo, " +
                         "A.Nombre," +
+                        //TODO: Se debe cambiar es select. Hace que la consulta se realice con demoras.
                         "(select IFNULL(SUM(CAST(STOCK AS NUMERIC)),0) from TB_CANTIDAD where ARTICULO = A.Codigo "+columnStock+"), " +
+                        //"G.NOMBRE, "+
                         "G.NOMBRE "
                         + "from TB_ARTICULO A join TB_GRUPO_ARTICULO G " +
                         "ON A.GrupoArticulo = G.CODIGO left join TB_PRECIO P on " +
@@ -52,6 +56,7 @@ public class ArticuloDAO {
         return lst;
     }
 
+    @AddTrace(name = "listarPorPrecioArticuloDAOTrace", enabled = true)
     public List<ArticuloBean> listarPorPrecio(String listaPrecio) {
 
         Cursor cursor = DataBaseHelper

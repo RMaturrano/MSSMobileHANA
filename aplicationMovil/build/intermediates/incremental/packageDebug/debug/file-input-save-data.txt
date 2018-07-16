@@ -1,5 +1,5 @@
 #Internal package file, do not edit.
-#Sat Jul 14 13:01:11 PET 2018
+#Sun Jul 15 22:56:05 PET 2018
 1.base=/Users/mark/Desktop/App Movil RM/MSSMobileHANA/aplicationMovil/build/intermediates/transforms/dexMerger/debug/0
 2.path=crashlytics-build.properties
 0.baseType=DIRECTORY
