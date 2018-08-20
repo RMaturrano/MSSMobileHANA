@@ -150,6 +150,8 @@ public class EntregaDetalleActivity extends AppCompatActivity {
             Intent intent = new Intent(EntregaDetalleActivity.this, IncidenciaActivity.class);
             intent.putExtra(IncidenciaActivity.KEY_PAR_ORIGEN, IncidenciaActivity.ENTREGA);
             intent.putExtra(IncidenciaActivity.KEY_PAR_CLIENTE, mEntrega.getSocioNegocio());
+            intent.putExtra(IncidenciaActivity.KEY_PAR_REFERENCIA, mEntrega.getReferencia());
+            intent.putExtra(IncidenciaActivity.KEY_PAR_FACTURA, String.valueOf(mEntrega.getClave()));
             startActivity(intent);
         }
     };

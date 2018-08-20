@@ -68,6 +68,12 @@ public class SettingsFragment extends PreferenceFragment implements
 	}
 
 	@Override
+	public void onStart() {
+		super.onStart();
+		setListPreferenceData();
+	}
+
+	@Override
 	public boolean onPreferenceChange(Preference preference, Object newValue) {
 		
 		boolean switched = !((SwitchPreference) preference).isChecked();

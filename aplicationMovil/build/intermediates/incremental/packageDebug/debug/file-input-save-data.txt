@@ -1,15 +1,19 @@
 #Internal package file, do not edit.
-#Sun Jul 15 22:56:05 PET 2018
-1.base=/Users/mark/Desktop/App Movil RM/MSSMobileHANA/aplicationMovil/build/intermediates/transforms/dexMerger/debug/0
-2.path=crashlytics-build.properties
+#Mon Aug 06 16:04:13 COT 2018
+1.base=C\:\\Users\\PC\\Desktop\\App Mobile Seidor v3.0\\MSSMobileHANA\\aplicationMovil\\build\\intermediates\\transforms\\dexMerger\\debug\\8
+2.path=classes.dex
 0.baseType=DIRECTORY
-2.base=/Users/mark/Desktop/App Movil RM/MSSMobileHANA/aplicationMovil/build/intermediates/assets/debug
-2.set=ASSET
+3.baseType=DIRECTORY
+2.base=C\:\\Users\\PC\\Desktop\\App Mobile Seidor v3.0\\MSSMobileHANA\\aplicationMovil\\build\\intermediates\\transforms\\dexMerger\\debug\\8
+3.set=ASSET
+2.set=DEX
 1.baseType=DIRECTORY
-count=3
+3.path=fonts/arialuni.ttf
+count=4
 1.set=DEX
-0.path=fonts/arialuni.ttf
+0.path=crashlytics-build.properties
+3.base=C\:\\Users\\PC\\Desktop\\App Mobile Seidor v3.0\\MSSMobileHANA\\aplicationMovil\\build\\intermediates\\assets\\debug
 0.set=ASSET
-0.base=/Users/mark/Desktop/App Movil RM/MSSMobileHANA/aplicationMovil/build/intermediates/assets/debug
+0.base=C\:\\Users\\PC\\Desktop\\App Mobile Seidor v3.0\\MSSMobileHANA\\aplicationMovil\\build\\intermediates\\assets\\debug
 2.baseType=DIRECTORY
-1.path=classes.dex
+1.path=classes2.dex

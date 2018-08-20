@@ -672,13 +672,14 @@ public class Insert {
 					db.execSQL(
 							"INSERT or IGNORE into "
 									+contexto.getResources().getString(R.string.T_ARTICULO)+
-							" values(?,?,?,?,?,?)",
+							" values(?,?,?,?,?,?,?)",
 							new Object[] { 	bean.getCod(),
 											bean.getDesc(),
 											bean.getFabricante(),
 											bean.getGrupoArticulo(),
 											bean.getCodUM(),
-											bean.getUnidadMedidaVenta()});
+											bean.getUnidadMedidaVenta(),
+											bean.getAlmacenDefecto()});
 					
 				}
 				db.setTransactionSuccessful();

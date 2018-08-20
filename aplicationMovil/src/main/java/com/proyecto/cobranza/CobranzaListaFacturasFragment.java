@@ -26,6 +26,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Toast;
 
 import com.proyect.movil.R;
 import com.proyecto.bean.FacturaBean;
@@ -74,10 +75,6 @@ public class CobranzaListaFacturasFragment extends Fragment implements OnItemCli
         contexto = view.getContext();
         lvListaFacturas = (ListView) v.findViewById(R.id.lvListaFacturasSN);
         lvTotalFacturas = (ListView) v.findViewById(R.id.lvTotalFacturas);
-        
-        //Registrar los avisos
-        IntentFilter filter = new IntentFilter("event-set-total-invoice");
-        LocalBroadcastManager.getInstance(contexto).registerReceiver(myLocalBroadcastReceiver, filter);
 
         buildListInvoices();
         llenarListaTotales();
@@ -87,6 +84,27 @@ public class CobranzaListaFacturasFragment extends Fragment implements OnItemCli
 		return view;
 	}
 
+	@Override
+	public void onResume() {
+		super.onResume();
+		try{
+			//Registrar los avisos
+			IntentFilter filter = new IntentFilter("event-set-total-invoice");
+			LocalBroadcastManager.getInstance(contexto).registerReceiver(myLocalBroadcastReceiver, filter);
+		}catch (Exception e){
+			Toast.makeText(contexto, e.getMessage(), Toast.LENGTH_SHORT).show();
+		}
+	}
+
+	@Override
+	public void onPause() {
+		super.onPause();
+		try{
+			LocalBroadcastManager.getInstance(contexto).unregisterReceiver(myLocalBroadcastReceiver);
+		}catch (Exception e){
+			Toast.makeText(contexto, e.getMessage(), Toast.LENGTH_SHORT).show();
+		}
+	}
 
 	private void llenarListaTotales() {
 

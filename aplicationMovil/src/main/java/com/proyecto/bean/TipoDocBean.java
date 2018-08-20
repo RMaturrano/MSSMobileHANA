@@ -26,7 +26,7 @@ public class TipoDocBean {
 		if(tipoPersona.equalsIgnoreCase("TPJ")){
 			data= db.rawQuery("select COD_DOC, DES_DOC from TB_TIPO_DOC where COD_DOC <> 1", null); 
 		}else if(tipoPersona.equalsIgnoreCase("TPN")){
-			data= db.rawQuery("select COD_DOC, DES_DOC from TB_TIPO_DOC where COD_DOC <> 6", null); 
+			data= db.rawQuery("select COD_DOC, DES_DOC from TB_TIPO_DOC", null);
 		}
 			
 		if(data.getCount()>0)

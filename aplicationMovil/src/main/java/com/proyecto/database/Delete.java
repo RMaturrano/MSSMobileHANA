@@ -296,6 +296,7 @@ public class Delete {
 		deleteArticulo();
 		deleteBancos();
 		deleteCalle();
+		deleteMonedas();
 		deleteCantidad();
 		deleteConPago();
 		deleteCuenta();
@@ -318,11 +319,29 @@ public class Delete {
 		deleteEntregas();
 		deleteDevolucion();
 		deleteGrupoSocio();
+		deleteAddresses();
+		deleteImpuestos();
+	}
+
+	private void deleteAddresses(){
+		db.execSQL("delete from TB_PAIS");
+		db.execSQL("delete from TB_DEPARTAMENTO");
+		db.execSQL("delete from TB_PROVINCIA");
+		db.execSQL("delete from TB_DISTRITO");
+		db.execSQL("delete from TB_CALLE");
 	}
 
 	private void deleteIncidencia(){
 		db.execSQL("delete from TB_INCIDENCIA");
 		db.execSQL("delete from "+ contexto.getResources().getString(R.string.TD_ORDEN_VENTA_DETALLE));
+	}
+
+	private void deleteMonedas(){
+		db.execSQL("delete from "+ contexto.getResources().getString(R.string.T_MONEDA));
+	}
+
+	private void deleteImpuestos(){
+		db.execSQL("delete from "+ contexto.getResources().getString(R.string.T_IMPUESTO));
 	}
 
 	private void deleteGrupoSocio(){

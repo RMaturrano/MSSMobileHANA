@@ -210,7 +210,7 @@ public class BuscarArtFragment extends Fragment implements OnItemClickListener {
                 .rawQuery(
                         "select DISTINCT A.Codigo,A.Nombre,A.Fabricante,A.GrupoArticulo, " +
                                 "A.GrupoUnidadMedida,A.UnidadMedidaVenta," +
-                                "GUM.Nombre,GA.NOMBRE as Grupo " +
+                                "GUM.Nombre,GA.NOMBRE as Grupo, A.AlmacenDefecto " +
                                 "from TB_ARTICULO A JOIN TB_GRUPO_UNIDAD_MEDIDA GUM " +
                                 "ON A.GrupoUnidadMedida = GUM.Codigo " +
                                 " JOIN TB_GRUPO_ARTICULO GA ON A.GrupoArticulo = GA.CODIGO " +
@@ -235,12 +235,13 @@ public class BuscarArtFragment extends Fragment implements OnItemClickListener {
 
 
         if (rs.getCount() > 0) {
-            Toast.makeText(contexto.getApplicationContext(), "Cargando " + rs.getCount() + "datos. Por favor espere..", Toast.LENGTH_SHORT).show();
+            Toast.makeText(contexto.getApplicationContext(), "Cargando " + rs.getCount() + " datos. Por favor espere..", Toast.LENGTH_SHORT).show();
             while (rs.moveToNext()) {
 
                 customListObjet = new FormatCustomListView();
                 customListObjet.setIcon(icon);
                 customListObjet.setGrupo(rs.getString(rs.getColumnIndex("Grupo")));
+                customListObjet.setAlmacenDefecto(rs.getString(rs.getColumnIndex("AlmacenDefecto")));
                 if (!rs.getString(0).equals(""))
                     customListObjet.setTitulo(rs.getString(0));
                 else
@@ -401,6 +402,7 @@ public class BuscarArtFragment extends Fragment implements OnItemClickListener {
             arguments = new Bundle();
             arguments.putString("desc", item.element.getData());
             arguments.putString("cod", item.element.getTitulo());
+            arguments.putString("almacen", item.element.getAlmacenDefecto());
             arguments.putString("extras", item.element.getExtra());
             arguments.putInt("position", position);
 

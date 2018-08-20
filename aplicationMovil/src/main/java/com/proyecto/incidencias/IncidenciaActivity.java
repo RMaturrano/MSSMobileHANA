@@ -102,6 +102,7 @@ public class IncidenciaActivity extends AppCompatActivity implements IRVAdapterA
     public final static String KEY_PAR_ORIGEN = "origen";
     public final static String KEY_PAR_CLIENTE = "cliente";
     public final static String KEY_PAR_FACTURA = "factura";
+    public final static String KEY_PAR_REFERENCIA = "referencia";
 
     public final static String ORDEN = "Orden venta";
     public final static String ENTREGA = "Entrega mercancia";
@@ -132,7 +133,7 @@ public class IncidenciaActivity extends AppCompatActivity implements IRVAdapterA
     private DireccionBuscarBean mDireccionSeleccionada;
     private ContactoBuscarBean mContactoSeleccionado;
     private MotivoBean mMotivoSeleccionado;
-    private String mClaveMovil, mCodigoEmpleado, mNombreEmpleado, mIdDispositivo;
+    private String mClaveMovil, mCodigoEmpleado, mNombreEmpleado, mIdDispositivo, mReferencia, mClaveEntrega;
 
     private final String ESTADO_CONECTADO = "Conectado";
     private final String ESTADO_DESCONECTADO = "Sin conexion";
@@ -222,6 +223,10 @@ public class IncidenciaActivity extends AppCompatActivity implements IRVAdapterA
                     case ENTREGA:
                         if(getIntent().getExtras().containsKey(KEY_PAR_CLIENTE))
                             mClienteSeleccionado = new ClienteDAO().buscarPorCodigo(getIntent().getExtras().getString(KEY_PAR_CLIENTE));
+                        if(getIntent().getExtras().containsKey(KEY_PAR_REFERENCIA))
+                            mReferencia = getIntent().getExtras().getString(KEY_PAR_REFERENCIA);
+                        if(getIntent().getExtras().containsKey(KEY_PAR_FACTURA))
+                            mClaveEntrega = getIntent().getExtras().getString(KEY_PAR_FACTURA);
                         break;
                     case FACTURA:
                         if(getIntent().getExtras().containsKey(KEY_PAR_FACTURA)) {
@@ -255,68 +260,83 @@ public class IncidenciaActivity extends AppCompatActivity implements IRVAdapterA
 
     private void inicializarForm(){
 
-        String fullDate = new SimpleDateFormat("yyyyMMddHHmmss", Locale.ENGLISH).format(new Date());
-        mClaveMovil = mIdDispositivo + "-" + fullDate + "-" + (CorrelativoDAO.obtenerUltimoNumero("INC"));
+        try{
+            String fullDate = new SimpleDateFormat("yyyyMMddHHmmss", Locale.ENGLISH).format(new Date());
+            mClaveMovil = mIdDispositivo + "-" + fullDate + "-" + (CorrelativoDAO.obtenerUltimoNumero("INC"));
 
-        mBtnTomarFoto.setVisibility(View.VISIBLE);
-        mLstItems = new ArrayList<>();
-        mLstItems.add(new ItemAddIncidencia(TITULO_CLAVE_MOVIL, mClaveMovil, true));
-        mLstItems.add(new ItemAddIncidencia(TITULO_ORIGEN, obtenerOrigenIncidencia(), true));
+            mBtnTomarFoto.setVisibility(View.VISIBLE);
+            mLstItems = new ArrayList<>();
+            mLstItems.add(new ItemAddIncidencia(TITULO_CLAVE_MOVIL, mClaveMovil, true));
+            mLstItems.add(new ItemAddIncidencia(TITULO_ORIGEN, obtenerOrigenIncidencia(), true));
 
-        if(mOrigenIncidencia.equals(ORDEN) || mOrigenIncidencia.equals(ENTREGA)){
-            mLstItems.add(new ItemAddIncidencia(TITULO_CODIGO_CLIENTE, mClienteSeleccionado != null? mClienteSeleccionado.getCodigo() : "", true));
-            mLstItems.add(new ItemAddIncidencia(TITULO_NOMBRE_CLIENTE, mClienteSeleccionado != null? mClienteSeleccionado.getNombre() : "", false));
-            mLstItems.add(new ItemAddIncidencia(TITULO_CODIGO_CONTACTO, mContactoSeleccionado != null? String.valueOf(mContactoSeleccionado.getCodigo()) : "", true));
-            mLstItems.add(new ItemAddIncidencia(TITULO_PERSONA_CONTACTO, mContactoSeleccionado != null? mContactoSeleccionado.getNombre() : "", false));
-            mLstItems.add(new ItemAddIncidencia(TITULO_COD_DIRECCION, mDireccionSeleccionada != null? mDireccionSeleccionada.getCodigo() : "", true));
-            mLstItems.add(new ItemAddIncidencia(TITULO_DET_DIRECCION, mDireccionSeleccionada != null? mDireccionSeleccionada.getCalle() : "", false));
-            mLstItems.add(new ItemAddIncidencia(TITULO_MOTIVO, mEdtMotivo.getText() != null? mEdtMotivo.getText().toString() : "", true));
-            mLstItems.add(new ItemAddIncidencia(TITULO_LATITUD, mCurrentLocation != null? String.valueOf(mCurrentLocation.getLatitude()) : "", false));
-            mLstItems.add(new ItemAddIncidencia(TITULO_LONGITUD, mCurrentLocation != null? String.valueOf(mCurrentLocation.getLongitude()) : "", false));
+            if(mOrigenIncidencia.equals(ORDEN) || mOrigenIncidencia.equals(ENTREGA)){
+                mLstItems.add(new ItemAddIncidencia(TITULO_CODIGO_CLIENTE, mClienteSeleccionado != null? mClienteSeleccionado.getCodigo() : "", true));
+                mLstItems.add(new ItemAddIncidencia(TITULO_NOMBRE_CLIENTE, mClienteSeleccionado != null? mClienteSeleccionado.getNombre() : "", false));
+                mLstItems.add(new ItemAddIncidencia(TITULO_CODIGO_CONTACTO, mContactoSeleccionado != null? String.valueOf(mContactoSeleccionado.getCodigo()) : "", true));
+                mLstItems.add(new ItemAddIncidencia(TITULO_PERSONA_CONTACTO, mContactoSeleccionado != null? mContactoSeleccionado.getNombre() : "", false));
+                mLstItems.add(new ItemAddIncidencia(TITULO_COD_DIRECCION, mDireccionSeleccionada != null? mDireccionSeleccionada.getCodigo() : "", true));
+                mLstItems.add(new ItemAddIncidencia(TITULO_DET_DIRECCION, mDireccionSeleccionada != null? mDireccionSeleccionada.getCalle() : "", false));
+                mLstItems.add(new ItemAddIncidencia(TITULO_MOTIVO, mEdtMotivo.getText() != null? mEdtMotivo.getText().toString() : "", true));
+                mLstItems.add(new ItemAddIncidencia(TITULO_LATITUD, mCurrentLocation != null? String.valueOf(mCurrentLocation.getLatitude()) : "", false));
+                mLstItems.add(new ItemAddIncidencia(TITULO_LONGITUD, mCurrentLocation != null? String.valueOf(mCurrentLocation.getLongitude()) : "", false));
+            }
+
+            if(mOrigenIncidencia.equals(FACTURA) || mOrigenIncidencia.equals(ENTREGA)){
+                String serie ="", correlativo = "";
+                if(mReferencia != null && !mReferencia.equals("")){
+                    String[] ref = mReferencia.split("-");
+                    if(ref != null && ref.length > 1){
+                        serie = ref[0];
+                        correlativo = ref[1];
+                    }
+                }else if(mFacturaSeleccionada != null){
+                    serie = mFacturaSeleccionada.getSerie();
+                    correlativo = String.valueOf(mFacturaSeleccionada.getCorrelativo());
+                }
+
+                mLstItems.add(new ItemAddIncidencia(TITULO_SERIE_FACTURA, serie, true));
+                mLstItems.add(new ItemAddIncidencia(TITULO_CORR_FACTURA, correlativo, true));
+            }
+
+            if(mOrigenIncidencia.equals(ENTREGA)){
+                mLstItems.add(new ItemAddIncidencia(TITULO_TIPO_INCIDENCIA, mEdtTipoIncidencia.getText() != null? mEdtTipoIncidencia.getText().toString() : "", true));
+            }else if(mOrigenIncidencia.equals(FACTURA)){
+                mLstItems.add(new ItemAddIncidencia(TITULO_FECHA_PAGO, mEdtFechaPago.getText() != null? mEdtFechaPago.getText().toString() : "", true));
+            }
+
+            mLstItems.add(new ItemAddIncidencia(TITULO_COD_VENDEDOR, mNombreEmpleado, false));
+            mLstItems.add(new ItemAddIncidencia(TITULO_COMENTARIOS, mEdtComentarios.getText() != null? mEdtComentarios.getText().toString() : "", true));
+            mLstItems.add(new ItemAddIncidencia(TITULO_FECHA_CREACION, obtenerFechaHora(PATTERN_FECHA), false));
+            mLstItems.add(new ItemAddIncidencia(TITULO_HORA_CREACION, obtenerFechaHora(PATTERN_HORA), false));
+            mLstItems.add(new ItemAddIncidencia(TITULO_ESTADO_CONEXION, comprobarConexion(), false));
+
+            mRVAdapterAddIncidencia.clearAndAddAll(mLstItems);
+            mLstMotivos.clear();
+
+            String valOrden = "N", valEntrega= "N", valFactura = "N";
+            switch (mOrigenIncidencia){
+                case ORDEN:
+                    valOrden = "Y";
+                    valEntrega = "N";
+                    valFactura = "N";
+                    break;
+                case ENTREGA:
+                    valOrden = "N";
+                    valEntrega = "Y";
+                    valFactura = "N";
+                    break;
+                case FACTURA:
+                    valOrden = "N";
+                    valEntrega = "N";
+                    valFactura = "Y";
+                    mBtnTomarFoto.setVisibility(View.GONE);
+                    break;
+            }
+
+            mLstMotivos.addAll(new MotivoDAO().listar(valOrden, valEntrega, valFactura));
+        }catch (Exception e){
+            showMessage("inicializarForm() > " + e.getMessage());
         }
-
-        if(mOrigenIncidencia.equals(FACTURA) || mOrigenIncidencia.equals(ENTREGA)){
-            mLstItems.add(new ItemAddIncidencia(TITULO_SERIE_FACTURA, mFacturaSeleccionada != null? mFacturaSeleccionada.getSerie() : "", true));
-            mLstItems.add(new ItemAddIncidencia(TITULO_CORR_FACTURA, mFacturaSeleccionada != null?
-                    (mFacturaSeleccionada.getCorrelativo() != 0 ? String.valueOf(mFacturaSeleccionada.getCorrelativo()) : "") : "", true));
-        }
-
-        if(mOrigenIncidencia.equals(ENTREGA)){
-            mLstItems.add(new ItemAddIncidencia(TITULO_TIPO_INCIDENCIA, mEdtTipoIncidencia.getText() != null? mEdtTipoIncidencia.getText().toString() : "", true));
-        }else if(mOrigenIncidencia.equals(FACTURA)){
-            mLstItems.add(new ItemAddIncidencia(TITULO_FECHA_PAGO, mEdtFechaPago.getText() != null? mEdtFechaPago.getText().toString() : "", true));
-        }
-
-        mLstItems.add(new ItemAddIncidencia(TITULO_COD_VENDEDOR, mNombreEmpleado, false));
-        mLstItems.add(new ItemAddIncidencia(TITULO_COMENTARIOS, mEdtComentarios.getText() != null? mEdtComentarios.getText().toString() : "", true));
-        mLstItems.add(new ItemAddIncidencia(TITULO_FECHA_CREACION, obtenerFechaHora(PATTERN_FECHA), false));
-        mLstItems.add(new ItemAddIncidencia(TITULO_HORA_CREACION, obtenerFechaHora(PATTERN_HORA), false));
-        mLstItems.add(new ItemAddIncidencia(TITULO_ESTADO_CONEXION, comprobarConexion(), false));
-
-        mRVAdapterAddIncidencia.clearAndAddAll(mLstItems);
-        mLstMotivos.clear();
-
-        String valOrden = "N", valEntrega= "N", valFactura = "N";
-        switch (mOrigenIncidencia){
-            case ORDEN:
-                valOrden = "Y";
-                valEntrega = "N";
-                valFactura = "N";
-                break;
-            case ENTREGA:
-                valOrden = "N";
-                valEntrega = "Y";
-                valFactura = "N";
-                break;
-            case FACTURA:
-                valOrden = "N";
-                valEntrega = "N";
-                valFactura = "Y";
-                mBtnTomarFoto.setVisibility(View.GONE);
-                break;
-        }
-
-        mLstMotivos.addAll(new MotivoDAO().listar(valOrden, valEntrega, valFactura));
     }
 
     @Override
@@ -904,7 +924,7 @@ public class IncidenciaActivity extends AppCompatActivity implements IRVAdapterA
                 break;
             case ENTREGA:
                 if(validarDatosBasicos()){
-                    if(mFacturaSeleccionada == null){
+                    if(mFacturaSeleccionada == null && mReferencia == null){
                         showMessage("Debe seleccionar una factura.");
                         result = false;
                     }else if(mEdtTipoIncidencia.getText() == null || mEdtTipoIncidencia.getText().toString().equals("")){
@@ -995,7 +1015,12 @@ public class IncidenciaActivity extends AppCompatActivity implements IRVAdapterA
             incidencia.setHoraCreacion(mRVAdapterAddIncidencia.findItem(TITULO_HORA_CREACION).getContenido());
             incidencia.setModoOffline(mRVAdapterAddIncidencia.findItem(TITULO_ESTADO_CONEXION).getContenido().equals(ESTADO_CONECTADO)?
                     "N": "Y");
-            incidencia.setClaveFactura(mFacturaSeleccionada != null ? mFacturaSeleccionada.getClave() : null);
+
+            if(mClaveEntrega == null || mClaveEntrega.equals(""))
+                incidencia.setClaveFactura(mFacturaSeleccionada != null ? mFacturaSeleccionada.getClave() : null);
+            else
+                incidencia.setClaveFactura(mClaveEntrega);
+
             incidencia.setSerieFactura(mRVAdapterAddIncidencia.findItem(TITULO_SERIE_FACTURA).getContenido());
             incidencia.setCorrelativoFactura(mRVAdapterAddIncidencia.findItem(TITULO_CORR_FACTURA).getContenido().equals("") ?
                     null : Integer.parseInt(mRVAdapterAddIncidencia.findItem(TITULO_CORR_FACTURA).getContenido()));

@@ -8,6 +8,7 @@ import java.util.Date;
 import java.util.Dictionary;
 import java.util.Enumeration;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -74,6 +75,7 @@ import com.proyecto.bean.OrdenVentaBean;
 import com.proyecto.bean.OrdenVentaDetalleBean;
 import com.proyecto.conectividad.Connectivity;
 import com.proyecto.dao.ClienteDAO;
+import com.proyecto.dao.ImpuestoDAO;
 import com.proyecto.database.DataBaseHelper;
 import com.proyecto.database.Insert;
 import com.proyecto.database.Select;
@@ -206,20 +208,21 @@ public class OrdenVentaFragment extends Fragment {
 	private BroadcastReceiver myLocalBroadcastReceiver = new BroadcastReceiver() {
 		  @Override
 		  public void onReceive(Context context, Intent intent) {
-		    
-	        Bundle bundle = intent.getExtras();
-	        
-	        if (bundle != null) {
-	        
-			      if(intent.getAction().equals("event-send-bp-to-ordr")){
-		
-				        String cod = bundle.getString("cod");
-				        String name = bundle.getString("name");
-				        String[] extras = bundle.getString("extras").toString().split(",");
 
-				        if(!extras[0].equals("") && !extras[0].equalsIgnoreCase("anytype{}")){
-				        	codigoListaPrecioSN = extras[0];
-				        	for (ListaPrecioBean bean : listaPrecios) {
+		  	try{
+				Bundle bundle = intent.getExtras();
+
+				if (bundle != null) {
+
+					if(intent.getAction().equals("event-send-bp-to-ordr")){
+
+						String cod = bundle.getString("cod");
+						String name = bundle.getString("name");
+						String[] extras = bundle.getString("extras").toString().split(",");
+
+						if(!extras[0].equals("") && !extras[0].equalsIgnoreCase("anytype{}")){
+							codigoListaPrecioSN = extras[0];
+							for (ListaPrecioBean bean : listaPrecios) {
 								if(bean.getCodigo().equals(codigoListaPrecioSN)){
 									listaPrecioSel = bean;
 									break;
@@ -231,117 +234,115 @@ public class OrdenVentaFragment extends Fragment {
 			            	fullObject.setData(listaPrecioSel.getNombre());
 			            	searchResults4.set(2, fullObject);
 			            	lvFinanzas.invalidateViews();	*/
-				        }else{
-				        	listaPrecioSel = null;
+						}else{
+							listaPrecioSel = null;
 				        /*	Object o = lvFinanzas.getItemAtPosition(2);
 			        		fullObject = new FormatCustomListView();
 			            	fullObject = (FormatCustomListView)o;
 			            	fullObject.setData("");
 			            	searchResults4.set(2, fullObject);	*/
-			            	lvFinanzas.invalidateViews();
-				        }
-				        	
-				        	
-				        if(!extras[1].equals("") && !extras[1].equalsIgnoreCase("anytype{}")){
-				        	codigoCondicionPagoSN = extras[1];
-					        for (CondicionPagoBean bean : listaCondicionPago) {
+							lvFinanzas.invalidateViews();
+						}
+
+
+						if(!extras[1].equals("") && !extras[1].equalsIgnoreCase("anytype{}")){
+							codigoCondicionPagoSN = extras[1];
+							for (CondicionPagoBean bean : listaCondicionPago) {
 								if(bean.getNumeroCondicion().equals(codigoCondicionPagoSN)){
 									condPagoSel = bean;
 									condPagoInicial = bean;
 									break;
-								}	
+								}
 							}
-					        Object o = lvFinanzas.getItemAtPosition(0);
-			        		fullObject = new FormatCustomListView();
-			            	fullObject = (FormatCustomListView)o;
-			            	fullObject.setData(condPagoSel.getDescripcionCondicion());
-			            	if(!condPagoSel.getDescripcionCondicion().equalsIgnoreCase("CONTADO")){
-			            		fullObject.setIcon(iconId);
-			            	}
-			            	searchResults4.set(0, fullObject);
-					        lvFinanzas.invalidateViews();
-				        }else{
-				        	condPagoSel = null;
-				        	Object o = lvFinanzas.getItemAtPosition(0);
-			        		fullObject = new FormatCustomListView();
-			            	fullObject = (FormatCustomListView)o;
-			            	fullObject.setData("");
-			            	searchResults4.set(0, fullObject);
-					        lvFinanzas.invalidateViews();
-				        }
-				        	
-				        if(extras.length > 2 && !extras[2].equals("") && !extras[2].equalsIgnoreCase("anytype{}")){
-				        	codigoIndicadorSN = extras[2];
-				        	for (IndicadorBean bean : listaIndicadores) {
+							Object o = lvFinanzas.getItemAtPosition(0);
+							fullObject = new FormatCustomListView();
+							fullObject = (FormatCustomListView)o;
+							fullObject.setData(condPagoSel.getDescripcionCondicion());
+							if(!condPagoSel.getDescripcionCondicion().equalsIgnoreCase("CONTADO")){
+								fullObject.setIcon(iconId);
+							}
+							searchResults4.set(0, fullObject);
+							lvFinanzas.invalidateViews();
+						}else{
+							condPagoSel = null;
+							Object o = lvFinanzas.getItemAtPosition(0);
+							fullObject = new FormatCustomListView();
+							fullObject = (FormatCustomListView)o;
+							fullObject.setData("");
+							searchResults4.set(0, fullObject);
+							lvFinanzas.invalidateViews();
+						}
+
+						if(extras.length > 2 && !extras[2].equals("") && !extras[2].equalsIgnoreCase("anytype{}")){
+							codigoIndicadorSN = extras[2];
+							for (IndicadorBean bean : listaIndicadores) {
 								if(bean.getCodigo().equals(codigoIndicadorSN)){
 									indicadorSel = bean;
 									break;
 								}
 							}
-				        	Object o = lvFinanzas.getItemAtPosition(1);
-			        		fullObject = new FormatCustomListView();
-			            	fullObject = (FormatCustomListView)o;
-			            	fullObject.setData(indicadorSel.getNombre());
-			            	searchResults4.set(1, fullObject);	
-			            	lvFinanzas.invalidateViews();
-				        }else{
-				        	indicadorSel = null;
-				        	Object o = lvFinanzas.getItemAtPosition(1);
-			        		fullObject = new FormatCustomListView();
-			            	fullObject = (FormatCustomListView)o;
-			            	fullObject.setData("");
-			            	searchResults4.set(1, fullObject);	
-			            	lvFinanzas.invalidateViews();
-				        }
-				        
-				        //Direccion fiscal
-					  if(extras.length >3) {
-						  if (!extras[3].equals("") && !extras[3].equalsIgnoreCase("anytype{}")) {
+							Object o = lvFinanzas.getItemAtPosition(1);
+							fullObject = new FormatCustomListView();
+							fullObject = (FormatCustomListView)o;
+							fullObject.setData(indicadorSel.getNombre());
+							searchResults4.set(1, fullObject);
+							lvFinanzas.invalidateViews();
+						}else{
+							indicadorSel = null;
+							Object o = lvFinanzas.getItemAtPosition(1);
+							fullObject = new FormatCustomListView();
+							fullObject = (FormatCustomListView)o;
+							fullObject.setData("");
+							searchResults4.set(1, fullObject);
+							lvFinanzas.invalidateViews();
+						}
+
+						//Direccion fiscal
+						if(extras.length >3) {
+							if (!extras[3].equals("") && !extras[3].equalsIgnoreCase("anytype{}")) {
 
 
 
-						  } else {
-							  Object o = lvDirecciones.getItemAtPosition(0);
-							  fullObject = new FormatCustomListView();
-							  fullObject = (FormatCustomListView) o;
-							  fullObject.setData("");
-							  searchResults2.set(0, fullObject);
-							  lvDirecciones.invalidateViews();
-						  }
-					  }
-				        	
-				        	//Capturar el objeto (que refleja la selecci�n estado doc)
-							Object o = lvPrincipal.getItemAtPosition(1);
-			        		fullObject = new FormatCustomListView();
-			            	fullObject = (FormatCustomListView)o;
-			            	fullObject.setData(cod);
-							searchResults.set(1, fullObject);
-							
-							Object o2 = lvPrincipal.getItemAtPosition(2);
-			        		fullObject = new FormatCustomListView();
-			            	fullObject = (FormatCustomListView)o2;
-			            	fullObject.setData(name);
-							searchResults.set(2, fullObject);
-							
-//						
-							llenarListaContenido();
-							lvPrincipal.invalidateViews();
-		        	
-	        	
-		        }else if(intent.getAction().equals("event-send-lines-to-order")){
-		        
-			        	//Capturar el objeto
+							} else {
+								Object o = lvDirecciones.getItemAtPosition(0);
+								fullObject = new FormatCustomListView();
+								fullObject = (FormatCustomListView) o;
+								fullObject.setData("");
+								searchResults2.set(0, fullObject);
+								lvDirecciones.invalidateViews();
+							}
+						}
+
+						//Capturar el objeto (que refleja la selecci�n estado doc)
+						Object o = lvPrincipal.getItemAtPosition(1);
+						fullObject = new FormatCustomListView();
+						fullObject = (FormatCustomListView)o;
+						fullObject.setData(cod);
+						searchResults.set(1, fullObject);
+
+						Object o2 = lvPrincipal.getItemAtPosition(2);
+						fullObject = new FormatCustomListView();
+						fullObject = (FormatCustomListView)o2;
+						fullObject.setData(name);
+						searchResults.set(2, fullObject);
+//
+						llenarListaContenido();
+						lvPrincipal.invalidateViews();
+					}else if(intent.getAction().equals("event-send-lines-to-order")){
+
+						//Capturar el objeto
 						Object o = lvContenido.getItemAtPosition(0);
-						FormatCustomListView fullObject1 = new FormatCustomListView();
-						fullObject1 = (FormatCustomListView)o;
+						FormatCustomListView fullObject1 = (FormatCustomListView)o;
 						fullObject1.setData(listaDetalleArticulos.size() + " articulos");
 						searchResults1.set(0, fullObject1);
-						
+
 						lvContenido.invalidateViews();
 						llenarListaTotales();
-			        
-		        }
-		    }
+					}
+				}
+			}catch (Exception e){
+		  		showToast(e.getMessage());
+			}
 		 }
 		  
 		  
@@ -355,8 +356,6 @@ public class OrdenVentaFragment extends Fragment {
 	    clearLists();
 	    v = view;
         contexto = view.getContext();
-        
-        
         boolean val = cargarListas();
 		
 		if(!val){
@@ -372,13 +371,7 @@ public class OrdenVentaFragment extends Fragment {
 		nombreEmpleado = pref.getString(Variables.NOMBRE_EMPLEADO, "");
 		idDispositivo = Secure.getString(getActivity().getContentResolver(),
 				Secure.ANDROID_ID);
-		
-        //registrar los mensajes que se van a recibir DESDE OTROS FRAGMENTS
-		IntentFilter filter = new IntentFilter("event-send-lines-to-order");
-        filter.addAction("event-send-bp-to-ordr");
-        LocalBroadcastManager.getInstance(contexto).registerReceiver(myLocalBroadcastReceiver, filter);
-        
-        
+
         //LLENAR EL LISTADO DE DATOS QUE COMPONEN LA ORDEN DE VENTA
         llenarListaOrdTit();
         llenarListaDirecciones();
@@ -464,6 +457,31 @@ public class OrdenVentaFragment extends Fragment {
 
 		}catch (Exception e){
 			showToast("onStart() > " + e.getMessage());
+		}
+	}
+
+	@Override
+	public void onResume() {
+		super.onResume();
+
+		try{
+			//registrar los mensajes que se van a recibir DESDE OTROS FRAGMENTS
+			IntentFilter filter = new IntentFilter("event-send-lines-to-order");
+			filter.addAction("event-send-bp-to-ordr");
+			LocalBroadcastManager.getInstance(contexto).registerReceiver(myLocalBroadcastReceiver, filter);
+		}catch (Exception e){
+			showToast(e.getMessage());
+		}
+	}
+
+	@Override
+	public void onPause() {
+		super.onPause();
+
+		try{
+			LocalBroadcastManager.getInstance(contexto).unregisterReceiver(myLocalBroadcastReceiver);
+		}catch (Exception e){
+			showToast(e.getMessage());
 		}
 	}
 
@@ -681,7 +699,7 @@ public class OrdenVentaFragment extends Fragment {
 		
 		FormatCustomListView sr = new FormatCustomListView();
 		sr.setTitulo("Condicion pago");
-		sr.setIcon(iconId);
+		//sr.setIcon(iconId);
 		searchResults4.add(sr);
     	
     	sr = new FormatCustomListView();
@@ -967,11 +985,14 @@ public class OrdenVentaFragment extends Fragment {
 				if(mClienteSeleccionado != null){
 					if(mClienteSeleccionado.getDirecciones().size() > 0) {
 
+						final List<DireccionBuscarBean> arrayChoose = new ArrayList<>();
 						ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(v.getContext(),
 								android.R.layout.select_dialog_singlechoice);
 						for (DireccionBuscarBean d: mClienteSeleccionado.getDirecciones()) {
-							if(d.getTipo() != null && d.getTipo().equals(Constantes.TIPO_DIRECCION_FISCAL))
+							if(d.getTipo() != null && d.getTipo().equals(Constantes.TIPO_DIRECCION_FISCAL)) {
 								arrayAdapter.add(d.getCalle());
+								arrayChoose.add(d);
+							}
 						}
 
 						final AlertDialog.Builder alertDialog = new AlertDialog.Builder(v.getContext());
@@ -980,7 +1001,7 @@ public class OrdenVentaFragment extends Fragment {
 						alertDialog.setSingleChoiceItems(arrayAdapter, -1, new DialogInterface.OnClickListener() {
 							@Override
 							public void onClick(DialogInterface dialog, int which) {
-								mDireccionFiscalTempSeleccionada = mClienteSeleccionado.getDirecciones().get(which);
+								mDireccionFiscalTempSeleccionada = arrayChoose.get(which);
 							}
 						});
 						alertDialog.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
@@ -1016,11 +1037,14 @@ public class OrdenVentaFragment extends Fragment {
 				if(mClienteSeleccionado != null){
 					if(mClienteSeleccionado.getDirecciones().size() > 0) {
 
-						ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(v.getContext(),
+						final List<DireccionBuscarBean> arrayChoose = new ArrayList<>();
+						final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(v.getContext(),
 								android.R.layout.select_dialog_singlechoice);
 						for (DireccionBuscarBean d: mClienteSeleccionado.getDirecciones()) {
-							if(d.getTipo() != null && d.getTipo().equals(Constantes.TIPO_DIRECCION_ENTREGA))
+							if(d.getTipo() != null && d.getTipo().equals(Constantes.TIPO_DIRECCION_ENTREGA)){
 								arrayAdapter.add(d.getCalle());
+								arrayChoose.add(d);
+							}
 						}
 
 						final AlertDialog.Builder alertDialog = new AlertDialog.Builder(v.getContext());
@@ -1029,7 +1053,7 @@ public class OrdenVentaFragment extends Fragment {
 						alertDialog.setSingleChoiceItems(arrayAdapter, -1, new DialogInterface.OnClickListener() {
 							@Override
 							public void onClick(DialogInterface dialog, int which) {
-								mDireccionEntregaTempSeleccionada = mClienteSeleccionado.getDirecciones().get(which);
+								mDireccionEntregaTempSeleccionada = arrayChoose.get(which);
 							}
 						});
 						alertDialog.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
@@ -1109,7 +1133,7 @@ public class OrdenVentaFragment extends Fragment {
 	private void construirAlertFinanzas(int position){
 		
 		if(position == 0){
-			
+			/*
 			if(!condPagoInicial.getDescripcionCondicion().equalsIgnoreCase("CONTADO")){
 				posicion = position;
 				//Capturar el objeto
@@ -1182,7 +1206,7 @@ public class OrdenVentaFragment extends Fragment {
 
 	    		alert.show();
 			}
-			
+			*/
 		}else if(position == 1){
 			
 //			posicion = position;
@@ -1628,10 +1652,14 @@ public class OrdenVentaFragment extends Fragment {
 			articulo.setPre(line.getPrecio());
 			articulo.setDescuento(line.getDescuento());
 			articulo.setCodigoImpuesto(line.getCodImp());
-			if(!line.getCodImp().equals("IGV_EXO"))
-				articulo.setImpuesto(line.getImp());
-			else
+
+			double tasaImp = new ImpuestoDAO().obtenerTasa(line.getCodImp());
+
+			if(tasaImp == 0)
 				articulo.setImpuesto(0);
+			else
+				articulo.setImpuesto(line.getImp());
+
 			articulo.setUtilIcon(iconId);
 			articulo.setUtilLinea(line.getLinea());
 			listaDetalleArticulos.add(articulo);

@@ -28,6 +28,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.ScrollView;
 import android.widget.Toast;
 
 import com.proyect.movil.R;
@@ -165,11 +166,7 @@ public class ListaArtFragment extends Fragment implements OnItemClickListener{
         
 	    v = view;
         contexto = view.getContext();
-        
-        //registro DE MENSAJE
-        LocalBroadcastManager.getInstance(contexto).registerReceiver(myLocalBroadcastReceiver,
-			      new IntentFilter("event-send-art-to-list"));
-        
+
 		lvPrincipal = (ListView) v.findViewById(R.id.lvListaArticuloPedido);
 		
 		buildListCalculos();
@@ -183,21 +180,44 @@ public class ListaArtFragment extends Fragment implements OnItemClickListener{
         
 		});
 		//
-        
         if(OrdenVentaFragment.listaDetalleArticulos.size()>0){
 
         	listaDetalle = OrdenVentaFragment.listaDetalleArticulos;        	
         	dysplayListArticles();
         	
         }
-        
         //
 		
         lvPrincipal.setOnItemClickListener(this);
         setHasOptionsMenu(true);
 		return view;
 	}
-	
+
+	@Override
+	public void onResume() {
+		super.onResume();
+
+		try{
+			//registro DE MENSAJE
+			LocalBroadcastManager.getInstance(contexto).registerReceiver(myLocalBroadcastReceiver,
+					new IntentFilter("event-send-art-to-list"));
+		}catch (Exception e){
+
+		}
+	}
+
+	@Override
+	public void onPause() {
+		super.onPause();
+
+		try{
+			//registro DE MENSAJE
+			LocalBroadcastManager.getInstance(contexto).unregisterReceiver(myLocalBroadcastReceiver);
+		}catch (Exception e){
+
+		}
+	}
+
 	private void construirAlert(int pos){
 		
 		if(pos == 1){
@@ -423,18 +443,22 @@ public class ListaArtFragment extends Fragment implements OnItemClickListener{
             		rg.addView(rbt);
             		c++;
 				}
-        	
-        	
-	        	LayoutParams lp = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT, Gravity.CENTER);        	
+
+
+	        	LayoutParams lp = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT, Gravity.CENTER);
+				ScrollView scrollView = new ScrollView(contexto);
+				scrollView.setLayoutParams(lp);
 	        	rg.setPadding(15, 0, 0, 0);
 	        	rg.setLayoutParams(lp);
 	        	rg.setGravity(Gravity.LEFT);
-	        	
+	        	rg.setVerticalScrollBarEnabled(true);
+	        	scrollView.addView(rg);
+
 				AlertDialog.Builder alert = new AlertDialog.Builder(contexto);
 	    		alert.setTitle("Seleccione artículo");
 	    		
 	    		//AGREGAR EL VIEW AL POP UP
-	    		alert.setView(rg);
+	    		alert.setView(scrollView);
 	    		
 	    		alert.setPositiveButton("Eliminar", new DialogInterface.OnClickListener() {
 	    		public void onClick(DialogInterface dialog, int whichButton) {
@@ -510,11 +534,17 @@ public class ListaArtFragment extends Fragment implements OnItemClickListener{
 
 
 	@Override
+	public void onStop() {
+		super.onStop();
+	}
+
+	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position,
 			long id) {
         
         MainVentas.codigoArticulo= OrdenVentaFragment.listaDetalleArticulos.get(position).getCod();
-		
+		MainVentas.position = position;
+
 		Fragment fragment = new ArticuloOrdVenta();
 		FragmentManager manager = getFragmentManager();
     	FragmentTransaction transaction = manager.beginTransaction();

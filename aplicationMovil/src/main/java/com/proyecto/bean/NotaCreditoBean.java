@@ -45,6 +45,11 @@ public class NotaCreditoBean implements Parcelable {
     private String  Saldo;
     private String claveMovil;
     private String estadoMovil;
+    private String latitud;
+    private String longitud;
+    private String fechaCreacion;
+    private String horaCreacion;
+    private String modoOffline;
 
     private List<NotaCreditoDetalleBean> Lineas;
 
@@ -314,6 +319,117 @@ public class NotaCreditoBean implements Parcelable {
         Lineas = lineas;
     }
 
+    public String getLatitud() {
+        return latitud;
+    }
+
+    public void setLatitud(String latitud) {
+        this.latitud = latitud;
+    }
+
+    public String getLongitud() {
+        return longitud;
+    }
+
+    public void setLongitud(String longitud) {
+        this.longitud = longitud;
+    }
+
+    public String getFechaCreacion() {
+        return fechaCreacion;
+    }
+
+    public void setFechaCreacion(String fechaCreacion) {
+        this.fechaCreacion = fechaCreacion;
+    }
+
+    public String getHoraCreacion() {
+        return horaCreacion;
+    }
+
+    public void setHoraCreacion(String horaCreacion) {
+        this.horaCreacion = horaCreacion;
+    }
+
+    public String getModoOffline() {
+        return modoOffline;
+    }
+
+    public void setModoOffline(String modoOffline) {
+        this.modoOffline = modoOffline;
+    }
+
+    public static JSONObject transformNotaCreditoToJSON(NotaCreditoBean bean, String sociedad){
+        JSONObject object = new JSONObject();
+
+        try{
+            object.put("ClaveMovil", bean.getClaveMovil());
+            object.put("ClaveBase", bean.getClaveBase());
+            object.put("SocioNegocio", bean.getSocioNegocio());
+            object.put("ListaPrecio", bean.getListaPrecio());
+            object.put("CondicionPago", bean.getCondicionPago());
+            object.put("Indicador", bean.getIndicador());
+            object.put("Referencia", bean.getReferencia());
+            object.put("FechaContable", StringDateCast.castDatetoDateWithoutSlash(bean.getFechaContable()));
+            object.put("FechaVencimiento",StringDateCast.castDatetoDateWithoutSlash( bean.getFechaVencimiento()));
+            //object.put("Contacto", bean.getContacto());
+            object.put("Moneda", bean.getMoneda());
+            object.put("EmpleadoVenta", bean.getEmpleadoVenta());
+            object.put("DireccionFiscal", bean.getDireccionFiscal());
+            object.put("DireccionEntrega", bean.getDireccionEntrega());
+            object.put("Comentario", bean.getComentario());
+            object.put("Empresa", Integer.parseInt(sociedad));
+
+            object.put("Latitud", bean.getLatitud());
+            object.put("Longitud", bean.getLongitud());
+            object.put("FechaCreacion", bean.getFechaCreacion());
+            object.put("HoraCreacion", bean.getHoraCreacion());
+            object.put("ModoOffLine", bean.getModoOffline());
+
+            JSONArray lines = new JSONArray();
+
+            for (NotaCreditoDetalleBean line: bean.getLineas()) {
+                JSONObject jsonLine = new JSONObject();
+                jsonLine.put("ClaveNotaCredito", line.getClaveNotaCredito());
+                jsonLine.put("Articulo", line.getArticulo());
+                jsonLine.put("UnidadMedida", line.getUnidadMedida());
+                jsonLine.put("Almacen", line.getAlmacen());
+                jsonLine.put("Cantidad", line.getCantidad());
+                jsonLine.put("ListaPrecio", line.getListaPrecio());
+                jsonLine.put("PrecioUnitario", line.getPrecioUnitario());
+                jsonLine.put("PorcentajeDescuento", line.getPorcentajeDescuento());
+                jsonLine.put("Impuesto", line.getImpuesto());
+                jsonLine.put("LineaBase", line.getLineaBase());
+                jsonLine.put("Linea", line.getLinea());
+
+                if(line.getLotes() != null) {
+
+                    JSONArray lotes = new JSONArray();
+                    for (NotaCreditoDetalleLoteBean l : line.getLotes()) {
+                        JSONObject lote = new JSONObject();
+                        lote.put("ClaveBase", l.getClaveBase());
+                        lote.put("LineaBase", l.getLineaBase());
+                        lote.put("Lote", l.getLote());
+                        lote.put("Cantidad", l.getCantidad());
+                        lotes.put(lote);
+                    }
+
+                    jsonLine.put("Lotes", lotes);
+                }
+
+                lines.put(jsonLine);
+            }
+
+            object.put("Lineas", lines);
+
+        }catch (Exception e){
+            return  null;
+        }
+
+        return  object;
+    }
+
+
     protected NotaCreditoBean(Parcel in) {
         Tipo = in.readString();
         clave = in.readString();
@@ -347,6 +463,11 @@ public class NotaCreditoBean implements Parcelable {
         Saldo = in.readString();
         claveMovil = in.readString();
         estadoMovil = in.readString();
+        latitud = in.readString();
+        longitud = in.readString();
+        fechaCreacion = in.readString();
+        horaCreacion = in.readString();
+        modoOffline = in.readString();
         if (in.readByte() == 0x01) {
             Lineas = new ArrayList<NotaCreditoDetalleBean>();
             in.readList(Lineas, NotaCreditoDetalleBean.class.getClassLoader());
@@ -409,6 +530,11 @@ public class NotaCreditoBean implements Parcelable {
         dest.writeString(Saldo);
         dest.writeString(claveMovil);
         dest.writeString(estadoMovil);
+        dest.writeString(latitud);
+        dest.writeString(longitud);
+        dest.writeString(fechaCreacion);
+        dest.writeString(horaCreacion);
+        dest.writeString(modoOffline);
         if (Lineas == null) {
             dest.writeByte((byte) (0x00));
         } else {
@@ -429,70 +555,4 @@ public class NotaCreditoBean implements Parcelable {
             return new NotaCreditoBean[size];
         }
     };
-
-
-    public static JSONObject transformNotaCreditoToJSON(NotaCreditoBean bean, String sociedad){
-        JSONObject object = new JSONObject();
-
-        try{
-            object.put("ClaveMovil", bean.getClaveMovil());
-            object.put("ClaveBase", bean.getClaveBase());
-            object.put("SocioNegocio", bean.getSocioNegocio());
-            object.put("ListaPrecio", bean.getListaPrecio());
-            object.put("CondicionPago", bean.getCondicionPago());
-            object.put("Indicador", bean.getIndicador());
-            object.put("Referencia", bean.getReferencia());
-            object.put("FechaContable", StringDateCast.castDatetoDateWithoutSlash(bean.getFechaContable()));
-            object.put("FechaVencimiento",StringDateCast.castDatetoDateWithoutSlash( bean.getFechaVencimiento()));
-            //object.put("Contacto", bean.getContacto());
-            object.put("Moneda", bean.getMoneda());
-            object.put("EmpleadoVenta", bean.getEmpleadoVenta());
-            object.put("DireccionFiscal", bean.getDireccionFiscal());
-            object.put("DireccionEntrega", bean.getDireccionEntrega());
-            object.put("Comentario", bean.getComentario());
-            object.put("Empresa", Integer.parseInt(sociedad));
-
-            JSONArray lines = new JSONArray();
-
-            for (NotaCreditoDetalleBean line: bean.getLineas()) {
-                JSONObject jsonLine = new JSONObject();
-                jsonLine.put("ClaveNotaCredito", line.getClaveNotaCredito());
-                jsonLine.put("Articulo", line.getArticulo());
-                jsonLine.put("UnidadMedida", line.getUnidadMedida());
-                jsonLine.put("Almacen", line.getAlmacen());
-                jsonLine.put("Cantidad", line.getCantidad());
-                jsonLine.put("ListaPrecio", line.getListaPrecio());
-                jsonLine.put("PrecioUnitario", line.getPrecioUnitario());
-                jsonLine.put("PorcentajeDescuento", line.getPorcentajeDescuento());
-                jsonLine.put("Impuesto", line.getImpuesto());
-                jsonLine.put("LineaBase", line.getLineaBase());
-                jsonLine.put("Linea", line.getLinea());
-
-                if(line.getLotes() != null) {
-
-                    JSONArray lotes = new JSONArray();
-                    for (NotaCreditoDetalleLoteBean l : line.getLotes()) {
-                        JSONObject lote = new JSONObject();
-                        lote.put("ClaveBase", l.getClaveBase());
-                        lote.put("LineaBase", l.getLineaBase());
-                        lote.put("Lote", l.getLote());
-                        lote.put("Cantidad", l.getCantidad());
-                        lotes.put(lote);
-                    }
-
-                    jsonLine.put("Lotes", lotes);
-                }
-
-                lines.put(jsonLine);
-            }
-
-            object.put("Lineas", lines);
-
-        }catch (Exception e){
-            return  null;
-        }
-
-        return  object;
-    }
-
 }

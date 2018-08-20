@@ -9,5 +9,6 @@
     <string name="C_ART_GRUPO_ART">GrupoArticulo</string>
     <string name="C_ART_GRUPO_UM">GrupoUnidadMedida</string>
     <string name="C_ART_UM_VENTA">UnidadMedidaVenta</string>
+    <string name="C_ART_ALM_DEF">AlmacenDefecto</string>
     
 </resources>

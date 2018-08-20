@@ -34,6 +34,7 @@
 
     <!--  -->
     <application
+        android:name = "android.support.multidex.MultiDexApplication"
         android:allowBackup="false"
         android:icon="@drawable/logo_seidor_menu"
         android:label="@string/app_name"
@@ -47,31 +48,35 @@
         <activity
             android:name="com.proyecto.movil.SplashActivity"
             android:label="@string/app_name"
-            android:theme="@android:style/Theme.Light.NoTitleBar.Fullscreen">
+            android:theme="@android:style/Theme.Light.NoTitleBar.Fullscreen"
+            android:screenOrientation="portrait">
 
             <!-- ACTIVITY EN SER LANZADO PRIMERO -->
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
             android:name="com.proyecto.movil.MainActivityDrawer"
-            android:label="@string/titMenuPrincipal" />
+            android:label="@string/titMenuPrincipal"
+            android:screenOrientation="portrait"/>
         <activity
             android:name="com.proyecto.movil.MainActivity"
-            android:label="@string/titMenuPrincipal" />
+            android:label="@string/titMenuPrincipal"
+            android:screenOrientation="portrait"/>
 
         <!-- REGISTRO SOCIO DE NEGOCIO -->
         <activity
             android:name="com.proyecto.sociosnegocio.MainSocioNegocio"
-            android:label="@string/titCliente" />
+            android:label="@string/titCliente"
+            android:screenOrientation="portrait"/>
 
         <!-- PARAMETROS DE CONEXION -->
         <activity
             android:name="com.proyecto.preferences.SettingsMain"
-            android:label="@string/titConn">
+            android:label="@string/titConn"
+            android:screenOrientation="portrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.proyecto.movil.MainActivity" />
@@ -80,13 +85,15 @@
         <!-- DETALLE SOCIO DE NEGOCIO -->
         <activity
             android:name="com.proyecto.sociosnegocio.DetalleSocioNegocioMain"
-            android:label="@string/titDetCliente" />
+            android:label="@string/titDetCliente"
+            android:screenOrientation="portrait"/>
 
-        <!-- LISTA CONTACTOS DE AGENDA TELEFONICA -->
+         <!-- LISTA CONTACTOS DE AGENDA TELEFONICA -->
         <activity
             android:name="com.proyecto.sociosnegocio.PhoneContactsListActivity"
             android:label="@string/activity_bp_list"
-            android:windowSoftInputMode="adjustResize">
+            android:windowSoftInputMode="adjustResize"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action." />
             </intent-filter>
@@ -102,7 +109,8 @@
         <!-- VENTAAS -->
         <activity
             android:name="com.proyecto.ventas.MainVentas"
-            android:label="@string/titOrdenVenta">
+            android:label="@string/titOrdenVenta"
+            android:screenOrientation="portrait">
 
             <!-- Intent para la implementación de la búsqueda -->
             <intent-filter>
@@ -115,10 +123,12 @@
         </activity>
         <activity
             android:name="com.proyecto.ventas.DetalleVentaMain"
-            android:label="@string/titDetOrd" />
+            android:label="@string/titDetOrd"
+            android:screenOrientation="portrait"/>
         <activity
             android:name="com.proyecto.ventas.DetalleVentaLinea"
-            android:label="@string/titDetOrd">
+            android:label="@string/titDetOrd"
+            android:screenOrientation="portrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.proyecto.ventas.DetalleVentaMain" />
@@ -130,30 +140,37 @@
         <!-- Cobranzas -->
         <activity
             android:name="com.proyecto.cobranza.MainCobranzas"
-            android:label="@string/titCobranzas">
+            android:label="@string/titCobranzas"
+            android:screenOrientation="portrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.proyecto.movil.MainActivity" />
         </activity>
         <activity
             android:name="com.proyecto.cobranza.DetalleCobranzaMain"
-            android:label="@string/titDetOrd" />
+            android:label="@string/titDetOrd"
+            android:screenOrientation="portrait"/>
         <activity
             android:name="com.proyecto.cobranza.DetalleFacturaMain"
-            android:label="@string/titDetOrd" />
+            android:label="@string/titDetOrd"
+            android:screenOrientation="portrait"/>
         <activity
             android:name="com.proyecto.informes.Informe"
-            android:label="@string/titInformes" />
+            android:label="@string/titInformes"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".LoginActivity"
             android:label="@string/title_activity_login"
-            android:windowSoftInputMode="adjustResize|stateVisible" />
+            android:windowSoftInputMode="adjustResize|stateVisible"
+            android:screenOrientation="portrait"/>
         <activity
             android:name="com.proyecto.facturas.DetalleFacturaLinea"
-            android:label="@string/titDetOrd" />
+            android:label="@string/titDetOrd"
+            android:screenOrientation="portrait"/>
         <activity
             android:name="com.proyecto.inventario.DetalleArticuloMain"
-            android:label="@string/titDetOrd" />
+            android:label="@string/titDetOrd"
+            android:screenOrientation="portrait"/>
 
         <receiver android:name="com.proyecto.broadcast.MainReceiver">
             <intent-filter>
@@ -193,32 +210,34 @@
         -->
         <activity
             android:name="com.proyecto.sociosnegocio.SocioDireccionActivity"
-            android:label="@string/title_activity_socio_direccion" />
+            android:label="@string/title_activity_socio_direccion"
+            android:screenOrientation="portrait"/>
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
 
-        <activity android:name="com.proyecto.movil.PinVerified" />
-        <activity android:name="com.proyecto.incidencias.IncidenciaActivity" />
-        <activity android:name="com.proyecto.facturas.BuscarFacturaActivity" />
-        <activity android:name="com.proyecto.sociosnegocio.ClienteBuscarActivity" />
-        <activity android:name="com.proyecto.incidencias.IncidenciaDetalleActivity" />
-        <activity android:name="com.proyecto.entregas.EntregaDetalleActivity" />
+        <activity android:name="com.proyecto.movil.PinVerified" android:screenOrientation="portrait" />
+        <activity android:name="com.proyecto.incidencias.IncidenciaActivity" android:screenOrientation="portrait"/>
+        <activity android:name="com.proyecto.facturas.BuscarFacturaActivity" android:screenOrientation="portrait"/>
+        <activity android:name="com.proyecto.sociosnegocio.ClienteBuscarActivity" android:screenOrientation="portrait"/>
+        <activity android:name="com.proyecto.incidencias.IncidenciaDetalleActivity" android:screenOrientation="portrait"/>
+        <activity android:name="com.proyecto.entregas.EntregaDetalleActivity" android:screenOrientation="portrait"/>
         <activity
             android:name="com.proyecto.geolocalizacion.MapsActivity"
-            android:label="@string/title_activity_maps" />
-        <activity android:name="com.proyecto.geolocalizacion.ShowMapActivity" />
-        <activity android:name="com.proyecto.visitas.DetalleVisitaActivity" />
-        <activity android:name="com.proyecto.devoluciones.DevolucionActivity" />
-        <activity android:name="com.proyecto.devoluciones.DevolucionListaEntregaActivity" />
-        <activity android:name="com.proyecto.devoluciones.DevolucionArticulosActivity" />
-        <activity android:name="com.proyecto.devoluciones.DevolucionDetalleActivity" />
-        <activity android:name="com.proyecto.notacredito.NotaCreditoActivity" />
-        <activity android:name="com.proyecto.notacredito.NotaCreditoListaFacturaActivity" />
-        <activity android:name="com.proyecto.notacredito.NotaCreditoArticulosActivity" />
-        <activity android:name="com.proyecto.notacredito.NotaCreditoDetalleActivity" />
-        <activity android:name="com.proyecto.inventario.ListaArticuloPrecioActivity"></activity>
+            android:label="@string/title_activity_maps"
+            android:screenOrientation="portrait"/>
+        <activity android:name="com.proyecto.geolocalizacion.ShowMapActivity" android:screenOrientation="portrait"/>
+        <activity android:name="com.proyecto.visitas.DetalleVisitaActivity" android:screenOrientation="portrait"/>
+        <activity android:name="com.proyecto.devoluciones.DevolucionActivity" android:screenOrientation="portrait"/>
+        <activity android:name="com.proyecto.devoluciones.DevolucionListaEntregaActivity" android:screenOrientation="portrait"/>
+        <activity android:name="com.proyecto.devoluciones.DevolucionArticulosActivity" android:screenOrientation="portrait"/>
+        <activity android:name="com.proyecto.devoluciones.DevolucionDetalleActivity" android:screenOrientation="portrait"/>
+        <activity android:name="com.proyecto.notacredito.NotaCreditoActivity" android:screenOrientation="portrait"/>
+        <activity android:name="com.proyecto.notacredito.NotaCreditoListaFacturaActivity" android:screenOrientation="portrait"/>
+        <activity android:name="com.proyecto.notacredito.NotaCreditoArticulosActivity" android:screenOrientation="portrait"/>
+        <activity android:name="com.proyecto.notacredito.NotaCreditoDetalleActivity" android:screenOrientation="portrait"/>
+        <activity android:name="com.proyecto.inventario.ListaArticuloPrecioActivity" android:screenOrientation="portrait"></activity>
     </application>
 
 </manifest>

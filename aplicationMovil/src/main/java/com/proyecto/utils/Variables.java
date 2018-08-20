@@ -33,6 +33,7 @@ public class Variables {
     public static final String COBRADOR = "EsCobrador";
 
     public static final String MENU_SOCIOS_NEGOCIO = "Socios de negocio";
+    public static final String FIELDS_SOCIOS_NEGOCIO = "Campos socios de negocio";
     public static final String MENU_INVENTARIO = "Inventario";
     public static final String MENU_PEDIDOS = "Pedidos";
     public static final String MENU_FACTURAS = "Facturas";

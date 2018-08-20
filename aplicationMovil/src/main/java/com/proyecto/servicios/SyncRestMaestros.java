@@ -130,6 +130,10 @@ public class SyncRestMaestros {
             JsonObjectRequest mJSONRequest = new JsonObjectRequest(Request.Method.GET,
                     ruta + "businesspartner/"+urlGetBP+".xsjs?empId=" + sociedad +"&cove=" + codigoEmpleado, null,
                     listenerGetSocios, errorListenerGetSocios);
+            mJSONRequest.setRetryPolicy(new DefaultRetryPolicy(
+                    MY_SOCKET_TIMEOUT_MS,
+                    DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                    DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
             VolleySingleton.getInstance(mContext).addToRequestQueue(mJSONRequest);
             //endregion
 
@@ -178,6 +182,10 @@ public class SyncRestMaestros {
             mJSONRequest = new JsonObjectRequest(Request.Method.GET,
                     ruta + "price/getPrices.xsjs?empId=" + sociedad, null,
                     listenerGetPrecios, errorListenerGetPrecios);
+            mJSONRequest.setRetryPolicy(new DefaultRetryPolicy(
+                    MY_SOCKET_TIMEOUT_MS,
+                    DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                    DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
             VolleySingleton.getInstance(mContext).addToRequestQueue(mJSONRequest);
             //endregion
 
@@ -347,6 +355,7 @@ public class SyncRestMaestros {
                         bean.setGrupoArticulo(jsonObj.getString("GrupoArticulo"));
                         bean.setCodUM(jsonObj.getString("GrupoUnidadMedida"));
                         bean.setUnidadMedidaVenta(jsonObj.getString("UnidadMedidaVenta"));
+                        bean.setAlmacenDefecto(jsonObj.getString("AlmacenDefecto"));
                         mList.add(bean);
                     }
 

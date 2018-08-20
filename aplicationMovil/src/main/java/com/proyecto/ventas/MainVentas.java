@@ -20,6 +20,7 @@ public class MainVentas extends AppCompatActivity{
 	public static String action = "";
 	public static String claveVenta = "";
 	public static String codigoArticulo = "";
+	public static int position = -1;
 	public static String MAIN_FRAGMENT = "OrdenVentaFrg";
 	
 	@Override
@@ -47,10 +48,8 @@ public class MainVentas extends AppCompatActivity{
         if (findViewById(R.id.box) != null) {
 
             if (savedInstanceState != null) {
-                
             	fragment = getFragmentManager().getFragment(
                         savedInstanceState, MAIN_FRAGMENT);
-            	
             }
             
             FragmentManager manager = getFragmentManager();
@@ -59,7 +58,8 @@ public class MainVentas extends AppCompatActivity{
             transaction.commit();
 
         }
-		
+
+        position = -1;
 	}
 
 	@Override

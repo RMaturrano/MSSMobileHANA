@@ -15,6 +15,7 @@ public class FormatCustomListView {
 	private String canal;
 	private String giro;
 	private String vendedor;
+	private String almacenDefecto;
 	private int icon, id;
 	private boolean chck;
 
@@ -131,5 +132,13 @@ public class FormatCustomListView {
 
 	public void setVendedor(String vendedor) {
 		this.vendedor = vendedor;
+	}
+
+	public String getAlmacenDefecto() {
+		return almacenDefecto;
+	}
+
+	public void setAlmacenDefecto(String almacenDefecto) {
+		this.almacenDefecto = almacenDefecto;
 	}
 }

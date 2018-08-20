@@ -29,8 +29,7 @@
                 android:layout_marginLeft="12dip"
                 android:maxLines="1"
                 android:ellipsize="end"
-                android:width="0dp"
-                android:layout_weight="8"
+                android:layout_weight="1"
                 >
             </TextView>
 
@@ -42,6 +41,8 @@
                 android:textColor="#9e9e9e"
                 android:layout_width="0dp"
                 android:layout_weight="2"
+                android:maxLines="1"
+                android:ellipsize="end"
                 android:id="@+id/txtViewTitleRight"
                 android:gravity="right"
                 android:layout_marginLeft="12dip"

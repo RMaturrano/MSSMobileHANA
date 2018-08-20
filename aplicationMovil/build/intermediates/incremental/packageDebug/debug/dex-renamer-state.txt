@@ -1,4 +1,7 @@
-#Sun Jul 15 22:56:05 PET 2018
-base.0=/Users/mark/Desktop/App Movil RM/MSSMobileHANA/aplicationMovil/build/intermediates/transforms/dexMerger/debug/0
+#Wed Aug 08 14:32:36 COT 2018
+base.0=C\:\\Users\\PC\\Desktop\\App Mobile Seidor v3.0\\MSSMobileHANA\\aplicationMovil\\build\\intermediates\\transforms\\dexMerger\\debug\\8
+path.1=classes2.dex
+renamed.1=classes2.dex
 path.0=classes.dex
 renamed.0=classes.dex
+base.1=C\:\\Users\\PC\\Desktop\\App Mobile Seidor v3.0\\MSSMobileHANA\\aplicationMovil\\build\\intermediates\\transforms\\dexMerger\\debug\\8

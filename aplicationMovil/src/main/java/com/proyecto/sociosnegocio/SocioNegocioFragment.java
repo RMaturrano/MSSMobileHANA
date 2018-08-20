@@ -67,6 +67,7 @@ import com.proyecto.conectividad.Connectivity;
 import com.proyecto.dao.ClienteDAO;
 import com.proyecto.database.Insert;
 import com.proyecto.database.Select;
+import com.proyecto.utils.Constantes;
 import com.proyecto.utils.ConstruirAlert;
 import com.proyecto.utils.DynamicHeight;
 import com.proyecto.utils.FormatCustomListView;
@@ -75,6 +76,7 @@ import com.proyecto.utils.Variables;
 import com.proyecto.ws.InvocaWS;
 import com.proyecto.ws.VolleySingleton;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 public class SocioNegocioFragment extends Fragment {
@@ -228,14 +230,6 @@ public class SocioNegocioFragment extends Fragment {
 		claveMovil = idDispositivo + "-"+fullDate+ "-" + ClaveMovilInt;
 		select.close();
 
-		// registrar los mensajes que se van a recibir DESDE OTROS FRAGMENTS
-		IntentFilter filter = new IntentFilter("event-send-contact-to-bp");
-		filter.addAction("event-send-contact-to-list");
-		filter.addAction("event-send-direction-to-bp");
-		filter.addAction("event-send-direction-to-list");
-		LocalBroadcastManager.getInstance(contexto).registerReceiver(
-				myLocalBroadcastReceiver, filter);
-
 		// LLENAR EL LISTADO DE DATOS QUE COMPONEN EL REGISTRO DE SOCIO DE
 		// NEGOCIO
 		llenarListaTitulo();
@@ -308,15 +302,39 @@ public class SocioNegocioFragment extends Fragment {
 
 		// //////
 
-		buildFirstAlert(contexto, 1, "Tipo de persona", searchResults,
-				lvPrincipal);
+		buildAlertTipoRegistro();
 
 		setHasOptionsMenu(true);
 		return view;
 
 	}
 
-	
+	@Override
+	public void onResume() {
+		super.onResume();
+		try{
+			// registrar los mensajes que se van a recibir DESDE OTROS FRAGMENTS
+			IntentFilter filter = new IntentFilter("event-send-contact-to-bp");
+			filter.addAction("event-send-contact-to-list");
+			filter.addAction("event-send-direction-to-bp");
+			filter.addAction("event-send-direction-to-list");
+			LocalBroadcastManager.getInstance(contexto).registerReceiver(
+					myLocalBroadcastReceiver, filter);
+		}catch (Exception e){
+			showMessage(e.getMessage());
+		}
+	}
+
+	@Override
+	public void onPause() {
+		super.onPause();
+		try{
+			LocalBroadcastManager.getInstance(contexto).unregisterReceiver(myLocalBroadcastReceiver);
+		}catch (Exception e){
+			showMessage(e.getMessage());
+		}
+	}
+
 	private boolean cargarListas(){
 		
 		listaCondicionPago = new ArrayList<CondicionPagoBean>();
@@ -357,7 +375,39 @@ public class SocioNegocioFragment extends Fragment {
 		return true;
 	}
 	
-	
+	private void buildAlertTipoRegistro(){
+		posicion = 6;
+		Object o = lvGeneral.getItemAtPosition(posicion);
+		fullObject = new FormatCustomListView();
+		fullObject = (FormatCustomListView) o;
+
+		ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(getActivity(),
+				android.R.layout.select_dialog_singlechoice);
+
+		for (TipoClienteRegistroBean p: listaTipoCliente) {
+			arrayAdapter.add(p.getCodigo() + " - " + p.getDescripcion());
+		}
+
+		final AlertDialog dialog;
+		final AlertDialog.Builder alert = new AlertDialog.Builder(
+				contexto);
+		alert.setTitle("Tipo de registro");
+		alert.setCancelable(false);
+		alert.setSingleChoiceItems(arrayAdapter, -1, new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				tipoCLienteSel = listaTipoCliente.get(which);
+				fullObject.setData(tipoCLienteSel.getDescripcion());
+				searchResults3.set(posicion, fullObject);
+				lvGeneral.invalidateViews();
+				dialog.dismiss();
+
+				buildFirstAlert(contexto, 1, "Tipo de persona", searchResults,
+						lvPrincipal);
+			}
+		});
+		dialog = alert.show();
+	}
 	
 	public void buildFirstAlert(final Context contexto, final int pos,
 			String titulo, final ArrayList<FormatCustomListView> searchResults,
@@ -1016,7 +1066,6 @@ public class SocioNegocioFragment extends Fragment {
 							grupoSel = new GrupoSocioNegocioBean();
 							grupoSel = (GrupoSocioNegocioBean) parent
 									.getItemAtPosition(pos);
-
 						}
 
 						@Override
@@ -1537,26 +1586,31 @@ public class SocioNegocioFragment extends Fragment {
 
 		FormatCustomListView sr1 = new FormatCustomListView();
 		sr1.setTitulo("Tipo de cliente");
+		sr1.setId(0);
 		sr1.setData("Lead");
 		searchResults.add(sr1);
 
 		sr1 = new FormatCustomListView();
 		sr1.setTitulo("Tipo de persona");
 		sr1.setIcon(iconId);
+		sr1.setId(1);
 		sr1.setData("Juridica");
 		searchResults.add(sr1);
 
 		sr1 = new FormatCustomListView();
 		sr1.setTitulo("Tipo documento");
+		sr1.setId(2);
 		sr1.setIcon(iconId);
 		searchResults.add(sr1);
 
 		sr1 = new FormatCustomListView();
 		sr1.setTitulo("Nro documento");
+		sr1.setId(3);
 		sr1.setIcon(iconId);
 		searchResults.add(sr1);
 
 		sr1 = new FormatCustomListView();
+
 		sr1.setTitulo("Codigo");
 		sr1.setData(claveMovil);
 		searchResults.add(sr1);
@@ -1564,10 +1618,12 @@ public class SocioNegocioFragment extends Fragment {
 		sr1 = new FormatCustomListView();
 		sr1.setTitulo("Nombre o razon social");
 		sr1.setIcon(iconId);
+		sr1.setId(4);
 		searchResults.add(sr1);
 
 		sr1 = new FormatCustomListView();
 		sr1.setTitulo("Nombre comercial");
+		sr1.setId(5);
 		sr1.setIcon(iconId);
 		searchResults.add(sr1);
 
@@ -1575,6 +1631,7 @@ public class SocioNegocioFragment extends Fragment {
 		sr1.setTitulo("Grupo");
 		sr1.setData(listaGruposSocioNegocio.get(0).getGroupName());
 		sr1.setIcon(iconId);
+		sr1.setId(10);
 		searchResults.add(sr1);
 
 		sr1 = new FormatCustomListView();
@@ -1598,22 +1655,26 @@ public class SocioNegocioFragment extends Fragment {
 
 		FormatCustomListView sr1 = new FormatCustomListView();
 		sr1.setTitulo("Tipo de cliente");
+		sr1.setId(0);
 		sr1.setData("Lead");
 		searchResults.add(sr1);
 
 		sr1 = new FormatCustomListView();
 		sr1.setTitulo("Tipo de persona");
 		sr1.setIcon(iconId);
+		sr1.setId(1);
 		sr1.setData("Natural");
 		searchResults.add(sr1);
 
 		sr1 = new FormatCustomListView();
 		sr1.setTitulo("Tipo documento");
+		sr1.setId(2);
 		sr1.setIcon(iconId);
 		searchResults.add(sr1);
 
 		sr1 = new FormatCustomListView();
 		sr1.setTitulo("Nro documento");
+		sr1.setId(3);
 		sr1.setIcon(iconId);
 		searchResults.add(sr1);
 
@@ -1624,35 +1685,42 @@ public class SocioNegocioFragment extends Fragment {
 
 		sr1 = new FormatCustomListView();
 		sr1.setTitulo("Nombre o razon social");
+		sr1.setId(4);
 		searchResults.add(sr1);
 
 		sr1 = new FormatCustomListView();
 		sr1.setTitulo("Nombre comercial");
+		sr1.setId(5);
 		sr1.setIcon(iconId);
 		searchResults.add(sr1);
 
 		sr1 = new FormatCustomListView();
 		sr1.setTitulo("Apellido Paterno");
+		sr1.setId(6);
 		sr1.setIcon(iconId);
 		searchResults.add(sr1);
 
 		sr1 = new FormatCustomListView();
 		sr1.setTitulo("Apellido Materno");
+		sr1.setId(7);
 		sr1.setIcon(iconId);
 		searchResults.add(sr1);
 
 		sr1 = new FormatCustomListView();
 		sr1.setTitulo("Primer Nombre");
 		sr1.setIcon(iconId);
+		sr1.setId(8);
 		searchResults.add(sr1);
 
 		sr1 = new FormatCustomListView();
 		sr1.setTitulo("Segundo nombre");
+		sr1.setId(9);
 		sr1.setIcon(iconId);
 		searchResults.add(sr1);
 
 		sr1 = new FormatCustomListView();
 		sr1.setTitulo("Grupo");
+		sr1.setId(10);
 		sr1.setData(listaGruposSocioNegocio.get(0).getGroupName());
 		sr1.setIcon(iconId);
 		searchResults.add(sr1);
@@ -1678,37 +1746,45 @@ public class SocioNegocioFragment extends Fragment {
 
 		FormatCustomListView sr1 = new FormatCustomListView();
 		sr1.setTitulo("Telefono 1");
+		sr1.setId(11);
 		sr1.setIcon(iconId);
 		searchResults3.add(sr1);
 
 		sr1 = new FormatCustomListView();
 		sr1.setTitulo("Telefono 2");
+		sr1.setId(12);
 		sr1.setIcon(iconId);
 		searchResults3.add(sr1);
 
 		sr1 = new FormatCustomListView();
 		sr1.setTitulo("Telefono movil");
+		sr1.setId(13);
 		sr1.setIcon(iconId);
 		searchResults3.add(sr1);
 
 		sr1 = new FormatCustomListView();
 		sr1.setTitulo("Correo electronico");
+		sr1.setId(14);
 		sr1.setIcon(iconId);
 		searchResults3.add(sr1);
 
 		sr1 = new FormatCustomListView();
 		sr1.setTitulo("Posee activos?");
+		sr1.setId(15);
 		sr1.setData("NO");
 		sr1.setIcon(iconId);
 		searchResults3.add(sr1);
 
 		sr1 = new FormatCustomListView();
 		sr1.setTitulo("Proyecto");
+		sr1.setId(16);
 		sr1.setIcon(iconId);
 		searchResults3.add(sr1);
 
 		sr1 = new FormatCustomListView();
 		sr1.setTitulo("Tipo de registro");
+		if(tipoCLienteSel != null)
+			sr1.setData(tipoCLienteSel.getDescripcion());
 		sr1.setIcon(iconId);
 		searchResults3.add(sr1);
 
@@ -1770,17 +1846,20 @@ public class SocioNegocioFragment extends Fragment {
 		FormatCustomListView sr = new FormatCustomListView();
 		sr.setTitulo("Condicion de pago");
 		sr.setIcon(iconId);
+		sr.setId(17);
 		sr.setData(listaCondicionPago.get(0).getDescripcionCondicion());
 		searchResults2.add(sr);
 
 		sr = new FormatCustomListView();
 		sr.setTitulo("Lista de precios");
+		sr.setId(18);
 		sr.setData(listaPrecios.get(0).getNombre());
 		sr.setIcon(iconId);
 		searchResults2.add(sr);
 
 		sr = new FormatCustomListView();
 		sr.setTitulo("Indicador");
+		sr.setId(19);
 		sr.setIcon(iconId);
 		sr.setData(listaIndicadores.get(0).getNombre());
 		searchResults2.add(sr);
@@ -1832,6 +1911,11 @@ public class SocioNegocioFragment extends Fragment {
 		case R.id.action_registrar:
 
 			try{
+
+				if(!validarFormulario()){
+					return true;
+				}
+
 				if (searchResults.get(2).getData() == null
 						|| searchResults.get(2).getData().equals("")) {
 
@@ -2068,7 +2152,6 @@ public class SocioNegocioFragment extends Fragment {
 
 		}
 	}
-	
 
 	private void enviarSocioAlServidor(){
 
@@ -2127,6 +2210,194 @@ public class SocioNegocioFragment extends Fragment {
 	private void showMessage(String message){
 		if(message != null)
 			Toast.makeText(contexto, message, Toast.LENGTH_SHORT).show();
+	}
+
+	private boolean validarFormulario(){
+
+		boolean res = true;
+		try {
+			if (tipoCLienteSel != null) {
+
+				String opcionesMenu = pref.getString(Variables.FIELDS_SOCIOS_NEGOCIO, "");
+				if (opcionesMenu != null && !opcionesMenu.equals("")) {
+					JSONArray mArrayMenu = new JSONArray(opcionesMenu);
+					for (int i = 0; i < mArrayMenu.length(); i++) {
+						JSONObject jsonObj = mArrayMenu.getJSONObject(i);
+
+						//region LISTA GENERAL
+						for (FormatCustomListView item : searchResults) {
+							if (res) {
+								if (item.getId() == Integer.parseInt(jsonObj.getString("Codigo"))) {
+									switch (tipoCLienteSel.getCodigo()) {
+										case Constantes.TIPO_REGISTRO_LEAD:
+											if (jsonObj.getString("OblgLead").equals("Y") &&
+													(item.getData() == null || item.getData().equals(""))) {
+												res = false;
+												showMessage("Debe ingresar un valor valido en el campo " + item.getTitulo());
+											}
+											break;
+										case Constantes.TIPO_REGISTRO_FINAL:
+											if (jsonObj.getString("OblgFinal").equals("Y") &&
+													(item.getData() == null || item.getData().equals(""))) {
+												res = false;
+												showMessage("Debe ingresar un valor valido en el campo " + item.getTitulo());
+											}
+											break;
+										case Constantes.TIPO_REGISTRO_COMPETENCIA:
+											if (jsonObj.getString("OblgComp").equals("Y") &&
+													(item.getData() == null || item.getData().equals(""))) {
+												res = false;
+												showMessage("Debe ingresar un valor valido en el campo " + item.getTitulo());
+											}
+											break;
+										default:
+											break;
+									}
+								}
+							}else
+								break;
+						}
+						//endregion
+
+						//region LISTA COND PAGO
+						for (FormatCustomListView item : searchResults2) {
+							if (res) {
+								if (item.getId() == Integer.parseInt(jsonObj.getString("Codigo"))) {
+									switch (tipoCLienteSel.getCodigo()) {
+										case Constantes.TIPO_REGISTRO_LEAD:
+											if (jsonObj.getString("OblgLead").equals("Y") &&
+													(item.getData() == null || item.getData().equals(""))) {
+												res = false;
+												showMessage("Debe ingresar un valor valido en el campo " + item.getTitulo());
+											}
+											break;
+										case Constantes.TIPO_REGISTRO_FINAL:
+											if (jsonObj.getString("OblgFinal").equals("Y") &&
+													(item.getData() == null || item.getData().equals(""))) {
+												res = false;
+												showMessage("Debe ingresar un valor valido en el campo " + item.getTitulo());
+											}
+											break;
+										case Constantes.TIPO_REGISTRO_COMPETENCIA:
+											if (jsonObj.getString("OblgComp").equals("Y") &&
+													(item.getData() == null || item.getData().equals(""))) {
+												res = false;
+												showMessage("Debe ingresar un valor valido en el campo " + item.getTitulo());
+											}
+											break;
+										default:
+											break;
+									}
+								}
+							}else
+								break;
+						}
+						//endregion
+
+						//region LISTA_CONDPAGO
+						for (FormatCustomListView item : searchResults3) {
+							if (res) {
+								if (item.getId() == Integer.parseInt(jsonObj.getString("Codigo"))) {
+									switch (tipoCLienteSel.getCodigo()) {
+										case Constantes.TIPO_REGISTRO_LEAD:
+											if (jsonObj.getString("OblgLead").equals("Y") &&
+													(item.getData() == null || item.getData().equals(""))) {
+												res = false;
+												showMessage("Debe ingresar un valor valido en el campo " + item.getTitulo());
+											}
+											break;
+										case Constantes.TIPO_REGISTRO_FINAL:
+											if (jsonObj.getString("OblgFinal").equals("Y") &&
+													(item.getData() == null || item.getData().equals(""))) {
+												res = false;
+												showMessage("Debe ingresar un valor valido en el campo " + item.getTitulo());
+											}
+											break;
+										case Constantes.TIPO_REGISTRO_COMPETENCIA:
+											if (jsonObj.getString("OblgComp").equals("Y") &&
+													(item.getData() == null || item.getData().equals(""))) {
+												res = false;
+												showMessage("Debe ingresar un valor valido en el campo " + item.getTitulo());
+											}
+											break;
+										default:
+											break;
+									}
+								}
+							}else
+								break;
+						}
+					//endregion
+
+						if(res && jsonObj.getInt("Codigo") >= 20){
+							try{
+								if(listaDirecciones.size() == 0){
+									res = false;
+									showMessage("Debe ingresar por lo menos una direccion");
+								}else {
+									for (DireccionBean direccion : listaDirecciones) {
+										if (direccion.getPais() == null ||
+												direccion.getPais().equals("")) {
+											res = false;
+											showMessage("Debe seleccionar un pais en la direccion " + direccion.getIDDireccion());
+										} else if (direccion.getDepartamento() == null ||
+												direccion.getDepartamento().equals("")) {
+											res = false;
+											showMessage("Debe seleccionar un departamento en la direccion " + direccion.getIDDireccion());
+										} else if (direccion.getProvincia() == null ||
+												direccion.getProvincia().equals("")) {
+											res = false;
+											showMessage("Debe seleccionar un provincia en la direccion " + direccion.getIDDireccion());
+										} else if (direccion.getDistrito() == null ||
+												direccion.getDistrito().equals("")) {
+											res = false;
+											showMessage("Debe seleccionar un distrito en la direccion " + direccion.getIDDireccion());
+										} else if (direccion.getLatitud() == null ||
+												direccion.getLatitud().equals("")) {
+											res = false;
+											showMessage("Debe ingresar la latitud y longitud en la direccion " + direccion.getIDDireccion());
+										} else if (direccion.getRuta() == null ||
+												direccion.getRuta().equals("")) {
+											res = false;
+											showMessage("Debe seleccionar una ruta en la direccion " + direccion.getIDDireccion());
+										} else if (direccion.getZona() == null ||
+												direccion.getZona().equals("")) {
+											res = false;
+											showMessage("Debe seleccionar una zona en la direccion " + direccion.getIDDireccion());
+										} else if (direccion.getCanal() == null ||
+												direccion.getCanal().equals("")) {
+											res = false;
+											showMessage("Debe seleccionar un canal en la direccion " + direccion.getIDDireccion());
+										} else if (direccion.getGiro() == null ||
+												direccion.getGiro().equals("")) {
+											res = false;
+											showMessage("Debe seleccionar un giro en la direccion " + direccion.getIDDireccion());
+										}
+
+										if (tipoCLienteSel.getCodigo().equals(Constantes.TIPO_REGISTRO_FINAL)) {
+											if (direccion.getCalle() == null ||
+													direccion.getCalle().equals("")) {
+												res = false;
+												showMessage("Debe seleccionar una calle en la direccion " + direccion.getIDDireccion());
+											}
+										}
+									}
+								}
+							}catch (Exception e){
+								res = false;
+								showMessage("Debe ingresar por lo menos una dirección");
+							}
+						}
+					}
+				}
+			}else{
+				showMessage("Debe seleccinar un tipo de registro...");
+			}
+		}catch (Exception e){
+			showMessage("validarFormulario() > " + e.getMessage());
+		}
+
+		return res;
 	}
 
 	;

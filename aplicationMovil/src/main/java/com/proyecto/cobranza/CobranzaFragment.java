@@ -233,15 +233,7 @@ public class CobranzaFragment extends Fragment{
 			nombreEmpleado = pref.getString(Variables.NOMBRE_EMPLEADO, "");
 			idDispositivo = Secure.getString(getActivity().getContentResolver(),
 					Secure.ANDROID_ID);
-	        
-	        //REGISTRAR EL M�TODO PARA RECIBIR PAR�METROS DESDE UN FRAGMENT CON POPBACKSTACK
-	        IntentFilter filter = new IntentFilter("custom-event-get-socio-negocio-cobranza");
-			filter.addAction("event-send-tipo-pago");
-			filter.addAction("event-send-total-pago-facturas");
-			LocalBroadcastManager.getInstance(contexto).registerReceiver(
-					myLocalBroadcastReceiver, filter);
-	        
-	        
+
 	        //LLENAR EL LISTADO DE DATOS QUE COMPONEN EL PAGO
 	        llenarListaTitulo();
 	        
@@ -282,8 +274,33 @@ public class CobranzaFragment extends Fragment{
         return view;
 		
 	}
-	
-	
+
+	@Override
+	public void onResume() {
+		super.onResume();
+
+		try{
+			//REGISTRAR EL METODO PARA RECIBIR PARAMETROS DESDE UN FRAGMENT CON POPBACKSTACK
+			IntentFilter filter = new IntentFilter("custom-event-get-socio-negocio-cobranza");
+			filter.addAction("event-send-tipo-pago");
+			filter.addAction("event-send-total-pago-facturas");
+			LocalBroadcastManager.getInstance(contexto).registerReceiver(
+					myLocalBroadcastReceiver, filter);
+		}catch (Exception e){
+			showMessage(e.getMessage());
+		}
+	}
+
+	@Override
+	public void onPause() {
+		super.onPause();
+		try{
+			LocalBroadcastManager.getInstance(contexto).unregisterReceiver(myLocalBroadcastReceiver);
+		}catch (Exception e){
+			showMessage(e.getMessage());
+		}
+	}
+
 	private boolean cargarListas(){
 		
 		boolean pass = true;

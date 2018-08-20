@@ -119,6 +119,7 @@ public class MainActivityDrawer extends AppCompatActivity {
 
 		if (wifi || movil) {
 			validarOpcionesMenu(sociedad, perfil, ip, port,codigoEmpleado);
+			obtenerValidacionCamposSociosNegocio(sociedad, ip, port);
 		}else{
 			validarOpcionesMenuOffLine();
 		}
@@ -320,6 +321,45 @@ public class MainActivityDrawer extends AppCompatActivity {
 		}
 	}
 
+	private void obtenerValidacionCamposSociosNegocio(String sociedad, String ip, String puerto){
+		try{
+
+			String ws_ruta = ("http://" + ip + ":" + puerto +
+					"/MSS_MOBILE/service/menu/getFieldsValidSN.xsjs?empId=" + Integer.parseInt(sociedad));
+
+			StringRequest stringRequest = new StringRequest(Request.Method.GET, ws_ruta,
+					new Response.Listener<String>() {
+						@Override
+						public void onResponse(String response) {
+
+							try{
+								JSONObject jsonObject = new JSONObject(response);
+								if(jsonObject.getString("ResponseStatus").equals("Success")) {
+									JSONArray jsonArray = jsonObject.getJSONObject("Response")
+											.getJSONObject("message")
+											.getJSONArray("value");
+
+									SharedPreferences.Editor editor = pref.edit();
+									editor.putString(Variables.FIELDS_SOCIOS_NEGOCIO, jsonArray.toString());
+									editor.commit();
+								}
+							}catch (Exception e){
+								showToast("JsonException: " + e.getMessage());
+							}
+					}
+				}, new Response.ErrorListener() {
+				@Override
+				public void onErrorResponse(VolleyError error) {
+					//showToast();
+				}
+			});
+
+			VolleySingleton.getInstance(contexto).addToRequestQueue(stringRequest);
+		}catch (Exception e){
+			showToast("obtenerValidacionCamposSociosNegocio() > " + e.getMessage());
+		}
+	}
+
 	private void setMenuVisible(boolean visible){
 		navigationView.getMenu().getItem(1).setVisible(visible);
 		navigationView.getMenu().getItem(2).setVisible(visible);
@@ -408,6 +448,7 @@ public class MainActivityDrawer extends AppCompatActivity {
 				editor.remove(Variables.NOMBRE_EMPLEADO);
 				editor.remove(Variables.USUARIO_EMPLEADO);
 				editor.remove(Variables.PASSWORD_EMPLEADO);
+				editor.remove(Variables.FIELDS_SOCIOS_NEGOCIO);
 				editor.commit();
 
 

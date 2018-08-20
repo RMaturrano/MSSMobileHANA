@@ -105,7 +105,7 @@ public class ListaFacturasTabPendientesFragment extends Fragment
 						" T0.SocioNegocio," +
 						" T1.NombreRazonSocial "
 						+ "from TB_FACTURA T0 JOIN TB_SOCIO_NEGOCIO T1 " +
-						" ON T0.SocioNegocio = T1.Codigo " , null);
+						" ON T0.SocioNegocio = T1.Codigo ORDER BY T0.FechaContable desc" , null);
 		while (rs.moveToNext()) {		
 			
 			customListObjet = new FacturaBean();

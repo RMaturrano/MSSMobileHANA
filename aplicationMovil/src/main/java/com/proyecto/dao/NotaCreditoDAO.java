@@ -166,6 +166,11 @@ public class NotaCreditoDAO {
         cv.put("Saldo", notacredito.getSaldo());
         cv.put("EstadoMovil", notacredito.getEstadoMovil());
         cv.put("ClaveBase", notacredito.getClaveBase());
+        cv.put("Latitud", notacredito.getLatitud());
+        cv.put("Longitud", notacredito.getLongitud());
+        cv.put("FechaCreacion", notacredito.getFechaCreacion());
+        cv.put("HoraCreacion", notacredito.getHoraCreacion());
+        cv.put("ModoOffline", notacredito.getModoOffline());
 
         long inserto = DataBaseHelper
                 .getHelper(null)

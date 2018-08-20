@@ -13,7 +13,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class MyDataBase extends SQLiteOpenHelper {
 
 	// VERSION DE BD
-	public static int DATABASE_VERSION = 95;
+	public static int DATABASE_VERSION = 99;
 
 	// DATABASE NAME
 	private static final String DATABASE_NAME = "BD_PRAGSA_SQLITE";
@@ -419,7 +419,12 @@ public class MyDataBase extends SQLiteOpenHelper {
 				+ contexto.getResources().getString(R.string.C_NOT_TOTAL) +" TEXT, "
 				+ contexto.getResources().getString(R.string.C_NOT_SALDO) +" TEXT, "
 				+ contexto.getResources().getString(R.string.C_NOT_ESTADO_MOVIL) +" TEXT, "
-				+ contexto.getResources().getString(R.string.C_NOT_CLAVE_BASE) +" TEXT " +
+				+ contexto.getResources().getString(R.string.C_NOT_CLAVE_BASE) +" TEXT, " +
+				"Latitud TEXT NULL,  " +
+				"Longitud TEXT NULL,  " +
+				"FechaCreacion TEXT NOT NULL,  " +
+				"HoraCreacion TEXT NOT NULL,  " +
+				"ModoOffline TEXT NULL  " +
 				")");
 		db.execSQL(QUERY_CREATE_NOTA_CREDITO);
 
@@ -468,6 +473,7 @@ public class MyDataBase extends SQLiteOpenHelper {
 				+ contexto.getResources().getString(R.string.C_ART_GRUPO_ART) +" TEXT, " 
 				+ contexto.getResources().getString(R.string.C_ART_GRUPO_UM) +" TEXT, " 
 				+ contexto.getResources().getString(R.string.C_ART_UM_VENTA) +" TEXT, "
+				+ contexto.getResources().getString(R.string.C_ART_ALM_DEF) +" TEXT, "
 				+ "UNIQUE("+ contexto.getResources().getString(R.string.C_ART_COD) +"))");
 		db.execSQL(Q_CREATE_TB_ART);
 		

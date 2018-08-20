@@ -4,7 +4,8 @@ public class ArticuloBean {
 
 	private String cod, desc, fabricante, grupoArticulo, codUM,unidadMedidaVenta, 
 			nroCatIC, peso, almacen, fecVen, gDet, marca,
-			zona, codProv, stock, codigoImpuesto, utilLinea, codigoListaPrecio, descripcionListaPrecio;
+			zona, codProv, stock, codigoImpuesto, utilLinea, codigoListaPrecio, descripcionListaPrecio,
+	almacenDefecto;
 	
 	private String nombreFabricante, nombreGrupoArt, nombreUnidadMedida, nombreUnidadMedidaVenta;
 
@@ -271,4 +272,11 @@ public class ArticuloBean {
 		this.utilLinea = utilLinea;
 	}
 
+	public String getAlmacenDefecto() {
+		return almacenDefecto;
+	}
+
+	public void setAlmacenDefecto(String almacenDefecto) {
+		this.almacenDefecto = almacenDefecto;
+	}
 }

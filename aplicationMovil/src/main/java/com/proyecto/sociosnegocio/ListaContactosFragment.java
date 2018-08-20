@@ -150,12 +150,7 @@ public class ListaContactosFragment extends Fragment{
       //registro DE MENSAJE
         LocalBroadcastManager.getInstance(contexto).registerReceiver(myLocalBroadcastReceiver,
 			      new IntentFilter("event-send-contact-to-list"));
-        
-      //registrar los mensajes que se van a recibir DESDE OTROS FRAGMENTS
-        IntentFilter filter = new IntentFilter("event-send-contact-to-list");
-        filter.addAction("event-get-contact-from-directory");
-        LocalBroadcastManager.getInstance(contexto).registerReceiver(myLocalBroadcastReceiver, filter);
-        
+
         llenarListaContactoPrincipal();
         
         lvContactoPrincipal.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -202,7 +197,30 @@ public class ListaContactosFragment extends Fragment{
         setHasOptionsMenu(true);
 		return view;
 	}
-	
+
+	@Override
+	public void onResume() {
+		super.onResume();
+		try{
+			//registrar los mensajes que se van a recibir DESDE OTROS FRAGMENTS
+			IntentFilter filter = new IntentFilter("event-send-contact-to-list");
+			filter.addAction("event-get-contact-from-directory");
+			LocalBroadcastManager.getInstance(contexto).registerReceiver(myLocalBroadcastReceiver, filter);
+		}catch (Exception e){
+			Toast.makeText(contexto, e.getMessage(), Toast.LENGTH_SHORT).show();
+		}
+	}
+
+	@Override
+	public void onPause() {
+		super.onPause();
+		try{
+			LocalBroadcastManager.getInstance(contexto).unregisterReceiver(myLocalBroadcastReceiver);
+		}catch (Exception e){
+			Toast.makeText(contexto, e.getMessage(), Toast.LENGTH_SHORT).show();
+		}
+	}
+
 	private void construirAlertContPrincipal(int position){
 		
 		if(position==0){

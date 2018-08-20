@@ -172,11 +172,7 @@ public class ListaDireccionesFragment extends Fragment{
 	    v = view;
         contexto = view.getContext();
         lvListaDirecciones = (ListView) v.findViewById(R.id.lvListaDireccionesSN);
-        
-      //registro DE MENSAJE
-        LocalBroadcastManager.getInstance(contexto).registerReceiver(myLocalBroadcastReceiver,
-			      new IntentFilter("event-send-direction-to-list"));
-        
+
         llenarListaDireccionPrincipal();
         
         lvDireccionPrincipal.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -185,7 +181,7 @@ public class ListaDireccionesFragment extends Fragment{
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
     				construirAlertDirPrincipal(position);
-            }
+  		          }
 
 		});
         
@@ -226,8 +222,29 @@ public class ListaDireccionesFragment extends Fragment{
 		return view;
 		
 	}
-	
-	
+
+	@Override
+	public void onResume() {
+		super.onResume();
+		try{
+			//registro DE MENSAJE
+			LocalBroadcastManager.getInstance(contexto).registerReceiver(myLocalBroadcastReceiver,
+					new IntentFilter("event-send-direction-to-list"));
+		}catch (Exception e){
+			Toast.makeText(contexto, e.getMessage(), Toast.LENGTH_SHORT).show();
+		}
+	}
+
+	@Override
+	public void onPause() {
+		super.onPause();
+		try{
+			LocalBroadcastManager.getInstance(contexto).unregisterReceiver(myLocalBroadcastReceiver);
+		}catch (Exception e){
+			Toast.makeText(contexto, e.getMessage(), Toast.LENGTH_SHORT).show();
+		}
+	}
+
 	private void construirAlertDirPrincipal(int position){
 		
 		if(position==0){

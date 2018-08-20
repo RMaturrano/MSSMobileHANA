@@ -1,13 +1,21 @@
+
 package com.proyecto.notacredito;
 
+import android.Manifest;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
+import android.os.Build;
 import android.os.Parcelable;
 import android.preference.PreferenceManager;
 import android.provider.Settings;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -15,6 +23,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.InputFilter;
 import android.text.InputType;
+import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.ViewGroup;
@@ -62,9 +71,13 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import static android.location.LocationManager.GPS_PROVIDER;
+
 public class NotaCreditoActivity extends AppCompatActivity implements IRVAdapterAddNotaCredito{
 
     public static String KEY_PARAM_FACTURA = "kpFactura";
+    private final String PATTERN_FECHA = "yyyy/MM/dd";
+    private final String PATTERN_HORA = "HH:mm";
     private NotaCreditoBean mNotaCredito;
 
     private SharedPreferences mSharedPreferences;
@@ -80,6 +93,7 @@ public class NotaCreditoActivity extends AppCompatActivity implements IRVAdapter
     private List<ItemAddCreditNote> mListRows;
     private FacturaBean mFactura;
     private List<FacturaBean> mListFacturasTemp;
+    private Location mCurrentLocation = null;
 
     //region UTIL_CONSTANTS
     private final static String DIALOG_COMENTARIOS = "comentarios";
@@ -131,6 +145,7 @@ public class NotaCreditoActivity extends AppCompatActivity implements IRVAdapter
     protected void onStart() {
         super.onStart();
         initRecyclerView();
+        mCurrentLocation = getCurrentLocation();
 
         if(getIntent().getExtras() != null){
             if(getIntent().getExtras().containsKey(KEY_PARAM_FACTURA)){
@@ -244,7 +259,7 @@ public class NotaCreditoActivity extends AppCompatActivity implements IRVAdapter
                         actualizarTotales();
                     }
                 }else
-                    showMessage("No se ha recibido información sobre los productos seleccionados.");
+                    showMessage("No se ha recibido informaci?n sobre los productos seleccionados.");
             }
         }catch (Exception e){
             showMessage("onActivityResult > " + e.getMessage());
@@ -522,6 +537,16 @@ public class NotaCreditoActivity extends AppCompatActivity implements IRVAdapter
             mNotaCredito.setImpuesto(mImpuesto.toString());
             mNotaCredito.setTotal(mTotal.toString());
 
+            mNotaCredito.setFechaCreacion(obtenerFechaHora(PATTERN_FECHA));
+            mNotaCredito.setHoraCreacion(obtenerFechaHora(PATTERN_HORA));
+            mNotaCredito.setModoOffline(existsNetworkConnection() ? "N" : "Y");
+
+            mCurrentLocation = getCurrentLocation();
+            if(mCurrentLocation != null){
+                mNotaCredito.setLatitud(String.valueOf(mCurrentLocation.getLatitude()));
+                mNotaCredito.setLongitud(String.valueOf(mCurrentLocation.getLongitude()));
+            }
+
             List<NotaCreditoDetalleBean> lineas = new ArrayList<>();
             int numerador = 0;
             for (FacturaDetalleBean d: mFactura.getLineas()) {
@@ -579,6 +604,119 @@ public class NotaCreditoActivity extends AppCompatActivity implements IRVAdapter
         }catch(Exception e){
             showMessage("registrarNotaCredito() > " + e.getMessage());
         }
+    }
+
+    //endregion
+
+    private String obtenerFechaHora(String pattern){
+        String fecha = new SimpleDateFormat(pattern).format(new Date());
+        return fecha;
+    }
+
+
+    //region MAP FUNCTIONS
+
+    private Location getCurrentLocation(){
+        try{
+            LocationManager mLocationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                    1);
+
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.ACCESS_COARSE_LOCATION},
+                    1);
+
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+                    != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this,
+                    Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                return null;
+            }
+
+            mLocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 300000, 0, mLocationListener);
+            if (!this.checkGPSIsEnabled()) {
+                showInfoAlert();
+            } else {
+                Location location = mLocationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+                if (location == null) {
+                    location = mLocationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+                }
+                return location;
+            }
+		/*if (location == null) {
+			location = mLocationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+		} */
+        }catch (Exception e){
+            showMessage("getCurrentLocation() > " + e.getMessage());
+            return null;
+        }
+        return null;
+    }
+
+    private final LocationListener mLocationListener = new LocationListener() {
+        @Override
+        public void onLocationChanged(final Location location) {
+            //createOrUpdateMarkerByLocation(location);
+        }
+
+        @Override
+        public void onStatusChanged(String provider, int status, Bundle extras) {
+
+        }
+
+        @Override
+        public void onProviderEnabled(String provider) {
+
+        }
+
+        @Override
+        public void onProviderDisabled(String provider) {
+
+        }
+    };
+
+    private boolean checkGPSIsEnabled() {
+        try {
+            int locationMode = 0;
+            String locationProviders;
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT){
+                try {
+                    locationMode = Settings.Secure.getInt(getContentResolver(), Settings.Secure.LOCATION_MODE);
+
+                } catch (Settings.SettingNotFoundException e) {
+                    showMessage("checkGPSIsEnabled() SDKV>19 > " + e.getMessage());
+                    return false;
+                }
+
+                return locationMode != Settings.Secure.LOCATION_MODE_OFF;
+
+            }else{
+                locationProviders = Settings.Secure.getString(getContentResolver(), Settings.Secure.LOCATION_PROVIDERS_ALLOWED);
+                return !TextUtils.isEmpty(locationProviders);
+            }
+
+
+        } catch (Exception e) {
+            showMessage("checkGPSIsEnabled() > " + e.getMessage());
+            return false;
+        }
+    }
+
+    private void showInfoAlert() {
+        new android.support.v7.app.AlertDialog.Builder(this)
+                .setTitle("Señal GPS")
+                .setMessage("No tienes señal GPS. Quieres habilitarla?")
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        //El GPS no está activado
+                        Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                        startActivity(intent);
+                    }
+                })
+                .setNegativeButton("CANCEL", null)
+                .show();
     }
 
     //endregion

@@ -37,7 +37,7 @@ public class ListViewCustomAdapterFourRowAndImgFACT_LIST extends BaseAdapter imp
 	
 	@Override
 	public int getCount() {
-		return lista.size();
+		return lista != null ? lista.size() : 0;
 	}
 
 	@Override
@@ -101,67 +101,70 @@ public class ListViewCustomAdapterFourRowAndImgFACT_LIST extends BaseAdapter imp
 	
 	@Override
    	public Filter getFilter() {
-    	
-   		Filter filter = new Filter() {
 
-               @SuppressWarnings("unchecked")
-               @Override
-               protected void publishResults(CharSequence constraint, FilterResults results) {
-            	   lista = (ArrayList<FacturaBean>) results.values;
-            	   notifyDataSetChanged();
-               }
+        try{
+            Filter filter = new Filter() {
 
-               @SuppressLint("DefaultLocale") 
-               @Override
-               protected FilterResults performFiltering(CharSequence constraint) {
+                @SuppressWarnings("unchecked")
+                @Override
+                protected void publishResults(CharSequence constraint, FilterResults results) {
+                    lista = (ArrayList<FacturaBean>) results.values;
+                    notifyDataSetChanged();
+                }
 
-            	   if(!constraint.toString().equals("")){
-      					if(mSearchTerm.length() > constraint.toString().length())
-      						lista = listaFiltrada;
-      			   }
-            	   
-            	   mSearchTerm = constraint.toString().toLowerCase();
-            	   FilterResults results = new FilterResults();
-            	   
-            	   if(mSearchTerm.equals("")){
-            		   
-            		   results.count = listaFiltrada.size();
-                       results.values = listaFiltrada;
+                @SuppressLint("DefaultLocale")
+                @Override
+                protected FilterResults performFiltering(CharSequence constraint) {
 
-                       return results;
-            		   
-            	   }else{
-            	   
-	                   ArrayList<FacturaBean> FilteredArrayList = new ArrayList<FacturaBean> ();
-	
-	                   // perform your search here using the searchConstraint String.
-	
-	                   for (int i = 0; i < lista.size(); i++) {
+                    if(!constraint.toString().equals("")){
+                        if(mSearchTerm.length() > constraint.toString().length())
+                            lista = listaFiltrada;
+                    }
 
-	                       try{
-                               FacturaBean data = lista.get(i);
+                    mSearchTerm = constraint.toString().toLowerCase();
+                    FilterResults results = new FilterResults();
 
-                               if (data.getReferencia().toLowerCase().contains(mSearchTerm.toString()) ||
-                                       data.getSocioNegocio().toLowerCase().contains(mSearchTerm.toString()) ||
-                                       data.getNombreSocio().toLowerCase().contains(mSearchTerm.toString()))  {
+                    if(mSearchTerm.equals("")){
 
-                                   FilteredArrayList.add(data);
-                               }
-                           }catch (Exception e){}
-	                   }
-	
-	                   
-	                   results.count = FilteredArrayList.size();
-	                   results.values = FilteredArrayList;
-	
-	                   return results;
-            	   }
-               }
-           };
+                        results.count = listaFiltrada.size();
+                        results.values = listaFiltrada;
 
-           return filter;
-   		
-   		
+                        return results;
+
+                    }else{
+
+                        ArrayList<FacturaBean> FilteredArrayList = new ArrayList<FacturaBean> ();
+
+                        // perform your search here using the searchConstraint String.
+
+                        for (int i = 0; i < lista.size(); i++) {
+
+                            try{
+                                FacturaBean data = lista.get(i);
+
+                                if (data.getReferencia().toLowerCase().contains(mSearchTerm.toString()) ||
+                                        data.getSocioNegocio().toLowerCase().contains(mSearchTerm.toString()) ||
+                                        data.getNombreSocio().toLowerCase().contains(mSearchTerm.toString()))  {
+
+                                    FilteredArrayList.add(data);
+                                }
+                            }catch (Exception e){}
+                        }
+
+
+                        results.count = FilteredArrayList.size();
+                        results.values = FilteredArrayList;
+
+                        return results;
+                    }
+                }
+            };
+
+            return filter;
+
+        }catch (Exception e){
+            return null;
+        }
    	}
 	
 	

@@ -118,11 +118,7 @@ public class DireccionSocioNegocio extends Fragment{
 	    v = view;
         contexto = view.getContext();
         cargarListas();
-        
-        //Registrar los avisos
-        IntentFilter filter = new IntentFilter("custom-event-get-calle");
-        LocalBroadcastManager.getInstance(contexto).registerReceiver(myLocalBroadcastReceiver, filter);
-        
+
         if(MainSocioNegocio.idDireccion.equals("")){
         	tipoRegistro = "Nuevo";
         	llenarListaDireccion();
@@ -144,314 +140,367 @@ public class DireccionSocioNegocio extends Fragment{
 	
 		});
 		////
-	    
 	   
 	    setHasOptionsMenu(true);
 	    return view;
 		
 	}
-	
-	private void cargarListas(){
-		
-		listaPais = new ArrayList<PaisBean>();
-		
-		Select select = new Select(contexto);
-		listaPais = select.listaPais();
-		paisSel = listaPais.get(0);
-		listaDepartamentos = select.listaDepartamentos(paisSel.getCodigo());
-		for (DepartamentoBean departamento : listaDepartamentos) {
-			if(departamento.getNombre().equalsIgnoreCase("Loreto")){
-				departamentoSel = departamento;
-				break;
-			}
-		}
-		
-		if(departamentoSel == null){
-			departamentoSel = listaDepartamentos.get(0);
-		}
 
-		listaCanales = select.listaCanales();
-		listaGiros = select.listaGiro();
-		
-		select.close();
-		
+	@Override
+	public void onResume() {
+		super.onResume();
+		try{
+			//Registrar los avisos
+			IntentFilter filter = new IntentFilter("custom-event-get-calle");
+			LocalBroadcastManager.getInstance(contexto).registerReceiver(myLocalBroadcastReceiver, filter);
+		}catch (Exception e){
+			showMessage(e.getMessage());
+		}
+	}
+
+	@Override
+	public void onPause() {
+		super.onPause();
+		try{
+			LocalBroadcastManager.getInstance(contexto).unregisterReceiver(myLocalBroadcastReceiver);
+		}catch (Exception e){
+			showMessage(e.getMessage());
+		}
+	}
+
+	private void cargarListas(){
+
+		try{
+			listaPais = new ArrayList<PaisBean>();
+
+			Select select = new Select(contexto);
+			listaPais = select.listaPais();
+			if(listaPais != null && listaPais.size() > 0)
+				paisSel = listaPais.get(0);
+
+			if(paisSel != null) {
+				listaDepartamentos = select.listaDepartamentos(paisSel.getCodigo());
+				for (DepartamentoBean departamento : listaDepartamentos) {
+					if (departamento.getNombre().equalsIgnoreCase("Loreto")) {
+						departamentoSel = departamento;
+						break;
+					}
+				}
+			}
+
+			if(departamentoSel == null && listaDepartamentos != null && listaDepartamentos.size() > 0){
+				departamentoSel = listaDepartamentos.get(0);
+			}
+
+			listaCanales = select.listaCanales();
+			listaGiros = select.listaGiro();
+
+			select.close();
+		}catch (Exception e){
+			showMessage("cargarListas() > " + e.getMessage());
+		}
 	}
 	
 	private void cargarListaDepartamento(){
-		
-		listaPais = new ArrayList<PaisBean>();
-		
-		Select select = new Select(contexto);
-		listaDepartamentos = select.listaDepartamentos(paisSel.getCodigo());
-		select.close();
-		
+		try{
+			listaPais = new ArrayList<PaisBean>();
+
+			Select select = new Select(contexto);
+			listaDepartamentos = select.listaDepartamentos(paisSel.getCodigo());
+			select.close();
+		}catch (Exception e){
+			showMessage("cargarListaDepartamento() > " + e.getMessage());
+		}
 	}
 
 	private void llenarListaDireccion() {
-		
-		searchResults = new ArrayList<FormatCustomListView>();
 
-		lvPrincipal = (ListView) v.findViewById(R.id.lvDireccionSN);
-		
-		DireccionBean direccion = null;
-		if(!MainSocioNegocio.idDireccion.equals("")){
-			for (DireccionBean bean : SocioNegocioFragment.listaDirecciones) {
-				if(bean.getIDDireccion().equals(MainSocioNegocio.idDireccion)){
-					direccion = new DireccionBean();
-					direccion = bean;
-					utilId = direccion.getUtilId();
-					break;
+		try{
+			searchResults = new ArrayList<FormatCustomListView>();
+
+			lvPrincipal = (ListView) v.findViewById(R.id.lvDireccionSN);
+
+			DireccionBean direccion = null;
+			if(!MainSocioNegocio.idDireccion.equals("")){
+				for (DireccionBean bean : SocioNegocioFragment.listaDirecciones) {
+					if(bean.getIDDireccion().equals(MainSocioNegocio.idDireccion)){
+						direccion = new DireccionBean();
+						direccion = bean;
+						utilId = direccion.getUtilId();
+						break;
+					}
 				}
 			}
-		}
-		
-		FormatCustomListView sr = new FormatCustomListView();
-		sr.setTitulo("Tipo dirección");
-		if(tipoRegistro.equalsIgnoreCase("Nuevo")){
+
+			FormatCustomListView sr = new FormatCustomListView();
+			sr.setTitulo("Tipo dirección");
+			if(tipoRegistro.equalsIgnoreCase("Nuevo")){
+				sr.setIcon(iconId);
+			}
+			if(direccion != null && direccion.getTipoDireccion().equals("B")){
+				sr.setData("Fiscal");
+			}else if(direccion != null && direccion.getTipoDireccion().equals("S")){
+				sr.setData("Entrega");
+			}
+			searchResults.add(sr);
+
+			sr = new FormatCustomListView();
+			sr.setTitulo("Id dirección");
+			if(direccion != null)
+				sr.setData(direccion.getIDDireccion());
+			searchResults.add(sr);
+
+			sr = new FormatCustomListView();
+			sr.setTitulo("País");
+			if(direccion != null){
+				for (PaisBean pais : listaPais) {
+					if(pais.getCodigo().equals(direccion.getPais())){
+						paisSel = pais;
+						sr.setData(paisSel.getNombre());
+						cargarListaDepartamento();
+						break;
+					}
+				}
+			}
+			else if(paisSel != null)
+				sr.setData(paisSel.getNombre());
 			sr.setIcon(iconId);
+			sr.setId(20);
+			searchResults.add(sr);
+
+			sr = new FormatCustomListView();
+			sr.setId(21);
+			sr.setTitulo("Departamento");
+			sr.setIcon(iconId);
+			if(direccion != null && direccion.getDepartamento() !=null){
+				for (DepartamentoBean depa : listaDepartamentos) {
+					if(depa.getCodigo().equals(direccion.getDepartamento())){
+						departamentoSel = depa;
+						sr.setData(depa.getNombre());
+						break;
+					}
+				}
+			}
+			else if(departamentoSel != null)
+				sr.setData(departamentoSel.getNombre());
+			searchResults.add(sr);
+
+			sr = new FormatCustomListView();
+			sr.setTitulo("Provincia");
+			sr.setId(22);
+			sr.setIcon(iconId);
+			if(direccion != null && direccion.getProvincia()!=null){
+				Select select = new Select(contexto);
+				listaProvincias = select.listaProvincias(departamentoSel.getCodigo());
+
+				if(listaProvincias != null && listaProvincias.size() > 0) {
+					for (ProvinciaBean prov : listaProvincias) {
+						if (prov.getCodigo().equals(direccion.getProvincia())) {
+							provinciaSel = prov;
+							sr.setData(provinciaSel.getNombre());
+							break;
+						}
+					}
+				}else
+					sr.setData(direccion.getProvincia());
+			}
+			searchResults.add(sr);
+
+			sr = new FormatCustomListView();
+			sr.setTitulo("Distrito");
+			sr.setId(23);
+			sr.setIcon(iconId);
+			if(direccion != null && direccion.getDistrito() != null){
+				if(provinciaSel != null) {
+					Select select = new Select(contexto);
+					listaDistritos = select.listaDistritos(provinciaSel.getCodigo());
+					select.close();
+					for (DistritoBean dist : listaDistritos) {
+						if (dist.getCodigo().equals(direccion.getDistrito())) {
+							distritoSel = dist;
+							sr.setData(distritoSel.getNombre());
+							break;
+						}
+					}
+				}else
+					sr.setData(direccion.getDistrito());
+			}
+			searchResults.add(sr);
+
+			sr = new FormatCustomListView();
+			sr.setTitulo("Calle");
+			sr.setId(24);
+			if(direccion != null && direccion.getCalle() != null){
+				/*Select select = new Select(contexto);
+				listaCalles = select.listaCalles(distritoSel.getCodigo());
+				select.close();
+				for (CalleBean calle : listaCalles) {
+					if(calle.getCodigo().equals(direccion.getCalle())){
+						calleSel = calle;
+						sr.setData(calleSel.getNombre());
+						break;
+					}
+				} */
+				sr.setData(direccion.getCalle());
+			}
+			sr.setIcon(iconId);
+			searchResults.add(sr);
+
+			sr = new FormatCustomListView();
+			sr.setTitulo("Referencia");
+			sr.setId(25);
+			if(direccion != null && direccion.getReferencia() != null)
+				sr.setData(direccion.getReferencia());
+			sr.setIcon(iconId);
+			searchResults.add(sr);
+
+			sr = new FormatCustomListView();
+			sr.setTitulo("Latitud");
+			sr.setId(26);
+			if(direccion != null && direccion.getLatitud() != null)
+				sr.setData(direccion.getLatitud());
+			searchResults.add(sr);
+
+			sr = new FormatCustomListView();
+			sr.setTitulo("Longitud");
+			if(direccion != null && direccion.getLongitud() != null)
+				sr.setData(direccion.getLongitud());
+			searchResults.add(sr);
+
+			sr = new FormatCustomListView();
+			sr.setTitulo("Ruta");
+			sr.setId(27);
+			if(direccion != null && direccion.getRuta() != null)
+				sr.setData(direccion.getRuta());
+			sr.setIcon(iconId);
+			searchResults.add(sr);
+
+			sr = new FormatCustomListView();
+			sr.setTitulo("Zona");
+			sr.setId(28);
+			if(direccion != null && direccion.getZona() != null)
+				sr.setData(direccion.getZona());
+			sr.setIcon(iconId);
+			searchResults.add(sr);
+
+			sr = new FormatCustomListView();
+			sr.setTitulo("Canal");
+			sr.setId(29);
+			if(direccion != null && direccion.getCanal() != null &&
+					!direccion.getCanal().equals("")) {
+				for (CanalBean c: listaCanales) {
+					if(c.getCodigo().equals(direccion.getCanal())){
+						canalSel = c;
+						sr.setData(canalSel.getDescripcion());
+						break;
+					}
+				}
+			}
+			sr.setIcon(iconId);
+			searchResults.add(sr);
+
+			sr = new FormatCustomListView();
+			sr.setTitulo("Giro");
+			sr.setId(30);
+			if(direccion != null && direccion.getGiro() != null &&
+					!direccion.getGiro().equals("")) {
+				for (GiroBean g: listaGiros) {
+					if(g.getCodigo().equals(direccion.getGiro())){
+						giroSel = g;
+						sr.setData(giroSel.getDescripcion());
+						break;
+					}
+				}
+			}
+			sr.setIcon(iconId);
+			searchResults.add(sr);
+
+			adapter = new ListViewCustomAdapterTwoLinesAndImg(contexto, searchResults);
+			lvPrincipal.setAdapter(adapter);
+			DynamicHeight.setListViewHeightBasedOnChildren(lvPrincipal);
+		}catch (Exception e){
+			showMessage("llenarListaDireccion() > " + e.getMessage() + " > Linea: " +
+			e.getStackTrace()[0].getLineNumber());
 		}
-		if(direccion != null && direccion.getTipoDireccion().equals("B")){
-			sr.setData("Fiscal");
-		}else if(direccion != null && direccion.getTipoDireccion().equals("S")){
-			sr.setData("Entrega");
-		}
-		searchResults.add(sr);
-		
-		sr = new FormatCustomListView();
-	  	sr.setTitulo("Id dirección");
-	  	if(direccion != null)
-			sr.setData(direccion.getIDDireccion());
-	  	searchResults.add(sr);
-	  	
-	  	sr = new FormatCustomListView();
-	  	sr.setTitulo("País");
-	  	if(direccion != null){
-	  		for (PaisBean pais : listaPais) {
-				if(pais.getCodigo().equals(direccion.getPais())){
-					paisSel = pais;
-					sr.setData(paisSel.getNombre());
-					cargarListaDepartamento();
-					break;
-				}
-			}
-	  	}
-	  	else
-	  		sr.setData(paisSel.getNombre());
-	  	sr.setIcon(iconId);
-	  	searchResults.add(sr);
-	  	
-	  	sr = new FormatCustomListView();
-	  	sr.setTitulo("Departamento");
-	  	sr.setIcon(iconId);
-	  	if(direccion != null && direccion.getDepartamento() !=null){
-	  		for (DepartamentoBean depa : listaDepartamentos) {
-				if(depa.getCodigo().equals(direccion.getDepartamento())){
-					departamentoSel = depa;
-					sr.setData(depa.getNombre());
-					break;
-				}
-			}
-	  	}
-	  	else
-	  		sr.setData(departamentoSel.getNombre());
-	  	searchResults.add(sr);
-	  	
-	  	sr = new FormatCustomListView();
-	  	sr.setTitulo("Provincia");
-	  	sr.setIcon(iconId);
-	  	if(direccion != null && direccion.getProvincia()!=null){
-	  		Select select = new Select(contexto);
-    		listaProvincias = select.listaProvincias(departamentoSel.getCodigo());
-    		select.close();
-    		for (ProvinciaBean prov : listaProvincias) {
-				if(prov.getCodigo().equals(direccion.getProvincia())){
-					provinciaSel = prov;
-					sr.setData(provinciaSel.getNombre());
-					break;
-				}
-			}
-	  	}
-	  	searchResults.add(sr);
-	  	
-	  	sr = new FormatCustomListView();
-	  	sr.setTitulo("Distrito");
-	  	sr.setIcon(iconId);
-	  	if(direccion != null && direccion.getDistrito() != null){
-	  		Select select = new Select(contexto);
-    		listaDistritos = select.listaDistritos(provinciaSel.getCodigo());
-    		select.close();
-    		for (DistritoBean dist : listaDistritos) {
-    			if(dist.getCodigo().equals(direccion.getDistrito())){
-    				distritoSel = dist;
-    				sr.setData(distritoSel.getNombre());
-    				break;
-    			}
-			}
-	  	}
-	  	searchResults.add(sr);
-  	
-	  	sr = new FormatCustomListView();
-	  	sr.setTitulo("Calle");
-	  	if(direccion != null && direccion.getCalle() != null){
-	  		/*Select select = new Select(contexto);
-    		listaCalles = select.listaCalles(distritoSel.getCodigo());
-    		select.close();
-    		for (CalleBean calle : listaCalles) {
-				if(calle.getCodigo().equals(direccion.getCalle())){
-					calleSel = calle;
-					sr.setData(calleSel.getNombre());
-					break;
-				}
-			} */
-	  		sr.setData(direccion.getCalle());
-	  	}
-	  	sr.setIcon(iconId);
-	  	searchResults.add(sr);
-	  	
-	  	sr = new FormatCustomListView();
-	  	sr.setTitulo("Referencia");
-	  	if(direccion != null && direccion.getReferencia() != null)
-			sr.setData(direccion.getReferencia());
-	  	sr.setIcon(iconId);
-	  	searchResults.add(sr);
-
-		sr = new FormatCustomListView();
-		sr.setTitulo("Latitud");
-		if(direccion != null && direccion.getLatitud() != null)
-			sr.setData(direccion.getLatitud());
-		searchResults.add(sr);
-
-		sr = new FormatCustomListView();
-		sr.setTitulo("Longitud");
-		if(direccion != null && direccion.getLongitud() != null)
-			sr.setData(direccion.getLongitud());
-		searchResults.add(sr);
-
-		sr = new FormatCustomListView();
-		sr.setTitulo("Ruta");
-		if(direccion != null && direccion.getRuta() != null)
-			sr.setData(direccion.getRuta());
-		sr.setIcon(iconId);
-		searchResults.add(sr);
-
-		sr = new FormatCustomListView();
-		sr.setTitulo("Zona");
-		if(direccion != null && direccion.getZona() != null)
-			sr.setData(direccion.getZona());
-		sr.setIcon(iconId);
-		searchResults.add(sr);
-
-		sr = new FormatCustomListView();
-		sr.setTitulo("Canal");
-		if(direccion != null && direccion.getCanal() != null &&
-				!direccion.getCanal().equals("")) {
-			for (CanalBean c: listaCanales) {
-				if(c.getCodigo().equals(direccion.getCanal())){
-					canalSel = c;
-					sr.setData(canalSel.getDescripcion());
-					break;
-				}
-			}
-		}
-		sr.setIcon(iconId);
-		searchResults.add(sr);
-
-		sr = new FormatCustomListView();
-		sr.setTitulo("Giro");
-		if(direccion != null && direccion.getGiro() != null &&
-				!direccion.getGiro().equals("")) {
-			for (GiroBean g: listaGiros) {
-				if(g.getCodigo().equals(direccion.getGiro())){
-					giroSel = g;
-					sr.setData(giroSel.getDescripcion());
-					break;
-				}
-			}
-		}
-		sr.setIcon(iconId);
-		searchResults.add(sr);
-
-	  	adapter = new ListViewCustomAdapterTwoLinesAndImg(contexto, searchResults);
-      	lvPrincipal.setAdapter(adapter);
-  		DynamicHeight.setListViewHeightBasedOnChildren(lvPrincipal);
 	}
 
 	private void buildFirstAlert(int position){
-		
-		posicion = position;
-		//Capturar el objeto (row - fila) 
-		Object o = lvPrincipal.getItemAtPosition(position);
-		fullObject = new FormatCustomListView();
-    	fullObject = (FormatCustomListView)o;
-    	//
-		
-		ArrayList<TipoDireccionBean> listaCombo = new ArrayList<TipoDireccionBean>();
-		TipoDireccionBean m = new TipoDireccionBean();
-		listaCombo = m.lista();
-		
-		//Spinner
-		final Spinner spn = new Spinner(contexto);
-		
-		ArrayAdapter<TipoDireccionBean> adapter = new ArrayAdapter<TipoDireccionBean>(contexto, 
-				android.R.layout.simple_list_item_1,
-				listaCombo);
-		spn.setAdapter(adapter);
-		spn.setOnItemSelectedListener(new OnItemSelectedListener() {
-			
-			@Override
-			public void onItemSelected(AdapterView<?> parent,
-					View arg1, int pos, long arg3) {
-			
-				direccionSel = new TipoDireccionBean();
-				direccionSel = (TipoDireccionBean) parent.getItemAtPosition(pos);
-				
-			}
 
-			@Override
-			public void onNothingSelected(
-					AdapterView<?> arg0) {
-				
-			}
-		});
-		
-		
-		
-		AlertDialog.Builder alert = new AlertDialog.Builder(contexto);
-		alert.setTitle("Tipo de dirección");
+		try{
+			posicion = position;
+			//Capturar el objeto (row - fila)
+			Object o = lvPrincipal.getItemAtPosition(position);
+			fullObject = new FormatCustomListView();
+			fullObject = (FormatCustomListView)o;
+			//
 
-		alert.setView(spn);
-		
-		alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-		public void onClick(DialogInterface dialog, int whichButton) {
-			
-			FormatCustomListView fullObject_1 = new FormatCustomListView();
-			fullObject_1 = (FormatCustomListView) lvPrincipal.getItemAtPosition(1);
-			if(direccionSel.getCodigo().equalsIgnoreCase("B"))
-				fullObject_1.setData(direccionSel.getDescripcion() + SocioNegocioFragment.directionIdFiscal);
-			else
-				fullObject_1.setData(direccionSel.getDescripcion() + SocioNegocioFragment.directionIdEntrega);
-			searchResults.set(posicion, fullObject_1);
+			ArrayList<TipoDireccionBean> listaCombo = new ArrayList<TipoDireccionBean>();
+			TipoDireccionBean m = new TipoDireccionBean();
+			listaCombo = m.lista();
 
-			fullObject.setData(direccionSel.getDescripcion());
-			searchResults.set(posicion, fullObject);
-			lvPrincipal.invalidateViews();
-			
-		  }
-		});
+			//Spinner
+			final Spinner spn = new Spinner(contexto);
 
-		alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-		  public void onClick(DialogInterface dialog, int whichButton) {
-		    // Canceled.
-		  }
-		});
+			ArrayAdapter<TipoDireccionBean> adapter = new ArrayAdapter<TipoDireccionBean>(contexto,
+					android.R.layout.simple_list_item_1,
+					listaCombo);
+			spn.setAdapter(adapter);
+			spn.setOnItemSelectedListener(new OnItemSelectedListener() {
 
-		alert.show();
-		
+				@Override
+				public void onItemSelected(AdapterView<?> parent,
+										   View arg1, int pos, long arg3) {
+
+					direccionSel = new TipoDireccionBean();
+					direccionSel = (TipoDireccionBean) parent.getItemAtPosition(pos);
+
+				}
+
+				@Override
+				public void onNothingSelected(
+						AdapterView<?> arg0) {
+
+				}
+			});
+
+			AlertDialog.Builder alert = new AlertDialog.Builder(contexto);
+			alert.setTitle("Tipo de dirección");
+			alert.setView(spn);
+			alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+				public void onClick(DialogInterface dialog, int whichButton) {
+
+					FormatCustomListView fullObject_1 = new FormatCustomListView();
+					fullObject_1 = (FormatCustomListView) lvPrincipal.getItemAtPosition(1);
+					if(direccionSel.getCodigo().equalsIgnoreCase("B"))
+						fullObject_1.setData(direccionSel.getDescripcion() + SocioNegocioFragment.directionIdFiscal);
+					else
+						fullObject_1.setData(direccionSel.getDescripcion() + SocioNegocioFragment.directionIdEntrega);
+					searchResults.set(posicion, fullObject_1);
+
+					fullObject.setData(direccionSel.getDescripcion());
+					searchResults.set(posicion, fullObject);
+					lvPrincipal.invalidateViews();
+
+				}
+			});
+
+			alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+				public void onClick(DialogInterface dialog, int whichButton) {
+					// Canceled.
+				}
+			});
+
+			alert.show();
+
+		}catch (Exception e){
+			showMessage("buildFirstAlert() > " + e.getMessage());
+		}
 	}
 	
 	//CONSTRUYENDO EL ALERT DE CADA LINEA PARA EL BLOQUE DE DIRECCIONES
 	private void construirAlert(int position){
-			
+
+		try{
 			if(position == 0){
 				
 				if(tipoRegistro.equalsIgnoreCase("Nuevo"))
@@ -623,75 +672,81 @@ public class DireccionSocioNegocio extends Fragment{
 		    		final Spinner spn = new Spinner(contexto);
 		    		Select select = new Select(contexto);
 		    		listaProvincias = select.listaProvincias(departamentoSel.getCodigo());
-		    		select.close();
-		    		
-		    		ArrayAdapter<ProvinciaBean> adapter = new ArrayAdapter<ProvinciaBean>(contexto, 
-							android.R.layout.simple_list_item_1,
-							listaProvincias);
-		    		spn.setAdapter(adapter);
-		    		spn.setOnItemSelectedListener(new OnItemSelectedListener() {
-						
-						@Override
-						public void onItemSelected(AdapterView<?> parent,
-								View arg1, int pos, long arg3) {
-							
-							provinciaSel = new ProvinciaBean();
-							provinciaSel = (ProvinciaBean) parent.getItemAtPosition(pos);
-							
-						}
+		    		if(listaProvincias != null && listaProvincias.size() > 0) {
 
-						@Override
-						public void onNothingSelected(
-								AdapterView<?> arg0) {
-							
-						}
-					});
-					
-					
-					
-					AlertDialog.Builder alert = new AlertDialog.Builder(contexto);
-		    		alert.setTitle("Provincia");
+						ArrayAdapter<ProvinciaBean> adapter = new ArrayAdapter<ProvinciaBean>(contexto,
+								android.R.layout.simple_list_item_1,
+								listaProvincias);
+						spn.setAdapter(adapter);
+						spn.setOnItemSelectedListener(new OnItemSelectedListener() {
 
-		    		alert.setView(spn);
-		    		
-		    		alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-		    		public void onClick(DialogInterface dialog, int whichButton) {
-		    	
-	    				if(distritoSel != null){
-	    					FormatCustomListView fullObject_2 = new FormatCustomListView();
-	    					fullObject_2 = (FormatCustomListView) lvPrincipal.getItemAtPosition(5);
-	    					fullObject_2.setData("");
-		    				searchResults.set(5, fullObject_2);
-		    				listaDistritos.clear();
-		    				distritoSel = null;
-		    				
-		    				if(calleSel != null){
-		    					FormatCustomListView fullObject_3 = new FormatCustomListView();
-		    					fullObject_3 = (FormatCustomListView) lvPrincipal.getItemAtPosition(6);
-		    					fullObject_3.setData("");
-			    				searchResults.set(6, fullObject_3);
-			    				calleSel = null;
-		    				}
-		    				
-	    				}
-		    				
-		    			if(provinciaSel != null){
-		    				fullObject.setData(provinciaSel.getNombre());
-							searchResults.set(posicion, fullObject);
-							lvPrincipal.invalidateViews();
-		    			}
-		    			
-		    			
-		    		  }
-		    		});
+							@Override
+							public void onItemSelected(AdapterView<?> parent,
+													   View arg1, int pos, long arg3) {
 
-		    		alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-		    		  public void onClick(DialogInterface dialog, int whichButton) {
-		    		    // Canceled.
-		    		  }
-		    		});
+								provinciaSel = new ProvinciaBean();
+								provinciaSel = (ProvinciaBean) parent.getItemAtPosition(pos);
 
-		    		alert.show();
+							}
+
+							@Override
+							public void onNothingSelected(
+									AdapterView<?> arg0) {
+
+							}
+						});
+
+
+						AlertDialog.Builder alert = new AlertDialog.Builder(contexto);
+						alert.setTitle("Provincia");
+
+						alert.setView(spn);
+
+						alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+							public void onClick(DialogInterface dialog, int whichButton) {
+
+								if (distritoSel != null) {
+									FormatCustomListView fullObject_2 = new FormatCustomListView();
+									fullObject_2 = (FormatCustomListView) lvPrincipal.getItemAtPosition(5);
+									fullObject_2.setData("");
+									searchResults.set(5, fullObject_2);
+									listaDistritos.clear();
+									distritoSel = null;
+
+									if (calleSel != null) {
+										FormatCustomListView fullObject_3 = new FormatCustomListView();
+										fullObject_3 = (FormatCustomListView) lvPrincipal.getItemAtPosition(6);
+										fullObject_3.setData("");
+										searchResults.set(6, fullObject_3);
+										calleSel = null;
+									}
+
+								}
+
+								if (provinciaSel != null) {
+									fullObject.setData(provinciaSel.getNombre());
+									searchResults.set(posicion, fullObject);
+									lvPrincipal.invalidateViews();
+								}
+
+
+							}
+						});
+
+						alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+							public void onClick(DialogInterface dialog, int whichButton) {
+								// Canceled.
+							}
+						});
+
+						alert.show();
+					}else{
+						ConstruirAlert alert = new ConstruirAlert();
+						alert.construirAlert(contexto, position, "Provincia", searchResults, lvPrincipal, "text",100);
+					}
+				}else{
+					ConstruirAlert alert = new ConstruirAlert();
+					alert.construirAlert(contexto, position, "Provincia", searchResults, lvPrincipal, "text",100);
 				}
 				
 			}else if(position== 5){
@@ -708,71 +763,77 @@ public class DireccionSocioNegocio extends Fragment{
 		    		final Spinner spn = new Spinner(contexto);
 		    		Select select = new Select(contexto);
 		    		listaDistritos = select.listaDistritos(provinciaSel.getCodigo());
-		    		select.close();
-		    		
-		    		ArrayAdapter<DistritoBean> adapter = new ArrayAdapter<DistritoBean>(contexto, 
-							android.R.layout.simple_list_item_1,
-							listaDistritos);
-		    		spn.setAdapter(adapter);
-		    		spn.setOnItemSelectedListener(new OnItemSelectedListener() {
-						
-						@Override
-						public void onItemSelected(AdapterView<?> parent,
-								View arg1, int pos, long arg3) {
-							
-							if(calleSel != null){
-		    					FormatCustomListView fullObject_3 = new FormatCustomListView();
-		    					fullObject_3 = (FormatCustomListView) lvPrincipal.getItemAtPosition(6);
-		    					fullObject_3.setData("");
-			    				searchResults.set(6, fullObject_3);
-			    				calleSel = null;
-		    				}
-							distritoSel = new DistritoBean();
-							distritoSel = (DistritoBean) parent.getItemAtPosition(pos);
-							
-						}
 
-						@Override
-						public void onNothingSelected(
-								AdapterView<?> arg0) {
-							
-						}
-					});
-					
-					
-					
-					AlertDialog.Builder alert = new AlertDialog.Builder(contexto);
-		    		alert.setTitle("Distrito");
+		    		if(listaDistritos != null && listaDistritos.size() > 0) {
 
-		    		alert.setView(spn);
-		    		
-		    		alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-		    		public void onClick(DialogInterface dialog, int whichButton) {
+						ArrayAdapter<DistritoBean> adapter = new ArrayAdapter<DistritoBean>(contexto,
+								android.R.layout.simple_list_item_1,
+								listaDistritos);
+						spn.setAdapter(adapter);
+						spn.setOnItemSelectedListener(new OnItemSelectedListener() {
 
-		    			if(calleSel != null){
-	    					FormatCustomListView fullObject_3 = new FormatCustomListView();
-	    					fullObject_3 = (FormatCustomListView) lvPrincipal.getItemAtPosition(6);
-	    					fullObject_3.setData("");
-		    				searchResults.set(6, fullObject_3);
-	    				}
-		    			
-		    			if(distritoSel != null){
-		    				fullObject.setData(distritoSel.getNombre());
-							searchResults.set(posicion, fullObject);
-							lvPrincipal.invalidateViews();
-		    			}
-		    			
-		    			
-		    		  }
-		    		});
+							@Override
+							public void onItemSelected(AdapterView<?> parent,
+													   View arg1, int pos, long arg3) {
 
-		    		alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-		    		  public void onClick(DialogInterface dialog, int whichButton) {
-		    		    // Canceled.
-		    		  }
-		    		});
+								if (calleSel != null) {
+									FormatCustomListView fullObject_3 = new FormatCustomListView();
+									fullObject_3 = (FormatCustomListView) lvPrincipal.getItemAtPosition(6);
+									fullObject_3.setData("");
+									searchResults.set(6, fullObject_3);
+									calleSel = null;
+								}
+								distritoSel = new DistritoBean();
+								distritoSel = (DistritoBean) parent.getItemAtPosition(pos);
 
-		    		alert.show();
+							}
+
+							@Override
+							public void onNothingSelected(
+									AdapterView<?> arg0) {
+
+							}
+						});
+
+						AlertDialog.Builder alert = new AlertDialog.Builder(contexto);
+						alert.setTitle("Distrito");
+
+						alert.setView(spn);
+
+						alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+							public void onClick(DialogInterface dialog, int whichButton) {
+
+								if (calleSel != null) {
+									FormatCustomListView fullObject_3 = new FormatCustomListView();
+									fullObject_3 = (FormatCustomListView) lvPrincipal.getItemAtPosition(6);
+									fullObject_3.setData("");
+									searchResults.set(6, fullObject_3);
+								}
+
+								if (distritoSel != null) {
+									fullObject.setData(distritoSel.getNombre());
+									searchResults.set(posicion, fullObject);
+									lvPrincipal.invalidateViews();
+								}
+
+
+							}
+						});
+
+						alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+							public void onClick(DialogInterface dialog, int whichButton) {
+								// Canceled.
+							}
+						});
+
+						alert.show();
+					}else{
+						ConstruirAlert alert = new ConstruirAlert();
+						alert.construirAlert(contexto, position, "Distrito", searchResults, lvPrincipal, "text",100);
+					}
+				}else{
+					ConstruirAlert alert = new ConstruirAlert();
+					alert.construirAlert(contexto, position, "Distrito", searchResults, lvPrincipal, "text",100);
 				}
 				
 			}else if(position== 6){
@@ -862,7 +923,10 @@ public class DireccionSocioNegocio extends Fragment{
 				});
 				dialog = alert.show();
 			}
+		}catch (Exception e){
+			showMessage("construirAlert() > " + e.getMessage());
 		}
+	}
 	
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
@@ -919,8 +983,12 @@ public class DireccionSocioNegocio extends Fragment{
 			    	    	bean.setDepartamento(departamentoSel.getCodigo());
 			    	    if(provinciaSel != null)
 			    	    	bean.setProvincia(provinciaSel.getCodigo());
+			    	    else
+			    	    	bean.setProvincia(searchResults.get(4).getData());
 			    	    if(distritoSel != null)
 			    	    	bean.setDistrito(distritoSel.getCodigo());
+			    	    else
+			    	    	bean.setDistrito(searchResults.get(5).getData());
 			    	    /*if(calleSel != null){
 			    	    	bean.setCalle(calleSel.getCodigo());
 			    	    	bean.setNombreCalle(calleSel.getNombre());
